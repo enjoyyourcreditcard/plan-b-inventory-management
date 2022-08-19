@@ -1,0 +1,35 @@
+#thumbwrap {
+    position: relative;
+    
+}
+.thumb span {
+
+    position: absolute;
+    visibility: hidden;
+}
+.thumb:hover,
+.thumb:hover span {
+    visibility: visible;
+    top: 0;
+    bottom: 0;
+    left: 45px;
+    z-index: 400;
+}
+
+.container-header{
+    margin-left: 0px;
+
+}
+.text-sidebar{
+    font-size: 16px;
+}
+.list-group-item-sidebar{
+padding: 10px 16px;
+}
+.tabel-horizontal-scroll{
+    /* width: 10px; */
+    height: 100%;
+    /* overflow-x: scroll; */
+
+}
+
