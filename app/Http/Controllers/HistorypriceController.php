@@ -8,7 +8,7 @@ use App\Services\HistoryPriceService;
 use Illuminate\Support\Facades\Validator;
 
 class HistoryPriceController extends Controller
-{
+{ 
     public function __construct(HistoryPriceService $historypriceService)
     {
         $this->historypriceService = $historypriceService;
