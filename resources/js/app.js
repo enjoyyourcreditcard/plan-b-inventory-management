@@ -15,6 +15,7 @@ require('./bootstrap');
 require('./components/Example');
 require('./components/LatestPart');
 require('./view/part');
+require('./view/part/detail');
 require('./view/part/category');
 
 

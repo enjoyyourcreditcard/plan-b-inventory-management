@@ -19,7 +19,6 @@
                                         <h3>PART INFO</h3>
                                     </div>
                                     <div class="mb-2">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/book -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box"
                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                             stroke="currentColor" fill="none" stroke-linecap="round"
@@ -34,7 +33,6 @@
                                         </strong>
                                     </div>
                                     <div class="mb-2">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/briefcase -->
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-tabler icon-tabler-sitemap" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -50,7 +48,6 @@
                                                 Headers</a></strong>
                                     </div>
                                     <div class="mb-2">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-tabler icon-tabler-calendar-event" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -65,7 +62,6 @@
                                         Creation Date : <strong>2022-07-14</strong>
                                     </div>
                                     <div class="mb-2">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-tabler icon-tabler-info-circle" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -187,37 +183,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="card card-sm mt-1">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="bg-green text-white avatar">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <circle cx="6" cy="19" r="2"></circle>
-                                                    <circle cx="17" cy="19" r="2"></circle>
-                                                    <path d="M17 17h-11v-14h-2"></path>
-                                                    <path d="M6 5l14 1l-1 7h-13"></path>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                78 Orders
-                                            </div>
-                                            <div class="text-muted">
-                                                32 shipped
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            --}}
-
                         </div>
                     </div>
                 </div>
@@ -270,7 +235,17 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
-                            <div id="parts"></div>
+                            {{-- <div>
+                                <a href="#" class="btn btn-primary w-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    New Part
+                                </a>
+                            </div> --}}
+                            <div id="detail-part"></div>
 
                         </div>
                         <div class="tab-pane" id="tabs-profile-12" role="tabpanel">

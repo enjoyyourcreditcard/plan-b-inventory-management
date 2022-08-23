@@ -21,9 +21,6 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
-    {{--
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-
 </head>
 
 <body>

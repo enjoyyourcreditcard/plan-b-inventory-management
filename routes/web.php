@@ -30,6 +30,5 @@ Route::get('/detail/part', function () {
 })->middleware(["auth:sanctum", 'ability:check-status']);
 
 
-
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

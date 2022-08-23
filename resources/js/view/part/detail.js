@@ -5,8 +5,9 @@ import TabelFooter from '../../components/tabel_footer';
 import Table from '../../components/Table';
 import TabelHiddenColumn from '../../components/table_hidden_column';
 import TableSearch from '../../components/table_search';
+import ReactModal from 'react-modal';
 
-function Parts() {
+function DetailPart() {
     const rawData = React.useMemo(
         () => [
             {
@@ -194,6 +195,7 @@ function Parts() {
 
     const [noStock, setNoStock] = useState(false);
     const [data, setData] = useState(rawData);
+    const [modalAddStock, setModalAddStock] = useState(true);
 
 
 
@@ -304,17 +306,65 @@ function Parts() {
     const { globalFilter, pageIndex } = state
     return (
         <div>
+            <ReactModal
+                isOpen={modalAddStock}
+                contentLabel="Minimal Modal Example"
+                style={{
+                    overlay: {
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(255, 255, 255, 0.75)'
+                    },
+                    content: {
+                        margin: "auto",
+                        width: "65%",
+                        padding: 0,
+                        //   left: 1000,
+
+                        //   position: 'absolute',
+                        //   top: '40px',
+                        //   left: '40px',
+                        //   right: '40px',
+                        //   bottom: '40px',
+                        //   border: '1px solid #ccc',
+                        //   background: '#fff',
+                        //   overflow: 'auto',
+                        //   WebkitOverflowScrolling: 'touch',
+                        //   borderRadius: '4px',
+                        //   outline: 'none',
+                        //   padding: '20px'
+                    }
+                }}
+            >
+                <div class="modal-content">
+                    <div class="modal-header border-bottom">
+                        <h5 class="h2 mt-2">New Stock Item</h5>
+                        <button type="button" onClick={(e)=>{setModalAddStock(false)}} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {/* <div class="modal-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit tempora totam unde.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    </div> */}
+                </div>
+                {/* <button onClick={(e)=>{setModalAddStock(false)}}>Close Modal</button> */}
+            </ReactModal>
             <div className="pt-3 ">
                 <div className="d-flex">
                     <div>
-                        <a href="#" class="btn btn-primary w-100">
+                        <button onClick={(e) => { setModalAddStock(true) }} class="btn btn-primary w-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                             New Part
-                        </a>
+                        </button>
                     </div>
 
                     <TableSearch
@@ -404,8 +454,8 @@ function Parts() {
     );
 }
 
-export default Parts;
+export default DetailPart;
 
-if (document.getElementById('parts')) {
-    ReactDOM.render(<Parts />, document.getElementById('parts'));
+if (document.getElementById('detail-part')) {
+    ReactDOM.render(<DetailPart />, document.getElementById('detail-part'));
 }
