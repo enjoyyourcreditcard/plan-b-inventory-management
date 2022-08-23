@@ -33,10 +33,14 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
-                            <div id="parts"></div>
+                            <div id="parts">
+
+                            </div>
                         </div>
                         <div class="tab-pane" id="tabs-profile-12" role="tabpanel">
-                            <div id="part_category"></div>
+                            <div id="part_category">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>

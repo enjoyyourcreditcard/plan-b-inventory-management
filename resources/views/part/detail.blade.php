@@ -256,16 +256,117 @@
 
                         </div>
                         <div class="tab-pane" id="tabs-attachments" role="tabpanel">
-                            {{-- <div id="parts"></div> --}}
+                            <div class="col-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <a href="#modal-report" class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">+ New Attachment</a>
+                                  </div>
+                                  <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                      {{-- <div class="text-muted">
+                                        Show
+                                        <div class="mx-2 d-inline-block">
+                                          <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                        </div>
+                                        entries
+                                      </div>
+                                      <div class="ms-auto text-muted">
+                                        Search:
+                                        <div class="ms-2 d-inline-block">
+                                          <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                        </div>
+                                      </div> --}}
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable" border="0.5">
+                                      <thead>
+                                        <tr>
+                            
+                                          <th class="w-1">No. 
+                                            
+                                          </th>
+                                          <th>Comment</th>
+                                          <th>file</th>
+                                          <th>action</th>
+                                          
+                                        </tr>
+                                      </thead>
+                                      
+                                      <tbody>
+                                        <tr>
+                                        @php
+                                        $no = 1;
+                                        @endphp
+                                        @foreach($data as $index => $row)
+                                          
+                                          <td>{{$no++}}</td>
+                                          <td>{{$row->comment}}</td>
+                                          <td><a href="{{asset ('file/'.$row->file)}}" target="blank" rel=" noopener noreferer" type="button" class="btn btn-outline-secondary">show</a></td>
+                                          <td class="text-end">
+                                            
+                                                <a href="/destroy/{{$row->id}}" style="background: transparent; border: none;"><img src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/16/undefined/external-bin-mother-earth-day-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"/></a>
+                                            
+                                          </td>
+                                          
+                                        </tr>
+                                        
+                                      </tbody>
+                                    @endforeach
+                                    </table>
+                                    {{-- {{ $data->links() }} --}}
+                                  </div>
 
-                            <!-- <div id="part_category"></div> -->
+                                  
+                                </div>
+                              </div>
+                            {{-- <div id="parts"></div> --}}
+                            {{-- <div id="part_category"></div> --}}
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
+
+<div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <form method="POST" action="/store" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Add Data</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Commentar</label>
+                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3" placeholder="Add Commentar"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Add File</label>
+                <input type="file" name="file" class="form-control" id="exampleInputEmail1" 
+                    aria-describedby="emailHelp">
+            </div>
+            
+        <div class="modal-footer">
+          <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </a>
+            <button class="btn btn-primary ms-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Save
+            </button>
+            
+          </a>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 @endsection

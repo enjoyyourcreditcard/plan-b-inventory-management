@@ -6921,7 +6921,7 @@ function DetailPart() {
       data = _useState4[0],
       setData = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState6 = _slicedToArray(_useState5, 2),
       modalAddStock = _useState6[0],
       setModalAddStock = _useState6[1];
