@@ -3,7 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HistorypriceController;
+use App\Http\Controllers\HistoryPriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Route::get('/part', function () {
 //     return view('part.detail');
 // })->middleware(["auth:sanctum", 'ability:check-status']);
 // Route::get('/detail/part', [App\Http\Controllers\HistorypriceController::class, 'index']);
-Route::resource('/detail/part', HistorypriceController::class);
+Route::resource('/detail/part', HistoryPriceController::class);
 
 
 Auth::routes();

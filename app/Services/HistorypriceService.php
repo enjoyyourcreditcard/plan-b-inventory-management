@@ -2,32 +2,34 @@
 
 namespace App\Services;
 
-use App\Models\Historyprice;
+use App\Models\HistoryPrice;
 use Illuminate\Http\Request;
-// use App\Services\HistorypriceService;
+// use App\Services\HistoryPriceController;
 use Illuminate\Support\Facades\Validator;
 
-class HistorypriceService
+class HistoryPriceService
 {
 
-    public function __construct(Historyprice $hp)
+    public function __construct(HistoryPrice $historyprice)
     {
-        $this->hp = $hp;
+        $this->historyprice = $historyprice;
     }
     
     public function handleIndex()
     {
-        $hps = $this->hp->all();
+        $history_prices = $this->historyprice->latest()->get();
+        // dd($historyprices);
 
-        return view('part.detail', [
-            'hps' => $hps
-        ]);
-        // return($hps);
+        // return view('part.detail', [
+        //     'historyprices' => $historyprices
+        // ]);
+
+        return($history_prices);
     }
 
     public function handleStore(Request $request)
     {
-        $this->hp->create($request->all());
+        $this->historyprice->create($request->all());
         return redirect('/detail/part');
     }
 
