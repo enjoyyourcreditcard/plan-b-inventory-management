@@ -7547,39 +7547,7 @@ function Parts() {
       className: "pt-3 ",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "d-flex",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("a", {
-            href: "#",
-            "class": "btn btn-primary w-100",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              "class": "icon icon-tabler icon-tabler-plus",
-              width: "24",
-              height: "24",
-              viewBox: "0 0 24 24",
-              "stroke-width": "2",
-              stroke: "currentColor",
-              fill: "none",
-              "stroke-linecap": "round",
-              "stroke-linejoin": "round",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("path", {
-                stroke: "none",
-                d: "M0 0h24v24H0z",
-                fill: "none"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("line", {
-                x1: "12",
-                y1: "5",
-                x2: "12",
-                y2: "19"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("line", {
-                x1: "5",
-                y1: "12",
-                x2: "19",
-                y2: "12"
-              })]
-            }), "New Part"]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_table_search__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_table_search__WEBPACK_IMPORTED_MODULE_6__["default"], {
           globalFilter: globalFilter,
           setGlobalFilter: setGlobalFilter
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
