@@ -19,10 +19,7 @@ class HistorypriceService
     {
         $hps = $this->hp->all();
 
-        return view('part.detail', [
-            'hps' => $hps
-        ]);
-        // return($hps);
+        return($hps);
     }
 
     public function handleStore(Request $request)
