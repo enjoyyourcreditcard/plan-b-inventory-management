@@ -278,29 +278,36 @@
                                 <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-team">
                                     New Price
                                 </a>
+                                @if (session()->has('success'))
+                                <div class="alert alert-success position-absolute" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
                                 <div class="card">
                                     <div class="table-responsive">
                                         <table class="table card-table table-vcenter text-nowrap datatable">
-                                        <thead>
-                                            <tr>
-                                                {{-- <th>Part_id</th> --}}
-                                                <th>Price</th>
-                                                <th>Created At</th>
-                                                {{-- <th>Updated At</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($historyprices as $hp)
-                                            <tr>
-                                                {{-- <td>{{ $hp->part_id }}</td> --}}
-                                                <td>Rp.{{ $hp->price }}</td>  
-                                                <td>{{ $hp->created_at->format('j F, Y') }}</td>  
-                                                {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
+                                            <thead>
+                                                <tr>
+                                                    {{-- <th>Part_id</th> --}}
+                                                    <th>Price</th>
+                                                    <th>Created At</th>
+                                                    {{-- <th>Updated At</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($historyprices as $hp)
+                                                <tr>
+                                                    {{-- <td>{{ $hp->part_id }}</td> --}}
+                                                    <td>Rp.{{ $hp->price }}</td>  
+                                                    <td>{{ $hp->created_at->format('j F, Y') }}</td>  
+                                                    {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
                                         </table>
-                                        {{-- {{ $historyprices->links() }} --}}
+                                        <div class="float-end me-3">
+                                            {{ $historyprices->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -320,18 +327,18 @@
                                 {{ csrf_field() }}
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                      <label for="lastName" class="form-label">Part ID</label>
-                                      <input type="number" class="form-control" name="part_id">
-                                      <div class="invalid-feedback">
-                                        Valid part id is required.
-                                      </div>
+                                      {{-- <label for="partId" class="form-label">Part ID</label> --}}
+                                      <input type="hidden" class="form-control" name="part_id" value="{{ $part_id }}">
+                                      {{-- @error('part_id')
+                                      <div class="text-warning">{{ $message }}</div>
+                                      @enderror --}}
                                     </div>
                                     <div class="mb-3">
-                                      <label for="address" class="form-label">Price</label>
-                                      <input type="number" class="form-control" name="price" placeholder="">
-                                      <div class="invalid-feedback">
-                                        Valid price is required
-                                      </div>
+                                      <label for="price" class="form-label">Price</label>
+                                      <input type="number" class="form-control" name="price" required >
+                                      @error('price')
+                                      <div class="text-warning">{{ $message }}</div>
+                                      @enderror
                                     </div>                                                    
                                 </div>
                                 <div class="modal-footer">

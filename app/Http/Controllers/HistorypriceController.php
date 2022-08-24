@@ -14,16 +14,28 @@ class HistoryPriceController extends Controller
         $this->historypriceService = $historypriceService;
     }
     
-    public function index()
+    public function index($id)
     {
-        // return ResponseJSON($this->hpService->handleIndex(), 200);
-        $history_price = $this->historypriceService->handleIndex();
-
-        return ResponseJSON($history_price, 200);
+        $history_prices = $this->historypriceService->handleAllHistoryPrice();
+        return view('part.detail', [
+            'historyprices' => $history_prices,
+            'part_id' => $id
+        ]);
     }
 
     public function store(Request $request)
     {
-        return $this->historypriceService->handleStore($request);
+        $this->historypriceService->handleStoreHistoryPrice($request);
+        return redirect('/detail/part')->with('success', 'Save data price!');
+    }
+
+    public function getAllHistoryPrice()
+    {
+        return ResponseJSON($this->historypriceService->handleAllHistoryPrice(), 200);
+    }
+
+    public function postStoreHistoryPrice(Request $request)
+    {
+        return ResponseJSON($this->historypriceService->handleStoreHistoryPrice($request), 200);
     }
 }

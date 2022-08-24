@@ -30,7 +30,8 @@ Route::get('/part', function () {
 //     return view('part.detail');
 // })->middleware(["auth:sanctum", 'ability:check-status']);
 // Route::get('/detail/part', [App\Http\Controllers\HistorypriceController::class, 'index']);
-Route::resource('/detail/part', HistoryPriceController::class);
+Route::resource('/detail/part/{id}', HistoryPriceController::class);
+
 
 
 Auth::routes();
