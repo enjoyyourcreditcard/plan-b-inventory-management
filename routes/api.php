@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HistoryPriceController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,7 +27,9 @@ Route::get('/tes123', function () {
     return ResponseJSON(auth("sanctum")->user(),401);
 })->middleware(["auth:sanctum",'abilities:check-status']);
 
-Route::prefix('detail')->group(function () {
-    Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
-    Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
-});
+
+// Route::prefix('detail')->group(function () {
+//     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
+//     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+// });
+

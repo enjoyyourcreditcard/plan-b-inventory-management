@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AttachmentService;
 use App\Services\HistoryPriceService;
 use Illuminate\Http\Request;
 
 class PartController extends Controller
 {
 
-    public function __construct(HistoryPriceService $historypriceService)
+    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService)
     {
         $this->historypriceService = $historypriceService;
+        $this->attachmentService = $attachmentService;
     }
 
 
@@ -57,8 +59,11 @@ class PartController extends Controller
     public function show($id)
     {
         $history_prices = $this->historypriceService->handleAllHistoryPrice();
+        $attachment = $this->attachmentService->handleAllAttachment();
+        // dd($attachment);
         return view('part.detail', [
             'historyprices' => $history_prices,
+            'attachment' => $attachment,
             'part_id' => $id
         ]);
     }

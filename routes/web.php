@@ -29,13 +29,10 @@ Route::get('/', function () {
 
 // Route::group(['prefix' => 'part', 'middleware' => 'auth:sanctum'], function () {
 Route::resource('part', PartController::class);
-Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
 
-// Route::resource('/part', HistoryPriceController::class);
-
-
-
-// Route::resource('/part', PartController::class, ['names' => 'users']);
+// Route::group(['prefix' => 'part'], function () {
+    Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
+    Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment');
 // });
 
 

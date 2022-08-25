@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="{{asset("/demo/part_images/1551mini-photo.thumbnail.jpg")}}"
+                            <img src="{{asset(" /demo/part_images/1551mini-photo.thumbnail.jpg")}}"
                                 class="rounded mx-auto d-block border" height="235px" alt="...">
                         </div>
                         <div class="col-md-6">
@@ -232,8 +232,8 @@
                             &nbsp;Attachments</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a href="#tabs-hp" class="nav-link" data-bs-toggle="tab" aria-selected="false"
-                            role="tab" tabindex="-1">
+                        <a href="#tabs-hp" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab"
+                            tabindex="-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -250,7 +250,10 @@
                         <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
                             {{-- <div>
                                 <a href="#" class="btn btn-primary w-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
+                                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
                                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -262,20 +265,56 @@
 
                         </div>
                         <div class="tab-pane" id="tabs-profile-12" role="tabpanel">
-                            <!-- <div id="part_category"></div> -->
-                            {{-- <div id="parts"></div> --}}
-
-
-
                         </div>
                         <div class="tab-pane" id="tabs-attachments" role="tabpanel">
-                            {{-- <div id="parts"></div> --}}
+                         
+                            <div class="col-12">
+                                <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#modal-add-attachment">
+                                    New Attachment
+                                </a>
+                              
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <table class="table card-table table-vcenter text-nowrap datatable"
+                                            border="0.5">
+                                            <thead>
+                                                <tr>
+                                                    <th>file</th>
+                                                    <th>Comment</th>
 
-                            <!-- <div id="part_category"></div> -->
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    @foreach($attachment as $item)
+                                                    {{-- <td>{{$loop->iteration}}</td> --}}
+                                                    <td><a href="{{asset ('file/'.$item->file)}}"
+                                                            target="blank">{{$item->file}}</a></td>
+                                                    {{-- <td class="text-end">
+                                                        <a href="/destroy/{{$item->id}}"
+                                                            style="background: transparent; border: none;"><img
+                                                                src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/16/undefined/external-bin-mother-earth-day-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png" /></a>
+                                                    </td> --}}
+                                                    <td>{{$item->comment}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                            @endforeach
+                                        </table>
+                                        <div class="float-end me-3">
+                                            {{-- {{ $attachment->links() }} --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="tab-pane" id="tabs-hp" role="tabpanel">
                             <div class="col-12">
-                                <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-team">
+                                <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#modal-add-price">
                                     New Price
                                 </a>
                                 @if (session()->has('success'))
@@ -297,10 +336,8 @@
                                             <tbody>
                                                 @foreach ($historyprices as $hp)
                                                 <tr>
-                                                    {{-- <td>{{ $hp->part_id }}</td> --}}
-                                                    <td>Rp.{{ $hp->price }}</td>  
-                                                    <td>{{ $hp->created_at->format('j F, Y') }}</td>  
-                                                    {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
+                                                    <td>Rp.{{ $hp->price }}</td>
+                                                    <td>{{ $hp->created_at->format('j F, Y') }}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -315,7 +352,7 @@
                     </div>
                 </div>
 
-                <div class="modal modal-blur fade" id="modal-team" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal modal-blur fade" id="modal-add-price" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -326,14 +363,14 @@
                             <form action="{{ route("post.store.historyprice")}}" method="post">
                                 {{ csrf_field() }}
                                 <div class="modal-body">
-                                      <input type="hidden" class="form-control" name="part_id" value="{{ $part_id }}">
+                                    <input type="hidden" class="form-control" name="part_id" value="{{ $part_id }}">
                                     <div class="mb-3">
-                                      <label for="price" class="form-label">Price</label>
-                                      <input type="number" class="form-control" name="price" required >
-                                      @error('price')
-                                      <div class="text-warning">{{ $message }}</div>
-                                      @enderror
-                                    </div>                                                    
+                                        <label for="price" class="form-label">Price</label>
+                                        <input type="number" class="form-control" name="price" required>
+                                        @error('price')
+                                        <div class="text-warning">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -344,10 +381,52 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+
+<div class="modal modal-blur fade" id="modal-add-attachment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Attachment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{route("post.store.attachment")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="part_id" class="form-control" value="{{$part_id}}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Add File</label>
+                        <input type="file" name="file" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Commentar</label>
+                        <textarea class="form-control" name="comment"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </a>
+                    <button class="btn btn-primary ms-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Save
+                    </button>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 @endsection
-

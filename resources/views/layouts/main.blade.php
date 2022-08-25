@@ -21,7 +21,7 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
-</head>
+{{-- </head> --}}
 
 <body>
     <div class="page">
@@ -365,7 +365,6 @@
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script src="{{ asset('js/app.js') }}"></script>
-
     <script src="{{asset('assets/js/tabler.min.js')}}" defer></script>
     <script src="{{asset('assets/js/demo.min.js')}}" defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

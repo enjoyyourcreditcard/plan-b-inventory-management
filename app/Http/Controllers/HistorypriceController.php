@@ -13,7 +13,6 @@ class HistoryPriceController extends Controller
     {
         $this->historypriceService = $historypriceService;
     }
-    
   
 
     public function store(Request $request)
