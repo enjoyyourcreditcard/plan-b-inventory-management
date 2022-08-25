@@ -15,8 +15,14 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body " style="height: 232px">
-                                    <div class="card-title">
+                                    <div class="card-title d-flex justify-content-between">
                                         <h3>PART INFO</h3>
+                                        <button class="btn px-2" data-bs-toggle="modal" data-bs-target="#editPartModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                          </svg>
+                                        </button>
                                     </div>
                                     <div class="mb-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box"
@@ -264,6 +270,49 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+{{-- Edit Part Modal --}}
+<div class="modal fade" id="editPartModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Part</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/part/{{ $part->id }}" method="POST" enctype="multipart/form-data">
+                    @method('put')
+                    @csrf
+                    <div class="mb-3">
+                        <label for="partName" class="form-label">Part Name</label>
+                        <input type="text" class="form-control" id="partName" name="name" value="{{ $part->name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="partCategory" class="form-label">Category</label>
+                        <select class="form-select" id="partCategory" name="category_id">
+                            <option value="1" selected>Mechanical/Enclosures</option>
+                            <option value="2">Electronics/Connectors/Pin Headers</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="partDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="partDescription" rows="3" name="description">{{ $part->description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="partNote" class="form-label">Note</label>
+                        <textarea class="form-control" id="partNote" rows="2" name="note">{{ $part->note }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="partImage" class="form-label">Part Image</label>
+                        <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
+                        <input type="hidden" name="oldImg" value="{{ $part->img }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end mt-5">Update</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

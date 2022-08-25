@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +26,13 @@ Route::get('/part', function () {
 })->middleware(["auth:sanctum", 'ability:check-status']);
 
 
-Route::get('/detail/part', function () {
-    return view('part.detail');
-})->middleware(["auth:sanctum", 'ability:check-status']);
+// Route::get('/detail/part', function () {
+//     return view('part.detail');
+// })->middleware(["auth:sanctum", 'ability:check-status']);
 
+Route::get('/detail/part/{id}', [PartController::class, 'show'])->middleware(["auth:sanctum", 'ability:check-status']);
+Route::put('/part/{id}', [PartController::class, 'update']);
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/part', [PartController::class, 'store']);

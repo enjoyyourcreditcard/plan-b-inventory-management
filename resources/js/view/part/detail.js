@@ -195,7 +195,7 @@ function DetailPart() {
 
     const [noStock, setNoStock] = useState(false);
     const [data, setData] = useState(rawData);
-    const [modalAddStock, setModalAddStock] = useState(true);
+    const [modalAddStock, setModalAddStock] = useState(false);
 
 
 
