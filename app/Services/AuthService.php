@@ -8,9 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-// use App\Models\Article;
-// use App\Models\Tag;
-
 class AuthService
 {
 

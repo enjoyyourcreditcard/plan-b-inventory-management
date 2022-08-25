@@ -2,10 +2,11 @@
 
 // use App\Http\Controllers\AuthController;
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoryPriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,12 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('logoutall', [AuthController::class, 'logoutall']);
 });
+
 Route::get('/tes123', function () {
     return ResponseJSON(auth("sanctum")->user(),401);
 })->middleware(["auth:sanctum",'abilities:check-status']);
+
+Route::prefix('detail')->group(function () {
+    Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
+    Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+});

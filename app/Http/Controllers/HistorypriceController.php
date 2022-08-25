@@ -3,25 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Historyprice;
-use App\Services\HistorypriceService;
+use App\Models\HistoryPrice;
+use App\Services\HistoryPriceService;
 use Illuminate\Support\Facades\Validator;
 
-class HistorypriceController extends Controller
-{
-    public function __construct(HistorypriceService $hpService)
+class HistoryPriceController extends Controller
+{ 
+    public function __construct(HistoryPriceService $historypriceService)
     {
-        $this->hpService = $hpService;
+        $this->historypriceService = $historypriceService;
     }
     
-    public function index()
-    {
-        // return ResponseJSON($this->hpService->handleIndex(), 200);
-        return $this->hpService->handleIndex();
-    }
+  
 
     public function store(Request $request)
     {
-        return $this->hpService->handleStore($request);
+        $this->historypriceService->handleStoreHistoryPrice($request);
+        return redirect()->back()->with('success', 'Save data price!');
+    }
+
+    
+    public function getAllHistoryPrice()
+    {
+        return ResponseJSON($this->historypriceService->handleAllHistoryPrice(), 200);
+    }
+
+    public function postStoreHistoryPrice(Request $request)
+    {
+        return ResponseJSON($this->historypriceService->handleStoreHistoryPrice($request), 200);
     }
 }

@@ -3,7 +3,8 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HistorypriceController;
+use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\PartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,18 +22,25 @@ Route::get('/', function () {
 });
 
 
-Route::get('/part', function () {
-    return view('part.part');
-})->middleware(["auth:sanctum", 'ability:check-status']);
-
-
-// Route::get('/detail/part', function () {
-//     return view('part.detail');
+// Route::get('/part', function () {
+//     return view('part.part');
 // })->middleware(["auth:sanctum", 'ability:check-status']);
-// Route::get('/detail/part', [App\Http\Controllers\HistorypriceController::class, 'index']);
-Route::resource('/detail/part', HistorypriceController::class);
 
+
+// Route::group(['prefix' => 'part', 'middleware' => 'auth:sanctum'], function () {
+Route::resource('part', PartController::class);
+Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
+
+// Route::resource('/part', HistoryPriceController::class);
+
+
+
+// Route::resource('/part', PartController::class, ['names' => 'users']);
+// });
+
+
+
+// Route::resource('/detail/part/{id}', HistoryPriceController::class);
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-

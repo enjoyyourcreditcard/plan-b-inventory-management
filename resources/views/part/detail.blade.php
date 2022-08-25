@@ -275,74 +275,40 @@
                         </div>
                         <div class="tab-pane" id="tabs-hp" role="tabpanel">
                             <div class="col-12">
+                                <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-team">
+                                    New Price
+                                </a>
+                                @if (session()->has('success'))
+                                <div class="alert alert-success position-absolute" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
                                 <div class="card">
-                                <div class="card-header">
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-team">
-                                        New Price
-                                    </a>
-                                </div>
-                                <div class="card-body border-bottom py-3">
-                                    <div class="d-flex">
-                                    <div class="text-muted">
-                                        Show
-                                        <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+                                    <div class="table-responsive">
+                                        <table class="table card-table table-vcenter text-nowrap datatable">
+                                            <thead>
+                                                <tr>
+                                                    {{-- <th>Part_id</th> --}}
+                                                    <th>Price</th>
+                                                    <th>Created At</th>
+                                                    {{-- <th>Updated At</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($historyprices as $hp)
+                                                <tr>
+                                                    {{-- <td>{{ $hp->part_id }}</td> --}}
+                                                    <td>Rp.{{ $hp->price }}</td>  
+                                                    <td>{{ $hp->created_at->format('j F, Y') }}</td>  
+                                                    {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div class="float-end me-3">
+                                            {{ $historyprices->links() }}
                                         </div>
-                                        entries
                                     </div>
-                                    <div class="ms-auto text-muted">
-                                        Search:
-                                        <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap datatable">
-                                    <thead>
-                                        <tr>
-                                            {{-- <th>Part_id</th> --}}
-                                            <th>Price</th>
-                                            <th>Created At</th>
-                                            {{-- <th>Updated At</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($hps as $hp)
-                                        <tr>
-                                            {{-- <td>{{ $hp->part_id }}</td> --}}
-                                            <td>Rp.{{ $hp->price }}</td>  
-                                            <td>{{ $hp->created_at->format('j F, Y') }}</td>  
-                                            {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-footer d-flex align-items-center">
-                                    <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
-                                    <ul class="pagination m-0 ms-auto">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
-                                        prev
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                        next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
-                                        </a>
-                                    </li>
-                                    </ul>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -357,22 +323,16 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{ url('/detail/part') }}" method="post">
+                            <form action="{{ route("post.store.historyprice")}}" method="post">
                                 {{ csrf_field() }}
                                 <div class="modal-body">
+                                      <input type="hidden" class="form-control" name="part_id" value="{{ $part_id }}">
                                     <div class="mb-3">
-                                      <label for="lastName" class="form-label">Part ID</label>
-                                      <input type="number" class="form-control" name="part_id">
-                                      <div class="invalid-feedback">
-                                        Valid part id is required.
-                                      </div>
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="address" class="form-label">Price</label>
-                                      <input type="text" class="form-control" name="price" placeholder="">
-                                      <div class="invalid-feedback">
-                                        Valid price is required
-                                      </div>
+                                      <label for="price" class="form-label">Price</label>
+                                      <input type="number" class="form-control" name="price" required >
+                                      @error('price')
+                                      <div class="text-warning">{{ $message }}</div>
+                                      @enderror
                                     </div>                                                    
                                 </div>
                                 <div class="modal-footer">
