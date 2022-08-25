@@ -15,8 +15,9 @@ class Attachment extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('comment');
+            $table->integer('part_id');
             $table->string('file');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

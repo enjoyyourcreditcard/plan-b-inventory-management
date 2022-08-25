@@ -30,7 +30,7 @@ Route::get('/part', function () {
 //     return view('part.detail');
 // })->middleware(["auth:sanctum", 'ability:check-status']);
 
-Route::get('/detail/part', [App\Http\Controllers\AttachmentController::class, 'index'])->name('index');
+Route::get('/detail/part/{id}', [App\Http\Controllers\AttachmentController::class, 'index'])->name('index');
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

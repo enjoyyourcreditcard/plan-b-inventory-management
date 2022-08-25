@@ -13,59 +13,43 @@ use Illuminate\Support\Facades\Validator;
 class AttachmentService
 {
 
-    public function __construct(Attachment $attachments)
+    public function __construct(Attachment $attachment)
     {
-        $this->attachment = $attachments;
+        $this->attachment = $attachment;
     }
 
-    public function indexData()
+    public function handleAllAttachment()
     {
-        $data = $this->attachment->all();
+        $data = $this->attachment->paginate(10);
 
-        return view('part.detail', [
-                'data' => $data
-            ]);
+        return($data);
 
-        // return new AttachmentResource(true, 'List Attachment Posts', $data);
-
-        // return view('part.detail', [
-        //     'data' => $data
-        // ]);
     }
-
-    // public function createData()
-    // {
+    
+    
+    public function handleStoreAttachment(Request $request)
+    {
         
-    //     return view('addattachment', [
-    //         "title" => "Add Data Attachment",
-    //         'dataattachment' => $dataattachment
-            
-    //     ]);
-    // }
-
-    public function storeData(Request $request)
-    {
-
         $data = $this->attachment::create($request->all());
+        // add file
         if ($request->hasFile('file')) {
             $request->file('file')->move('file', $request->file('file')->getClientOriginalName());
             $data->file = $request->file('file')->getClientOriginalName();
             $data->save();
         }
-    
-        return redirect()->route('index');
+        
+        return($data);
         
     }
-
-    public function destroyData($id)
+    
+    public function handleDeleteAttachment($id)
     {
-        $datas = $this->attachment::find($id);
-        $datas->delete();
+        $data = $this->attachment::find($id);
+        $data->delete();
 
-        return redirect('/detail/part');
+
+        return($data);
+
     }
-
-
-
     
 }

@@ -2,10 +2,11 @@
 
 // use App\Http\Controllers\AuthController;
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AttachmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,9 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
 Route::get('/tes123', function () {
     return ResponseJSON(auth("sanctum")->user(),401);
 })->middleware(["auth:sanctum",'abilities:check-status']);
+
+Route::group(['prefix' => 'detail'], function () {
+    Route::get('/part', [AttachmentController::class, 'getAllAttachment']);
+    Route::post('/part', [AttachmentController::class, 'postStoreAttachment']);
+    Route::post('/part/{id}', [AttachmentController::class, 'getDeleteAttachment']);
+});

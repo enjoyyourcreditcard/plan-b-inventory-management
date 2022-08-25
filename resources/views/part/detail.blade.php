@@ -258,68 +258,61 @@
                         <div class="tab-pane" id="tabs-attachments" role="tabpanel">
                             <div class="col-12">
                                 <div class="card">
-                                  <div class="card-header">
-                                    <a href="#modal-report" class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">+ New Attachment</a>
-                                  </div>
-                                  <div class="card-body border-bottom py-3">
-                                    <div class="d-flex">
-                                      {{-- <div class="text-muted">
-                                        Show
-                                        <div class="mx-2 d-inline-block">
-                                          <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
-                                        </div>
-                                        entries
-                                      </div>
-                                      <div class="ms-auto text-muted">
-                                        Search:
-                                        <div class="ms-2 d-inline-block">
-                                          <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                                        </div>
-                                      </div> --}}
+                                    <div class="card-header">
+                                        <a href="#modal-report" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#modal-report">+ New Attachment</a>
                                     </div>
-                                  </div>
-                                  <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap datatable" border="0.5">
-                                      <thead>
-                                        <tr>
-                            
-                                          <th class="w-1">No. 
-                                            
-                                          </th>
-                                          <th>Comment</th>
-                                          <th>file</th>
-                                          <th>action</th>
-                                          
-                                        </tr>
-                                      </thead>
-                                      
-                                      <tbody>
-                                        <tr>
-                                        @php
-                                        $no = 1;
-                                        @endphp
-                                        @foreach($data as $index => $row)
-                                          
-                                          <td>{{$no++}}</td>
-                                          <td>{{$row->comment}}</td>
-                                          <td><a href="{{asset ('file/'.$row->file)}}" target="blank" rel=" noopener noreferer" type="button" class="btn btn-outline-secondary">show</a></td>
-                                          <td class="text-end">
-                                            
-                                                <a href="/destroy/{{$row->id}}" style="background: transparent; border: none;"><img src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/16/undefined/external-bin-mother-earth-day-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"/></a>
-                                            
-                                          </td>
-                                          
-                                        </tr>
-                                        
-                                      </tbody>
-                                    @endforeach
-                                    </table>
-                                    {{-- {{ $data->links() }} --}}
-                                  </div>
+                                    <div class="card-body border-bottom py-3">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table card-table table-vcenter text-nowrap datatable"
+                                            border="0.5">
+                                            <thead>
+                                                <tr>
 
-                                  
+                                                    <th class="w-1">No.
+
+                                                    </th>
+                                                    <th>Comment</th>
+                                                    <th>file</th>
+                                                    <th>action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    @php
+                                                    $no = 1;
+                                                    @endphp
+                                                    @foreach($data as $index => $row)
+
+                                                    <td>{{$no++}}</td>
+                                                    <td>{{$row->comment}}</td>
+                                                    <td><a href="{{asset ('file/'.$row->file)}}" target="blank"
+                                                            rel=" noopener noreferer" type="button"
+                                                            class="btn btn-outline-secondary">show</a></td>
+                                                    <td class="text-end">
+                                                        <a href="/destroy/{{$row->id}}"
+                                                            style="background: transparent; border: none;"><img
+                                                                src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/16/undefined/external-bin-mother-earth-day-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png" /></a>
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                            @endforeach
+                                        </table>
+
+                                        <div class="d-flex justify-content-end">
+                                            {{ $data->links() }}
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
-                              </div>
+                            </div>
                             {{-- <div id="parts"></div> --}}
                             {{-- <div id="part_category"></div> --}}
                         </div>
@@ -331,26 +324,32 @@
 </div>
 
 
+
+
 <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
+        <div class="modal-content">
 
-        <form method="POST" action="/store" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title">Add Data</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Commentar</label>
-                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3" placeholder="Add Commentar"></textarea>
+            <form method="POST" action="/store" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Commentar</label>
+                        <textarea class="form-control" name="comment">
             </div>
 
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Add File</label>
-                <input type="file" name="file" class="form-control" id="exampleInputEmail1" 
-                    aria-describedby="emailHelp">
+                {{-- <label class="form-label">Part Id</label> --}}
+                <input type="hidden" name="part_id" class="form-control" value="{{$part_id}}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Add File</label>
+                <input type="file" name="file" class="form-control">
             </div>
             
         <div class="modal-footer">
