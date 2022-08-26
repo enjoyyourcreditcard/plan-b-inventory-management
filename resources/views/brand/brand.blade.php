@@ -60,8 +60,8 @@
                                                 @foreach ($brands as $item)
                                                     <tr>
                                                         <th>{{ $loop->iteration }}</th>
-                                                        <td class="name">{{ $item->name }}</td>
-                                                        <td style="text-transform: capitalize;">{{ $item->status }}</td>
+                                                        <td class="name text-capitalize">{{ $item->name }}</td>
+                                                        <td class="text-capitalize">{{ $item->status }}</td>
                                                         <td>
                                                             <a href="{{ url('/delete/'.$item->id) }}">Delete</a>
                                                             |
