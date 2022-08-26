@@ -3,8 +3,9 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HistoryPriceController;
+// use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,17 @@ Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route WareHouse
+// Route::get('/warehouse', function(){
+//     return view('warehouse.warehouse');
+// });
+
+Route::get('/warehouseDetail', function(){
+    return view('warehouse.detail');
+});
+
+Route::get('/warehouse', [WarehouseController::class, 'index']);
+Route::post('/warehouse', [WarehouseController::class, 'store']);
+Route::get('/inActive/{id}', [WarehouseController::class, 'inActive']);
+Route::put('/warehouse/{id}', [WarehouseController::class, 'update']);

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,5 @@ Route::prefix('detail')->group(function () {
     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
 });
+
+// Route::get('/warehouse', [WarehouseController::class, 'getAllWarehouse']);
