@@ -365,6 +365,7 @@
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('additionalJs')
 
     <script src="{{asset('assets/js/tabler.min.js')}}" defer></script>
     <script src="{{asset('assets/js/demo.min.js')}}" defer></script>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\HistoryPriceController;
 
 /*
@@ -31,4 +32,11 @@ Route::get('/tes123', function () {
 Route::prefix('detail')->group(function () {
     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+});
+
+Route::prefix('brand')->group(function () {
+    Route::get('/', [BrandController::class, 'getAllBrand']);
+    Route::post('/', [BrandController::class, 'postStoreBrand']);
+    Route::put('/{id}', [BrandController::class, 'putUpdateBrand']);
+    Route::get('/delete/{id}', [BrandController::class, 'getDeactiveBrand']);
 });
