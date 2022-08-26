@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Part;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -10,24 +11,38 @@ use Illuminate\Support\Facades\Storage;
 class PartService
 {
 
-    public function __construct(Part $part)
+    public function __construct(Part $part, Category $category)
     {
         $this->part = $part;
+        $this->category = $category;
     }
 
     // API Part GET
-    public function handleAllPart()
+    public function handleAllPartApi()
     {
-        $parts = $this->part->paginate(10);
+        $parts = $this->part->with('category')->paginate(10);
 
         return($parts);
+    }
+
+    // Part GET
+    public function handleAllPart()
+    {
+        $parts = $this->part->all();
+        $categories = $this->category->with('parts')->get();
+
+        return view('part.part', [
+            'parts' => $parts,
+            'categories' => $categories
+        ]);
     }
 
     // Part SHOW
     public function handleShowPart($id)
     {
         return view('part.detail', [
-            'part' => $this->part->find($id)
+            'part' => $this->part->find($id),
+            'categories' => $this->category->all()
         ]);
     }
 
@@ -37,6 +52,11 @@ class PartService
         $validatedData = $request->validate([
             'name' => 'required|unique:parts',
             'category_id' => 'required',
+            'brand' => 'required',
+            'uom' => 'required',
+            'sn_status' => 'required',
+            'color' => 'required',
+            'size' => 'required',
             'description' => 'required|max:255',
             'note' => 'max:255',
             'img' => 'image|file|max:5120'
@@ -49,7 +69,6 @@ class PartService
             $validatedData['img'] = 'images/part/default.jpg';
         }
 
-        $validatedData['started'] = now();
         $validatedData['status'] = 'active';
 
         Part::create($validatedData);
@@ -73,16 +92,20 @@ class PartService
         $this->part->find($id)->update([
             'name' => $request->name,
             'category_id' => $request->category_id,
+            'brand' => $request->brand,
+            'uom' => $request->uom,
+            'sn_status' => $request->sn_status,
+            'color' => $request->color,
+            'size' => $request->size,
             'description' => $request->description,
             'note' => $request->note,
-            'updated' => now(),
         ]);
         
         return('Data has been updated');
     }
 
     // Part DELETE
-    public function handleDeletePart($id)
+    public function handleDeactivePart($id)
     {
         $part = $this->part->find($id);
         $data = [];

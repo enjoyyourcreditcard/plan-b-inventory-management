@@ -237,6 +237,19 @@
                             </svg>
                             &nbsp;Attachments</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#tabs-hp" class="nav-link" data-bs-toggle="tab" aria-selected="false"
+                            role="tab" tabindex="-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5">
+                                </path>
+                            </svg>
+                            &nbsp;History Price</a>
+                    </li>
                 </ul>
                 <div class="card-body">
                     <div class="tab-content">
@@ -266,6 +279,80 @@
 
                             <!-- <div id="part_category"></div> -->
                         </div>
+                        <div class="tab-pane" id="tabs-hp" role="tabpanel">
+                            <div class="col-12">
+                                <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-team">
+                                    New Price
+                                </a>
+                                @if (session()->has('success'))
+                                <div class="alert alert-success position-absolute" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <table class="table card-table table-vcenter text-nowrap datatable">
+                                            <thead>
+                                                <tr>
+                                                    {{-- <th>Part_id</th> --}}
+                                                    <th>Price</th>
+                                                    <th>Created At</th>
+                                                    {{-- <th>Updated At</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{-- @foreach ($historyprices as $hp) --}}
+                                                {{-- <tr> --}}
+                                                    {{-- <td>{{ $hp->part_id }}</td> --}}
+                                                    {{-- <td>Rp.{{ $hp->price }}</td>   --}}
+                                                    {{-- <td>{{ $hp->created_at->format('j F, Y') }}</td>   --}}
+                                                    {{-- <td>{{ $hp->updated_at->format('j F, Y') }}</td> --}}
+                                                {{-- </tr> --}}
+                                                {{-- @endforeach --}}
+                                            </tbody>
+                                        </table>
+                                        <div class="float-end me-3">
+                                            {{-- {{ $historyprices->links() }} --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal modal-blur fade" id="modal-team" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add a new price</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            {{-- <form action="{{ url('/detail/part') }}" method="post"> --}}
+                                {{-- {{ csrf_field() }} --}}
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                      {{-- <label for="partId" class="form-label">Part ID</label> --}}
+                                      {{-- <input type="hidden" class="form-control" name="part_id" value="{{ $part_id }}"> --}}
+                                      {{-- @error('part_id')
+                                      <div class="text-warning">{{ $message }}</div>
+                                      @enderror --}}
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="price" class="form-label">Price</label>
+                                      <input type="number" class="form-control" name="price" required >
+                                      {{-- @error('price') --}}
+                                      {{-- <div class="text-warning">{{ $message }}</div> --}}
+                                      {{-- @enderror --}}
+                                    </div>                                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add Price</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,8 +362,8 @@
 </div>
 
 {{-- Edit Part Modal --}}
-<div class="modal fade" id="editPartModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal modal-blur fade" id="editPartModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Part</h5>
@@ -286,29 +373,92 @@
                 <form action="/part/{{ $part->id }}" method="POST" enctype="multipart/form-data">
                     @method('put')
                     @csrf
-                    <div class="mb-3">
-                        <label for="partName" class="form-label">Part Name</label>
-                        <input type="text" class="form-control" id="partName" name="name" value="{{ $part->name }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="partCategory" class="form-label">Category</label>
-                        <select class="form-select" id="partCategory" name="category_id">
-                            <option value="1" selected>Mechanical/Enclosures</option>
-                            <option value="2">Electronics/Connectors/Pin Headers</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="partDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="partDescription" rows="3" name="description">{{ $part->description }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="partNote" class="form-label">Note</label>
-                        <textarea class="form-control" id="partNote" rows="2" name="note">{{ $part->note }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="partImage" class="form-label">Part Image</label>
-                        <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
-                        <input type="hidden" name="oldImg" value="{{ $part->img }}">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="partName" class="form-label">Part Name</label>
+                            <input type="text" class="form-control" id="partName" name="name" value="{{ $part->name }}">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partCategory" class="form-label">Category</label>
+                            <select class="form-select" id="partCategory" name="category_id">
+
+                                @foreach ($categories as $category)
+                                    @if ($part->category_id == $category->id)
+                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                    @else
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endif
+                                @endforeach
+
+                                {{-- <option value="{{ $part->category->id }}" selected>{{ $part->category->name }}</option>
+                                <option value="1" selected>Mechanical/Enclosures</option>
+                                <option value="2">Electronics/Connectors/Pin Headers</option> --}}
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partBrand" class="form-label">Brand</label>
+                            <select class="form-select" id="partBrand" name="brand" required>
+                                <option value="3M" {{ $part->brand == 'M3' ? 'selected' : '' }}>3M</option>
+                                <option value="ZTE" {{ $part->brand == 'ZTE' ? 'selected' : '' }}>ZTE</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partUom" class="form-label">Uom</label>
+                            <select class="form-select" id="partUom" name="uom" required>
+                                <option value="meter" {{ $part->uom == 'meter' ? 'selected' : '' }}>Meter</option>
+                                <option value="set" {{ $part->uom == 'set' ? 'selected' : '' }}>Set</option>
+                                <option value="each" {{ $part->uom == 'each' ? 'selected' : '' }}>Each</option>
+                                <option value="roll" {{ $part->uom == 'roll' ? 'selected' : '' }}>Roll</option>
+                                <option value="unit" {{ $part->uom == 'unit' ? 'selected' : '' }}>Unit</option>
+                                <option value="batang" {{ $part->uom == 'batang' ? 'selected' : '' }}>Batang</option>
+                                <option value="liter" {{ $part->uom == 'liter' ? 'selected' : '' }}>Liter</option>
+                                <option value="kaleng" {{ $part->uom == 'kaleng' ? 'selected' : '' }}>Kaleng</option>
+                                <option value="kg" {{ $part->uom == 'kg' ? 'selected' : '' }}>Kg</option>
+                                <option value="kubic" {{ $part->uom == 'kubic' ? 'selected' : '' }}>Kubic</option>
+                                <option value="pack" {{ $part->uom == 'pack' ? 'selected' : '' }}>Pack</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partSnStatus" class="form-label">SN Status</label>
+                            <select class="form-select" id="partSnStatus" name="sn_status" required>
+                                <option value="non sn" {{ $part->sn_status == 'non sn' ? 'selected' : '' }}>NON SN</option>
+                                <option value="sn" {{ $part->sn_status == 'sn' ? 'selected' : '' }}>SN</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partColor" class="form-label">Color</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" name="color" value="{{ $part->color }}">
+                            <datalist id="datalistOptions">
+                                <option value="Black">
+                                <option value="White">
+                                <option value="Grey">
+                                <option value="Green">
+                                <option value="Yellow">
+                                <option value="NN">
+                                <option value="Blue">
+                                <option value="Silver">
+                                <option value="Multi Color">
+                                <option value="Red">
+                                <option value="Orange">
+                            </datalist>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partSize" class="form-label">Size</label>
+                            <input type="number" class="form-control" id="partSize" name="size" required value="{{ $part->size }}">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="partDescription" rows="3" name="description">{{ $part->description }}</textarea>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partNote" class="form-label">Note</label>
+                            <textarea class="form-control" id="partNote" rows="2" name="note">{{ $part->note }}</textarea>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="partImage" class="form-label">Part Image</label>
+                            <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
+                            <input type="hidden" name="oldImg" value="{{ $part->img }}">
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary float-end mt-5">Update</button>
                 </form>
@@ -318,3 +468,4 @@
 </div>
 
 @endsection
+

@@ -17,9 +17,14 @@ class PartController extends Controller
 
     public function getAllPart()
     {
-        return ResponseJSON($this->partService->handleAllPart(), 200);
+        return ResponseJSON($this->partService->handleAllPartApi(), 200);
     }
     
+    public function index()
+    {
+        return $this->partService->handleAllPart();
+    }
+
     public function show($id)
     {
         return $this->partService->handleShowPart($id);
@@ -39,8 +44,8 @@ class PartController extends Controller
         return redirect('/detail/part/'.$id);
     }
 
-    public function getDeletePart($id)
+    public function getDeactivePart($id)
     {
-        return ResponseJSON($this->partService->handleDeletePart($id), 200);
+        return ResponseJSON($this->partService->handleDeactivePart($id), 200);
     }
 }

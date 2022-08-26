@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
 
 /*
@@ -29,5 +30,9 @@ Route::get('/tes123', function () {
 })->middleware(["auth:sanctum",'abilities:check-status']);
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
-    Route::get('/delete/{id}', [PartController::class, 'getDeletePart']);
+    Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
+Route::prefix('detail')->group(function () {
+    Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
+    Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
 });

@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Part extends Model
+class HistoryPrice extends Model
 {
     use HasFactory;
-
-    protected $guarded = [
-        'id'
+    protected $fillable = [
+        'part_id',
+        'price'
     ];
-
-    public function category() {
-        return $this->belongsTo(Category::class);
-    }
 }

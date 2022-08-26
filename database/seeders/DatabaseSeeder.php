@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PartSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\HistoryPriceSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(UserPermissionSeeder::class);
+        $this->call(HistoryPriceSeeder::class);
+        $this->call(CategorySeeder::class);
         $this->call(PartSeeder::class);
     }
 }
