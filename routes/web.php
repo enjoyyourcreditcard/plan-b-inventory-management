@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
 
@@ -24,17 +25,17 @@ Route::get('/', function () {
 
 // Route::get('/part', function () {
 //     return view('part.part');
-// })->middleware(["auth:sanctum", 'ability:check-status']);
+// })->middleware(["auth:sanctum", 'ability:check-status']);   
 
 
-// Route::group(['prefix' => 'part', 'middleware' => 'auth:sanctum'], function () {
 Route::resource('part', PartController::class);
+Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
+Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment');
 
-// Route::group(['prefix' => 'part'], function () {
-    Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
-    Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment');
-// });
 
+
+Route::resource('/brand', BrandController::class);
+Route::get('/delete/{id}', [BrandController::class, 'deactive']);
 
 
 // Route::resource('/detail/part/{id}', HistoryPriceController::class);

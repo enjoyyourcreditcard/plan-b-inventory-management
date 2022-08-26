@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\HistoryPrice;
 use App\Services\HistoryPriceService;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class HistoryPriceController extends Controller
@@ -18,7 +19,8 @@ class HistoryPriceController extends Controller
     public function store(Request $request)
     {
         $this->historypriceService->handleStoreHistoryPrice($request);
-        return redirect()->back()->with('success', 'Save data price!');
+        // Redirect::to();
+        return redirect(URL::previous() . "#tabs-hp")->with('success', 'Save data price!');
     }
 
     

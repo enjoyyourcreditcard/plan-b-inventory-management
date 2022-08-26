@@ -32,7 +32,7 @@
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                     <a href=".">
-                        <img src="https://preview.tabler.io/static/logo.svg" width="110" height="32" alt="Tabler"
+                        <img src="https://ik.imagekit.io/jh2scbhjww/Group_1_i7u4rzAFv5.png?ik-sdk-version=javascript-1.4.3&updatedAt=1661522173103" width="110" height="32" alt="Tabler"
                             class="navbar-brand-image">
                     </a>
                 </h1>
@@ -365,6 +365,11 @@
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script src="{{ asset('js/app.js') }}"></script>
+{{-- <<<<<<< HEAD --}}
+{{-- ======= --}}
+    @yield('additionalJs')
+
+{{-- >>>>>>> origin/brand --}}
     <script src="{{asset('assets/js/tabler.min.js')}}" defer></script>
     <script src="{{asset('assets/js/demo.min.js')}}" defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
