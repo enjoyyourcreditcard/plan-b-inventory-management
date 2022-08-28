@@ -14,16 +14,24 @@ class HistoryPriceController extends Controller
     {
         $this->historypriceService = $historypriceService;
     }
-  
+
+    public function index($id)
+    {
+        $history_prices = $this->historypriceService->handleAllHistoryPrice();
+        return view('part.detail', [
+            'historyprices' => $history_prices,
+            'part_id' => $id
+        ]);
+    }
 
     public function store(Request $request)
     {
         $this->historypriceService->handleStoreHistoryPrice($request);
-        // Redirect::to();
-        return redirect(URL::previous() . "#tabs-hp")->with('success', 'Save data price!');
+        return redirectTab("tabs-hp");
+        // return redirect(URL::previous() . "#")->with('success', 'Save data price!');
     }
 
-    
+ 
     public function getAllHistoryPrice()
     {
         return ResponseJSON($this->historypriceService->handleAllHistoryPrice(), 200);

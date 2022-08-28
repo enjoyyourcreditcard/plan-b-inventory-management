@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-// <<<<<<< HEAD
-// =======
-// use App\Http\Controllers\BrandController;
-// use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\PartController;
 
-// >>>>>>> origin/brand
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,14 +31,10 @@ Route::get('/tes123', function () {
     return ResponseJSON(auth("sanctum")->user(),401);
 })->middleware(["auth:sanctum",'abilities:check-status']);
 
-// <<<<<<< HEAD
-
-// // Route::prefix('detail')->group(function () {
-// //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
-// //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
-// // });
-
-// =======
+Route::group(['prefix' => 'part'], function () {
+    Route::get('/', [PartController::class, 'getAllPart']);
+    Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
 //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
@@ -53,3 +47,13 @@ Route::get('/tes123', function () {
 //     Route::get('/delete/{id}', [BrandController::class, 'getDeactiveBrand']);
 // });
 // >>>>>>> origin/brand
+// =======
+// Route::group(['prefix' => 'part'], function () {
+//     Route::get('/', [PartController::class, 'getAllPart']);
+//     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+// });
+// Route::prefix('detail')->group(function () {
+//     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
+//     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+// });
+

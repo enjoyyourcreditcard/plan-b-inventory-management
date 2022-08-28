@@ -18,9 +18,9 @@ class AttachmentService
         $this->attachment = $attachment;
     }
 
-    public function handleAllAttachment()
+    public function handleAllAttachment($id)
     {
-        $attachment = $this->attachment->latest()->get();
+        $attachment = $this->attachment->where('part_id',$id)->latest()->get();
         return($attachment);
 
     }

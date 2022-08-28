@@ -25,7 +25,8 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $this->brandService->handleStoreBrand($request);
-        return redirect('/brand');
+        return redirectTab("tabs-merek");
+
     }
 
     public function update(Request $request, $id)

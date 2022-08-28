@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default class Api {
   constructor() {
-    this.api_url = "http://localhost:8000/data/demo/";
+    this.api_url = "http://localhost:8000/api/";
     // this.addError = useErrorStore((state) => state.addError);
   }
 
@@ -28,7 +28,7 @@ export default class Api {
   };
   getPart = () => {
     return this.init()
-      .get(`part.json`)
+      .get(`part`)
       .catch((error) => {
         // this.addError(error.message);
       });

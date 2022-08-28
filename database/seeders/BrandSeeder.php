@@ -14,23 +14,30 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        Brand::truncate();
         $brands = [
             [
                 'name' => 'Nokia',
-                'status' => 'active'
+                'status' => 'active',
+                'created_at' => '2022-08-23 10:53:17',
+                'updated_at' => '2022-08-23 10:53:17',
             ],
             [
                 'status' => 'active',
-                'name' => 'Samsung'
+                'name' => 'Samsung',
+                'created_at' => '2022-08-23 10:53:17',
+                'updated_at' => '2022-08-23 10:53:17',
             ],
             [
                 'status' => 'active',
-                'name' => 'Huawei'
+                'name' => 'Huawei',
+                'created_at' => '2022-08-23 10:53:17',
+                'updated_at' => '2022-08-23 10:53:17',
             ],
             [
                 'status' => 'active',
-                'name' => 'Oddo'
+                'name' => 'Oddo',
+                'created_at' => '2022-08-23 10:53:17',
+                'updated_at' => '2022-08-23 10:53:17',
             ]
         ];
 

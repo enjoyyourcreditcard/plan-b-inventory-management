@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Audit;
-
-
+use Illuminate\Support\Facades\URL;
 
 function ResponseJSON($data, $code = 200)
 {
@@ -32,6 +31,14 @@ function ResponseJSON($data, $code = 200)
         'data' => $data
     ];
     return response()->json($respon, $code)->header('Accept', 'application/json');
+}
+
+
+ function redirectTab($tabID)
+{
+    // ->with('success', 'Save data price!')
+    return redirect(URL::previous() . "#".$tabID);
+    
 }
 
 function addAudit($user_id, $action, $status = null)

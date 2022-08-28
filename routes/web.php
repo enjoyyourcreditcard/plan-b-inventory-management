@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
 
@@ -28,17 +29,45 @@ Route::get('/', function () {
 // })->middleware(["auth:sanctum", 'ability:check-status']);   
 
 
-Route::resource('part', PartController::class);
-Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice');
-Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment');
+/*
+|--------------------------------------------------------------------------
+| Part Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('part', PartController::class)->middleware("auth");
+Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
+Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
+Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
+Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
 
 
 
-Route::resource('/brand', BrandController::class);
-Route::get('/delete/{id}', [BrandController::class, 'deactive']);
+Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
+Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
+Route::post('/category/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
 
 
-// Route::resource('/detail/part/{id}', HistoryPriceController::class);
+
+
+
+// Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category');
+
+
+
+
+
+// Route::resource('/brand', BrandController::class);
+// Route::post('/brand/deactive/{id}', [BrandController::class, 'postDeactive']);
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Stock Routes
+|--------------------------------------------------------------------------
+*/
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

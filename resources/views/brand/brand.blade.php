@@ -87,35 +87,7 @@
                             <div id="part_category"></div>
                         </div>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Add a new brand</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form action="{{ url('/brand') }}" method="post">
-                                    {{ csrf_field() }}
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Brand Name</label>
-                                            <input type="text" class="form-control" name="name" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            {{-- <label for="name" class="form-label">Status</label> --}}
-                                            <input type="hidden" class="form-control" name="status">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add Brand</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+               
 
                     <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -156,7 +128,6 @@
 
 @section('additionalJs') 
 <script> 
-// name
     const name = document.querySelectorAll('.name'); 
     const inputNameEdit = document.querySelector('.input-name-edit'); 
     const tombolEdit = document.querySelectorAll('.tombol-edit'); 

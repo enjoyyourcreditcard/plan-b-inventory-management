@@ -15,7 +15,8 @@ class CreateHistoryPricesTable extends Migration
     {
         Schema::create('history_prices', function (Blueprint $table) {
             $table->id();
-            $table->integer('part_id');
+            $table->unsignedBigInteger('part_id');
+            $table->foreign('part_id')->references('id')->on('parts');
             $table->string('price');
             $table->timestamps();
         });

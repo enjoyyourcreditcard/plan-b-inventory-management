@@ -1,19 +1,14 @@
 <!doctype html>
-<!--
-* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
-* @version 1.0.0-beta11
-* @link https://tabler.io
-* Copyright 2018-2022 The Tabler Authors
-* Copyright 2018-2022 codecalm.net Paweł Kuna
-* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
--->
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Empty page - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+    <title>Inventory Management - MVN</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" integrity="sha512-kq3FES+RuuGoBW3a9R2ELYKRywUEQv0wvPTItv3DSGqjpbNtGWVdvT8qwdKkqvPzT93jp8tSF4+oN4IeTEIlQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS files -->
     <link href="{{asset('assets/css/tabler.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/tabler-flags.min.css')}}" rel="stylesheet" />
@@ -32,37 +27,12 @@
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                     <a href=".">
-                        <img src="https://ik.imagekit.io/jh2scbhjww/Group_1_i7u4rzAFv5.png?ik-sdk-version=javascript-1.4.3&updatedAt=1661522173103" width="110" height="32" alt="Tabler"
+                        <img src="https://ik.imagekit.io/jh2scbhjww/My_project-1__2__WUSPB2Vkq.png?ik-sdk-version=javascript-1.4.3&updatedAt=1661695688387" alt="Tabler"
                             class="navbar-brand-image">
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
                     <div class="d-none d-md-flex">
-                        <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" aria-label="Enable dark mode">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path
-                                    d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a href="?theme=light" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" aria-label="Enable light mode">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <circle cx="12" cy="12" r="4"></circle>
-                                <path
-                                    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7">
-                                </path>
-                            </svg>
-                        </a>
                         <div class="nav-item dropdown d-none d-md-flex me-3">
                             <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                                 aria-label="Show notifications">
@@ -199,7 +169,7 @@
                             <span class="avatar avatar-sm"
                                 style="background-image: url(./static/avatars/003m.jpg)"></span>
                             <div class="d-none d-xl-block ps-2">
-                                <div>Dunn Slane</div>
+                                <div>{{Auth::user()->name}}</div>
                                 <div class="mt-1 small text-muted">Research Nurse</div>
                             </div>
                         </a>
@@ -364,14 +334,9 @@
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
+    
     <script src="{{ asset('js/app.js') }}"></script>
-{{-- <<<<<<< HEAD --}}
-{{-- ======= --}}
-    @yield('additionalJs')
 
-{{-- >>>>>>> origin/brand --}}
-    <script src="{{asset('assets/js/tabler.min.js')}}" defer></script>
-    <script src="{{asset('assets/js/demo.min.js')}}" defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -381,6 +346,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="{{asset('assets/js/tabler.min.js')}}" ></script>
+    <script src="{{asset('js/main.js')}}" ></script>
+
+    @yield('additionalJs')
+
 </body>
 
 </html>

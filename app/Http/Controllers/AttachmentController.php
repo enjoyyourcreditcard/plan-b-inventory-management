@@ -23,7 +23,9 @@ class AttachmentController extends Controller
     {
         // dd($request);
         $this->attachmentService->handleStoreAttachment($request);
-        return redirect()->back();
+        // return redirect()->back();
+        return redirectTab("tabs-attachments");
+
 
     }
     

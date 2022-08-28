@@ -15,7 +15,8 @@ class Attachment extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->integer('part_id');
+            $table->unsignedBigInteger('part_id');
+            $table->foreign('part_id')->references('id')->on('parts');
             $table->string('file');
             $table->string('comment')->nullable();
             $table->timestamps();
