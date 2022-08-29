@@ -67,6 +67,7 @@
                                     <div class="list-group list-group-flush list-group-hoverable">
                                         <div class="list-group-item">
                                             <div class="row align-items-center">
+                                                <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
                                                 <div class="col text-truncate">
                                                     <h3 href="#" class="text-body d-block">{{$row->part_id}}</h3>
                                                     <h4 class="text-body d-block">{{$row->title}}</h4>
