@@ -39,6 +39,7 @@ Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class
 Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
 Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
 Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
+Route::get('/delete/{id}', [App\Http\Controllers\NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
 
 
 

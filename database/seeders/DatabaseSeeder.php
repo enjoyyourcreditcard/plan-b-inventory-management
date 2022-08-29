@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserPermissionSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(BrandSeeder::class);
+        $this->call(NotificationSeeder::class);
 
         $this->call(PartSeeder::class);
         $this->call(HistoryPriceSeeder::class);

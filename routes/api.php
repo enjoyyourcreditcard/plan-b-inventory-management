@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\PartController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,13 @@ Route::get('/tes123', function () {
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
+
+Route::group(['prefix' => 'notification'], function () {
+    Route::get('/', [NotificationController::class, 'getAllNotification']);
+    Route::post('/create', [NotificationController::class, 'postStoreNotification']);
+    Route::put('/update/{id}', [NotificationController::class, 'putUpdateNotification']);
+    Route::delete('/delete/{id}', [NotificationController::class, 'getDeleteNotification']);
 });
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);

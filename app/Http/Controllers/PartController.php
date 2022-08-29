@@ -7,18 +7,20 @@ use App\Services\BrandService;
 use App\Services\CategoryService;
 use App\Services\HistoryPriceService;
 use App\Services\PartService;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class PartController extends Controller
 {
 
-    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService)
+    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService)
     {
         $this->historypriceService = $historypriceService;
         $this->attachmentService = $attachmentService;
         $this->partService = $partService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
+        $this->notificationService = $notificationService;
     }
 
 
@@ -32,11 +34,14 @@ class PartController extends Controller
     {
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
-        return view('part.part', [
+        $notifications =  $this->notificationService->handleAllNotification();
+        return view('part.part',[
+            'notifications' => $notifications,
             'categories' => $categories,
             'brands'=>$brands
         ]);
     }
+    
 
 
 
@@ -73,7 +78,9 @@ class PartController extends Controller
         $history_prices = $this->historypriceService->handleGetHistoryPriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
         $part = $this->partService->handleShowPart($id);
+        $notifications =  $this->notificationService->handleAllNotification();
         return view('part.detail', [
+            'notifications' => $notifications,
             'historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
