@@ -39,9 +39,9 @@ Route::group(['prefix' => 'part'], function () {
 
 Route::group(['prefix' => 'notification'], function () {
     Route::get('/', [NotificationController::class, 'getAllNotification']);
-    Route::post('/create', [NotificationController::class, 'postStoreNotification']);
-    Route::put('/update/{id}', [NotificationController::class, 'putUpdateNotification']);
-    Route::delete('/delete/{id}', [NotificationController::class, 'getDeleteNotification']);
+    Route::post('/', [NotificationController::class, 'postStoreNotification']);
+    Route::put('/{id}', [NotificationController::class, 'putUpdateNotification']);
+    Route::delete('/{id}', [NotificationController::class, 'getDeleteNotification']);
 });
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);

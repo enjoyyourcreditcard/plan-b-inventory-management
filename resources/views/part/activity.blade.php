@@ -20,8 +20,8 @@
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="card">
+                            <div class="divide-y " data-bs-spy="scroll">
                             <div class="card-body">
-                                <div class="divide-y">
                                     <div>
                                         @foreach($notifications as $index => $row)
                                         <div class="row mb-3">
@@ -42,6 +42,7 @@
                                                 <div class="badge bg-primary"></div>
                                             </div>
                                         </div>
+                                        
                                         @endforeach
                                     </div>
                                 </div>

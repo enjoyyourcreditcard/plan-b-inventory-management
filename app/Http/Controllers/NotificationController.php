@@ -34,23 +34,23 @@ class NotificationController extends Controller
     
     // API
     
-    public function getAllNotification()
+    public function getAllNotification(Request $request)
     {
-        return ResponseJSON($this->notificationService->handleAllNotification(), 200);
+        return ResponseJSON($this->notificationService->handleAllNotificationApi($request), 200);
     }
 
     public function postStoreNotification(Request $request)
     {
-        return ResponseJSON($this->notificationService->handleStoreNotification($request), 200);
+        return ResponseJSON($this->notificationService->handleStoreNotificationApi($request), 200);
     }
 
     public function putUpdateNotification(Request $request, $id)
     {
-        return ResponseJSON($this->notificationService->handleUpdateNotification($request, $id), 200);
+        return ResponseJSON($this->notificationService->handleUpdateNotificationApi($request, $id), 200);
     }
 
     public function getDeleteNotification($id)
     {
-        return ResponseJSON($this->notificationService->handleDeleteNotification($id), 200);
+        return ResponseJSON($this->notificationService->handleDeleteNotificationApi($id), 200);
     }
 }
