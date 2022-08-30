@@ -13,6 +13,32 @@ $(".select2").select2({
 }
 );
 
+$(".select3").select2({
+    width: '100%',
+    height: '10px',
+    tags: true,
+    dropdownParent: $("#createPartModal"),
+    theme: "bootstrap"
+}
+);
+
+$(".select2EditPart").select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#EditPartModal"),
+    theme: "bootstrap"
+}
+);
+
+$(".select3EditPart").select2({
+    width: '100%',
+    height: '10px',
+    tags: true,
+    dropdownParent: $("#EditPartModal"),
+    theme: "bootstrap"
+}
+);
+
 $('#editCategoryModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('id')

@@ -5,10 +5,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PartSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\BrandSeeder;
+use Database\Seeders\StockSeeder;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\HistoryPriceSeeder;
-use Database\Seeders\BrandSeeder;
-use Database\Seeders\CategorySeeder;
 
 
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BrandSeeder::class);
 
         $this->call(PartSeeder::class);
+        $this->call(StockSeeder::class);
         $this->call(HistoryPriceSeeder::class);
         $this->call(AttachmentSeeder::class);
     }

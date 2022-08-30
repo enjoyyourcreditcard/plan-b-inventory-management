@@ -13,6 +13,12 @@ class BrandService
         $this->brand = $brand;
     }
 
+    public function handleGetAllBrand()
+    {
+        $brands = $this->brand->all();
+        return($brands);
+    }
+
     public function handleAllBrand()
     {
         $brands = $this->brand->paginate(5);

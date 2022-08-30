@@ -56,7 +56,7 @@ class PartSeeder extends Seeder
             'name' => 'ODC (OPTIC DISTRIBUTION CABINET) WITH SPLITTER CAPACITY 576 CORE PEDESTAL (ZTE)',
             'brand_id' => 2,
             'uom' => 'set',
-            'sn_status' => 'non sn',
+            'sn_status' => 'sn',
             'color' => 'grey',
             'size' => '1',
             'description' => 'Small plastic enclosure, grey',

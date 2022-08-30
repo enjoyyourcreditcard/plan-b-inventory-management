@@ -43,8 +43,6 @@ class PartService
     // Part STORE 
     public function handleStorePart($request)
     {
-    
-
         $validatedData = $request->validate([
             'name' => 'required|unique:parts',
             'category_id' => 'required',
@@ -58,10 +56,8 @@ class PartService
             'img' => 'image|file|max:5120'
         ]);
 
-        dd($request->file('img'));
         if ($request->file('img')) {
-            $request->file('img')->move('images/part', $request->file('img')->getClientOriginalName());
-            $validatedData['img'] = "images/part/".$request->file('img')->getClientOriginalName();
+            $validatedData['img'] = $request->file('img')->store('images/part');
         } else {
             $validatedData['img'] = 'images/part/default.jpg';
         }
@@ -87,7 +83,7 @@ class PartService
         $this->part->find($id)->update([
             'name' => $request->name,
             'category_id' => $request->category_id,
-            'brand' => $request->brand,
+            'brand_id' => $request->brand_id,
             'uom' => $request->uom,
             'sn_status' => $request->sn_status,
             'color' => $request->color,
@@ -110,5 +106,16 @@ class PartService
         $part->update($data);
 
         return ('Data has been deactivated');
+    }
+
+    // Part SN Status
+    public function handleSnPart($id)
+    {
+        if ($this->part->find($id)->sn_status == "sn") {
+            $ifSn = true;
+        }else{
+            $ifSn = false;
+        }
+        return($ifSn);
     }
 }

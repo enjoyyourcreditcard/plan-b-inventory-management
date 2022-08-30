@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\AttachmentService;
-use App\Services\BrandService;
-use App\Services\CategoryService;
-use App\Services\HistoryPriceService;
-use App\Services\PartService;
+use App\Models\Stock;
 use Illuminate\Http\Request;
+use App\Services\PartService;
+use App\Services\BrandService;
+use App\Services\StockService;
+use App\Services\CategoryService;
+use App\Services\AttachmentService;
+use App\Services\HistoryPriceService;
 
 class PartController extends Controller
 {
 
-    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService)
+    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, StockService $stockService)
     {
         $this->historypriceService = $historypriceService;
         $this->attachmentService = $attachmentService;
         $this->partService = $partService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
+        $this->stockService = $stockService;
     }
 
 
@@ -59,7 +62,7 @@ class PartController extends Controller
     public function store(Request $request)
     {
         $this->partService->handleStorePart($request);
-        return redirect('/part');
+        return redirect()->back();
     }
 
     /**
@@ -70,14 +73,25 @@ class PartController extends Controller
      */
     public function show($id)
     {
+        $ifSn = $this->partService->handleSnPart($id);
         $history_prices = $this->historypriceService->handleGetHistoryPriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
         $part = $this->partService->handleShowPart($id);
+        $stocks = $this->stockService->handleShowStock($id);
+        $categories = $this->categoryService->handleGetAllCategory();
+        $brands = $this->brandService->handleGetAllBrand();
+
+        $ifSn = $part->sn_status == "sn";
+        
         return view('part.detail', [
             'historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
-            'part_id' => $id
+            'stocks' => $stocks,
+            'part_id' => $id,
+            'categories' => $categories,
+            'brands' => $brands,
+            'ifSn' => $ifSn
         ]);
     }
 
@@ -102,7 +116,7 @@ class PartController extends Controller
     public function update(Request $request, $id)
     {
         $this->partService->handleUpdatePart($request, $id);
-        return redirect('/detail/part/' . $id);
+        return redirect()->back();
     }
     /**
      * Remove the specified resource from storage.

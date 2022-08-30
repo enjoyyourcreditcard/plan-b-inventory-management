@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\HistoryPriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,24 @@ Route::get('/tes123', function () {
     return ResponseJSON(auth("sanctum")->user(),401);
 })->middleware(["auth:sanctum",'abilities:check-status']);
 
+
+Route::get('/tes', function (Request $req) {
+    dd($req->search);
+    // return ResponseJSON(auth("sanctum")-> user(),401);
+});
+
+
+
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
+
+Route::group(['prefix' => 'stock'], function () {
+    Route::get('/', [StockController::class, 'getAllStock']);
+    Route::post('/', [StockController::class, 'postStoreStock']);
+    Route::put('/{id}', [StockController::class, 'putUpdateStock']);
+    Route::delete('/{id}', [StockController::class, 'getDeleteStock']);
 });
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);

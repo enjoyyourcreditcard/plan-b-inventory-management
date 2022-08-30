@@ -271,8 +271,8 @@
         <h5 class="modal-title">Create New Part</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
           @csrf
           <div class="row">
             <div class="mb-2">
@@ -290,7 +290,7 @@
 
             <div class="mb-2">
               <label for="partBrand" class="form-label">Brand</label>
-              <select class="form-select select2" id="partBrand" name="brand" required>
+              <select class="form-select select2" id="partBrand" name="brand_id" required>
                 @foreach ($brands as $brand)
                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
@@ -324,20 +324,19 @@
 
             <div class="mb-2">
               <label for="partColor" class="form-label">Color</label>
-              <input class="form-control" list="datalistOptions" id="exampleDataList" name="color">
-              <datalist id="datalistOptions">
-                <option value="Black">
-                <option value="White">
-                <option value="Grey">
-                <option value="Green">
-                <option value="Yellow">
-                <option value="NN">
-                <option value="Blue">
-                <option value="Silver">
-                <option value="Multi Color">
-                <option value="Red">
-                <option value="Orange">
-              </datalist>
+              <select class="form-control select3" id="partColor" name="color" required>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Grey">Grey</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="NN">NN</option>
+                <option value="Blue">Blue</option>
+                <option value="Silver">Silver</option>
+                <option value="Multi Color">Multi Color</option>
+                <option value="Red">Red</option>
+                <option value="Orange">Orange</option>
+              </select>
             </div>
 
             <div class="mb-2">
@@ -359,14 +358,13 @@
               <label for="partImage" class="form-label">Part Image</label>
               <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
             </div>
-
-            <div class="mb-3">
-              <button type="submit" class="btn btn-primary w-100">Save</button>
-            </div>
-
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -396,35 +394,6 @@
     </div>
   </div>
 </div>
-
-{{-- Edit Category Modal --}}
-<div class="modal modal-blur fade"  id="editCategoryModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Part</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="form-edit" action="{{route('post.update.category')}}" method="POST">
-          @csrf
-          <input type="hidden" class="form-control input-name-edit" id="categoryId" name="id" required>
-          <div class="mb-3">
-            <label for="categoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control input-name-edit" id="categoryName" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label for="categoryDescription" class="form-label">Description</label>
-            <textarea class="form-control input-description-edit" id="categoryDescription" rows="3" name="description"
-              required></textarea>
-          </div>
-          <button type="submit" class="btn float-end mt-5">Save</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- Add Brand -->
 <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
