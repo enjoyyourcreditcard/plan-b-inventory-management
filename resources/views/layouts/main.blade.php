@@ -60,20 +60,21 @@
                                 <div class="card">
 
                                     <div class="card-header">
-                                        <h3 class="card-title">Last updates</h3>
+                                        <a class="card-title" href="{{Route ('get.index.notif')}}">Last updates</a>
                                     </div>
 
                                     @foreach($notifications as $index => $row)
-                                    <div class="list-group list-group-flush list-group-hoverable">
+                                    <div class="list-group list-group-flush list-group-hoverable " style="width: 40vw;">
                                         <div class="list-group-item">
                                             <div class="row align-items-center">
-                                                <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
                                                 <div class="col text-truncate">
-                                                    <h3 href="#" class="text-body d-block">{{$row->part_id}}</h3>
-                                                    <h4 class="text-body d-block">{{$row->title}}</h4>
-                                                    <div class="d-block text-muted text-truncate mt-n1">
-                                                        {{$row->content}}
-                                                    </div>
+                                                    {{-- <a data-bs-trigger="hover" data-bs-toggle="popover" title="{{$row->title}}" data-bs-content="{{$row->content}}" data-bs-placement="left"> --}}
+                                                        <h3 href="#" class="text-body d-block">{{$row->user_id}}</h3>
+                                                        <h4 class="text-body d-block">{{$row->title}}</h4>
+                                                        <div class="d-block text-muted text-truncate mt-n1">
+                                                            {{$row->content}}
+                                                        </div>
+                                                    {{-- </a> --}}
                                                 </div>
                                                 <div class="col-auto">
                                                     <a href="/delete/{{$row->id}}" class="list-group-item-actions show">

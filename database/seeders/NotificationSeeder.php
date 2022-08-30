@@ -19,7 +19,7 @@ class NotificationSeeder extends Seeder
             [
                 'user_id' => 1,
                 'title' => 'Halo User',
-                'content' => 'berhasil',
+                'content' => 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ',
                 'status' => 'read',
             ],
 

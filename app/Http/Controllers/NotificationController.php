@@ -15,13 +15,13 @@ class NotificationController extends Controller
         $this->notificationService = $notificationService;
     }
     
-    // public function index()
-    // {
-    //     $notifications =  $this->notificationService->handleAllNotification();
-    //     return view('layouts.main', [
-    //         'notifications' => $notifications
-    //     ]);
-    // }
+    public function index()
+    {
+        $notifications =  $this->notificationService->handleAllNotification();
+        return view('part.activity', [
+            'notifications' => $notifications
+        ]);
+    }
     
     public function destroy($id)
     {

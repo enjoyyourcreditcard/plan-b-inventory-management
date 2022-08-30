@@ -34,18 +34,19 @@ Route::get('/', function () {
 | Part Routes
 |--------------------------------------------------------------------------
 */
-Route::resource('part', PartController::class)->middleware("auth");
+Route::resource('/part' , PartController::class)->middleware("auth");
 Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
 Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
 Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
 Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
-Route::get('/delete/{id}', [App\Http\Controllers\NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
 
 
 
 Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
 Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
 Route::post('/category/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+Route::get('/delete/{id}', [App\Http\Controllers\NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
+Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('get.index.notif')->middleware("auth");
 
 
 
