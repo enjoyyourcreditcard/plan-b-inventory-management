@@ -21,7 +21,7 @@ class StockService
         return($stocks);
     }
 
-    public function handleShowStock($id)
+    public function handleGetStockByPartId($id)
     {
         $stocks = $this->stock->where('part_id', $id)->get();
         return($stocks);

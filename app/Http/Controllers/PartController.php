@@ -73,16 +73,13 @@ class PartController extends Controller
      */
     public function show($id)
     {
-        $ifSn = $this->partService->handleSnPart($id);
         $history_prices = $this->historypriceService->handleGetHistoryPriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
         $part = $this->partService->handleShowPart($id);
-        $stocks = $this->stockService->handleShowStock($id);
+        $stocks = $this->stockService->handleGetStockByPartId($id);
         $categories = $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleGetAllBrand();
-
-        $ifSn = $part->sn_status == "sn";
-        
+        $is_sn = $part->sn_status == "sn";
         return view('part.detail', [
             'historyprices' => $history_prices,
             'attachment' => $attachment,
@@ -91,7 +88,7 @@ class PartController extends Controller
             'part_id' => $id,
             'categories' => $categories,
             'brands' => $brands,
-            'ifSn' => $ifSn
+            'is_sn' => $is_sn
         ]);
     }
 

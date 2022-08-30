@@ -16,7 +16,7 @@ class StockController extends Controller
 
     public function getAllStock()
     {
-        return ResponseJSON($this->stockService->handleAllStock(), 200);
+        return ResponseJSON($this->stockService->handleAllStockApi(), 200);
     }
 
     public function postStoreStock(Request $request)

@@ -448,7 +448,7 @@
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
-                                                @if ($ifSn == true)
+                                                @if ($is_sn == true)
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>SN Code</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -503,7 +503,7 @@
                                             @foreach ($stocks as $stock)
                                             <tr role="row">
                                                 <td role="cell">{{ $stock->wh_id }}</td>
-                                                @if($ifSn == true)
+                                                @if($is_sn == true)
                                                 <td role="cell">{{ $stock->sn_code }}</td>
                                                 @endif
                                                 <td role="cell">{{ $stock->condition }}</td>
@@ -677,7 +677,7 @@
                         </select>
                     </div>
 
-                    @if ($ifSn == true)
+                    @if ($is_sn == true)
                     <div class="mb-3">
                         <label for="stockSnCode" class="form-label">SN Code</label>
                         <input type="text" class="form-control" id="stockSnCode" name="sn_code" required>
@@ -721,7 +721,7 @@
                         </select>
                     </div>
 
-                    @if ($ifSn == true)
+                    @if ($is_sn == true)
                     <div class="mb-3">
                         <label for="stockSnCode" class="form-label">SN Code</label>
                         <input type="text" class="form-control" id="stockSnCode" name="sn_code" required>
