@@ -27,8 +27,15 @@ class BrandService
 
     public function handleStoreBrand(Request $request)
     {
-        $brand = $this->brand->create($request->all());
-        return($brand);
+        $validatedData = $request->validate([
+            'name' => 'required|unique:brands',
+            'category_id' => 'required',
+        ]);
+
+        $validatedData['status'] = 'active';
+
+        $this->brand->create($validatedData);
+        return('Data has been stored');
     }
 
     public function handleUpdateBrand(Request $request, $id)

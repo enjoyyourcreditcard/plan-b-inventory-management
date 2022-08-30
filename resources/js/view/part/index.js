@@ -55,13 +55,7 @@ function Parts() {
                             </a>
                             <a href={"/part/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                         </div>
-
-
-
-
-
                     </>
-
                 )
             }, {
                 Header: 'Description',
@@ -86,6 +80,11 @@ function Parts() {
             }, {
                 Header: 'Brand',
                 accessor: 'brand',
+                Cell: tableProps => (
+                    <>
+                        <a href='#' className="text-primary">{tableProps.row.original.brand.name}</a>
+                    </>
+                )
             }, {
                 Header: 'Stock',
                 accessor: 'size',

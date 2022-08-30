@@ -8,7 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name'
+    
+    protected $guarded = [
+        'id'
     ];
+    
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function parts() {
+        return $this->hasMany(Part::class);
+    }    
 }

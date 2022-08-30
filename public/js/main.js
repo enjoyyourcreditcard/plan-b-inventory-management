@@ -22,6 +22,14 @@ $(".select3").select2({
 }
 );
 
+$(".select4").select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createBrandModal"),
+    theme: "bootstrap"
+}
+);
+
 $(".select2EditPart").select2({
     width: '100%',
     height: '10px',

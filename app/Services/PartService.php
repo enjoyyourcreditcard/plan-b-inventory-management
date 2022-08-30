@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Part;
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -11,16 +12,17 @@ use Illuminate\Support\Facades\Storage;
 class PartService
 {
 
-    public function __construct(Part $part, Category $category)
+    public function __construct(Part $part, Category $category, Brand $brand)
     {
         $this->part = $part;
+        $this->brand = $brand;
         $this->category = $category;
     }
 
     // API Part GET
     public function handleAllPartApi()
     {
-        $parts = $this->part->with('category')->paginate(10);
+        $parts = $this->part->with('category')->with('brand')->paginate(10);
 
         return ($parts);
     }

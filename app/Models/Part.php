@@ -20,4 +20,8 @@ class Part extends Model
     public function stocks() {
         return $this->hasMany(Stock::class);
     }
+
+    public function brand() {
+        return $this->belongsTo(Brand::class);
+    }
 }

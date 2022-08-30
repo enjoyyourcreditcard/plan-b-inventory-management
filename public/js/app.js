@@ -7477,7 +7477,16 @@ function Parts() {
       }
     }, {
       Header: 'Brand',
-      accessor: 'brand'
+      accessor: 'brand',
+      Cell: function Cell(tableProps) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+            href: "#",
+            className: "text-primary",
+            children: tableProps.row.original.brand.name
+          })
+        });
+      }
     }, {
       Header: 'Stock',
       accessor: 'size',
