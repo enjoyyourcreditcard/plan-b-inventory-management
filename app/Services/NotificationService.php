@@ -35,16 +35,6 @@ class NotificationService
         $notification = $this->notification->find($id)->update($request->all());
         return($notification);
     }
-
-
-    public function handleUpdateCategory($request)
-    {
-        $this->category->find($request->id)->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-        return('Data has been updated');
-    }
     
     public function handleDeleteNotification($id)
     {
