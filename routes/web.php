@@ -7,6 +7,9 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BuildController;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,22 +38,22 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('part', PartController::class)->middleware("auth");
-Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
-Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
-Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
-Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
+Route::post('/historyprice', [HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
+Route::post('/brand', [BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
+Route::post('/brand/update', [CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
+Route::get('/part/deactive/{id}', [PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
 
 
 
-Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
-Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
-Route::post('/category/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
+Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
+Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
 
 
 
 
 
-// Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category');
+// Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 
 
 
@@ -58,6 +61,19 @@ Route::post('/category/update', [App\Http\Controllers\CategoryController::class,
 
 // Route::resource('/brand', BrandController::class);
 // Route::post('/brand/deactive/{id}', [BrandController::class, 'postDeactive']);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Build Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/build', [BuildController::class, 'index']);
+Route::post('/build', [BuildController::class, 'store']);
+Route::put('/build/{id}', [BuildController::class, 'update']);
+Route::delete('/build/{id}', [BuildController::class, 'delete']);
+
 
 
 
@@ -70,4 +86,4 @@ Route::post('/category/update', [App\Http\Controllers\CategoryController::class,
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -9,6 +9,7 @@ use Database\Seeders\PermissionSeeder;
 use Database\Seeders\HistoryPriceSeeder;
 use Database\Seeders\BrandSeeder;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\BuildSeeder;
 
 
 
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PartSeeder::class);
         $this->call(HistoryPriceSeeder::class);
         $this->call(AttachmentSeeder::class);
+        $this->call(BuildSeeder::class);
     }
 }

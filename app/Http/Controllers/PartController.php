@@ -33,7 +33,7 @@ class PartController extends Controller
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
         return view('part.part', [
-            'categories' => $categories,
+            'categories' => $categories,    
             'brands'=>$brands
         ]);
     }

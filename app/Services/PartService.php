@@ -11,10 +11,9 @@ use Illuminate\Support\Facades\Storage;
 class PartService
 {
 
-    public function __construct(Part $part, Category $category)
+    public function __construct(Part $part)
     {
         $this->part = $part;
-        $this->category = $category;
     }
 
     // API Part GET
@@ -26,7 +25,12 @@ class PartService
     }
 
     // Part GET
- 
+    public function handleAllPart()
+    {
+        $part = $this->part->all();
+        return ($part);
+    }
+    
 
     // Part SHOW
     public function handleShowPart($id)
