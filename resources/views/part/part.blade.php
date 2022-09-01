@@ -130,16 +130,7 @@
                   </div>
                 </div>
               </div>
-{{-- <<<<<<< HEAD
 
-              <div className="tabel-horizontal-scroll">
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <th>
-                      Category
-                    </th>
-                    <th>
-======= --}}
              
                 <div className="tabel-horizontal-scroll">
                   <table class="table table-bordered table-striped">
@@ -188,6 +179,7 @@
                           </td>
                         </tr>
                         @endforeach
+
                   </tbody>
                 </table>
               </div>
@@ -458,8 +450,20 @@
             <label for="name" class="form-label">Brand Name</label>
             <input type="text" class="form-control" name="name" required>
           </div>
+
           <div class="mb-3">
-            {{-- <label for="name" class="form-label">Status</label> --}}
+            <label for="name" class="form-label">Category</label>
+            {{-- <input type="text" class="form-control" value="1" name="category_id" required> --}}
+
+              <select name="category_id" class="form-control" >
+                @foreach ($categories as $item)
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+              </select>
+          </div>
+
+
+          <div class="mb-3">
             <input type="hidden" class="form-control" name="status">
           </div>
         </div>
@@ -473,13 +477,11 @@
 </div>
 
 
-<<<<<<< HEAD
 {{-- *
 *|--------------------------------------------------------------------------
 *| Modal Edit Brand
 *|--------------------------------------------------------------------------
 *--}}
-=======
 <!-- Edit Category Modal -->
 <div class="modal modal-blur fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -502,7 +504,6 @@
           </div>
           <div class="mb-3">
             <label for="categoryUom" class="form-label">Uom</label>
-            {{-- <input type="text" name="uom" id="categoryUom"> --}}
             <select class="form-select select6" name="uom[]" id="categoryUom" required multiple="multiple">
               <option value="meter">Meter</option>
               <option value="set">Set</option>
@@ -528,7 +529,6 @@
 </div>
 
 <!-- Edit Brand -->
->>>>>>> origin/category_column
 <div class="modal modal-blur fade" id="editBrandModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

@@ -16,25 +16,33 @@ class BrandService
     public function handleGetAllBrand()
     {
         $brands = $this->brand->all();
-        return($brands);
+        return ($brands);
     }
 
     public function handleAllBrand()
     {
         $brands = $this->brand->paginate(5);
-        return($brands);
+        return ($brands);
     }
 
     public function handleStoreBrand(Request $request)
     {
-        $brand = $this->brand->create($request->all());
-        return($brand);
+        // dd($request);
+        $validatedData = $request->validate([
+            'name' => 'required|unique:brands',
+            'category_id' => 'required',
+        ]);
+
+        $validatedData['status'] = 'active';
+
+        $this->brand->create($validatedData);
+        return ('Data has been stored');
     }
 
     public function handleUpdateBrand(Request $request, $id)
     {
         $brand = $this->brand->find($id)->update($request->all());
-        return($brand);
+        return ($brand);
     }
 
     public function handleDeactiveBrand($id)
@@ -42,6 +50,6 @@ class BrandService
         $brand = $this->brand->find($id);
         $brand->status = 'inactive';
         $brand->save();
-        return($brand);
+        return ($brand);
     }
 }

@@ -225,7 +225,6 @@ $('#partCategory').on('change', function (e) {
 
 
 $('#editPartCategory').on('change', function (e) {
-    console.log('hello :)');
     var optionSelected = $(this).find("option:selected");
     var uom = optionSelected.data('uom');
     uomArray = uom.split(', ');

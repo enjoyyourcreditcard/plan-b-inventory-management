@@ -36,9 +36,7 @@ function ResponseJSON($data, $code = 200)
 
  function redirectTab($tabID)
 {
-    // ->with('success', 'Save data price!')
     return redirect(URL::previous() . "#".$tabID);
-    
 }
 
 function addAudit($user_id, $action, $status = null)
