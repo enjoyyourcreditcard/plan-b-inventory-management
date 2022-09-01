@@ -21,6 +21,7 @@ class CategoryService
             'description' => 'required|max:255',
         ]);
 
+        $validatedData['uom'] = implode(', ', $request->uom);
         $validatedData['started'] = now();
         $validatedData['status'] = 'active';
 
@@ -32,7 +33,6 @@ class CategoryService
     public function handleGetAllCategory()
     {
         return $this->category::all();
-        # code...
     }
 
     // Category UPDATE 
@@ -41,6 +41,8 @@ class CategoryService
         $this->category->find($request->id)->update([
             'name' => $request->name,
             'description' => $request->description,
+            'uom' => implode(', ', $request->uom),
+
         ]);
         return('Data has been updated');
     }

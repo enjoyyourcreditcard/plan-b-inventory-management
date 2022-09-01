@@ -17,11 +17,13 @@ class CategorySeeder extends Seeder
         Category::create([
             'name' => 'Mechanical/Enclosures',
             'description' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae hic nulla quis vitae, eveniet, sunt quidem eaque quae, non quisquam quaerat delectus beatae vero soluta dolores! Est praesentium perspiciatis neque!',
+            'uom' => 'set, unit, each'
         ]);
-
+        
         Category::create([
             'name' => 'Electronics/Connectors/Pin Headers',
             'description' => 'sunt quidem eaque quae, non quisquam quaerat delectus beatae vero soluta dolores! Est praesentium perspiciatis neque Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae hic nulla quis vitae, eveniet,!',
+            'uom' => 'meter, roll, batang'
         ]);
     }
 }

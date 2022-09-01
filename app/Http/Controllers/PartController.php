@@ -82,7 +82,9 @@ class PartController extends Controller
         $stocks = $this->stockService->handleGetStockByPartId($id);
         $categories = $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleGetAllBrand();
+
         $is_sn = $part->sn_status == "sn";
+        $uoms = $this->partService->handleShowUom($id);
         return view('part.detail', [
             'historyprices' => $history_prices,
             'attachment' => $attachment,
@@ -91,6 +93,7 @@ class PartController extends Controller
             'part_id' => $id,
             'categories' => $categories,
             'brands' => $brands,
+            'uoms' => $uoms,
             'is_sn' => $is_sn
         ]);
     }

@@ -5,10 +5,11 @@
 | Part Javascript
 |--------------------------------------------------------------------------
 */
-$(".select2").select2({
+$(".select2").prepend('<option selected></option>').select2({
     width: '100%',
     height: '10px',
     dropdownParent: $("#createPartModal"),
+    placeholder: "Select..",
     theme: "bootstrap"
 }
 );
@@ -19,6 +20,24 @@ $(".select3").select2({
     tags: true,
     dropdownParent: $("#createPartModal"),
     theme: "bootstrap"
+}
+);
+
+$(".select5").select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createCategoryModal"),
+    theme: "classic"
+}
+);
+
+$(".select6").select2({
+    width: '100%',
+    height: '10px',
+    multiple:true,
+    dropdownParent: $("#editCategoryModal"),
+    theme: "classic"
+
 }
 );
 
@@ -44,10 +63,18 @@ $('#editCategoryModal').on('show.bs.modal', function (event) {
     var id = button.data('id')
     var name = button.data('name')
     var description = button.data('description')
+    var uom = button.data('uom')
     var modal = $(this)
+
+    uomArray = uom.split(', ');
+    for(i = 0; i > uomArray.length; i++){
+        console.log(uomArray[i]);
+    }
+    
     modal.find('.modal-body #categoryId').val(id)
     modal.find('.modal-body #categoryDescription').val(description)
     modal.find('.modal-body #categoryName').val(name)
+    $('#categoryUom').val(uomArray).change();
 })
 
 $('#editBrandModal').on('show.bs.modal', function (event) {
@@ -60,6 +87,7 @@ $('#editBrandModal').on('show.bs.modal', function (event) {
 })
 
 
+// <<<<<<< HEAD
 // const name = document.querySelectorAll('.name'); 
 // const inputNameEdit = document.querySelector('.input-name-edit'); 
 // const tombolEdit = document.querySelectorAll('.tombol-edit'); 
@@ -185,3 +213,24 @@ $('#editWarehouseModal').on('show.bs.modal', function (event) {
 //           formEdit.setAttribute('action', '/warehouse/' + e.getAttribute('data-id'))
 //       })
 //   });
+$('#partCategory').on('change', function (e) {
+    var optionSelected = $(this).find("option:selected");
+    var uom = optionSelected.data('uom');
+    uomArray = uom.split(', ');
+    $('.partUomOption').remove();
+    uomArray.forEach(e => {
+        $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
+    });
+});
+
+
+$('#editPartCategory').on('change', function (e) {
+    console.log('hello :)');
+    var optionSelected = $(this).find("option:selected");
+    var uom = optionSelected.data('uom');
+    uomArray = uom.split(', ');
+    $('.partUomOption').remove();
+    uomArray.forEach(e => {
+        $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
+    });
+});
