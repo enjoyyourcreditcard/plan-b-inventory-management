@@ -39,14 +39,27 @@
               </svg>&nbsp;
               Merek</a>
           </li>
+
+          
+          
         </ul>
         <div class="card-body">
           <div class="tab-content">
+
+              {{-- *
+             *|--------------------------------------------------------------------------
+             *| Tab Part
+             *|--------------------------------------------------------------------------
+             *--}}
             <div class="tab-pane active show" id="tabs-part-12" role="tabpanel">
               <div id="parts"></div>
             </div>
+             {{-- *
+             *|--------------------------------------------------------------------------
+             *| Tab Category
+             *|--------------------------------------------------------------------------
+             *--}}
             <div class="tab-pane" id="tabs-category" role="tabpanel">
-
               <div class="pt-3 ">
                 <div class="d-flex">
                   <div>
@@ -117,64 +130,69 @@
                   </div>
                 </div>
               </div>
-             
-                <div className="tabel-horizontal-scroll">
-                  <table class="table table-bordered table-striped">
-                      <thead>
-                        <th >
-                          Category
-                        </th>
-                          <th >
 
-                          Category
-                        </th >
-                        <th >
-                          Description
-                        </th >
-                        <th >
-                          Total Part
-                        </th >
-                      </thead>
-                      <tbody>
-                        @foreach ($categories as $category)
-                        <tr >
-                          <td >
-                            <a href="#" style="min-width: 300px;" class="name">{{ $category->name }}</a>
-                          </td>
-                          <td >
-                              {{ $category->description }}
-                          </td>
-                          <td >
-                            <a href="#">{{ $category->parts->count() }}</a>
-                          </td>
-                          <td >
-                            <button class="btn px-2 border-0 m-auto tombol-edit" data-bs-toggle="modal"
-                              data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
-                              data-name="{{ $category->name }}" data-description="{{$category->description}}">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path
-                                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                <path fill-rule="evenodd"
-                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                        @endforeach
+              <div className="tabel-horizontal-scroll">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th>
+                      Category
+                    </th>
+                    <th>
 
-                        </tbody>
-                  </table>
+                      Category
+                    </th>
+                    <th>
+                      Description
+                    </th>
+                    <th>
+                      Total Part
+                    </th>
+                  </thead>
+                  <tbody>
+                    @foreach ($categories as $category)
+                    <tr>
+                      <td>
+                        <a href="#" style="min-width: 300px;" class="name">{{ $category->name }}</a>
+                      </td>
+                      <td>
+                        {{ $category->description }}
+                      </td>
+                      <td>
+                        <a href="#">{{ $category->parts->count() }}</a>
+                      </td>
+                      <td>
+                        <button class="btn px-2 border-0 m-auto tombol-edit" data-bs-toggle="modal"
+                          data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
+                          data-name="{{ $category->name }}" data-description="{{$category->description}}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path
+                              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                    @endforeach
+
+                  </tbody>
+                </table>
               </div>
-              </div>
+            </div>
 
 
-
+            {{-- *
+             *|--------------------------------------------------------------------------
+             *| Tab Brand
+             *|--------------------------------------------------------------------------
+             *--}}
             <div class="tab-pane" id="tabs-merek" role="tabpanel">
-              <button class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-create" class="btn btn-primary w-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round">
+              <button class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-create"
+                class="btn btn-primary w-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <line x1="12" y1="5" x2="12" y2="19"></line>
                   <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -222,8 +240,8 @@
                         Total Part
                       </th>
                       <th>
-                        Create Date 
-                      </th >
+                        Create Date
+                      </th>
                     </thead>
                     <tbody>
                       @foreach ($brands as $brand)
@@ -234,36 +252,40 @@
                       </tr>
                       @endforeach
 
-                      </tbody>
-                </table>
+                    </tbody>
+                  </table>
                   <div class="float-end me-3">
                     {{ $brands->links() }}
                   </div>
                 </div>
               </div>
             </div>
-
-
-
           </div>
-
         </div>
       </div>
     </div>
   </div>
-  <div class="tab-content">
-    <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
-      <div id="parts"></div>
-    </div>
-    <div class="tab-pane" id="tabs-profile-12" role="tabpanel">
-      <div id="part_category">
-      </div>
+</div>
+</div>
+<div class="tab-content">
+  <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
+    <div id="parts"></div>
+  </div>
+  <div class="tab-pane" id="tabs-profile-12" role="tabpanel">
+    <div id="part_category">
     </div>
   </div>
 </div>
+</div>
 
 
-{{-- Store Part Modal --}}
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Part
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="createPartModal">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -369,7 +391,11 @@
   </div>
 </div>
 
-{{-- Store Category Modal --}}
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Category
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="createCategoryModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -395,7 +421,11 @@
   </div>
 </div>
 
-<!-- Add Brand -->
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Brand
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -425,7 +455,11 @@
 </div>
 
 
-<!-- Edit Brand -->
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Edit Brand
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="editBrandModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

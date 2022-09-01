@@ -502,7 +502,7 @@
                                         <tbody role="rowgroup">
                                             @foreach ($stocks as $stock)
                                             <tr role="row">
-                                                <td role="cell">{{ $stock->wh_id }}</td>
+                                                <td role="cell">{{ $stock->warehouse->wh_name }}</td>
                                                 @if($is_sn == true)
                                                 <td role="cell">{{ $stock->sn_code }}</td>
                                                 @endif
@@ -670,7 +670,7 @@
 
                     <div class="mb-3">
                         <label for="stockWhId" class="form-label">Warehouse</label>
-                        <select class="form-control" id="stockWhId" name="wh_id" required>
+                        <select class="form-control" id="stockWhId" name="warehouse_id" required>
                             <option value="1">Warehouse A</option>
                             <option value="2">Warehouse B</option>
                             <option value="3">Warehouse C</option>
@@ -714,7 +714,7 @@
 
                     <div class="mb-3">
                         <label for="stockWhId" class="form-label">Warehouse</label>
-                        <select class="form-control" id="stockWhId" name="wh_id" required>
+                        <select class="form-control" id="stockWhId" name="warehouse_id" required>
                             <option value="1">Warehouse A</option>
                             <option value="2">Warehouse B</option>
                             <option value="3">Warehouse C</option>

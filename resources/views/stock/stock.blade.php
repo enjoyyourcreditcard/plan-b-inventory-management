@@ -16,11 +16,30 @@
                                 <line x1="10" y1="12" x2="14" y2="12"></line>
                             </svg>&nbsp;Stock</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#tabs-wh" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3 21v-13l9 -4l9 4v13"></path>
+                                <path d="M13 13h4v8h-10v-6h6"></path>
+                                <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
+                            </svg>&nbsp;
+                            Warehouse</a>
+                    </li>
+
                 </ul>
                 <div class="card-body">
                     <div class="tab-content">
+
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab Stock
+                        *|--------------------------------------------------------------------------
+                        *--}}
                         <div class="tab-pane active show" id="tabs-stock-12" role="tabpanel">
-                            {{-- <div id="parts"></div> --}}
                             <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
@@ -163,8 +182,9 @@
                                             @foreach ($stocks as $stock)
                                             <tr role="row">
                                                 <td role="cell">{{ $stock->part->name }}</td>
-                                                <td role="cell">{{ $stock->wh_id }}</td>
-                                                <td role="cell">{{ $stock->sn_code != null ? $stock->sn_code : '-' }}</td>
+                                                <td role="cell">{{ $stock->warehouse->wh_name }}</td>
+                                                <td role="cell">{{ $stock->sn_code != null ? $stock->sn_code : '-' }}
+                                                </td>
                                                 <td role="cell">{{ $stock->condition }}</td>
                                                 <td role="cell">{{ $stock->expired_date }}</td>
                                                 <td role="cell">{{ $stock->stock_status }}</td>
@@ -174,6 +194,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+
                                 <div class=" d-flex align-items-center">
                                     <p class="m-0 ">Showing <span>1</span> of <span>1</span> entries</p>
                                     <div class="pagination m-0 ms-auto">
@@ -197,17 +218,251 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab Warehouse
+                        *|--------------------------------------------------------------------------
+                        *--}}
+                        <div class="tab-pane" id="tabs-wh" role="tabpanel">
+                            <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                                data-target="#createWarehouseModal">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>New Warehouse
+                            </button>
+                            <table class="table table-bordered table-striped">
+
+
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>WareHouse Name</th>
+                                        <th>Regional</th>
+                                        <th>City</th>
+                                        <th>Location</th>
+                                        <th>WareHouse Type</th>
+                                        <th>Contract Status</th>
+                                        <th>Start At</th>
+                                        <th>End At</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                    $no = 1;
+                                    @endphp
+                                    @foreach ($warehouse as $item)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td class="regional">{{ $item->regional }}</td>
+                                        <td class="wh_name">{{ $item->wh_name }}</td>
+                                        <td class="kota">{{ $item->kota }}</td>
+                                        <td class="whlocation">{{ $item->location }}</td>
+                                        <td class="wh_type">{{ $item->wh_type }}</td>
+                                        <td class="contract_status">{{ $item->contract_status }}</td>
+                                        <td class="start_at">{{ $item->start_at }}</td>
+                                        <td class="end_at">{{ $item->end_at }}</td>
+                                        <td style="text-transform: capitalize;">{{ $item->status }}</td>
+                                        <td>
+                                            <a href="{{ url('/inActive/' . $item->id) }}"
+                                                class="btn btn-primary">Change</a>
+                                            |
+                                            <a class="btn_update btn btn-warning" data-id="{{ $item->id }}"
+                                                data-bs-toggle="modal" data-bs-target="#editWarehouseModal"
+                                                data-regional="{{$item->regional}}" data-wh_name="{{$item->wh_name}}"
+                                                data-kota="{{$item->kota}}" data-location="{{$item->location}}"
+                                                data-wh_type="{{$item->wh_type}}"
+                                                data-contract_status="{{$item->contract_status}}"
+                                                data-start_at="{{$item->start_at}}" data-end_at="{{$item->end_at}}"
+                                                data-status="{{$item->status}}" data-id="{{$item->id}}">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="tab-content">
-        <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
-            {{-- <div id="parts"></div> --}}
+
+</div>
+
+
+
+
+
+{{-- *
+* |--------------------------------------------------------------------------
+* | Modal Warehouse
+* |--------------------------------------------------------------------------
+* --}}
+
+<div class="modal fade" id="createWarehouseModal" tabindex="-1" role="dialog"
+    aria-labelledby="createWarehouseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createWarehouseModalLabel">Form Create WareHouse</h5>
+            </div>
+            <form action="/warehouse" method="POST">
+                @csrf
+
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <div class="form-group">
+                            <label for="" class="form-label">WareHouse Name</label>
+                            <input type="text" name="wh_name" class="form-control" id="inputWarehouse"
+                                aria-describedby="emailHelp">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Regional</label>
+                            <input type="text" name="regional" class="form-control " id="inputReginal">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">City</label>
+                            <input type="text" name="kota" class="form-control " id="inputCity">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Location</label>
+                            <input type="text" name="location" class="form-control " id="input">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">WareHouse Type</label>
+                            <input type="text" name="wh_type" class="form-control " id="inputType">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Contract Status</label>
+                            <input type="text" name="contract_status" class="form-control " id="inputContract">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Start At</label>
+                            <input type="date" name="start_at" class="form-control " id="inputStart">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="form-group">
+                            <label for="" class="form-label">End At</label>
+                            <input type="date" name="end_at" class="form-control " id="inputEnd">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="form-group">
+                            <input type="hidden" name="status" class="form-control " id="inputEnd">
+                        </div>
+                    </div>
+
+                    {{-- *End Form --}}
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
+                    --}}
+                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                    <button type="button" class="btn me-auto btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {{-- <button type="submit" class="btn btn-primary">Add Brand</button> --}}
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
 
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editWarehouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Update WareHouse</h5>
+            </div>
+            <form action="/warehouse" method="POST" id="update_wh" class="update_wh">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+
+                    <input type="hidden" name="id" id="whid">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">WareHouse Name</label>
+                        <input type="text" name="wh_name" id="wh_name" class="form-control " id="inputwh_name"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Regional</label>
+                        <input type="text" name="regional" id="whregional" class="form-control " id="inputregional">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">City</label>
+                        <input type="text" name="kota" id="whkota" class="form-control " id="inputkota">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Location</label>
+                        <input type="text" name="location" id="whlocation" class="form-control " id="inputlocation">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">WareHouse Type</label>
+                        <input type="text" name="wh_type" id="wh_type" class="form-control " id="inputwh_type">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Contract Status</label>
+                        <input type="text" name="contract_status" id="whcontract_status" class="form-control "
+                            id="inputcontract_status">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Start At</label>
+                        <input type="date" name="start_at" id="whstart_at" class="form-control" id="inputstart_at">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">End At</label>
+                        <input type="date" name="end_at" id="whend_at" class="form-control" id="inputend_at">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+
+                    {{-- <button type="button" class="btn btn-primary">Submit</button> --}}
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @endsection

@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\StockService;
+use App\Services\WareHouseService;
 
 class StockController extends Controller
 {
-    public function __construct(StockService $stockService) {
+    public function __construct(StockService $stockService, WareHouseService $wareHouseService) {
         $this->stockService = $stockService;
+        $this->wareHouseService = $wareHouseService;
+
     }
 
     public function index() {
         $stocks = $this->stockService->handleAllStock();
+        $warehouse = $this->wareHouseService->handleAllWareHouse();
         return view('stock.stock', [
-            'stocks' => $stocks
+            'stocks' => $stocks,
+            'warehouse' => $warehouse
         ]);
     }
 

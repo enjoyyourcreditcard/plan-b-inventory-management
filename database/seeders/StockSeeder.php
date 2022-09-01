@@ -16,7 +16,7 @@ class StockSeeder extends Seeder
     {
         Stock::create([
             'part_id' => 1,
-            'wh_id' => 1,
+            'warehouse_id' => 1,
             'condition' => 'good new',
             'expired_date' => '2022-10-01',
             'stock_status' => 'in',
@@ -25,7 +25,7 @@ class StockSeeder extends Seeder
 
         Stock::create([
             'part_id' => 1,
-            'wh_id' => 2,
+            'warehouse_id' => 2,
             'condition' => 'good rekondisi',
             'expired_date' => '2022-12-01',
             'stock_status' => 'in',
@@ -34,7 +34,7 @@ class StockSeeder extends Seeder
 
         Stock::create([
             'part_id' => 1,
-            'wh_id' => 2,
+            'warehouse_id' => 2,
             'condition' => 'good potongan',
             'expired_date' => '2022-12-05',
             'stock_status' => 'in',
@@ -43,7 +43,7 @@ class StockSeeder extends Seeder
 
         Stock::create([
             'part_id' => 1,
-            'wh_id' => 1,
+            'warehouse_id' => 1,
             'condition' => 'not good',
             'expired_date' => '2022-07-03',
             'stock_status' => 'in',
@@ -52,7 +52,7 @@ class StockSeeder extends Seeder
 
         Stock::create([
             'part_id' => 3,
-            'wh_id' => 2,
+            'warehouse_id' => 2,
             'sn_code' => 'qwertz',
             'condition' => 'good potongan',
             'expired_date' => '2022-12-05',
@@ -62,7 +62,7 @@ class StockSeeder extends Seeder
 
         Stock::create([
             'part_id' => 3,
-            'wh_id' => 1,
+            'warehouse_id' => 1,
             'sn_code' => 'qwerty',
             'condition' => 'not good',
             'expired_date' => '2022-07-03',

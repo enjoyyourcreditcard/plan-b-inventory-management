@@ -35,9 +35,11 @@ class PartController extends Controller
     {
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
+        
         return view('part.part', [
             'categories' => $categories,
-            'brands'=>$brands
+            'brands'=>$brands,
+           
         ]);
     }
 
@@ -73,6 +75,7 @@ class PartController extends Controller
      */
     public function show($id)
     {
+        // dd("asadsa");
         $history_prices = $this->historypriceService->handleGetHistoryPriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
         $part = $this->partService->handleShowPart($id);

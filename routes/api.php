@@ -33,11 +33,6 @@ Route::get('/tes123', function () {
 })->middleware(["auth:sanctum",'abilities:check-status']);
 
 
-Route::get('/tes', function (Request $req) {
-    dd($req->search);
-    // return ResponseJSON(auth("sanctum")-> user(),401);
-});
-
 
 
 Route::group(['prefix' => 'part'], function () {

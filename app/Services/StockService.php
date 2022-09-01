@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Stock;
 use App\Models\Part;
+use App\Models\Warehouse;
+
 use Illuminate\Http\Request;
 
 class StockService
@@ -23,7 +25,9 @@ class StockService
 
     public function handleGetStockByPartId($id)
     {
-        $stocks = $this->stock->where('part_id', $id)->get();
+        // $stocks = $this->stock->with('warehouse')->get();
+        $stocks = $this->stock->where('part_id', $id)->with('warehouse')->get();
+        // dd($stocks->warehouse_id);
         return($stocks);
     }
 
@@ -31,7 +35,7 @@ class StockService
     {
         $validatedData = $request->validate([
             'part_id' => 'required',
-            'wh_id' => 'required',
+            'warehouse_id' => 'required',
             'sn_code' => 'nullable',
             'condition' => '',
             'expired_date' => 'required',
@@ -71,7 +75,7 @@ class StockService
     public function handleAllStockApi(Request $request)
     {   
         $part_id = $request->input('part_id');
-        $wh_id = $request->input('wh_id');
+        $warehouse_id = $request->input('warehouse_id');
         $condition = $request->input('condition');
         $stock_status = $request->input('stock_status');
         $status = $request->input('status');
@@ -81,8 +85,8 @@ class StockService
         ->when($part_id, function ($query, $part_id){
             return $query->where('part_id', $part_id);
         })
-        ->when($wh_id, function ($query, $wh_id){
-            return $query->where('wh_id', $wh_id);
+        ->when($warehouse_id, function ($query, $warehouse_id){
+            return $query->where('warehouse_id', $warehouse_id);
         })
         ->when($condition, function ($query, $condition){
             return $query->where('condition', $condition);
@@ -105,7 +109,7 @@ class StockService
     {
         $validatedData = $request->validate([
             'part_id' => 'required',
-            'wh_id' => 'required',
+            'warehouse_id' => 'required',
             'sn_code' => 'required',
             'condition' => 'required',
             'expired_date' => 'required',
