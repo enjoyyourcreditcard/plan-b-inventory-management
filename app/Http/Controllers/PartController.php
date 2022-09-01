@@ -80,6 +80,7 @@ class PartController extends Controller
         $stocks = $this->stockService->handleShowStock($id);
         $categories = $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleGetAllBrand();
+        $uoms = $this->partService->handleShowUom($id);
 
         $ifSn = $part->sn_status == "sn";
         
@@ -91,7 +92,8 @@ class PartController extends Controller
             'part_id' => $id,
             'categories' => $categories,
             'brands' => $brands,
-            'ifSn' => $ifSn
+            'ifSn' => $ifSn,
+            'uoms' => $uoms
         ]);
     }
 

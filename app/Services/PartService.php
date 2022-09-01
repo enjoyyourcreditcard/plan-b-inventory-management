@@ -21,23 +21,13 @@ class PartService
     public function handleAllPartApi()
     {
         $parts = $this->part->with('category')->paginate(10);
-
         return ($parts);
     }
-
-    // Part GET
- 
 
     // Part SHOW
     public function handleShowPart($id)
     {
-        // 'part' => ,
         return $this->part->with('category')->find($id);
-        
-        // return view('part.detail', [
-        // 'part' => $this->part->find($id),
-        //     'categories' => $this->category->all()
-        // ]);
     }
 
     // Part STORE 
@@ -117,5 +107,12 @@ class PartService
             $ifSn = false;
         }
         return($ifSn);
+    }
+
+    public function handleShowUom($id)
+    {
+        $uomString = $this->part->find($id)->category->uom;
+        $uomArray = explode(', ', $uomString);
+        return($uomArray);
     }
 }

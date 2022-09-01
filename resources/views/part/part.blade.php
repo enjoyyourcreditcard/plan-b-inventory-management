@@ -124,15 +124,14 @@
                         <th >
                           Category
                         </th>
-                          <th >
-
-                          Category
-                        </th >
                         <th >
                           Description
                         </th >
                         <th >
                           Total Part
+                        </th >
+                        <th >
+                          Act
                         </th >
                       </thead>
                       <tbody>
@@ -148,9 +147,13 @@
                             <a href="#">{{ $category->parts->count() }}</a>
                           </td>
                           <td >
-                            <button class="btn px-2 border-0 m-auto tombol-edit" data-bs-toggle="modal"
-                              data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
-                              data-name="{{ $category->name }}" data-description="{{$category->description}}">
+                            <button class="btn px-2 border-0 m-auto tombol-edit"
+                              data-bs-toggle="modal"
+                              data-bs-target="#editCategoryModal"
+                              data-id="{{ $category->id }}"
+                              data-uom="{{ $category->uom }}"
+                              data-name="{{ $category->name }}"
+                              data-description="{{$category->description}}">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -282,8 +285,9 @@
             <div class="mb-2">
               <label for="partCategory" class="form-label">Category</label>
               <select class="form-control  select2" id="partCategory" name="category_id" required>
+                {{-- <option selected></option> --}}
                 @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
                 @endforeach
               </select>
             </div>
@@ -300,17 +304,6 @@
             <div class="mb-2">
               <label for="partUom" class="form-label">Uom</label>
               <select class="form-select select2" id="partUom" name="uom" required>
-                <option value="meter">Meter</option>
-                <option value="set">Set</option>
-                <option value="each">Each</option>
-                <option value="roll">Roll</option>
-                <option value="unit">Unit</option>
-                <option value="batang">Batang</option>
-                <option value="liter">Liter</option>
-                <option value="kaleng">Kaleng</option>
-                <option value="kg">Kg</option>
-                <option value="kubic">Kubic</option>
-                <option value="pack">Pack</option>
               </select>
             </div>
 
@@ -324,7 +317,7 @@
 
             <div class="mb-2">
               <label for="partColor" class="form-label">Color</label>
-              <select class="form-control select3" id="partColor" name="color" required>
+              <select class="form-select select3" id="partColor" name="color" required>
                 <option value="Black">Black</option>
                 <option value="White">White</option>
                 <option value="Grey">Grey</option>
@@ -374,7 +367,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Create New Part</h5>
+        <h5 class="modal-title">Create New Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -387,6 +380,22 @@
           <div class="mb-3">
             <label for="categoryDescription" class="form-label">Description</label>
             <textarea class="form-control" id="categoryDescription" rows="3" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="categoryUom" class="form-label">Uom</label>
+            <select class="form-select select5" name="uom[]" required multiple="multiple">
+              <option value="meter">Meter</option>
+              <option value="set">Set</option>
+              <option value="each">Each</option>
+              <option value="roll">Roll</option>
+              <option value="unit">Unit</option>
+              <option value="batang">Batang</option>
+              <option value="liter">Liter</option>
+              <option value="kaleng">Kaleng</option>
+              <option value="kg">Kg</option>
+              <option value="kubic">Kubic</option>
+              <option value="pack">Pack</option>
+            </select>
           </div>
           <button type="submit" class="btn float-end mt-5">Save</button>
         </form>
@@ -424,6 +433,53 @@
   </div>
 </div>
 
+
+<!-- Edit Category Modal -->
+<div class="modal modal-blur fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/category/update" method="post" class="form-edit">
+        @csrf
+        <div class="modal-body">
+          <input type="hidden" class="form-control" name="id" id="categoryId" required>
+          <div class="mb-3">
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" name="name" id="categoryName" required>
+          </div>
+          <div class="mb-3">
+            <label for="categoryDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="categoryDescription" rows="3" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="categoryUom" class="form-label">Uom</label>
+            {{-- <input type="text" name="uom" id="categoryUom"> --}}
+            <select class="form-select select6" name="uom[]" id="categoryUom" required multiple="multiple">
+              <option value="meter">Meter</option>
+              <option value="set">Set</option>
+              <option value="each">Each</option>
+              <option value="roll">Roll</option>
+              <option value="unit">Unit</option>
+              <option value="batang">Batang</option>
+              <option value="liter">Liter</option>
+              <option value="kaleng">Kaleng</option>
+              <option value="kg">Kg</option>
+              <option value="kubic">Kubic</option>
+              <option value="pack">Pack</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- Edit Brand -->
 <div class="modal modal-blur fade" id="editBrandModal" tabindex="-1" role="dialog" aria-hidden="true">

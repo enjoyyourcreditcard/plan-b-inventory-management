@@ -821,10 +821,10 @@
                 <h5 class="modal-title">Edit Part</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/part/" method="POST" enctype="multipart/form-data">
+            <form action="/part/{{ $part->id }}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                    @method('put')
                     @csrf
+                    @method('put')
                     <div class="row">
                         <div class="mb-2">
                             <label for="partName" class="form-label">Part Name</label>
@@ -832,13 +832,13 @@
                                 value="{{ $part->name }}">
                         </div>
                         <div class="mb-2">
-                            <label for="partCategory" class="form-label">Category</label>
-                            <select class="form-control  select2EditPart" id="partCategory" name="category_id" required>
+                            <label for="editPartCategory" class="form-label">Category</label>
+                            <select class="form-control select2EditPart" id="editPartCategory" name="category_id" required>
                                 @foreach ($categories as $category)
                                 @if ($part->category_id == $category->id)
-                                <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
                                 @else
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
                                 @endif
                                 @endforeach
                             </select>
@@ -860,17 +860,13 @@
                         <div class="mb-2">
                             <label for="partUom" class="form-label">Uom</label>
                             <select class="form-select select2EditPart" id="partUom" name="uom" required>
-                                <option value="meter" {{ $part->uom == "meter" ? 'selected' : '' }}>Meter</option>
-                                <option value="set" {{ $part->uom == "set" ? 'selected' : '' }}>Set</option>
-                                <option value="each" {{ $part->uom == "each" ? 'selected' : '' }}>Each</option>
-                                <option value="roll" {{ $part->uom == "roll" ? 'selected' : '' }}>Roll</option>
-                                <option value="unit" {{ $part->uom == "unit" ? 'selected' : '' }}>Unit</option>
-                                <option value="batang" {{ $part->uom == "batang" ? 'selected' : '' }}>Batang</option>
-                                <option value="liter" {{ $part->uom == "liter" ? 'selected' : '' }}>Liter</option>
-                                <option value="kaleng" {{ $part->uom == "kaleng" ? 'selected' : '' }}>Kaleng</option>
-                                <option value="kg" {{ $part->uom == "kg" ? 'selected' : '' }}>Kg</option>
-                                <option value="kubic" {{ $part->uom == "kubic" ? 'selected' : '' }}>Kubic</option>
-                                <option value="pack" {{ $part->uom == "pack" ? 'selected' : '' }}>Pack</option>
+                                @foreach ($uoms as $uom)
+                                    @if ($uom == $part->uom)
+                                    <option class="partUomOption" value="{{ $uom }}" selected>{{ $uom }}</option>
+                                    @else
+                                    <option class="partUomOption" value="{{ $uom }}">{{ $uom }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
 
@@ -923,6 +919,8 @@
                             <label for="partImage" class="form-label">Part Image</label>
                             <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
                         </div>
+
+                        <input type="hidden" name="oldImg" value="{{ $part->img }}">
                     </div>
                 </div>
                 <div class="modal-footer">
