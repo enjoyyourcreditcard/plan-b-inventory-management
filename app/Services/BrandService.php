@@ -52,4 +52,25 @@ class BrandService
         $brand->save();
         return ($brand);
     }
+
+    public function handleGetAllBrandGroupByCategory()
+    {
+        $brands = $this->brand->all()->groupBy('category_id');
+        if (count($brands) == 0) {
+            $brandString = '';
+        }else{
+            $array = [];
+            foreach($brands as $key1 => $brand) {
+                foreach($brand as $key2 => $data) {
+                    $array[$key1][$key2] = $data->id;
+                }
+                $brandString[$key1]['id'] = implode(', ', $array[$key1]);
+                foreach($brand as $key3 => $data) {
+                    $array[$key1][$key3] = $data->name;
+                }
+                $brandString[$key1]['name'] = implode(', ', $array[$key1]);
+            }
+        }
+        return($brandString);
+    }
 }

@@ -87,23 +87,6 @@ $('#editBrandModal').on('show.bs.modal', function (event) {
 })
 
 
-// <<<<<<< HEAD
-// const name = document.querySelectorAll('.name'); 
-// const inputNameEdit = document.querySelector('.input-name-edit'); 
-// const tombolEdit = document.querySelectorAll('.tombol-edit'); 
-// const formEdit = document.querySelector('.form-edit'); 
-
-// tombolEdit.forEach((e, i) => { 
-//     e.addEventListener('click', function () { 
-//         inputNameEdit.value = ''; 
-//         inputNameEdit.value = name[i].innerHTML.trim();                         
-//         formEdit.removeAttribute('action'); 
-//         formEdit.setAttribute('action', '/brand/' + e.getAttribute('data-id')) 
-//     }) 
-// }); 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Detail Part Javascript
@@ -213,23 +196,83 @@ $('#editWarehouseModal').on('show.bs.modal', function (event) {
 //           formEdit.setAttribute('action', '/warehouse/' + e.getAttribute('data-id'))
 //       })
 //   });
+
+
 $('#partCategory').on('change', function (e) {
+    //Set Variables
     var optionSelected = $(this).find("option:selected");
     var uom = optionSelected.data('uom');
+    var brandId = optionSelected.data('brandid');
+    var brandName = optionSelected.data('brandname');
+    
+    //Strings to Arrays
     uomArray = uom.split(', ');
+    brandArray = [];
+    if (typeof(brandId) == 'string')
+    {
+        brandArray['id'] = brandId.split(', ');
+        brandArray['name'] = brandName.split(', ');
+    }
+    else
+    {
+        brandArray['id'] = '';
+        brandArray['name'] = '';
+    }
+
+    // Delete Other Options
     $('.partUomOption').remove();
+    $('.partBrandOption').remove();
+
+    // Create New Options for UOM
     uomArray.forEach(e => {
         $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
     });
+
+    // Create New Options for Brands
+    let i = 0;
+    while (i < brandArray['id'].length) {
+        $('#partBrand').append("<option class='partBrandOption' value='"+ brandArray['id'][i] +"'>"+ brandArray['name'][i] +"</option>");
+        i++;
+    }
 });
 
 
 $('#editPartCategory').on('change', function (e) {
+    //Set Variables
     var optionSelected = $(this).find("option:selected");
     var uom = optionSelected.data('uom');
+    var brandId = optionSelected.data('brandid');
+    var brandName = optionSelected.data('brandname');
+    console.log('Pertama ' + uom);
+    console.log('Kedua ' + brandId);
+
+    //Strings to Arrays
     uomArray = uom.split(', ');
+    brandArray = [];
+    if (typeof(brandId) == 'string')
+    {
+        brandArray['id'] = brandId.split(', ');
+        brandArray['name'] = brandName.split(', ');
+    }
+    else
+    {
+        brandArray['id'] = '';
+        brandArray['name'] = '';
+    }
+
+    // Delete Other Options
     $('.partUomOption').remove();
+    $('.partBrandOption').remove();
+
+    // Create New Options for UOM
     uomArray.forEach(e => {
         $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
     });
+    
+    // Create New Options for Brands
+    let i = 0;
+    while (i < brandArray['id'].length) {
+        $('#partBrand').append("<option class='partBrandOption' value='"+ brandArray['id'][i] +"'>"+ brandArray['name'][i] +"</option>");
+        i++;
+    }
 });

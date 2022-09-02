@@ -835,9 +835,9 @@
                             <select class="form-control select2EditPart" id="editPartCategory" name="category_id" required>
                                 @foreach ($categories as $category)
                                 @if ($part->category_id == $category->id)
-                                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
-                                @else
-                                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : $brand['nameString'][$category->id] }}" data-brandid="{{ $brand == null ? '' : $brand['idString'][$category->id] }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
+                                @else   
+                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : $brand['nameString'][$category->id] }}" data-brandid="{{ $brand == null ? '' : $brand['idString'][$category->id] }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
                                 @endif
                                 @endforeach
                             </select>
@@ -846,13 +846,14 @@
                         <div class="mb-2">
                             <label for="partBrand" class="form-label">Brand</label>
                             <select class="form-select select2EditPart" id="partBrand" name="brand_id" required>
-                                @foreach ($brands as $brand)
-                                @if ($part->brand_id == $brand->id)
-                                <option value="{{ $brand->id }}" selected>{{ $brand->name }}</option>
+                                @for ($i = 0; $i < count($brand['id']); $i++)
+                                @if ($part->brand_id == $brand['id'][$i])
+                                <option class="partBrandOption" value="{{ $brand['id'][$i] }}" selected>{{ $brand['name'][$i] }}</option>
                                 @else
-                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                <option class="partBrandOption" value="{{ $brand['id'][$i] }}">{{ $brand['name'][$i] }}</option>
                                 @endif
-                                @endforeach
+                                @endfor
+
                             </select>
                         </div>
 
