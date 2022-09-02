@@ -5787,7 +5787,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Table */ "./resources/js/components/Table/index.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _table_hidden_column__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./table_hidden_column */ "./resources/js/components/table_hidden_column/index.js");
 /* harmony import */ var _table_search__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./table_search */ "./resources/js/components/table_search/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -6087,7 +6087,7 @@ function LatestPart() {
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         className: "tabel-horizontal-scroll",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Table__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(Object(function webpackMissingModule() { var e = new Error("Cannot find module './Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
           getTableProps: getTableProps,
           prepareRow: prepareRow,
           getTableBodyProps: getTableBodyProps,
@@ -6184,87 +6184,6 @@ function LatestPart() {
 if (document.getElementById('latest-part')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(LatestPart, {}), document.getElementById('latest-part'));
 }
-
-/***/ }),
-
-/***/ "./resources/js/components/Table/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/components/Table/index.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-function Table(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "tabel-horizontal-scroll",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", _objectSpread(_objectSpread({}, props.getTableProps()), {}, {
-        className: "table table-bordered table-striped",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-          children: props.headerGroups.map(function (headerGroup) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", _objectSpread(_objectSpread({}, headerGroup.getHeaderGroupProps()), {}, {
-              children: headerGroup.headers.map(function (column) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("th", _objectSpread(_objectSpread({
-                  "class": "w-1"
-                }, column.getHeaderProps(column.getSortByToggleProps())), {}, {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("b", {
-                    children: column.render('Header')
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    "class": "icon icon-sm text-dark icon-thick",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    "stroke-width": "2",
-                    stroke: "currentColor",
-                    fill: "none",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
-                      stroke: "none",
-                      d: "M0 0h24v24H0z",
-                      fill: "none"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("polyline", {
-                      points: "6 15 12 9 18 15"
-                    })]
-                  })]
-                }));
-              })
-            }));
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", _objectSpread(_objectSpread({}, props.getTableBodyProps()), {}, {
-          children: props.page.map(function (row, i) {
-            props.prepareRow(row);
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", _objectSpread(_objectSpread({}, row.getRowProps()), {}, {
-              children: row.cells.map(function (cell) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", _objectSpread(_objectSpread({}, cell.getCellProps()), {}, {
-                  children: cell.render('Cell')
-                }));
-              })
-            }));
-          })
-        }))]
-      }))
-    })
-  });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Table);
 
 /***/ }),
 
@@ -6644,7 +6563,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_tabel_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/tabel_footer */ "./resources/js/components/tabel_footer/index.js");
-/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Table */ "./resources/js/components/Table/index.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _components_table_hidden_column__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/table_hidden_column */ "./resources/js/components/table_hidden_column/index.js");
 /* harmony import */ var _components_table_search__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/table_search */ "./resources/js/components/table_search/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -6759,7 +6678,7 @@ function Category() {
           allColumns: allColumns
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_Table__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
       getTableProps: getTableProps,
       prepareRow: prepareRow,
       getTableBodyProps: getTableBodyProps,
@@ -6801,7 +6720,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_tabel_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/tabel_footer */ "./resources/js/components/tabel_footer/index.js");
-/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Table */ "./resources/js/components/Table/index.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _components_table_hidden_column__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/table_hidden_column */ "./resources/js/components/table_hidden_column/index.js");
 /* harmony import */ var _components_table_search__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/table_search */ "./resources/js/components/table_search/index.js");
 /* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-modal */ "./node_modules/react-modal/lib/index.js");
@@ -7266,7 +7185,7 @@ function DetailPart() {
           allColumns: allColumns
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Table__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
       getTableProps: getTableProps,
       prepareRow: prepareRow,
       getTableBodyProps: getTableBodyProps,
@@ -7308,7 +7227,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
 /* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_tabel_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/tabel_footer */ "./resources/js/components/tabel_footer/index.js");
-/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Table */ "./resources/js/components/Table/index.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _components_table_hidden_column__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/table_hidden_column */ "./resources/js/components/table_hidden_column/index.js");
 /* harmony import */ var _components_table_search__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/table_search */ "./resources/js/components/table_search/index.js");
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/api */ "./resources/js/utils/api/index.js");
@@ -7630,7 +7549,7 @@ function Parts() {
       })
     }), loadingData ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
       children: "Loading Please wait..."
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Table__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../components/Table'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
       getTableProps: getTableProps,
       prepareRow: prepareRow,
       getTableBodyProps: getTableBodyProps,

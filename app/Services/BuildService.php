@@ -49,9 +49,12 @@ class BuildService{
     }
 
     public function handleDeleteBuild($id){
-        $build = $this->build::find($id);
-        $build->delete();
-        return($build);
+        $buildName = $this->build::find($id)->name;
+        $builds = $this->build->where('name', $buildName)->get();
+        foreach($builds as $build){
+            $build->delete();
+        }
+        return($builds);
     }
 
     public function handleArrayToStringBuild() {

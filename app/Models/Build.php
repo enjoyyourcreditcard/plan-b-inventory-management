@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Build extends Model
 {
     use HasFactory;
-    protected $table = 'builds';
+    protected $table = 'db_builds_function';
     protected $guarded = [
         'id'
     ];

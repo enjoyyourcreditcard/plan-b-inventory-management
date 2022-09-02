@@ -13,7 +13,7 @@ class CreateBuildsTable extends Migration
      */
     public function up()
     {
-        Schema::create('builds', function (Blueprint $table) {
+        Schema::create('db_builds_function', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->bigInteger('part_id')->unsigned()->nullable();
