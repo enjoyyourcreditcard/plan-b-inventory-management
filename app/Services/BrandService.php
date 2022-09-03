@@ -21,13 +21,12 @@ class BrandService
 
     public function handleAllBrand()
     {
-        $brands = $this->brand->paginate(5);
+        $brands = $this->brand->with('category')->get();
         return ($brands);
     }
 
     public function handleStoreBrand(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'name' => 'required|unique:brands',
             'category_id' => 'required',

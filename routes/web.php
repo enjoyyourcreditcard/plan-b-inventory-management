@@ -11,6 +11,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\WarehouseController;
+use Illuminate\Support\Facades\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,16 @@ use App\Http\Controllers\WarehouseController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to("/home");
+
 });
+
+
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/me', function (Request $request) {
+//         return Auth::user()->tokens;
+//     });
+// });
 
 
 // Route::get('/part', function () {

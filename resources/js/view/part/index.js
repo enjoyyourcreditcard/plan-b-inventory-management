@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useTable, usePagination, useGlobalFilter, useSortBy, useFilters } from 'react-table'
+import ReactTooltip from 'react-tooltip';
 import TabelFooter from '../../components/tabel_footer';
 import Table from '../../components/Table';
 import TabelHiddenColumn from '../../components/table_hidden_column';
+import TableLoading from '../../components/table_loding';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
 
@@ -13,7 +15,6 @@ function Parts() {
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
     const [data, setData] = useState([]);
-    // const [page, setPage] = useState(1);
 
     useEffect(() => {
         async function getData() {
@@ -30,7 +31,7 @@ function Parts() {
     }, []);
 
     function filterNoStock() {
-        let data = noStock ? rawData : rawData.filter((i) => i.size === 1)
+        let data = noStock ? rawData : rawData.filter((i) => i.stocks_count === 0)
         setData(data);
         setNoStock(!noStock);
     }
@@ -47,14 +48,15 @@ function Parts() {
 
                 Cell: tableProps => (
                     <>
-                        <div id="thumbwrap" >
-                            <a class="thumb" href="#"><img src={"/"+tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
-                                <span>
-                                    <img src={"/"+tableProps.row.original.img} alt="" style={{ border: "1px solid #CCCCEE" }} />
-                                </span>
-                            </a>
-                            <a href={"/part/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
-                        </div>
+                        <ReactTooltip place="right"  effect="solid"   backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
+                        <img src={"/" + tableProps.row.original.img} />} />
+
+                    <div id="thumbwrap" >
+                        <a data-tip={tableProps.row.original.name}>
+                            <img src={"/" + tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
+                        </a>
+                        <a href={"/part/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
+                    </div>
                     </>
                 )
             }, {
@@ -91,10 +93,10 @@ function Parts() {
                 Cell: tableProps => (
                     <>
 
-                        <a href='#' className='text-primary '>{tableProps.row.original.size}</a>
+                        <a href='#' className='text-primary '>{tableProps.row.original.stocks_count}</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
-                        {tableProps.row.original.size <= 1 ?
+                        {tableProps.row.original.stocks_count < 1 ?
                     //     <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
                     //     Tooltip on top
                     //   </button>
@@ -179,7 +181,7 @@ function Parts() {
                 </div>
             </div>
             {loadingData ? (
-                <p>Loading Please wait...</p>
+                <TableLoading/>
             ) : (
                 <Table
                     getTableProps={getTableProps}

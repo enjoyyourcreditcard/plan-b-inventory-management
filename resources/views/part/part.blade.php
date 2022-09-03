@@ -60,8 +60,8 @@
              *|--------------------------------------------------------------------------
              *--}}
             <div class="tab-pane" id="tabs-category" role="tabpanel">
-              <div class="pt-3 ">
-                <div class="d-flex">
+                <div id="part-category"></div>
+                {{-- <div class="d-flex">
                   <div>
                     <button data-bs-toggle="modal" data-bs-target="#createCategoryModal" class="btn btn-primary w-100">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
@@ -128,11 +128,10 @@
                         class="dropdown-item" href="#"><input type="checkbox" title="Toggle Column Visible" checked=""
                           style="cursor: pointer;">&nbsp; Link</button></div>
                   </div>
-                </div>
-              </div>
+                </div> --}}
 
              
-                <div className="tabel-horizontal-scroll">
+                {{-- <div className="tabel-horizontal-scroll">
                   <table class="table table-bordered table-striped">
                       <thead>
                         <th >
@@ -182,7 +181,7 @@
 
                   </tbody>
                 </table>
-              </div>
+              </div> --}}
             </div>
 
 
@@ -192,7 +191,8 @@
              *|--------------------------------------------------------------------------
              *--}}
             <div class="tab-pane" id="tabs-merek" role="tabpanel">
-              <button class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-create"
+              <div id="part-brand"></div>
+              {{-- <button class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-create"
                 class="btn btn-primary w-100">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24"
                   viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -210,33 +210,6 @@
               @endif
               <div class="card">
                 <div class="table-responsive">
-                  {{-- <table class="table card-table table-vcenter text-nowrap datatable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Brand</th>
-                        <th>Status</th>
-                        <th>:::</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($brands as $item)
-                      <tr>
-                        <th>{{ $loop->iteration }}</th>
-                        <td class="name text-capitalize">{{ $item->name }}</td>
-                        <td class="text-capitalize">{{ $item->status }}</td>
-                        <td>
-                          <a href="{{ url('/delete/'.$item->id) }}">Delete</a>
-                          |
-                          <a href="#" data-bs-toggle="modal" data-bs-target="#editBrandModal" class="tombol-edit"
-                            data-id="{{ $item->id }}" data-name="{{$item->name}}">
-                            Edit
-                          </a>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table> --}}
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th>Brand</th>
@@ -262,7 +235,7 @@
                     {{ $brands->links() }}
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -453,8 +426,6 @@
 
           <div class="mb-3">
             <label for="name" class="form-label">Category</label>
-            {{-- <input type="text" class="form-control" value="1" name="category_id" required> --}}
-
               <select name="category_id" class="form-control" >
                 @foreach ($categories as $item)
                 <option value="{{$item->id}}">{{$item->name}}</option>

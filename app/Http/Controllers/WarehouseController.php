@@ -18,6 +18,12 @@ class WarehouseController extends Controller
         $warehouse = $this->warehouseService->handleAllWareHouse();
         return view('warehouse.warehouse', compact('warehouse'));
     }
+    
+    public function getAllWarehouse()
+    {
+        return ResponseJSON($this->warehouseService->handleAllWareHouse(), 200);
+    }
+
 
     public function store(Request $request){
         $this->warehouseService->handleStoreWareHouse($request);
@@ -30,7 +36,6 @@ class WarehouseController extends Controller
     }
 
     public function update(Request $request, $id){
-        // return($request);
         $this->warehouseService->handleUpdateWareHouse($request, $id);
         return redirect('/warehouse');
     }

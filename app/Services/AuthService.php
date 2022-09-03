@@ -27,10 +27,13 @@ class AuthService
         if (!Hash::check($request->password, $user->password, [])) {
             throw new \Exception('Error in Login');
         }
-        $tokenResult = $user->createToken('token-auth', ['server:update'])->plainTextToken;
+        // $tokenResult = $user->createToken('token-auth', ['server:update'])->plainTextToken;
+        $request->session()->regenerate();
+        $request->session()->get('token', $user->createToken('token-auth', ['show-part'])->plainTextToken);
+        
         return ResponseJSON([
             'user' => $user,
-            'access_token' => $tokenResult,
+            // 'access_token' => $tokenResult,
         ],  200);
     }
 

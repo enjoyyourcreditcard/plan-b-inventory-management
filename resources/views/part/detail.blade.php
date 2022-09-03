@@ -656,47 +656,7 @@
 </div>
 
 {{-- Store Stock Modal --}}
-<div class="modal modal-blur fade" id="createStockModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form action="{{ Route('post.store.stock') }}" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create New Stock</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <input type="hidden" name="part_id" value="{{ $part->id }}">
 
-                    <div class="mb-3">
-                        <label for="stockWhId" class="form-label">Warehouse</label>
-                        <select class="form-control" id="stockWhId" name="warehouse_id" required>
-                            <option value="1">Warehouse A</option>
-                            <option value="2">Warehouse B</option>
-                            <option value="3">Warehouse C</option>
-                        </select>
-                    </div>
-
-                    @if ($is_sn == true)
-                    <div class="mb-3">
-                        <label for="stockSnCode" class="form-label">SN Code</label>
-                        <input type="text" class="form-control" id="stockSnCode" name="sn_code" required>
-                    </div>
-                    @endif
-
-                    <div class="mb-3">
-                        <label for="stockExpiredDate" class="form-label">Expired Date</label>
-                        <input type="date" class="form-control" id="stockExpiredDate" name="expired_date" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 {{-- Edit Stock Modal --}}
 <div class="modal modal-blur fade" id="editStockModal">

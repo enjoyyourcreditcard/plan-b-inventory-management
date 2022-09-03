@@ -34,6 +34,47 @@ export default class Api {
       });
   };
 
+  getCategory = () => {
+    return this.init()
+      .get(`category`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  getBrand = () => {
+    return this.init()
+      .get(`brand`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  getStock = () => {
+    return this.init()
+      .get(`stock`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  getWarehouse = () => {
+    return this.init()
+      .get(`warehouse`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+
+  
+
+
+  
   // getTrandingList = () => {
   //   return this.init()
   //     .get(`/get/news/tranding`)

@@ -286,7 +286,7 @@
 
             </div>
             <footer class="footer footer-transparent d-print-none">
-                <div class="container-xl">
+                <div class="container container-header">
                     <div class="row text-center align-items-center flex-row-reverse">
                         <div class="col-lg-auto ms-lg-auto">
                             <ul class="list-inline list-inline-dots mb-0">
@@ -294,8 +294,7 @@
                                         class="link-secondary">Documentation</a></li>
                                 <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a>
                                 </li>
-                                <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
-                                        class="link-secondary" rel="noopener">Source code</a></li>
+                               
                                 <li class="list-inline-item">
                                     <a href="https://github.com/sponsors/codecalm" target="_blank"
                                         class="link-secondary" rel="noopener">
@@ -313,18 +312,18 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                        <div class="col-12 col-lg-auto mt-lg-0">
                             <ul class="list-inline list-inline-dots mb-0">
                                 <li class="list-inline-item">
                                     Copyright &copy; 2022
-                                    <a href="." class="link-secondary">Tabler</a>.
+                                    <a href="." class="link-secondary">Inventory Management</a>.
                                     All rights reserved.
                                 </li>
-                                <li class="list-inline-item">
+                                {{-- <li class="list-inline-item">
                                     <a href="./changelog.html" class="link-secondary" rel="noopener">
                                         v1.0.0-beta11
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -346,7 +345,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{asset('assets/js/tabler.min.js')}}" ></script>
@@ -354,9 +352,7 @@
 
     @yield('additionalJs')
 
-=======
     @yield('jsModal')
->>>>>>> origin/warehouse
 </body>
 
 </html>

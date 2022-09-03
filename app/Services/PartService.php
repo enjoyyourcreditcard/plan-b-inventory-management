@@ -22,9 +22,17 @@ class PartService
     // API Part GET
     public function handleAllPartApi()
     {
-        $parts = $this->part->with('category')->with('brand')->paginate(10);
+        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->paginate(10);
         return ($parts);
     }
+
+     // API Part GET
+     public function handleAllPart()
+     {
+         $parts = $this->part->all();
+         return ($parts);
+     }
+ 
 
     // Part SHOW
     public function handleShowPart($id)

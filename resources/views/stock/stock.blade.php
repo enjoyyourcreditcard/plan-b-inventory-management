@@ -31,7 +31,7 @@
                     </li>
 
                 </ul>
-                <div class="card-body">
+                <div class="card-body" >
                     <div class="tab-content">
 
                         {{-- *
@@ -40,7 +40,8 @@
                         *|--------------------------------------------------------------------------
                         *--}}
                         <div class="tab-pane active show" id="tabs-stock-12" role="tabpanel">
-                            <div>
+                        <div id="stock"></div>
+                            {{-- <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
                                         <div class="ms-auto text-muted">
@@ -216,7 +217,7 @@
                                                 </svg></button></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
 
@@ -226,18 +227,9 @@
                         *|--------------------------------------------------------------------------
                         *--}}
                         <div class="tab-pane" id="tabs-wh" role="tabpanel">
-                            <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                                data-target="#createWarehouseModal">
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>New Warehouse
-                            </button>
-                            <table class="table table-bordered table-striped">
+                           
+                            <div id="stock-warehouse"></div>
+                            {{-- <table class="table table-bordered table-striped">
 
 
                                 <thead>
@@ -289,7 +281,7 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table> --}}
 
                         </div>
                     </div>
@@ -461,6 +453,62 @@
                 </div>
             </form>
 
+        </div>
+    </div>
+</div>
+
+
+
+{{-- *
+* |--------------------------------------------------------------------------
+* | Modal Stock
+* |--------------------------------------------------------------------------
+* --}}
+<div class="modal modal-blur fade" id="createStockModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ Route('post.store.stock') }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Stock</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="stockWhId" class="form-label">Part</label>
+                        <select class="form-control" name="part_id" required>
+                            @foreach ($parts as $part)
+                            <option value="{{$part->id}}">{{$part->name}}</option>
+                            @endforeach
+                         
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockWhId" class="form-label">Warehouse</label>
+                        <select class="form-control" name="warehouse_id" required>
+                            <option value="1">Warehouse A</option>
+                            <option value="2">Warehouse B</option>
+                            <option value="3">Warehouse C</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockSnCode" class="form-label">SN Code</label>
+                        <input type="text" class="form-control" id="stockSnCode" name="sn_code" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockExpiredDate" class="form-label">Expired Date</label>
+                        <input type="date" class="form-control" id="stockExpiredDate" name="expired_date" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

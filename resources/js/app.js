@@ -15,8 +15,13 @@ require('./bootstrap');
 require('./components/Example');
 require('./components/LatestPart');
 require('./view/part');
+require('./view/stock');
+require('./view/stock/warehouse');
+
+
 require('./view/part/detail');
 require('./view/part/category');
+require('./view/part/brand');
 
 
 

@@ -86,6 +86,11 @@ $('#editBrandModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body #brandName').val(name)
 })
 
+$('a[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom',
+    html: true
+});
 
 // <<<<<<< HEAD
 // const name = document.querySelectorAll('.name'); 

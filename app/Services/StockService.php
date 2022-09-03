@@ -99,7 +99,7 @@ class StockService
         })
         ->when($created_at, function ($query, $created_at){
             return $query->where('created_at', $created_at);
-        })
+        })->with('part')->with('warehouse')->with('part.brand')->with('part.category')
         ->get();
 
         return($stocks);

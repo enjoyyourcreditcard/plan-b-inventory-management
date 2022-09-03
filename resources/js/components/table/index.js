@@ -1,8 +1,8 @@
 function Table(props) {
     return (<>
-        <div className="tabel-horizontal-scroll">
-            <table {...props.getTableProps()} className="table table-bordered table-striped">
-                <thead>
+        <div className="table-responsive mb-3">
+            <table {...props.getTableProps()} className="table table-borderless table-striped" >
+                <thead >
                     {props.headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
@@ -13,13 +13,15 @@ function Table(props) {
                         </tr>
                     ))}
                 </thead>
-                <tbody {...props.getTableBodyProps()} >
+                <tbody {...props.getTableBodyProps()}>
                     {props.page.map((row, i) => {
                         props.prepareRow(row)
                         return (
                             <tr {...row.getRowProps()} >
                                 {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                
+                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+
                                 })}
                             </tr>
                         )

@@ -32,7 +32,11 @@ class CategoryService
 
     public function handleGetAllCategory()
     {
-        return $this->category::all();
+
+
+        return $this->category::with('parts')->get();
+
+
     }
 
     // Category UPDATE 

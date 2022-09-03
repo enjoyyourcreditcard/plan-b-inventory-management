@@ -27,4 +27,12 @@ class CategoryController extends Controller
         $this->categoryService->handleDeactiveCategory($id);
         return redirectTab("tabs-category");
     }
+    
+    public function getAllCategory()
+    {
+        return ResponseJSON($this->categoryService->handleGetAllCategory(), 200);
+
+        
+
+    }
 }

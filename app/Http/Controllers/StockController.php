@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PartService;
 use Illuminate\Http\Request;
 use App\Services\StockService;
 use App\Services\WareHouseService;
 
 class StockController extends Controller
 {
-    public function __construct(StockService $stockService, WareHouseService $wareHouseService) {
+    public function __construct(StockService $stockService, WareHouseService $wareHouseService, PartService $partService) {
         $this->stockService = $stockService;
         $this->wareHouseService = $wareHouseService;
+        $this->partService = $partService;
 
     }
 
     public function index() {
         $stocks = $this->stockService->handleAllStock();
         $warehouse = $this->wareHouseService->handleAllWareHouse();
+        $parts = $this->partService->handleAllPart();
+        // $is_sn = $part->sn_status == "sn";
+
         return view('stock.stock', [
             'stocks' => $stocks,
+            'parts' => $parts,
             'warehouse' => $warehouse
         ]);
     }
