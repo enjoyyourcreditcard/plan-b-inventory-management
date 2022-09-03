@@ -119,10 +119,34 @@ class PartService
         return($ifSn);
     }
 
-    public function handleShowUom($id)
+    public function handleShowUomGroupByCategory($id)
     {
         $uomString = $this->part->find($id)->category->uom;
         $uomArray = explode(', ', $uomString);
         return($uomArray);
+    }
+
+    public function handleShowBrandGroupByCategory($id)
+    {
+        $category_id = $this->part->find($id)->category_id;
+        $brandsPerCategory = $this->brand->where('category_id', $category_id)->get();
+        $brands = $this->brand->all()->groupBy('category_id');
+        $brand = [];
+        foreach($brandsPerCategory as $brandPerCategory)
+        {
+            $brand['name'][] = $brandPerCategory->name;
+            $brand['id'][] = $brandPerCategory->id;
+        }
+        foreach ($brands as $key => $data)
+        {
+            foreach ($data as $item)
+            {
+                $brand['nameString'][$key][] = $item->name;
+                $brand['idString'][$key][] = $item->id;
+            }
+            $brand['nameString'][$key] = implode(', ', $brand['nameString'][$key]);
+            $brand['idString'][$key] = implode(', ', $brand['idString'][$key]);
+        }
+        return($brand);
     }
 }

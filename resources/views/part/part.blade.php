@@ -280,10 +280,9 @@
             </div>
             <div class="mb-2">
               <label for="partCategory" class="form-label">Category</label>
-              <select class="form-control  select2" id="partCategory" name="category_id" required>
-                {{-- <option selected></option> --}}
+              <select class="form-control select2" id="partCategory" name="category_id" required>
                 @foreach ($categories as $category)
-                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" data-brandname="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['name'] }}" data-brandid="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['id'] }}">{{ $category->name }}</option>
                 @endforeach
               </select>
             </div>
@@ -291,9 +290,6 @@
             <div class="mb-2">
               <label for="partBrand" class="form-label">Brand</label>
               <select class="form-select select2" id="partBrand" name="brand_id" required>
-                @foreach ($brands as $brand)
-                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                @endforeach
               </select>
             </div>
 

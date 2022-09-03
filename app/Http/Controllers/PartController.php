@@ -35,11 +35,11 @@ class PartController extends Controller
     {
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
-        
+        $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
         return view('part.part', [
             'categories' => $categories,
             'brands'=>$brands,
-           
+            'brandString'=>$brandString
         ]);
     }
 
@@ -82,9 +82,9 @@ class PartController extends Controller
         $stocks = $this->stockService->handleGetStockByPartId($id);
         $categories = $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleGetAllBrand();
-
         $is_sn = $part->sn_status == "sn";
-        $uoms = $this->partService->handleShowUom($id);
+        $uoms = $this->partService->handleShowUomGroupByCategory($id);
+        $brand = $this->partService->handleShowBrandGroupByCategory($id);
         return view('part.detail', [
             'historyprices' => $history_prices,
             'attachment' => $attachment,
@@ -94,7 +94,8 @@ class PartController extends Controller
             'categories' => $categories,
             'brands' => $brands,
             'uoms' => $uoms,
-            'is_sn' => $is_sn
+            'is_sn' => $is_sn,
+            'brand' => $brand
         ]);
     }
 
