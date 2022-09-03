@@ -13,15 +13,22 @@ class Part extends Model
         'id'
     ];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function stocks() {
+    public function stocks()
+    {
         return $this->hasMany(Stock::class);
     }
 
-    public function brand() {
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
+    }
+    public function build()
+    {
+        return $this->hasMany(Build::class);
     }
 }

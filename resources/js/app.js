@@ -22,6 +22,7 @@ require('./view/stock/warehouse');
 require('./view/part/detail');
 require('./view/part/category');
 require('./view/part/brand');
+require('./view/part/build');
 
 
 

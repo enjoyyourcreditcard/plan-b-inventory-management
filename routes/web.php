@@ -12,6 +12,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BuildController;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,15 +62,15 @@ Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, '
 
 
 
-Route::post('/attachment', [App\Http\Controllers\AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
-Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
-Route::post('/category/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
+Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
+Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
 
 
 
 
 
-// Route::post('/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('post.store.category');
+// Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 
 
 
@@ -78,7 +81,19 @@ Route::post('/category/update', [App\Http\Controllers\CategoryController::class,
 
 
 
-// 
+/*
+|--------------------------------------------------------------------------
+| Build Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/build', [BuildController::class, 'index']);
+Route::post('/build', [BuildController::class, 'store']);
+Route::put('/build/{id}', [BuildController::class, 'update']);
+Route::delete('/build/{id}', [BuildController::class, 'delete']);
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -89,16 +104,4 @@ Route::post('/category/update', [App\Http\Controllers\CategoryController::class,
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route WareHouse
-// Route::get('/warehouse', function(){
-//     return view('warehouse.warehouse');
-// });
-
-Route::get('/warehouseDetail', function(){
-    return view('warehouse.detail');
-});
-
-Route::get('/warehouse', [WarehouseController::class, 'index']);
-Route::post('/warehouse', [WarehouseController::class, 'store']);
-Route::get('/inActive/{id}', [WarehouseController::class, 'inActive']);
-Route::put('/warehouse/{id}', [WarehouseController::class, 'update']);
+//

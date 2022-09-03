@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Inventory Management - MVN</title>
-
+    
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" integrity="sha512-kq3FES+RuuGoBW3a9R2ELYKRywUEQv0wvPTItv3DSGqjpbNtGWVdvT8qwdKkqvPzT93jp8tSF4+oN4IeTEIlQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- CSS files -->
     <link href="{{asset('assets/css/tabler.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/tabler-flags.min.css')}}" rel="stylesheet" />
@@ -16,6 +19,7 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+    {{-- CDN input --}}
 {{-- </head> --}}
 
 <body>
@@ -332,6 +336,7 @@
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
+    {{-- CDN input --}}
     
     <script src="{{ asset('js/app.js') }}"></script>
 

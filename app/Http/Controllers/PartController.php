@@ -36,10 +36,13 @@ class PartController extends Controller
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
         $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
+        $part = $this->partService->handleAllPart();
         return view('part.part', [
             'categories' => $categories,
             'brands'=>$brands,
+            'part' =>$part,
             'brandString'=>$brandString
+            
         ]);
     }
 

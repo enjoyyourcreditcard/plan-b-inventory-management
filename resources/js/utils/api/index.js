@@ -70,6 +70,15 @@ export default class Api {
   };
 
 
+  getBuild = () => {
+    return this.init()
+      .get(`build`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
 
   
 

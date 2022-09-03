@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BuildController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\HistoryPriceController;
@@ -69,6 +70,12 @@ Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
 
 });
+
+Route::group(['prefix' => 'build'], function () {
+    Route::get('/', [BuildController::class, 'getAllBuild']);
+
+});
+
 
 
 // Route::prefix('detail')->group(function () {

@@ -34,6 +34,7 @@ class PartService
      }
  
 
+
     // Part SHOW
     public function handleShowPart($id)
     {

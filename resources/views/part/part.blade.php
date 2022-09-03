@@ -6,14 +6,13 @@
         <ul class="nav nav-tabs nav-tabs-alt" data-bs-toggle="tabs" role="tablist">
           <li class="nav-item" role="presentation">
             <a href="#tabs-part-12" class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24"
-                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <rect x="3" y="4" width="18" height="4" rx="2"></rect>
-                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
-                <line x1="10" y1="12" x2="14" y2="12"></line>
-              </svg>&nbsp;PART</a>
+                <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
+                <line x1="12" y1="12" x2="20" y2="7.5"></line>
+                <line x1="12" y1="12" x2="12" y2="21"></line>
+                <line x1="12" y1="12" x2="4" y2="7.5"></line>
+             </svg>&nbsp;PART</a>
           </li>
           <li class="nav-item" role="presentation">
             <a href="#tabs-category" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
@@ -39,6 +38,21 @@
               </svg>&nbsp;
               Merek</a>
           </li>
+
+          <li class="nav-item" role="presentation">
+            <a href="#tabs-build" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tools" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4"></path>
+                <line x1="14.5" y1="5.5" x2="18.5" y2="9.5"></line>
+                <polyline points="12 8 7 3 3 7 8 12"></polyline>
+                <line x1="7" y1="8" x2="5.5" y2="9.5"></line>
+                <polyline points="16 12 21 17 17 21 12 16"></polyline>
+                <line x1="16" y1="17" x2="14.5" y2="18.5"></line>
+             </svg>&nbsp;
+              Build</a>
+          </li>
+
 
           
           
@@ -237,6 +251,17 @@
                 </div>
               </div> --}}
             </div>
+
+            {{-- *
+             *|--------------------------------------------------------------------------
+             *| Tab Build
+             *|--------------------------------------------------------------------------
+             *--}}
+
+             <div class="tab-pane" id="tabs-build" role="tabpanel">
+              <div id="part-build"></div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -400,53 +425,10 @@
   </div>
 </div>
 
-{{-- *
-*|--------------------------------------------------------------------------
-*| Modal Add Brand
-*|--------------------------------------------------------------------------
-*--}}
-<div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add a new brand</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="{{ Route("post.store.brand") }}" method="post">
-        @csrf
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Brand Name</label>
-            <input type="text" class="form-control" name="name" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="name" class="form-label">Category</label>
-              <select name="category_id" class="form-control" >
-                @foreach ($categories as $item)
-                <option value="{{$item->id}}">{{$item->name}}</option>
-                @endforeach
-              </select>
-          </div>
-
-
-          <div class="mb-3">
-            <input type="hidden" class="form-control" name="status">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Brand</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 {{-- *
 *|--------------------------------------------------------------------------
-*| Modal Edit Brand
+*| Modal Edit Category
 *|--------------------------------------------------------------------------
 *--}}
 <!-- Edit Category Modal -->
@@ -495,6 +477,58 @@
   </div>
 </div>
 
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Brand
+*|--------------------------------------------------------------------------
+*--}}
+<div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a new brand</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{ Route("post.store.brand") }}" method="post">
+        @csrf
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="name" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Category</label>
+              <select name="category_id" class="form-control" >
+                @foreach ($categories as $item)
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+              </select>
+          </div>
+
+
+          <div class="mb-3">
+            <input type="hidden" class="form-control" name="status">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Brand</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Edit Brand
+*|--------------------------------------------------------------------------
+*--}}
 <!-- Edit Brand -->
 <div class="modal modal-blur fade" id="editBrandModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -526,4 +560,89 @@
   </div>
 </div>
 
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Build
+*|--------------------------------------------------------------------------
+*--}}
+<div class="modal modal-blur fade" id="createBuildModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create Build</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="/build" method="POST">
+                  @csrf
+                  <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Build Name</label>
+                      <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                          aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-3">
+                      {{-- * SELECT2 --}}
+                      <label for="exampleInputEmail1" class="form-label">Part</label>
+                      <select class=" form-select inputBuildSelect2" name="part_id[]" id="build"
+                          multiple="multiple">
+                          <div>
+                              <option></option>
+                              @foreach ($part as $item)
+                                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              @endforeach
+                          </div>
+                      </select>
+                      {{-- * END SELECT2 --}}
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Edit Build
+*|--------------------------------------------------------------------------
+*--}}
+<div class="modal modal-blur fade" id="modalEditBuild" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Build</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="/build/{{ $item->id }}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <input type="hidden" class="form-control" name="id" id="buildId" required>
+                  <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Build Name</label>
+                      <input type="text" name="name" class="form-control" id="buildName"
+                          aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Part</label>
+                      <select class="form-select editBuildSelect2" name="part_id[]" id="buildPartId" multiple="multiple">
+                              @foreach ($part as $item)
+                              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              @endforeach
+                          </select>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
 @endsection
