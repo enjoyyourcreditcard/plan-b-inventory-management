@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Request;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -50,7 +52,7 @@ Route::get('/', function () {
 | Part Routes
 |--------------------------------------------------------------------------
 */
-Route::resource('part', PartController::class)->middleware("auth");
+Route::resource('/part' , PartController::class)->middleware("auth");
 Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
 Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
 Route::get('/stock', [StockController::class, 'index'])->middleware("auth");
@@ -62,9 +64,13 @@ Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, '
 
 
 
+// <<<<<<< HEAD
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
 Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
 Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+
+Route::get('/notification/delete/{id}', [NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
+Route::get('/notification', [NotificationController::class, 'index'])->name('get.index.notif')->middleware("auth");
 
 
 
@@ -102,6 +108,6 @@ Route::delete('/build/{id}', [BuildController::class, 'delete']);
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //

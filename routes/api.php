@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,12 @@ Route::group(['prefix' => 'build'], function () {
 
 
 
+Route::group(['prefix' => 'notification'], function () {
+    Route::get('/', [NotificationController::class, 'getAllNotification']);
+    Route::post('/', [NotificationController::class, 'postStoreNotification']);
+    Route::put('/{id}', [NotificationController::class, 'putUpdateNotification']);
+    Route::delete('/{id}', [NotificationController::class, 'getDeleteNotification']);
+});
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
 //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);

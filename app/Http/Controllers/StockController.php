@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\NotificationService;
 use App\Services\PartService;
 use Illuminate\Http\Request;
 use App\Services\StockService;
@@ -9,10 +10,12 @@ use App\Services\WareHouseService;
 
 class StockController extends Controller
 {
-    public function __construct(StockService $stockService, WareHouseService $wareHouseService, PartService $partService) {
+    public function __construct(StockService $stockService, WareHouseService $wareHouseService, PartService $partService, NotificationService $notificationService) {
         $this->stockService = $stockService;
         $this->wareHouseService = $wareHouseService;
         $this->partService = $partService;
+        $this->notificationService = $notificationService;
+        
 
     }
 
@@ -20,12 +23,16 @@ class StockController extends Controller
         $stocks = $this->stockService->handleAllStock();
         $warehouse = $this->wareHouseService->handleAllWareHouse();
         $parts = $this->partService->handleAllPart();
+        $notifications =  $this->notificationService->handleAllNotification();
+
         // $is_sn = $part->sn_status == "sn";
 
         return view('stock.stock', [
             'stocks' => $stocks,
             'parts' => $parts,
-            'warehouse' => $warehouse
+            'warehouse' => $warehouse,
+            'notifications' => $notifications,
+
         ]);
     }
 
