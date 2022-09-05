@@ -59,23 +59,11 @@ Route::put('/stock/{id}', [StockController::class, 'put'])->name('put.update.sto
 Route::delete('/stock/{id}', [StockController::class, 'destroy'])->name('delete.destroy.stock')->middleware("auth");
 Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
 Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
-
-
-
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
 Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
+Route::get('/category/{id}', [CategoryController::class, 'show'])->middleware("auth");
 Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
-
-
-
-
-
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
-
-
-
-
-
 // Route::resource('/brand', BrandController::class);
 // Route::post('/brand/deactive/{id}', [BrandController::class, 'postDeactive']);
 
@@ -102,6 +90,6 @@ Route::delete('/build/{id}', [BuildController::class, 'delete']);
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //

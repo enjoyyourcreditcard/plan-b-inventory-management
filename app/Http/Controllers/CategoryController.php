@@ -12,9 +12,15 @@ class CategoryController extends Controller
         $this->categoryService = $categoryService;
     }
 
+    public function show($id) {
+        $category = $this->categoryService->handleShowCategory($id);
+        return view('category.detail', [
+            'category' => $category
+        ]);
+    }
+
     public function store(Request $request) {
         $this->categoryService->handleStoreCategory($request);
-
         return redirectTab("tabs-category");
     }
 
