@@ -10,11 +10,13 @@ use App\Services\StockService;
 use App\Services\CategoryService;
 use App\Services\AttachmentService;
 use App\Services\HistoryPriceService;
+use App\Services\NotificationService;
+use Illuminate\Support\Facades\Auth;
 
 class PartController extends Controller
 {
 
-    public function __construct(HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, StockService $stockService)
+    public function __construct(stockService $stockService, HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService)
     {
         $this->historypriceService = $historypriceService;
         $this->attachmentService = $attachmentService;
@@ -22,6 +24,7 @@ class PartController extends Controller
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
         $this->stockService = $stockService;
+        $this->notificationService = $notificationService;
     }
 
 
@@ -37,7 +40,9 @@ class PartController extends Controller
         $brands = $this->brandService->handleAllBrand();
         $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
         $part = $this->partService->handleAllPart();
-        return view('part.part', [
+        $notifications =  $this->notificationService->handleAllNotification();
+        return view('part.part',[
+            'notifications' => $notifications,
             'categories' => $categories,
             'brands'=>$brands,
             'part' =>$part,
@@ -45,6 +50,7 @@ class PartController extends Controller
             
         ]);
     }
+    
 
 
 
@@ -88,7 +94,9 @@ class PartController extends Controller
         $is_sn = $part->sn_status == "sn";
         $uoms = $this->partService->handleShowUomGroupByCategory($id);
         $brand = $this->partService->handleShowBrandGroupByCategory($id);
+        $notifications =  $this->notificationService->handleAllNotification();
         return view('part.detail', [
+            'notifications' => $notifications,
             'historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
