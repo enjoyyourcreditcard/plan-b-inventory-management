@@ -795,9 +795,9 @@
                             <select class="form-control select2EditPart" id="editPartCategory" name="category_id" required>
                                 @foreach ($categories as $category)
                                 @if ($part->category_id == $category->id)
-                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : $brand['nameString'][$category->id] }}" data-brandid="{{ $brand == null ? '' : $brand['idString'][$category->id] }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}" data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
                                 @else   
-                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : $brand['nameString'][$category->id] }}" data-brandid="{{ $brand == null ? '' : $brand['idString'][$category->id] }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}" data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
                                 @endif
                                 @endforeach
                             </select>
@@ -813,7 +813,6 @@
                                 <option class="partBrandOption" value="{{ $brand['id'][$i] }}">{{ $brand['name'][$i] }}</option>
                                 @endif
                                 @endfor
-
                             </select>
                         </div>
 

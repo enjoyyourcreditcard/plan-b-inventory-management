@@ -8042,8 +8042,8 @@ function Parts() {
             switch (_context.prev = _context.next) {
               case 0:
                 api.getPart().then(function (response) {
-                  setRawData(response.data.data.data);
-                  setData(response.data.data.data);
+                  setRawData(response.data.data);
+                  setData(response.data.data);
                   setLoadingData(false);
                 });
 
@@ -8130,7 +8130,7 @@ function Parts() {
       Cell: function Cell(tableProps) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
-            href: "#",
+            href: '/category/' + tableProps.row.original.category.id,
             className: "text-primary",
             children: tableProps.row.original.category.name
           })

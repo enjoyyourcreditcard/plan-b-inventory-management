@@ -64,12 +64,11 @@
                                         <a class="card-title" href="{{Route ('get.index.notif')}}">Last updates</a>
                                     </div>
 
-                                    @foreach($notifications as $index => $row)
+                                    {{-- @foreach($notifications as $index => $row)
                                     <div class="list-group list-group-flush list-group-hoverable " style="width: 40vw;">
                                         <div class="list-group-item">
                                             <div class="row align-items-center">
                                                 <div class="col text-truncate">
-                                                        {{-- <h3 href="#" class="text-body d-block">{{$row->user_id}}</h3> --}}
                                                         <h4 class="text-body d-block">{{$row->title}}</h4>
                                                         <div class="d-block text-muted text-truncate mt-n1">
                                                             {{$row->content}}
@@ -89,7 +88,7 @@
                                         </div>
                                         
                                     </div>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>

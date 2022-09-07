@@ -64,7 +64,13 @@
                                             <polyline points="12 4 12 7 "></polyline>
                                             <polyline points="16 4 16 6 "></polyline>
                                         </svg>
-                                        UOM: <strong>{{ $category->uom }}</strong>
+                                        UOM: 
+
+                                        @foreach ($uom as $item)
+                                        <span class="badge badge-primary">{{$item}}</span>
+
+                                        {{-- <strong>{{ $item }}</strong> --}}
+                                        @endforeach
                                     </div>
                                     <div class="mb-2">
                                         <svg xmlns="http://www.w3.org/2000/svg"

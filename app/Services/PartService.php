@@ -22,7 +22,7 @@ class PartService
     // API Part GET
     public function handleAllPartApi()
     {
-        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->paginate(10);
+        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->get();
         return ($parts);
     }
 
@@ -58,7 +58,7 @@ class PartService
         ]);
 
         if ($request->file('img')) {
-            $validatedData['img'] = $request->file('img')->store('images/part');
+            $validatedData['img'] = 'storage/'.$request->file('img')->store('images/part');
         } else {
             $validatedData['img'] = 'images/part/default.jpg';
         }
@@ -75,7 +75,7 @@ class PartService
             if ($request->oldImg != "images/part/default.jpg") {
                 Storage::delete($request->oldImg);
             }
-            $newImg = $request->file('img')->store('images/part');
+            $newImg = 'storage/'.$request->file('img')->store('images/part');
             $this->part->find($id)->update([
                 'img' => $newImg
             ]);

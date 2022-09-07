@@ -3,12 +3,10 @@
 use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
-use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;

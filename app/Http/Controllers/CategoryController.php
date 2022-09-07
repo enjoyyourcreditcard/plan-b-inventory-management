@@ -14,8 +14,11 @@ class CategoryController extends Controller
 
     public function show($id) {
         $category = $this->categoryService->handleShowCategory($id);
+        $uom = explode(', ' ,$category->uom);
+
         return view('category.detail', [
-            'category' => $category
+            'category' => $category,
+            'uom' => $uom, 
         ]);
     }
 

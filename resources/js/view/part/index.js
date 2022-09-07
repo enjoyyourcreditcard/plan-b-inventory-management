@@ -19,8 +19,8 @@ function Parts() {
     useEffect(() => {
         async function getData() {
             api.getPart().then((response) => {
-                setRawData(response.data.data.data)
-                setData(response.data.data.data);
+                setRawData(response.data.data)
+                setData(response.data.data);
 
                 setLoadingData(false);
             })
@@ -75,7 +75,7 @@ function Parts() {
                 accessor: 'category',
                 Cell: tableProps => (
                     <>
-                        <a href='#' className="text-primary">{tableProps.row.original.category.name}</a>
+                        <a href={'/category/'+tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
                     </>
                 )
 
