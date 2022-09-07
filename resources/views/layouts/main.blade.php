@@ -16,6 +16,9 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+    {{-- mapbox --}}
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
 {{-- </head> --}}
 
 <body>
@@ -346,17 +349,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{asset('assets/js/tabler.min.js')}}" ></script>
     <script src="{{asset('js/main.js')}}" ></script>
 
     @yield('additionalJs')
-
-=======
+    
     @yield('jsModal')
->>>>>>> origin/warehouse
 </body>
 
 </html>

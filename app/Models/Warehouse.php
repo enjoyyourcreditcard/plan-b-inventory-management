@@ -10,16 +10,19 @@ class Warehouse extends Model
 {
     use HasFactory;
     
-    protected $table = 'warehouse';
+    protected $table = 'db_warehouses_function';
     protected $fillable = [
-        'wh_name',
+        'name',
         'regional',
-        'kota',
+        'city',
         'location',
-        'wh_type',
+        'type',
         'contract_status',
+        'tenggat_waktu',
         'start_at',
         'end_at',
+        'lat',
+        'lng',
         'status',
     ];
 

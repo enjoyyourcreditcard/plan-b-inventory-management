@@ -16,11 +16,11 @@ class WarehouseSeeder extends Seeder
     {
         Warehouse::create([
 
-            "wh_name" => "warehouse Depok" ,
+            "name" => "warehouse Depok" ,
             "regional" => "Depok",
-            "kota" => "depok",
+            "city" => "depok",
             "location" => "depok",
-            "wh_type" => "sewa",
+            "type" => "sewa",
             "contract_status" => "sewa",
             "start_at" => "2022-08-03",
             "end_at" => "2022-08-03",
@@ -28,11 +28,11 @@ class WarehouseSeeder extends Seeder
 
         Warehouse::create([
 
-            "wh_name" => "warehouse Jakarta" ,
+            "name" => "warehouse Jakarta" ,
             "regional" => "Depok",
-            "kota" => "depok",
+            "city" => "depok",
             "location" => "depok",
-            "wh_type" => "sewa",
+            "type" => "sewa",
             "contract_status" => "sewa",
             "start_at" => "2022-08-03",
             "end_at" => "2022-08-03",

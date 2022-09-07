@@ -13,16 +13,19 @@ class CreateWarehouseTable extends Migration
      */
     public function up()
     {
-        Schema::create('warehouse', function (Blueprint $table) {
+        Schema::create('db_warehouses_function', function (Blueprint $table) {
             $table->id();
-            $table->string('wh_name');
-            $table->string('regional');
-            $table->string('kota');
+            $table->string('name');
+            $table->enum('regional', ['jakarta', 'depok', 'bogor', 'bekasi', 'tanggerang', 'bandung', 'solo', 'medan']);
+            $table->string('city');
             $table->string('location');
-            $table->string('wh_type');
-            $table->string('contract_status');
+            $table->string('type');
+            $table->enum('contract_status', ['sewa', 'permanen']);
+            $table->string('tenggat_waktu')->nullable();
             $table->date('start_at');
             $table->date('end_at');
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->string('status')->default("active");
             $table->timestamps();
         });
