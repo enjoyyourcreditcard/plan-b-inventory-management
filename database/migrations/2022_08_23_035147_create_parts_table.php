@@ -23,8 +23,8 @@ class CreatePartsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands');
-            $table->enum('uom', ['meter', 'set', 'each', 'roll', 'unit', 'batang', 'liter', 'kaleng', 'kg', 'kubic', 'pack']);
-            $table->enum('sn_status', ['sn', 'non sn']);
+            $table->enum('uom', ['METER', 'SET', 'EACH', 'ROLL', 'UNIT', 'BATANG', 'LITER', 'KALENG', 'KG', 'KUBIC', 'PACK']);
+            $table->enum('sn_status', ['SN', 'NON SN']);
             $table->string('color');
             $table->integer('size');
             $table->text('description');

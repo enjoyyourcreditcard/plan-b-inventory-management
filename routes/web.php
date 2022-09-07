@@ -63,11 +63,11 @@ Route::post('/brand/update', [CategoryController::class, 'update'])->name('post.
 Route::get('/part/deactive/{id}', [PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
 
 
-
-// <<<<<<< HEAD
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
 Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
+Route::get('/category/{id}', [CategoryController::class, 'show'])->middleware("auth");
 Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+
 
 Route::get('/notification/delete/{id}', [NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
 Route::get('/notification', [NotificationController::class, 'index'])->name('get.index.notif')->middleware("auth");
@@ -77,11 +77,6 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('get
 
 
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
-
-
-
-
-
 // Route::resource('/brand', BrandController::class);
 // Route::post('/brand/deactive/{id}', [BrandController::class, 'postDeactive']);
 

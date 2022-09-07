@@ -24,19 +24,20 @@ class CategoryService
         $validatedData['uom'] = implode(', ', $request->uom);
         $validatedData['started'] = now();
         $validatedData['status'] = 'active';
-
         $this->category->create($validatedData);
-
         return('Data has been stored');
     }
 
+    // Category INDEX
     public function handleGetAllCategory()
     {
-
-
         return $this->category::with('parts')->get();
+    }
 
-
+    // Category SHOW
+    public function handleShowCategory($id)
+    {
+        return $this->category->with('parts')->with('brands')->find($id);
     }
 
     // Category UPDATE 
@@ -46,7 +47,6 @@ class CategoryService
             'name' => $request->name,
             'description' => $request->description,
             'uom' => implode(', ', $request->uom),
-
         ]);
         return('Data has been updated');
     }

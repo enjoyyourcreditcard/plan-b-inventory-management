@@ -95,6 +95,7 @@ class PartController extends Controller
         $uoms = $this->partService->handleShowUomGroupByCategory($id);
         $brand = $this->partService->handleShowBrandGroupByCategory($id);
         $notifications =  $this->notificationService->handleAllNotification();
+        // dd($categories);
         return view('part.detail', [
             'notifications' => $notifications,
             'historyprices' => $history_prices,
