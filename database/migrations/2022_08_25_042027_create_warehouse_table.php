@@ -21,7 +21,7 @@ class CreateWarehouseTable extends Migration
             $table->string('location');
             $table->string('type');
             $table->enum('contract_status', ['sewa', 'permanen']);
-            $table->string('tenggat_waktu')->nullable();
+            $table->string('expired')->nullable();
             $table->date('start_at');
             $table->date('end_at');
             $table->string('lat')->nullable();
