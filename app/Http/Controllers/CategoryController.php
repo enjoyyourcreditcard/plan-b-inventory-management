@@ -15,7 +15,6 @@ class CategoryController extends Controller
     public function show($id) {
         $category = $this->categoryService->handleShowCategory($id);
         $uom = explode(', ' ,$category->uom);
-
         return view('category.detail', [
             'category' => $category,
             'uom' => $uom, 
@@ -23,8 +22,8 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request) {
-        $this->categoryService->handleStoreCategory($request);
-        return redirectTab("tabs-category");
+        $status = $this->categoryService->handleStoreCategory($request);
+        return($status);
     }
 
     public function update(Request $request) {

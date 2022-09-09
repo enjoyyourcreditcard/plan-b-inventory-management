@@ -26,7 +26,7 @@ class PartService
         return ($parts);
     }
 
-     // API Part GET
+     // Part GET
      public function handleAllPart()
      {
          $parts = $this->part->all();

@@ -5,7 +5,44 @@
 | Part Javascript
 |--------------------------------------------------------------------------
 */
-$(".select2").prepend('<option selected></option>').select2({
+$(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createPartModal"),
+    placeholder: "Select..",
+    theme: "bootstrap",
+    _type: "open",
+    language: {
+        "noResults": function(){
+            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+        }
+    },
+    escapeMarkup: function (markup) {
+        return markup;
+    }
+}
+);
+
+function showPartCategoryModal () {
+    $('#createPartCategoryModal').show();
+    $(".inputPartCategorySelect2").select2("close");
+};
+function bye () {
+    $('#createPartCategoryModal').hide();
+    $(".inputPartCategorySelect2").select2({
+        dropdownParent: $("#createPartModal"),
+        "language": {
+            "noResults": function(){
+                return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+};
+
+$(".inputPartAllSelect2").prepend('<option selected></option>').select2({
     width: '100%',
     height: '10px',
     dropdownParent: $("#createPartModal"),
@@ -236,52 +273,6 @@ $('#editWarehouseModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body #whid').val(id)
 })
 
-//   // console.log(location);
-//   const whName = document.querySelectorAll(".wh_name");
-//   const inputWhNameEdit = document.getElementById("inputwh_name");
-//   const regional = document.querySelectorAll('.regional');
-//   const inputRegionalEdit = document.getElementById('inputregional');
-//   const kota = document.querySelectorAll('.kota');
-//   const inputKotaEdit = document.getElementById('inputkota');
-//   const locationWh = document.querySelectorAll('.whlocation');
-//   const inputLocationWhEdit = document.getElementById('inputlocation');
-//   const whType = document.querySelectorAll('.wh_type');
-//   const inputWhTypeEdit = document.getElementById('inputwh_type');
-//   const contractStatus = document.querySelectorAll('.contract_status');
-//   const inputContractStatusEdit = document.getElementById('inputcontract_status');
-//   const startAt = document.querySelectorAll('.start_at');
-//   const inputStartAtEdit = document.getElementById('inputstart_at');
-//   const endAt = document.querySelectorAll('.end_at');
-//   const inputEndAtEdit = document.getElementById('inputend_at');
-//   const tombolEdit = document.querySelectorAll('.btn_update');
-//   const formEdit = document.getElementById('update_wh');
-
-
-//   tombolEdit.forEach((e, i) => {
-//       // console.log(locationWh[i]);
-//       e.addEventListener('click', function() {
-//           inputWhNameEdit.value = '';
-//           inputWhNameEdit.value = whName[i].innerHTML.trim();
-//           inputRegionalEdit.value = '';
-//           inputRegionalEdit.value = regional[i].innerHTML.trim();
-//           inputKotaEdit.value = '';
-//           inputKotaEdit.value = kota[i].innerHTML.trim();
-//           inputLocationWhEdit.value = '';
-//           inputLocationWhEdit.value = locationWh[i].innerHTML.trim();
-//           inputWhTypeEdit.value = '';
-//           inputWhTypeEdit.value = whType[i].innerHTML.trim();
-//           inputContractStatusEdit.value = '';
-//           inputContractStatusEdit.value = contractStatus[i].innerHTML.trim();
-//           inputStartAtEdit.value = '';
-//           inputStartAtEdit.value = startAt[i].innerHTML.trim();
-//           inputEndAtEdit.value = '';
-//           inputEndAtEdit.value = endAt[i].innerHTML.trim();
-//           formEdit.removeAttribute('action');
-//           formEdit.setAttribute('action', '/warehouse/' + e.getAttribute('data-id'))
-//       })
-//   });
-
-
 $('#partCategory').on('change', function (e) {
     //Set Variables
     var optionSelected = $(this).find("option:selected");
@@ -359,4 +350,60 @@ $('#editPartCategory').on('change', function (e) {
         $('#partBrand').append("<option class='partBrandOption' value='"+ brandArray['id'][i] +"'>"+ brandArray['name'][i] +"</option>");
         i++;
     }
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| AJAX
+|--------------------------------------------------------------------------
+*/
+
+
+$(document).ready(function () {
+    $.get('/ajax/part', function (data) {
+        for (let i = 0; i < data['categories'].length; i++) {
+            $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+        }
+    });
+
+    $('#submitStoreCategory').click(function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            url: '/category',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            method: 'post',
+            data: {
+                name: jQuery('#categoryName').val(),
+                description: jQuery('#categoryDescription').val(),
+                uom: jQuery('#storeCategoryUom').val(),
+                isAjax: 'yep'
+            },
+            success: function () {
+                $('#createPartCategoryModal').hide();
+                $(".inputPartCategorySelect2").select2({
+                    dropdownParent: $("#createPartModal"),
+                    "language": {
+                        "noResults": function(){
+                            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+                        }
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
+                });
+                $('.partCategoryOption').remove();
+                $.get('/ajax/part', function (data) {
+                    for (let i = 0; i < data['categories'].length; i++) {
+                        $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+                    }
+                });
+            }
+        });
+    });
 });

@@ -288,94 +288,130 @@
 *| Modal Add Part
 *|--------------------------------------------------------------------------
 *--}}
-<div class="modal modal-blur fade" id="createPartModal">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal" id="createPartModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 864px">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Create New Part</h5>
+        <h5 class="modal-title">Create Part</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">
-        <div class="modal-body">
-          @csrf
-          <div class="row">
-            <div class="mb-2">
-              <label for="partName" class="form-label">Part Name</label>
-              <input type="text" class="form-control" id="partName" name="name" required>
-            </div>
-            <div class="mb-2">
-              <label for="partCategory" class="form-label">Category</label>
-              <select class="form-control select2" id="partCategory" name="category_id" required>
-                @foreach ($categories as $category)
-                <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" data-brandname="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['name'] }}" data-brandid="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['id'] }}">{{ $category->name }}</option>
-                @endforeach
-              </select>
-            </div>
+      <form id="addPartForm" action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">@csrf</form>
+      <form id="addCategoryForm">@csrf</form>
+      <div class="modal-body" style="overflow-y: scroll; height: 80vh;">
+        <div class="row">
+          <div class="mb-2">
+            <label for="partName" class="form-label">Part Name</label>
+            <input type="text" class="form-control" id="partName" name="name" form="addPartForm" required>
+          </div>
+          <div class="mb-2">
+            <label for="partCategory" class="form-label">Category</label>
+            <select class="form-control inputPartCategorySelect2" id="partCategory" name="category_id" form="addPartForm" required>
+              @foreach ($categories as $category)
+              {{-- <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" data-brandname="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['name'] }}" data-brandid="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['id'] }}">{{ $category->name }}</option> --}}
+              @endforeach
+            </select>
+          </div>
 
-            <div class="mb-2">
-              <label for="partBrand" class="form-label">Brand</label>
-              <select class="form-select select2" id="partBrand" name="brand_id" required>
-              </select>
-            </div>
+          <div class="mb-2">
+            <label for="partBrand" class="form-label">Brand</label>
+            <select class="form-select inputPartAllSelect2" id="partBrand" name="brand_id" form="addPartForm" required>
+            </select>
+          </div>
 
-            <div class="mb-2">
-              <label for="partUom" class="form-label">Uom</label>
-              <select class="form-select select2" id="partUom" name="uom" required>
-              </select>
-            </div>
+          <div class="mb-2">
+            <label for="partUom" class="form-label">Uom</label>
+            <select class="form-select inputPartAllSelect2" id="partUom" name="uom" form="addPartForm" required>
+            </select>
+          </div>
 
-            <div class="mb-2">
-              <label for="partSnStatus" class="form-label">SN Status</label>
-              <select class="form-select select2" id="partSnStatus" name="sn_status" required>
-                <option value="non sn">NON SN</option>
-                <option value="sn">SN</option>
-              </select>
-            </div>
+          <div class="mb-2">
+            <label for="partSnStatus" class="form-label">SN Status</label>
+            <select class="form-select inputPartAllSelect2" id="partSnStatus" name="sn_status" form="addPartForm" required>
+              <option value="non sn">NON SN</option>
+              <option value="sn">SN</option>
+            </select>
+          </div>
 
-            <div class="mb-2">
-              <label for="partColor" class="form-label">Color</label>
-              <select class="form-select select3" id="partColor" name="color" required>
-                <option value="Black">Black</option>
-                <option value="White">White</option>
-                <option value="Grey">Grey</option>
-                <option value="Green">Green</option>
-                <option value="Yellow">Yellow</option>
-                <option value="NN">NN</option>
-                <option value="Blue">Blue</option>
-                <option value="Silver">Silver</option>
-                <option value="Multi Color">Multi Color</option>
-                <option value="Red">Red</option>
-                <option value="Orange">Orange</option>
-              </select>
-            </div>
+          <div class="mb-2">
+            <label for="partColor" class="form-label">Color</label>
+            <select class="form-select select3" id="partColor" name="color" form="addPartForm" required>
+              <option value="Black">Black</option>
+              <option value="White">White</option>
+              <option value="Grey">Grey</option>
+              <option value="Green">Green</option>
+              <option value="Yellow">Yellow</option>
+              <option value="NN">NN</option>
+              <option value="Blue">Blue</option>
+              <option value="Silver">Silver</option>
+              <option value="Multi Color">Multi Color</option>
+              <option value="Red">Red</option>
+              <option value="Orange">Orange</option>
+            </select>
+          </div>
 
-            <div class="mb-2">
-              <label for="partSize" class="form-label">Size</label>
-              <input type="number" class="form-control" id="partSize" name="size" required>
-            </div>
+          <div class="mb-2">
+            <label for="partSize" class="form-label">Size</label>
+            <input type="number" class="form-control" id="partSize" name="size" form="addPartForm" required>
+          </div>
 
-            <div class="mb-2">
-              <label for="partDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="partDescription" rows="3" name="description" required></textarea>
-            </div>
+          <div class="mb-2">
+            <label for="partDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="partDescription" rows="3" name="description" form="addPartForm" required></textarea>
+          </div>
 
-            <div class="mb-2">
-              <label for="partNote" class="form-label">Note</label>
-              <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
-            </div>
+          <div class="mb-2">
+            <label for="partNote" class="form-label">Note</label>
+            <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
+          </div>
 
-            <div class="mb-4">
-              <label for="partImage" class="form-label">Part Image</label>
-              <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
-            </div>
+          <div class="mb-4">
+            <label for="partImage" class="form-label">Part Image</label>
+            <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" form="addPartForm">Save</button>
+      </div>
     </div>
+    {{--  --}}
+    <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2);">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Category</h5>
+        <button type="button" class="btn-close" onclick="bye()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="categoryName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="categoryName" name="name" form="addCategoryForm" required>
+        </div>
+        <div class="mb-3">
+          <label for="categoryDescription" class="form-label">Description</label>
+          <textarea class="form-control" id="categoryDescription" rows="3" name="description" form="addCategoryForm" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="categoryUom" class="form-label">Uom</label>
+          <select id="storeCategoryUom" class="form-select select3" name="uom[]" form="addCategoryForm" required multiple="multiple">
+            <option value="meter">Meter</option>
+            <option value="set">Set</option>
+            <option value="each">Each</option>
+            <option value="roll">Roll</option>
+            <option value="unit">Unit</option>
+            <option value="batang">Batang</option>
+            <option value="liter">Liter</option>
+            <option value="kaleng">Kaleng</option>
+            <option value="kg">Kg</option>
+            <option value="kubic">Kubic</option>
+            <option value="pack">Pack</option>
+          </select>
+        </div>
+        <div>
+          <button id="submitStoreCategory" type="submit" class="btn btn-primary float-end" form="addCategoryForm">Save</button>
+        </div>
+      </div>
+    </div>
+    {{--  --}}
   </div>
 </div>
 
@@ -432,7 +468,7 @@
 *|--------------------------------------------------------------------------
 *--}}
 <!-- Edit Category Modal -->
-<div class="modal modal-blur fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

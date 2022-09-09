@@ -52,8 +52,9 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('/part' , PartController::class)->middleware("auth");
+Route::get('/ajax/part' , [PartController::class, 'ajaxIndex'])->middleware("auth");
 Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
-Route::post('/brand', [App\Http\Controllers\BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
+Route::post('/brand', [BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
 Route::get('/stock', [StockController::class, 'index'])->middleware("auth");
 Route::post('/stock', [StockController::class, 'store'])->name('post.store.stock')->middleware("auth");
 Route::put('/stock/{id}', [StockController::class, 'put'])->name('put.update.stock')->middleware("auth");

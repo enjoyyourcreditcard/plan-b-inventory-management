@@ -47,7 +47,16 @@ class PartController extends Controller
             'brands'=>$brands,
             'part' =>$part,
             'brandString'=>$brandString
-            
+        ]);
+    }
+
+    public function ajaxIndex()
+    {
+        $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
+        $categories =  $this->categoryService->handleGetAllCategory();
+        return response()->json([
+            'categories' => $categories,
+            'brandString' => $brandString
         ]);
     }
     
