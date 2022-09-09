@@ -20,8 +20,8 @@ class WareHouseService{
 
     public function handleStoreWareHouse(Request $request)
     {
-        if($request->tenggat_waktu == null){
-            $request['tenggat_waktu'] = "-";
+        if($request->expired == null){
+            $request['expired'] = "-";
         }
         $warehouse = $this->warehouse->create([
             'name' => $request->name,
@@ -30,7 +30,7 @@ class WareHouseService{
             'location' => $request->location,
             'type' => $request->type,
             'contract_status' => $request->contract_status,
-            'tenggat_waktu' => $request->tenggat_waktu,
+            'expired' => $request->expired,
             'start_at' => $request->start_at,
             'end_at' => $request->end_at,
             'lat' => $request->lat,
@@ -48,7 +48,7 @@ class WareHouseService{
             'location' => $request->location,
             'type' => $request->type,
             'contract_status' => $request->contract_status,
-            'tenggat_waktu' => $request->tenggat_waktu,
+            'expired' => $request->expired,
             'start_at' => $request->start_at,
             'end_at' => $request->end_at,
             'lat' => $request->lat,
