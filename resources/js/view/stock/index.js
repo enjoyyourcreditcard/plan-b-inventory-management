@@ -59,7 +59,7 @@ function Stock() {
 
             Cell: tableProps => (
                 <>
-                    <ReactTooltip place="right"  effect="solid"   backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
+                    <ReactTooltip place="right" effect="solid" backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
                         <img src={"/" + tableProps.row.original.part.img} />} />
 
                     <div id="thumbwrap" >
@@ -198,18 +198,22 @@ function Stock() {
             <div className="pt-3 ">
                 <div className="d-flex">
                     <div>
+                        {/* <button data-bs-toggle="modal" data-bs-target="#selectStockModal"
+                            class="btn btn-primary w-100"></button> */}
 
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectStockModal">
 
-
-                        <button data-bs-toggle="modal" data-bs-target="#createStockModal"
-                            class="btn btn-primary w-100"><svg xmlns="http://www.w3.org/2000/svg"
+                            <svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-plus" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>New Stock</button>
+                            </svg>
+                            New Stock
+                        </button>
+
                     </div>
 
                     <TableSearch
@@ -235,7 +239,7 @@ function Stock() {
                 </div>
             </div>
             {loadingData ? (
-                <TableLoading/>
+                <TableLoading />
             ) : (
                 <Table
                     getTableProps={getTableProps}

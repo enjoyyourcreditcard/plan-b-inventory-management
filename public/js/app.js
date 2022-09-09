@@ -6222,7 +6222,7 @@ function Table(props) {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "table-responsive mb-3",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", _objectSpread(_objectSpread({}, props.getTableProps()), {}, {
-        className: "table table-borderless table-striped",
+        className: "table table-borderless",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
           children: props.headerGroups.map(function (headerGroup) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", _objectSpread(_objectSpread({}, headerGroup.getHeaderGroupProps()), {}, {
@@ -6261,6 +6261,7 @@ function Table(props) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", _objectSpread(_objectSpread({}, row.getRowProps()), {}, {
               children: row.cells.map(function (cell) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", _objectSpread(_objectSpread({}, cell.getCellProps()), {}, {
+                  className: "align-middle",
                   children: cell.render('Cell')
                 }));
               })
@@ -6308,7 +6309,6 @@ function TabelFooter(props) {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           "class": "btn-group ",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
-            disabled: !props.canPreviousPage,
             onClick: function onClick() {
               return props.previousPage();
             },
@@ -6336,7 +6336,6 @@ function TabelFooter(props) {
               })]
             }), "prev"]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
-            disabled: !props.canNextPage,
             className: "btn btn-outline-dark",
             href: "#",
             onClick: function onClick() {
@@ -6503,7 +6502,7 @@ function TableLoading(props) {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "text-center py-5",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-        children: "Sedang Mengambil Data..."
+        children: "Loading ..."
       })
     })
   });
@@ -8090,24 +8089,33 @@ function Parts() {
                 src: "/" + tableProps.row.original.img
               });
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
             id: "thumbwrap",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
-              "data-tip": tableProps.row.original.name,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
-                src: "/" + tableProps.row.original.img,
-                alt: "",
-                width: 30,
-                height: 25,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+              className: "d-flex",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
                 style: {
-                  border: "1px solid #CCCCEE"
-                }
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
-              href: "/part/" + tableProps.row.original.id,
-              className: "text-primary text-decoration-none ",
-              children: [" \xA0", tableProps.row.original.name]
-            })]
+                  minWidth: 40
+                },
+                className: "pr-1",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
+                  "data-tip": tableProps.row.original.name,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("img", {
+                    src: "/" + tableProps.row.original.img,
+                    alt: "",
+                    width: 30,
+                    height: 25,
+                    style: {
+                      border: "1px solid #CCCCEE"
+                    }
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
+                href: "/part/" + tableProps.row.original.id,
+                className: "text-primary text-decoration-none ",
+                children: [" ", tableProps.row.original.name]
+              })]
+            })
           })]
         });
       }
@@ -8118,7 +8126,9 @@ function Parts() {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
             style: {
-              "minWidth": 300
+              "minWidth": 300,
+              "padding": 0,
+              "margin": 0
             },
             children: tableProps.row.original.description
           })
@@ -8157,12 +8167,7 @@ function Parts() {
             href: "#",
             className: "text-primary ",
             children: tableProps.row.original.stocks_count
-          }), "\xA0\xA0\xA0\xA0", tableProps.row.original.stocks_count < 1 ?
-          /*#__PURE__*/
-          //     <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-          //     Tooltip on top
-          //   </button>
-          (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("svg", {
+          }), "\xA0\xA0\xA0\xA0", tableProps.row.original.stocks_count < 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             "class": "text-danger icon icon-tabler icon-tabler-alert-triangle",
             width: "24",
@@ -8630,9 +8635,10 @@ function Stock() {
         className: "d-flex",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("button", {
-            "data-bs-toggle": "modal",
-            "data-bs-target": "#createStockModal",
-            "class": "btn btn-primary w-100",
+            type: "button",
+            "class": "btn btn-primary",
+            "data-toggle": "modal",
+            "data-target": "#selectStockModal",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("svg", {
               xmlns: "http://www.w3.org/2000/svg",
               "class": "icon icon-tabler icon-tabler-plus",

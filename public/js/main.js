@@ -14,6 +14,7 @@ $(".select2").prepend('<option selected></option>').select2({
 }
 );
 
+
 $(".select3").select2({
     width: '100%',
     height: '10px',
@@ -74,6 +75,14 @@ $(".editBuildSelect2").select2({
     theme: "classic"
 });
 // *: End Build JS
+
+$(".addStockSelect2").select2({
+    width: '100%',
+    height: '10px',
+    // multiple:true,
+    dropdownParent: $("#createStockModal"),
+    theme: "bootstrap"
+});
 
 
 $('#editCategoryModal').on('show.bs.modal', function (event) {

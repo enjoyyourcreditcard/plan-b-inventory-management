@@ -31,7 +31,30 @@
                     </li>
 
                 </ul>
-                <div class="card-body" >
+                <!-- Button trigger modal -->
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
                     <div class="tab-content">
 
                         {{-- *
@@ -40,7 +63,7 @@
                         *|--------------------------------------------------------------------------
                         *--}}
                         <div class="tab-pane active show" id="tabs-stock-12" role="tabpanel">
-                        <div id="stock"></div>
+                            <div id="stock"></div>
                             {{-- <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
@@ -227,7 +250,7 @@
                         *|--------------------------------------------------------------------------
                         *--}}
                         <div class="tab-pane" id="tabs-wh" role="tabpanel">
-                           
+
                             <div id="stock-warehouse"></div>
                             {{-- <table class="table table-bordered table-striped">
 
@@ -470,18 +493,18 @@
             <form action="{{ Route('post.store.stock') }}" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Stock</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @csrf
 
                     <div class="mb-3">
                         <label for="stockWhId" class="form-label">Part</label>
-                        <select class="form-control" name="part_id" required>
+                        <select class="form-control addStockSelect2" name="part_id" required>
                             @foreach ($parts as $part)
                             <option value="{{$part->id}}">{{$part->name}}</option>
                             @endforeach
-                         
+
                         </select>
                     </div>
 
@@ -509,6 +532,70 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+{{-- *
+* |--------------------------------------------------------------------------
+* | Modal Select Stock
+* |--------------------------------------------------------------------------
+* --}}
+
+<div class="modal modal-blur fade" id="selectStockModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-title">Upload Stock</div>
+                <div>Pilih methode tambah data</div>
+            </div>
+            <div class="pb-3 px-3">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <button type="button" class="btn btn-success me-auto w-100" disabled>
+                            Bulk</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary w-100"  data-toggle="modal" data-target="#createStockModal" data-dismiss="modal">Pieces</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-title">Are you sure?</div>
+                <div>If you proceed, you will lose all your personal data.</div>
+            </div>
+            <div class="modal-footer">
+
+
+                <button disabled class="btn btn-success w-100">
+                    </svg>Excel</button>
+
+                <button type="button" class="btn btn-link link-secondary me-auto"
+                    data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my
+                    data</button>
+                {{-- <button data-toggle="modal" data-target="#createStockModal" data-dismiss="modal"
+                    class="btn btn-primary w-100"><svg xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>Satuan</button> --}}
+            </div>
         </div>
     </div>
 </div>
