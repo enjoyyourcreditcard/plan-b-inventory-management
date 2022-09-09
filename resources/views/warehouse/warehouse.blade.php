@@ -97,8 +97,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label for="exampleInputPassword1">Tenggat Waktu</label>
-                                                        <input type="date" name="tenggat_waktu"
+                                                        <label for="exampleInputPassword1">Expired</label>
+                                                        <input type="date" name="expired"
                                                             class="form-control disContract" id="inputTenggat" required>
                                                     </div>
                                                 </div>
@@ -268,8 +268,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label for="exampleInputPassword1">Tenggat Waktu</label>
-                                                        <input type="date" name="tenggat_waktu"
+                                                        <label for="exampleInputPassword1">Expired</label>
+                                                        <input type="date" name="expired"
                                                             class="form-control disContract" id="inputtenggatwaktu">
                                                     </div>
                                                 </div>
@@ -388,7 +388,7 @@
                                                     <th>Location</th>
                                                     <th>WareHouse Type</th>
                                                     <th>Contract Status</th>
-                                                    <th>Tenggat Waktu</th>
+                                                    <th>Expired</th>
                                                     <th>Latitude</th>
                                                     <th>Longitude</th>
                                                     <th>Start At</th>
@@ -410,7 +410,7 @@
                                                         <td class="whlocation">{{ $item->location }}</td>
                                                         <td class="wh_type">{{ $item->type }}</td>
                                                         <td class="contract_status">{{ $item->contract_status }}</td>
-                                                        <td class="tenggat_waktu">{{ $item->tenggat_waktu }}</td>
+                                                        <td class="tenggat_waktu">{{ $item->expired }}</td>
                                                         <td class="lat">{{ $item->lat }}</td>
                                                         <td class="lng">{{ $item->lng }}</td>
                                                         <td class="start_at">{{ $item->start_at }}</td>
