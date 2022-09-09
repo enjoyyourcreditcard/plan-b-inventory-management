@@ -39,7 +39,7 @@ Route::get('/tes123', function () {
 
 
 
-Route::group(['prefix' => 'part', 'middleware' => ['auth:sanctum','ability:show-part2']], function () {
+Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
 });

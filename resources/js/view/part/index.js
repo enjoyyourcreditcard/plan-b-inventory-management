@@ -81,7 +81,8 @@ function Parts() {
                 accessor: 'category',
                 Cell: tableProps => (
                     <>
-                        <a href={'/category/' + tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
+
+                        <a href={'/category/'+tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
                     </>
                 )
 

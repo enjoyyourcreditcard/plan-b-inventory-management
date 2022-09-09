@@ -816,7 +816,6 @@
                                 <option class="partBrandOption" value="{{ $brand['id'][$i] }}">{{ $brand['name'][$i] }}</option>
                                 @endif
                                 @endfor
-
                             </select>
                         </div>
 

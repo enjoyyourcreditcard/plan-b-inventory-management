@@ -2,14 +2,17 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Inventory Management - MVN</title>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
@@ -25,6 +28,7 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+</head>
 
 
 
@@ -76,10 +80,10 @@
                                         <div class="list-group-item">
                                             <div class="row align-items-center">
                                                 <div class="col text-truncate">
-                                                    <h4 class="text-body d-block">{{$row->title}}</h4>
-                                                    <div class="d-block text-muted text-truncate mt-n1">
-                                                        {{$row->content}}
-                                                    </div>
+                                                    <<<<<<< HEAD <h4 class="text-body d-block">{{$row->title}}</h4>
+                                                        <div class="d-block text-muted text-truncate mt-n1">
+                                                            {{$row->content}}
+                                                        </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <a href="/delete/{{$row->id}}" class="list-group-item-actions show">
@@ -95,11 +99,32 @@
                                                             <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
                                                             <path d="M3 3l18 18"></path>
                                                         </svg>
+                                                        =======
+                                                        <h4 class="text-body d-block">{{$row->title}}</h4>
+                                                        <div class="d-block text-muted text-truncate mt-n1">
+                                                            {{$row->content}}
+                                                        </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="/delete/{{$row->id}}" class="list-group-item-actions show">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-report-off" width="24"
+                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                                            stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path
+                                                                d="M5.576 5.595a1.994 1.994 0 0 0 -.576 1.405v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2m0 -4v-8a2 2 0 0 0 -2 -2h-2">
+                                                            </path>
+                                                            <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
+                                                            <path d="M3 3l18 18"></path>
+                                                        </svg>
+                                                        >>>>>>> origin/user_friendly_modal_part
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <<<<<<< HEAD=======>>>>>>> origin/user_friendly_modal_part
                                     </div>
                                     @endforeach --}}
                                 </div>
@@ -110,7 +135,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                             aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url(https://avatars.dicebear.com/api/initials/{{Auth::user()->name}}.svg)"></span>
+                            <span class="avatar avatar-sm"
+                                style="background-image: url(https://avatars.dicebear.com/api/initials/{{Auth::user()->name}}.svg)"></span>
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{Auth::user()->name}}</div>
                                 <div class="mt-1 small text-muted">Inventory Control</div>
@@ -193,10 +219,15 @@
                             <li class="nav-item {{ Request::is('inbound*') ? 'active' : '' }}">
                                 <a class="nav-link" href="/inbound">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-receipt" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2"></path>
-                                         </svg>
+                                            <path
+                                                d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2">
+                                            </path>
+                                        </svg>
                                     </span>
                                     <span class="nav-link-title">
                                         <b>Transaksi</b>
@@ -351,10 +382,11 @@
     {{-- CDN input --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>

@@ -24,8 +24,12 @@ class CategoryService
         $validatedData['uom'] = implode(', ', $request->uom);
         $validatedData['started'] = now();
         $validatedData['status'] = 'active';
-        $this->category->create($validatedData);
-        return('Data has been stored');
+        $data = $this->category->create($validatedData);
+        if ($request->isAjax == 'yep') {
+            return ResponseJSON($data, 200);
+        }else{
+            return redirectTab("tabs-category");
+        }
     }
 
     // Category INDEX

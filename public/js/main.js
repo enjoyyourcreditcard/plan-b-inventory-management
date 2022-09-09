@@ -5,7 +5,44 @@
 | Part Javascript
 |--------------------------------------------------------------------------
 */
-$(".select2").prepend('<option selected></option>').select2({
+$(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createPartModal"),
+    placeholder: "Select..",
+    theme: "bootstrap",
+    _type: "open",
+    language: {
+        "noResults": function(){
+            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+        }
+    },
+    escapeMarkup: function (markup) {
+        return markup;
+    }
+}
+);
+
+function showPartCategoryModal () {
+    $('#createPartCategoryModal').show();
+    $(".inputPartCategorySelect2").select2("close");
+};
+function bye () {
+    $('#createPartCategoryModal').hide();
+    $(".inputPartCategorySelect2").select2({
+        dropdownParent: $("#createPartModal"),
+        "language": {
+            "noResults": function(){
+                return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+};
+
+$(".inputPartAllSelect2").prepend('<option selected></option>').select2({
     width: '100%',
     height: '10px',
     dropdownParent: $("#createPartModal"),
@@ -38,7 +75,6 @@ $(".select6").select2({
     multiple:true,
     dropdownParent: $("#editCategoryModal"),
     theme: "classic"
-
 }
 );
 
@@ -84,6 +120,14 @@ $(".addStockSelect2").select2({
     theme: "bootstrap"
 });
 
+// *: Request Form JS
+$(".inputRequestFormSelect2").select2({
+    dropdownParent: $("#inputRequestFormParent"),
+    placeholder: "Select part..",
+    theme: "bootstrap"
+}
+);
+// *: End Request Form JS
 
 $('#editCategoryModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
@@ -140,23 +184,37 @@ $('#modalEditBuild').on('show.bs.modal', function(event) {
 })
 // *: End Build Edit JS
 
-
-
-
-    // const name = document.querySelectorAll('.name'); 
-    // const inputNameEdit = document.querySelector('.input-name-edit'); 
-    // const tombolEdit = document.querySelectorAll('.tombol-edit'); 
-    // const formEdit = document.querySelector('.form-edit'); 
- 
-    // tombolEdit.forEach((e, i) => { 
-    //     e.addEventListener('click', function () { 
-    //         inputNameEdit.value = ''; 
-    //         inputNameEdit.value = name[i].innerHTML.trim();                         
-    //         formEdit.removeAttribute('action'); 
-    //         formEdit.setAttribute('action', '/brand/' + e.getAttribute('data-id')) 
-    //     }) 
-    // }); 
-
+// *: Request Form Append New Input JS
+$(function () {
+    i = 0;
+    var datas = [];
+    var options = $('.inputRequestFormSelect2');
+    for (i = 0; i < options.children().length; i++) {
+        datas.push({
+            id: options.children()[i].value,
+            text: options.children()[i].text
+        });
+    }
+    $('#request-form-append-new').click(function () {
+        $( "#inputRequestAppend" ).append('<div class="mb-3" id="' + i + '"><hr><div class="row"><div class="col-md-10 col-6"><select class="form-control inputRequestFormAppendSelect2" name="part_id[]" required><option></option></select></div><div class="col-md-1 col-3"><input type="number" class="form-control" name="quantity[]" placeholder="Input placeholder" value="1" min="1"></div><div class="col-md-1 col-3"><button class="btn request-form-delete" data-id="'+ i +'"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash mx-auto" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="4" y1="7" x2="20" y2="7"></line><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg></button></div></div><div class="col-11 mt-3"><textarea class="form-control" rows="3" name="remarks[]" placeholder="Note.."></textarea></div></div>');
+        $(".inputRequestFormAppendSelect2").select2({
+            data: datas,
+            width: '100%',
+            height: '100%',
+            placeholder: "Select part..",
+            dropdownParent: $("#inputRequestFormParent"),
+            theme: "bootstrap"
+        });
+        i++;
+    });
+    $('#inputRequestAppend').on('click', '.request-form-delete', function(event){
+        var button = $(event.currentTarget);
+        var id = button.data('id');
+        var inputRequestFormDelete = $('#'+id);
+        inputRequestFormDelete.remove();
+    });
+});
+// *: End Request Form Append New Input JS
 
 
 /*
@@ -223,52 +281,6 @@ $('#editWarehouseModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body #whstatus').val(status)
     modal.find('.modal-body #whid').val(id)
 })
-
-//   // console.log(location);
-//   const whName = document.querySelectorAll(".wh_name");
-//   const inputWhNameEdit = document.getElementById("inputwh_name");
-//   const regional = document.querySelectorAll('.regional');
-//   const inputRegionalEdit = document.getElementById('inputregional');
-//   const kota = document.querySelectorAll('.kota');
-//   const inputKotaEdit = document.getElementById('inputkota');
-//   const locationWh = document.querySelectorAll('.whlocation');
-//   const inputLocationWhEdit = document.getElementById('inputlocation');
-//   const whType = document.querySelectorAll('.wh_type');
-//   const inputWhTypeEdit = document.getElementById('inputwh_type');
-//   const contractStatus = document.querySelectorAll('.contract_status');
-//   const inputContractStatusEdit = document.getElementById('inputcontract_status');
-//   const startAt = document.querySelectorAll('.start_at');
-//   const inputStartAtEdit = document.getElementById('inputstart_at');
-//   const endAt = document.querySelectorAll('.end_at');
-//   const inputEndAtEdit = document.getElementById('inputend_at');
-//   const tombolEdit = document.querySelectorAll('.btn_update');
-//   const formEdit = document.getElementById('update_wh');
-
-
-//   tombolEdit.forEach((e, i) => {
-//       // console.log(locationWh[i]);
-//       e.addEventListener('click', function() {
-//           inputWhNameEdit.value = '';
-//           inputWhNameEdit.value = whName[i].innerHTML.trim();
-//           inputRegionalEdit.value = '';
-//           inputRegionalEdit.value = regional[i].innerHTML.trim();
-//           inputKotaEdit.value = '';
-//           inputKotaEdit.value = kota[i].innerHTML.trim();
-//           inputLocationWhEdit.value = '';
-//           inputLocationWhEdit.value = locationWh[i].innerHTML.trim();
-//           inputWhTypeEdit.value = '';
-//           inputWhTypeEdit.value = whType[i].innerHTML.trim();
-//           inputContractStatusEdit.value = '';
-//           inputContractStatusEdit.value = contractStatus[i].innerHTML.trim();
-//           inputStartAtEdit.value = '';
-//           inputStartAtEdit.value = startAt[i].innerHTML.trim();
-//           inputEndAtEdit.value = '';
-//           inputEndAtEdit.value = endAt[i].innerHTML.trim();
-//           formEdit.removeAttribute('action');
-//           formEdit.setAttribute('action', '/warehouse/' + e.getAttribute('data-id'))
-//       })
-//   });
-
 
 $('#partCategory').on('change', function (e) {
     //Set Variables
@@ -347,4 +359,60 @@ $('#editPartCategory').on('change', function (e) {
         $('#partBrand').append("<option class='partBrandOption' value='"+ brandArray['id'][i] +"'>"+ brandArray['name'][i] +"</option>");
         i++;
     }
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| AJAX
+|--------------------------------------------------------------------------
+*/
+
+
+$(document).ready(function () {
+    $.get('/ajax/part', function (data) {
+        for (let i = 0; i < data['categories'].length; i++) {
+            $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+        }
+    });
+
+    $('#submitStoreCategory').click(function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            url: '/category',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            method: 'post',
+            data: {
+                name: jQuery('#categoryName').val(),
+                description: jQuery('#categoryDescription').val(),
+                uom: jQuery('#storeCategoryUom').val(),
+                isAjax: 'yep'
+            },
+            success: function () {
+                $('#createPartCategoryModal').hide();
+                $(".inputPartCategorySelect2").select2({
+                    dropdownParent: $("#createPartModal"),
+                    "language": {
+                        "noResults": function(){
+                            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+                        }
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
+                });
+                $('.partCategoryOption').remove();
+                $.get('/ajax/part', function (data) {
+                    for (let i = 0; i < data['categories'].length; i++) {
+                        $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+                    }
+                });
+            }
+        });
+    });
 });

@@ -21,5 +21,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345'),
             'status' => 'aktif',
         ]);
+
+        User::create([
+            'email' => 'actor@gmail.com',
+            'name' => 'Actor Number One',
+            'password' => Hash::make('12345'),
+            'status' => 'aktif',
+        ]);
     }
 }

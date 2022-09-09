@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\RequestForm;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Part extends Model
 {
@@ -30,5 +31,9 @@ class Part extends Model
     public function build()
     {
         return $this->hasMany(Build::class);
+    }
+    public function requestForms()
+    {
+        return $this->hasMany(RequestForm::class);
     }
 }
