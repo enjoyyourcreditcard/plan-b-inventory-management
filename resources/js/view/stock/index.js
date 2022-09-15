@@ -9,9 +9,11 @@ import Api from '../../utils/api';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import TableLoading from '../../components/table_loding';
+import Filter from '../../utils/filter';
 
 function Stock() {
     const api = new Api;
+    const filter = new Filter;
     const [rawData, setRawData] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
@@ -36,6 +38,17 @@ function Stock() {
         setData(data);
         setNoStock(!noStock);
     }
+
+    function SearchFilter(search, column) {
+        let result = filter.search(search,column,rawData);
+        setData(result);
+    }
+
+    function resetSearchFilter() {
+            setData(rawData);
+    }
+
+
     const columns = React.useMemo(
 
         () => [{
@@ -66,17 +79,17 @@ function Stock() {
                         <a data-tip={tableProps.row.original.part.name}>
                             <img src={"/" + tableProps.row.original.part.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
                         </a>
-                        <a href={"/part/" + tableProps.row.original.part.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.part.name}</a>
+                        <a href={"/part/" + tableProps.row.original.part.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.part_name}</a>
                     </div>
                 </>
             )
         }, {
             Header: 'Warehouse',
-            accessor: 'warehouse',
+            accessor: 'wh_name',
 
             Cell: tableProps => (
                 <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.warehouse.wh_name}</p>
+                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.wh_name}</p>
                 </>
 
             )
@@ -96,11 +109,11 @@ function Stock() {
         },
         {
             Header: 'Category',
-            accessor: 'category',
+            accessor: 'category_name',
 
             Cell: tableProps => (
                 <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.part.category.name}</p>
+                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.category_name}</p>
                 </>
 
             )
@@ -144,11 +157,11 @@ function Stock() {
         },
         {
             Header: 'Brand',
-            accessor: 'brand',
+            accessor: 'brand_name',
 
             Cell: tableProps => (
                 <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.part.brand.name}</p>
+                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.brand_name}</p>
                 </>
 
             )
@@ -215,10 +228,10 @@ function Stock() {
                         </button>
 
                     </div>
-
-                    <TableSearch
-                        globalFilter={globalFilter}
-                        setGlobalFilter={setGlobalFilter} />
+ <TableSearch
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter}/>
 
                     <div className='px-1'></div>
                     <div class="btn-group h-25 ">

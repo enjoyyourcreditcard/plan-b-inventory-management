@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useTable, usePagination, useGlobalFilter, useSortBy, useFilters } from 'react-table'
+import { useTable, usePagination, useSortBy, } from 'react-table'
 import ReactTooltip from 'react-tooltip';
 import TabelFooter from '../../components/tabel_footer';
 import Table from '../../components/Table';
@@ -8,9 +8,12 @@ import TabelHiddenColumn from '../../components/table_hidden_column';
 import TableLoading from '../../components/table_loding';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
+import Filter from '../../utils/filter';
 
 function Parts() {
     const api = new Api;
+    const filter = new Filter;
+
     const [rawData, setRawData] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
@@ -30,21 +33,30 @@ function Parts() {
         }
     }, []);
 
+
     function filterNoStock() {
-        let data = noStock ? rawData : rawData.filter((i) => i.stocks_count === 0)
-        setData(data);
+        let result = filter.noStock(noStock,rawData);
+        setData(result);
         setNoStock(!noStock);
     }
+
+    
+    function SearchFilter(search, column) {
+        let result = filter.search(search,column,rawData);
+        setData(result);
+    }
+
+    function resetSearchFilter() {
+        setData(rawData);
+    }
+
     const columns = React.useMemo(
 
         () => [
-
             {
-
-                //Add this line to the column definition
                 Header: 'Name',
                 accessor: 'name',
-                style: { 'maxWidth': 10 },//Add this line to the column definition
+                style: { 'maxWidth': 10 },
 
                 Cell: tableProps => (
                     <>
@@ -53,7 +65,7 @@ function Parts() {
 
                         <div id="thumbwrap" >
                             <div className='d-flex'>
-                                <div style={{minWidth:40}} className="pr-1">
+                                <div style={{ minWidth: 40 }} className="pr-1">
                                     <a data-tip={tableProps.row.original.name}>
                                         <img src={"/" + tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
                                     </a>
@@ -71,7 +83,7 @@ function Parts() {
 
                 Cell: tableProps => (
                     <>
-                        <p style={{ "minWidth": 300,"padding":0,"margin":0 }}>{tableProps.row.original.description}</p>
+                        <p style={{ "minWidth": 300, "padding": 0, "margin": 0 }}>{tableProps.row.original.description}</p>
                     </>
 
                 )
@@ -82,7 +94,7 @@ function Parts() {
                 Cell: tableProps => (
                     <>
 
-                        <a href={'/category/'+tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
+                        <a href={'/category/' + tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
                     </>
                 )
 
@@ -96,7 +108,7 @@ function Parts() {
                 )
             }, {
                 Header: 'Stock',
-                accessor: 'size',
+                accessor: 'stocks_count',
                 Cell: tableProps => (
                     <>
 
@@ -118,10 +130,37 @@ function Parts() {
                 )
 
             },
+            , {
+                Header: 'SN Status',
+                accessor: 'sn_status'
+
+            },
+            , {
+                Header: 'Color',
+                accessor: 'color'
+
+            }, {
+                Header: 'IM Code',
+                accessor: 'im_code'
+
+            },
+            , {
+                Header: 'Orafin Code',
+                accessor: 'orafin_code'
+
+            },
 
         ],
         []
     )
+
+    const initialState = {
+        hiddenColumns: [
+            "color",
+            "im_code",
+            "orafin_code",
+            "sn_status"]
+    };
     const {
         getTableProps,
         getTableBodyProps,
@@ -137,15 +176,16 @@ function Parts() {
         nextPage,
         allColumns,
         previousPage,
-        setGlobalFilter
     } = useTable(
         {
             columns,
-            data
+            data,
+            initialState
+
         },
-        useGlobalFilter, useSortBy, usePagination
+        useSortBy, usePagination
     )
-    const { globalFilter, pageIndex } = state
+    const { pageIndex } = state
     return (
         <div>
             <div className="pt-3 ">
@@ -163,8 +203,9 @@ function Parts() {
                     </div>
 
                     <TableSearch
-                        globalFilter={globalFilter}
-                        setGlobalFilter={setGlobalFilter} />
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter} />
 
                     <div className='px-1'></div>
                     <div class="btn-group h-25 ">

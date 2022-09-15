@@ -156,10 +156,12 @@ class PartController extends Controller
         return redirect()->back();
     }
 
-    public function getAllPart()
+    public function getAllPart(Request $req)
     {
-        return ResponseJSON($this->partService->handleAllPartApi(), 200);
+        return ResponseJSON($this->partService->handleAllPartApi($req), 200);
     }
+
+
     public function getDeactivePart($id)
     {
         return ResponseJSON($this->partService->handleDeactivePart($id), 200);

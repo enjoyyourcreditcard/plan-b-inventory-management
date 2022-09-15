@@ -80,7 +80,6 @@ class StockService
         $stock_status = $request->input('stock_status');
         $status = $request->input('status');
         $created_at = $request->input('created_at');
-
         $stocks = $this->stock
         ->when($part_id, function ($query, $part_id){
             return $query->where('part_id', $part_id);
@@ -99,9 +98,19 @@ class StockService
         })
         ->when($created_at, function ($query, $created_at){
             return $query->where('created_at', $created_at);
-        })->with('part')->with('warehouse')->with('part.brand')->with('part.category')
-        ->get();
-
+        })->with('part')->with('warehouse:id,name')->with('part.brand:id,name')->with('part.category:id,name')
+        ->get()->map(function($item){
+            $item->wh_name = $item->warehouse->name;
+            $item->brand_name = $item->part->brand->name;
+            $item->category_name = $item->part->category->name;
+            $item->part_name = $item->part->name;
+            $item->uom = $item->part->uom;
+            $item->sn_status = $item->part->sn_status;
+            $item->color = $item->part->color;
+            
+            return $item;
+        });
+        
         return($stocks);
     }
 

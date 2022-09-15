@@ -7,9 +7,11 @@ import TabelHiddenColumn from '../../components/table_hidden_column';
 import TableLoading from '../../components/table_loding';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
+import Filter from '../../utils/filter';
 
 function Warehouse() {
     const api = new Api;
+    const filter = new Filter;
     const [rawData, setRawData] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
@@ -28,6 +30,15 @@ function Warehouse() {
         }
     }, []);
 
+    function SearchFilter(search, column) {
+        let result = filter.search(search,column,rawData);
+        setData(result);
+    }
+
+    function resetSearchFilter() {
+            setData(rawData);
+    }
+
     function filterNoStock() {
         let data = noStock ? rawData : rawData.filter((i) => i.size === 1)
         setData(data);
@@ -41,11 +52,11 @@ function Warehouse() {
 
                 //Add this line to the column definition
                 Header: 'Name',
-                accessor: 'wh_name',
+                accessor: 'name',
                 style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: tableProps => (
                     <>
-                            <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.wh_name}</a>
+                            <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                     </>
                 )
             }, 
@@ -56,7 +67,7 @@ function Warehouse() {
             },
             {
                 Header: 'City',
-                accessor: 'kota',
+                accessor: 'city',
 
             },
             {
@@ -118,9 +129,9 @@ function Warehouse() {
                         
                     </div>
                     <TableSearch
-                        globalFilter={globalFilter}
-                        setGlobalFilter={setGlobalFilter} />
-
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter}/>
                     <div className='px-1'></div>
                     {/* <div class="btn-group h-25 ">
                         <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

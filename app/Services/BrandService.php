@@ -72,4 +72,9 @@ class BrandService
         }
         return($brandString);
     }
+
+    public function handleGetAllBrandForSelect()
+    {
+        return $this->brand->select("name")->get();
+    }
 }

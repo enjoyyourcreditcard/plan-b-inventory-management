@@ -16,6 +16,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Models\Warehouse;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('/part' , PartController::class)->middleware("auth");
+Route::resource('/warehouse' , WarehouseController::class)->middleware("auth");
 
 Route::get('/ajax/part' , [PartController::class, 'ajaxIndex'])->middleware("auth");
 Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
@@ -61,8 +63,8 @@ Route::post('/stock', [StockController::class, 'store'])->name('post.store.stock
 Route::put('/stock/{id}', [StockController::class, 'put'])->name('put.update.stock')->middleware("auth");
 Route::delete('/stock/{id}', [StockController::class, 'destroy'])->name('delete.destroy.stock')->middleware("auth");
 
-Route::post('/brand/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
-Route::get('/part/deactive/{id}', [App\Http\Controllers\PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
+Route::post('/brand/update', [CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
+Route::get('/part/deactive/{id}', [PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
 
 
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
@@ -117,3 +119,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 Route::get('/request-form', [RequestFormController::class, 'index'])->middleware('auth');
 Route::post('/request-form', [RequestFormController::class, 'store'])->middleware('auth');
+
+
+
+

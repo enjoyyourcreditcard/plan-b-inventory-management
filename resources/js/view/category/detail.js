@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useTable, usePagination, useGlobalFilter, useSortBy, useFilters } from 'react-table'
+import ReactTooltip from 'react-tooltip';
 import TabelFooter from '../../components/tabel_footer';
 import Table from '../../components/Table';
 import TabelHiddenColumn from '../../components/table_hidden_column';
 import TableLoading from '../../components/table_loding';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
-import Filter from '../../utils/filter';
 
-function Build() {
+function DetailCategory(props) {
     const api = new Api;
-    const filter = new Filter;
     const [rawData, setRawData] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        // console.log()
         async function getData() {
-            api.getBuild().then((response) => {
+            api.getCategoryById(props.categoryid).then((response) => {
+                console.log(response.data.data.parts)
                 setRawData(response.data.data)
                 setData(response.data.data);
+
                 setLoadingData(false);
             })
         }
@@ -31,20 +33,25 @@ function Build() {
     }, []);
 
     function filterNoStock() {
-        let data = noStock ? rawData : rawData.filter((i) => i.size === 1)
+        let data = noStock ? rawData : rawData.filter((i) => i.stocks_count === 0)
         setData(data);
         setNoStock(!noStock);
     }
 
-
     function SearchFilter(search, column) {
-        let result = filter.search(search,column,rawData);
-        setData(result);
+        if (column === "brand") {
+            console.log('asdasd')
+            let data = rawData.filter(item => item.brand.name.toLowerCase().indexOf(search) > -1);
+            setData(data);
+        } else {
+            let data = rawData.filter(item => eval("item." + column).toLowerCase().indexOf(search) > -1);
+            setData(data);
+        }
     }
-  
     function resetSearchFilter() {
             setData(rawData);
     }
+
     const columns = React.useMemo(
 
         () => [
@@ -55,22 +62,74 @@ function Build() {
                 Header: 'Name',
                 accessor: 'name',
                 style: { 'maxWidth': 10 },//Add this line to the column definition
-             
-            },
-            {
-                Header: 'part',
-                accessor: 'part',
+
                 Cell: tableProps => (
                     <>
-                        {tableProps.row.original.part.map((item, index) => {
-                            return (
-                                <a class="btn" href={"/part/"+item.part.id} style={{marginRight:5}}>
-                                    <img src={"/"+item.part.img} class="me-2" height="22px" width="22px"/>{item.part.name}
-                                </a>
+                        <ReactTooltip place="right" effect="solid" backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
+                            <img src={"/" + tableProps.row.original.img} />} />
 
-                             
-                            );
-                        })}
+                        <div id="thumbwrap" >
+                            <div className='d-flex'>
+                                <div style={{minWidth:40}} className="pr-1">
+                                    <a data-tip={tableProps.row.original.name}>
+                                        <img src={"/" + tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
+                                    </a>
+                                </div>
+
+                                <a href={"/part/" + tableProps.row.original.id} className="text-primary text-decoration-none " > {tableProps.row.original.name}</a>
+
+                            </div>
+                        </div>
+                    </>
+                )
+            }, {
+                Header: 'Description',
+                accessor: 'description',
+
+                Cell: tableProps => (
+                    <>
+                        <p style={{ "minWidth": 300,"padding":0,"margin":0 }}>{tableProps.row.original.description}</p>
+                    </>
+
+                )
+
+            }, {
+                Header: 'Category',
+                accessor: 'category',
+                Cell: tableProps => (
+                    <>
+
+                        <a href={'/category/'+tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
+                    </>
+                )
+
+            }, {
+                Header: 'Brand',
+                accessor: 'brand',
+                Cell: tableProps => (
+                    <>
+                        <a href='#' className="text-primary">{tableProps.row.original.brand.name}</a>
+                    </>
+                )
+            }, {
+                Header: 'Stock',
+                accessor: 'size',
+                Cell: tableProps => (
+                    <>
+
+                        <a href='#' className='text-primary '>{tableProps.row.original.stocks_count}</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                        {tableProps.row.original.stocks_count < 1 ?
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="text-danger icon icon-tabler icon-tabler-alert-triangle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 9v2m0 4v.01"></path>
+                                <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+                            </svg>
+
+                            : <></>}
+
                     </>
 
                 )
@@ -109,29 +168,24 @@ function Build() {
             <div className="pt-3 ">
                 <div className="d-flex">
                     <div>
-
-                        <button className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createBuildModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-plus" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
+                        {/* TODO: data-bs-target dibikin props */}
+                        <button data-bs-toggle="modal" data-bs-target="#createPartModal" class="btn btn-primary w-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            New Build
-
-
-                       
+                            New Part
                         </button>
-
                     </div>
+
                     <TableSearch
                         columns={columns}
                         SearchFilter={SearchFilter}
                         resetSearchFilter={resetSearchFilter}/>
-                        
+
                     <div className='px-1'></div>
-                    {/* <div class="btn-group h-25 ">
+                    <div class="btn-group h-25 ">
                         <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-filter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -142,7 +196,7 @@ function Build() {
                             <button class="dropdown-item" href="#"><input type="checkbox" checked={noStock} onChange={filterNoStock} />&nbsp; No Stock</button>
                         </div>
                     </div>
-                    <div className='px-1'></div> */}
+                    <div className='px-1'></div>
 
                     <TabelHiddenColumn
                         allColumns={allColumns} />
@@ -172,8 +226,10 @@ function Build() {
     );
 }
 
-export default Build;
+export default DetailCategory;
 
-if (document.getElementById('part-build')) {
-    ReactDOM.render(<Build />, document.getElementById('part-build'));
+if (document.getElementById('detail-category')) {
+    const propsContainer = document.getElementById("detail-category");
+    const props = Object.assign({}, propsContainer.dataset);
+    ReactDOM.render(<DetailCategory  {...props} />, document.getElementById('detail-category'));
 }

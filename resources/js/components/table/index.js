@@ -14,14 +14,13 @@ function Table(props) {
                     ))}
                 </thead>
                 <tbody {...props.getTableBodyProps()}>
+                    
                     {props.page.map((row, i) => {
-                        props.prepareRow(row)
+                    props.prepareRow(row)
                         return (
                             <tr {...row.getRowProps()} >
                                 {row.cells.map(cell => {
-                                
                                         return <td {...cell.getCellProps()} className="align-middle">{cell.render('Cell')}</td>
-
                                 })}
                             </tr>
                         )

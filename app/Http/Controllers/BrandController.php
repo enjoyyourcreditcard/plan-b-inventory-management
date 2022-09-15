@@ -60,4 +60,15 @@ class BrandController extends Controller
     {
         return ResponseJSON($this->brandService->handleDeactiveBrand($id), 200);
     }
+
+    public function getAllBrandForSelect()
+    {
+        $category = $this->brandService->handleGetAllBrandForSelect();
+        $result = [];
+        foreach ($category as $item) {
+            $result[] = $item->name;
+        }
+        return ResponseJSON($result,200);
+    }
+    
 }

@@ -325,7 +325,7 @@
 * |--------------------------------------------------------------------------
 * --}}
 
-<div class="modal fade" id="createWarehouseModal" tabindex="-1" role="dialog"
+{{-- <div class="modal fade" id="createWarehouseModal" tabindex="-1" role="dialog"
     aria-labelledby="createWarehouseModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -404,22 +404,148 @@
                         </div>
                     </div>
 
-                    {{-- *End Form --}}
                 </div>
                 <div class="modal-footer">
-                    {{-- <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
-                    --}}
-                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                     <button type="button" class="btn me-auto btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {{-- <button type="submit" class="btn btn-primary">Add Brand</button> --}}
                     <button type="button" class="btn btn-primary">Submit</button>
                 </div>
             </form>
 
         </div>
     </div>
-</div>
+</div> --}}
 
+
+<div class="modal modal-blur fade modal-lg" id="createWarehouseModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Create Warehouse</h5>
+            </div>
+            <div class="modal-body">
+                <form action="/warehouse" method="POST">
+                    @csrf
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="exampleInputEmail1">Warehouse Name</label>
+                        <input type="text" name="name" class="form-control" id="inputWarehouse"
+                            aria-describedby="emailHelp" placeholder="Input Warehouse Name" required>
+                    </div>
+
+                    
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="exampleInputPassword1">Regional</label>
+                        <select class="form-select" name="regional" id="regional" required>
+                            <option value="Jabodetabek">Jabodetabek</option>
+                            <option value="Jakarta">Jakarta
+                            </option>
+                            <option value="Surabaya">Surabaya
+                            </option>
+                            <option value="Medan">Medan
+                            </option>
+                            <option value="Bandung">Bandung
+                            </option>
+                            <option value="Semarang">Semarang
+                            </option>
+                            <option value="Malang">Malang
+                            </option>
+                            <option value="Semarang">Semarang
+                            </option>
+                            <option value="SUMATERA 1">SUMATERA 1
+                            </option>
+                            <option value="SUMATERA 2">SUMATERA 2
+                            </option>
+                            <option value="JAWA TENGAH">JAWA TENGAH
+                            </option>
+                            <option value="KALIMANTAN">KALIMANTAN
+                            </option>
+                            <option value="JATIM, BALI &amp; NT">JATIM, BALI &amp; NT
+                            </option>
+                            <option value="SULAMPA">SULAMPA
+                            </option>
+                            <option value="Others">Others
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="exampleInputPassword1">City</label>
+                        <input type="text" name="city" class="form-control " id="inputCity" placeholder="Input City"
+                            required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="exampleInputPassword1">Location</label>
+                        <input type="text" name="location" class="form-control " id="input" placeholder="Input Location"
+                            required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="exampleInputPassword1">Warehouse Type</label>
+                        <input type="text" name="type" class="form-control " id="inputType"
+                            placeholder="Input Warehouse Type" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label" for="exampleInputPassword1">Contract Status</label>
+                                <select class="form-select" name="contract_status" id="contract_status"
+                                    onchange="checkOption(this)" required>
+                                    <option selected disabled>Select Contract Status</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Permanent">Permanent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="exampleInputPassword1">Expired</label>
+                                <input type="date" name="expired" class="form-control disContract" id="inputTenggat"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group mb-3">
+                        <div class="row">
+                            <div class=" col-md-6">
+                                <label class="form-label" for="exampleInputPassword1">Start At</label>
+                                <input type="date" name="start_at" class="form-control " id="inputStart"
+                                    placeholder="Start At" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="exampleInputPassword1">End At</label>
+                                <input type="date" name="end_at" class="form-control " id="inputEnd"
+                                    placeholder="End At" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="row">
+                            <div class=" col-md-6 ">
+                                <label class="form-label" for="exampleInputPassword1">latitude</label>
+                                <input type="text" name="lat" class="form-control " id="lat" required>
+                            </div>
+                            <div class=" col-md-6 ">
+                                <label class="form-label" for="exampleInputPassword1">longtitude</label>
+                                <input type="text" name="lng" class="form-control " id="lng" required>
+                            </div>
+                        </div>
+                        {{-- <div id="map" style="height: 250px; width: 670px" class="my-3">
+                        </div> --}}
+                       
+                    </div>
+                 
+                    
+                    <div class="form-group mb-3">
+                        <input type="hidden" name="status" class="form-control " id="inputEnd">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                {{-- *End Form --}}
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="editWarehouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -511,9 +637,11 @@
                     <div class="mb-3">
                         <label for="stockWhId" class="form-label">Warehouse</label>
                         <select class="form-control" name="warehouse_id" required>
-                            <option value="1">Warehouse A</option>
-                            <option value="2">Warehouse B</option>
-                            <option value="3">Warehouse C</option>
+                            @foreach ($warehouse as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                            {{-- <option value="1">Warehouse A</option>
+                            <option value="3">Warehouse C</option> --}}
                         </select>
                     </div>
 
@@ -558,7 +686,8 @@
                             Bulk</button>
                     </div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-primary w-100"  data-toggle="modal" data-target="#createStockModal" data-dismiss="modal">Pieces</button>
+                        <button type="button" class="btn btn-primary w-100" data-toggle="modal"
+                            data-target="#createStockModal" data-dismiss="modal">Pieces</button>
 
                     </div>
 

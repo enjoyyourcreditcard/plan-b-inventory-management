@@ -28,9 +28,27 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+    {{-- mapbox --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" type="text/javascript">
+    </script>
+    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
 </head>
 
-
+<style>
+    #mapid {
+        z-index: 0;
+        display: block;
+        width: 100%;
+        height: 400px;
+    }
+</style>
 
 <body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;;
 
@@ -399,8 +417,8 @@
     <script src="{{asset('js/main.js')}}"></script>
 
     @yield('additionalJs')
-
-    @yield('jsModal')
+    {{-- <<<<<<< HEAD=======>>>>>>> origin/warehousemaps --}}
+        @yield('jsModal')
 </body>
 
 </html>

@@ -509,7 +509,7 @@
                                                 @if($is_sn == true)
                                                 <td role="cell">{{ $stock->sn_code }}</td>
                                                 @endif
-                                                <td role="cell">{{ $stock->warehouse->wh_name }}</td>
+                                                <td role="cell">{{ $stock->warehouse->name }}</td>
                                                 <td role="cell">{{ $stock->condition }}</td>
                                                 <td role="cell">{{ $stock->expired_date }}</td>
                                                 {{-- <td role="cell">{{ $stock->stock_status }}</td> --}}
