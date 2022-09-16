@@ -26,6 +26,10 @@ class Warehouse extends Model
     public function stocks() {
         return $this->hasMany(Stock::class);
     }
+
+    public function requestForms() {
+        return $this->hasMany(RequestForm::class);
+    }
     
 }
 

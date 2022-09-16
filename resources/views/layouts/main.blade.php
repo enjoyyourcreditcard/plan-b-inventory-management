@@ -22,7 +22,12 @@
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
 
-
+    <style>
+        .select2-selection.select2-selection--single{
+            height: 36.67px;
+            border: 1px solid gainsboro;
+        }
+    </style>
 
 <body>
     <div class="page">
