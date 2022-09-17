@@ -80,6 +80,43 @@ export default class Api {
 
 
 
+  getCategoryById = (id) => {
+    return this.init()
+      .get(`part?category_id=`+id)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+
+
+/*
+*|--------------------------------------------------------------------------
+*| Api for select
+*|--------------------------------------------------------------------------
+*/
+  getCategorySelect = (id) => {
+    return this.init()
+      .get(`category/select`)
+      .catch((error) => {
+      });
+  };
+
+  getBrandSelect = (id) => {
+    return this.init()
+      .get(`brand/select`)
+      .catch((error) => {
+      });
+  };
+
+
+
+
+
+
+
+
   
 
 

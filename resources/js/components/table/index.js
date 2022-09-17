@@ -1,7 +1,7 @@
 function Table(props) {
     return (<>
         <div className="table-responsive mb-3">
-            <table {...props.getTableProps()} className="table table-borderless table-striped" >
+            <table {...props.getTableProps()} className="table table-borderless" >
                 <thead >
                     {props.headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -14,14 +14,13 @@ function Table(props) {
                     ))}
                 </thead>
                 <tbody {...props.getTableBodyProps()}>
+                    
                     {props.page.map((row, i) => {
-                        props.prepareRow(row)
+                    props.prepareRow(row)
                         return (
                             <tr {...row.getRowProps()} >
                                 {row.cells.map(cell => {
-                                
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-
+                                        return <td {...cell.getCellProps()} className="align-middle">{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )

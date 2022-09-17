@@ -311,7 +311,7 @@
                             </svg>
                             &nbsp;STOCK</a>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <a href="#tabs-profile-12" class="nav-link" data-bs-toggle="tab" aria-selected="false"
                             role="tab" tabindex="-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layers-subtract"
@@ -322,7 +322,7 @@
                                 <path d="M16 16v2a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-8a2 2 0 0 1 2 -2h2"></path>
                             </svg>
                             &nbsp;used in</a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item" role="presentation">
                         <a href="#tabs-attachments" class="nav-link" data-bs-toggle="tab" aria-selected="false"
@@ -360,15 +360,19 @@
                             <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
-                                        <div><button data-bs-toggle="modal" data-bs-target="#createStockModal"
-                                                class="btn btn-primary w-100"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-plus" width="24" height="24"
-                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                </svg>New Stock</button></div>
+                                        <div> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectStockModal">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg>
+                                            New Stock
+                                        </button>
+                </div>
                                         <div class="ms-auto text-muted">
                                             <div class="input-icon mb-3"><input type="text" class="form-control"
                                                     placeholder="Search…" value=""><span class="input-icon-addon"><svg
@@ -477,7 +481,7 @@
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
-                                                <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
+                                                {{-- <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>Stock Status</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
@@ -485,8 +489,8 @@
                                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
-                                                    </svg></th>
-                                                <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
+                                                    </svg></th> --}}
+                                                {{-- <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>Status</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
@@ -496,20 +500,20 @@
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>Action</b></th>
+                                                    style="cursor: pointer;"><b>Action</b></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody role="rowgroup">
                                             @foreach ($stocks as $stock)
                                             <tr role="row">
-                                                <td role="cell">{{ $stock->warehouse->wh_name }}</td>
                                                 @if($is_sn == true)
                                                 <td role="cell">{{ $stock->sn_code }}</td>
                                                 @endif
+                                                <td role="cell">{{ $stock->warehouse->name }}</td>
                                                 <td role="cell">{{ $stock->condition }}</td>
                                                 <td role="cell">{{ $stock->expired_date }}</td>
-                                                <td role="cell">{{ $stock->stock_status }}</td>
-                                                <td role="cell">{{ $stock->status }}</td>
+                                                {{-- <td role="cell">{{ $stock->stock_status }}</td> --}}
+                                                {{-- <td role="cell">{{ $stock->status }}</td>
                                                 <td role="cell">
                                                     <form action="/stock/{{ $stock->id }}" method="POST">
                                                         @csrf
@@ -525,7 +529,7 @@
                                                             </svg>
                                                         </button>
                                                     </form>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -802,7 +806,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="mb-2">
                             <label for="partBrand" class="form-label">Brand</label>
                             <select class="form-select select2EditPart" id="partBrand" name="brand_id" required>
@@ -890,5 +893,81 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal modal-blur fade" id="selectStockModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-title">Upload Stock</div>
+                <div>Pilih methode tambah data</div>
+            </div>
+            <div class="pb-3 px-3">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <button type="button" class="btn btn-success me-auto w-100" disabled>
+                            Bulk</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary w-100"  data-toggle="modal" data-target="#createStockModal" data-dismiss="modal">Pieces</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="createStockModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ Route('post.store.stock') }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Stock</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+
+                    <div class="mb-3">
+                     <input type="hidden" name="part_id" value="{{$part_id}}"/>
+                        {{-- <select class="form-control" name="part_id" required>
+                            @foreach ($parts as $part)
+                            <option value="{{$part->id}}">{{$part->name}}</option>
+                            @endforeach
+
+                        </select> --}}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockWhId" class="form-label">Warehouse</label>
+                        <select class="form-control" name="warehouse_id" required>
+                            <option value="1">Warehouse A</option>
+                            <option value="2">Warehouse B</option>
+                            <option value="3">Warehouse C</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockSnCode" class="form-label">SN Code</label>
+                        <input type="text" class="form-control" id="stockSnCode" name="sn_code" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stockExpiredDate" class="form-label">Expired Date</label>
+                        <input type="date" class="form-control" id="stockExpiredDate" name="expired_date" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @endsection

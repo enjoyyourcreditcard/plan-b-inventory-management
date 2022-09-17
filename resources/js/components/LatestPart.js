@@ -257,6 +257,19 @@ function LatestPart() {
         []
     )
 
+    function SearchFilter(search, column) {
+        if (column === "brand") {
+            console.log('asdasd')
+            let data = rawData.filter(item => item.brand.name.toLowerCase().indexOf(search) > -1);
+            setData(data);
+        } else {
+            let data = rawData.filter(item => eval("item." + column).toLowerCase().indexOf(search) > -1);
+            setData(data);
+        }
+    }
+    function resetSearchFilter() {
+            setData(rawData);
+    }
     const {
         getTableProps,
         getTableBodyProps,
@@ -284,9 +297,10 @@ function LatestPart() {
             <div className="card ">
                 <div className="pt-3 container">
                     <div className="d-flex">
-                        <TableSearch
-                            globalFilter={globalFilter}
-                            setGlobalFilter={setGlobalFilter} />
+                    <TableSearch
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter}/>
                         <div className='px-1'></div>
                         <TabelHiddenColumn
                             allColumns={allColumns} />

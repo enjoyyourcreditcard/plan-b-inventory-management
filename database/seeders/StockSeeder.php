@@ -17,7 +17,7 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 1,
             'warehouse_id' => 1,
-            'condition' => 'good new',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-10-01',
             'stock_status' => 'in',
             'status' => 'active',
@@ -26,7 +26,7 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 1,
             'warehouse_id' => 2,
-            'condition' => 'good rekondisi',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-12-01',
             'stock_status' => 'in',
             'status' => 'active',
@@ -35,7 +35,7 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 1,
             'warehouse_id' => 2,
-            'condition' => 'good potongan',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-12-05',
             'stock_status' => 'in',
             'status' => 'active',
@@ -44,7 +44,7 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 1,
             'warehouse_id' => 1,
-            'condition' => 'not good',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-07-03',
             'stock_status' => 'in',
             'status' => 'active',
@@ -53,8 +53,8 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 3,
             'warehouse_id' => 2,
-            'sn_code' => 'qwertz',
-            'condition' => 'good potongan',
+            'sn_code' => '77447497',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-12-05',
             'stock_status' => 'in',
             'status' => 'active',
@@ -63,8 +63,8 @@ class StockSeeder extends Seeder
         Stock::create([
             'part_id' => 3,
             'warehouse_id' => 1,
-            'sn_code' => 'qwerty',
-            'condition' => 'not good',
+            'sn_code' => '24969229',
+            'condition' => 'GOOD NEW',
             'expired_date' => '2022-07-03',
             'stock_status' => 'in',
             'status' => 'active',

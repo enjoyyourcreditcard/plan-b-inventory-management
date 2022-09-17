@@ -12,14 +12,17 @@ class Warehouse extends Model
     
     protected $table = 'warehouse';
     protected $fillable = [
-        'wh_name',
+        'name',
         'regional',
-        'kota',
+        'city',
         'location',
-        'wh_type',
+        'type',
         'contract_status',
+        'tenggat_waktu',
         'start_at',
         'end_at',
+        'lat',
+        'lng',
         'status',
     ];
 

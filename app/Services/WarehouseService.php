@@ -20,15 +20,21 @@ class WareHouseService{
 
     public function handleStoreWareHouse(Request $request)
     {
+        if($request->expired == null){
+            $request['expired'] = "-";
+        }
         $warehouse = $this->warehouse->create([
-            'wh_name' => $request->wh_name,
+            'name' => $request->name,
             'regional' => $request->regional,
-            'kota' => $request->kota,
+            'city' => $request->city,
             'location' => $request->location,
-            'wh_type' => $request->wh_type,
+            'type' => $request->type,
             'contract_status' => $request->contract_status,
+            'expired' => $request->expired,
             'start_at' => $request->start_at,
             'end_at' => $request->end_at,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
             'status' => "active",
         ]);
         return($warehouse);
@@ -36,14 +42,17 @@ class WareHouseService{
 
     public function handleUpdateWareHouse(Request $request, $id){
         $this->warehouse->find($id)->update([
-            'wh_name' => $request->wh_name,
+            'name' => $request->name,
             'regional' => $request->regional,
-            'kota' => $request->kota,
+            'city' => $request->city,
             'location' => $request->location,
-            'wh_type' => $request->wh_type,
+            'type' => $request->type,
             'contract_status' => $request->contract_status,
+            'expired' => $request->expired,
             'start_at' => $request->start_at,
             'end_at' => $request->end_at,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
             ]);
             return('');
     }

@@ -1,10 +1,10 @@
-// formatRupiah
 
 /*
-|--------------------------------------------------------------------------
-| Part Javascript
-|--------------------------------------------------------------------------
+*|--------------------------------------------------------------------------
+*| Part Javascript
+*|--------------------------------------------------------------------------
 */
+
 $(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
     width: '100%',
     height: '10px',
@@ -51,10 +51,13 @@ $(".inputPartAllSelect2").prepend('<option selected></option>').select2({
 }
 );
 
+
 $(".select3").select2({
     width: '100%',
-    height: '10px',
-    tags: true,
+    // height: '10px',
+    // tags: true,
+    placeholder: "Select a state",
+    allowClear: true,
     dropdownParent: $("#createPartModal"),
     theme: "bootstrap"
 }
@@ -110,6 +113,14 @@ $(".editBuildSelect2").select2({
     theme: "classic"
 });
 // *: End Build JS
+
+$(".addStockSelect2").select2({
+    width: '100%',
+    height: '10px',
+    // multiple:true,
+    dropdownParent: $("#createStockModal"),
+    theme: "bootstrap"
+});
 
 // *: Request Form JS
 $(".inputPartRequestFormSelect2").select2({
@@ -244,12 +255,12 @@ function formatRupiah(angka, prefix) {
 
 
 
-/*
-|--------------------------------------------------------------------------
-| Stock Javascript
-|--------------------------------------------------------------------------
-*/
 
+/*
+*|--------------------------------------------------------------------------
+*| Stock Javascript
+*|--------------------------------------------------------------------------
+*/
 
 $('#editWarehouseModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
@@ -408,3 +419,70 @@ $(document).ready(function () {
         });
     });
 });
+
+
+
+$('.btn_update').click(function(event) {
+    var contract = $(event.currentTarget).data('tenggat');
+    if (contract == "permanen") {
+        $(".disContract").attr("disabled", "disabled");
+    } else {
+        $(".disContract").removeAttr("disabled");
+    }
+});
+
+/// js for disable input
+$("select").change(function() {
+    if ($(this).val() == "Permanent") {
+        $(".disContract").attr("disabled", "disabled");
+    } else {
+        $(".disContract").removeAttr("disabled");
+    }
+}).trigger("change");
+
+
+
+let map;
+
+function initMap() {
+map = new google.maps.Map(document.getElementById("map"), {
+    center: {
+        lat: -34.397,
+        lng: 150.644
+    },
+    zoom: 8,
+    scrollwheel: true,
+});
+
+const uluru = {
+    lat: -34.397,
+    lng: 150.644
+};
+let marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+    draggable: true
+});
+
+google.maps.event.addListener(marker, 'position_changed',
+    function() {
+        let lat = marker.position.lat()
+        let lng = marker.position.lng()
+        $('#lat').val(lat)
+        $('#lng').val(lng)
+    })
+
+google.maps.event.addListener(map, 'click',
+    function(event) {
+        pos = event.latLng
+        marker.setPosition(pos)
+    })
+}
+
+
+
+/*
+*|--------------------------------------------------------------------------
+*| Detail Part Javascript
+*|--------------------------------------------------------------------------
+*/

@@ -68,3 +68,7 @@ table {
     border-bottom-right-radius: 0.25rem !important;
   }
 
+  .select2-selection__rendered{
+    margin-top: -10 !important;
+  }
+

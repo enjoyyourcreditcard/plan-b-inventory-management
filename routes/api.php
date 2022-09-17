@@ -47,6 +47,8 @@ Route::group(['prefix' => 'part'], function () {
 
 Route::group(['prefix' => 'category'], function () {
     Route::get('/', [CategoryController::class, 'getAllCategory']);
+    Route::get('/detail/{id}', [CategoryController::class, 'getCategoryById']);
+    Route::get('/select', [CategoryController::class, 'getAllCategoryForSelect']);
     // Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
 });
 
@@ -55,6 +57,8 @@ Route::group(['prefix' => 'brand'], function () {
     Route::get('/', [BrandController::class, 'getAllBrand']);
     Route::post('/', [BrandController::class, 'postStoreBrand']);
     Route::put('/{id}', [BrandController::class, 'putUpdateBrand']);
+    Route::get('/select', [BrandController::class, 'getAllBrandForSelect']);
+    
     Route::get('/delete/{id}', [BrandController::class, 'getDeactiveBrand']);
 });
 

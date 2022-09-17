@@ -38,6 +38,13 @@ class CategoryService
         return $this->category::with('parts')->get();
     }
 
+
+    public function handleGetAllCategoryForSelect()
+    {
+        return $this->category->select("name")->get();
+    }
+
+
     // Category SHOW
     public function handleShowCategory($id)
     {

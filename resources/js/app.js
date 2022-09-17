@@ -26,3 +26,7 @@ require('./view/part/build');
 
 
 
+require('./view/category/detail');
+
+
+

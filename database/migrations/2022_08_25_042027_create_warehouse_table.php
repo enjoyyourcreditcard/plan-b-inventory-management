@@ -15,14 +15,32 @@ class CreateWarehouseTable extends Migration
     {
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
-            $table->string('wh_name');
-            $table->string('regional');
-            $table->string('kota');
+            $table->string('name');
+            $table->enum('regional', [
+                "Jabodetabek",
+                "Jakarta",
+                "Surabaya",
+                "Medan",
+                "Bandung",
+                "Semarang",
+                "Malang",
+                "SUMATERA 1",
+                "SUMATERA 2",
+                "JAWA TENGAH",
+                "KALIMANTAN",
+                "JATIM, BALI & NT",
+                "SULAMPA",
+                "Others"
+            ]);
+            $table->string('city');
             $table->string('location');
-            $table->string('wh_type');
-            $table->string('contract_status');
+            $table->string('type');
+            $table->enum('contract_status', ['Contract', 'Permanent']);
+            $table->string('expired')->nullable();
             $table->date('start_at');
             $table->date('end_at');
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->string('status')->default("active");
             $table->timestamps();
         });

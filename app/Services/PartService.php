@@ -20,18 +20,22 @@ class PartService
     }
 
     // API Part GET
-    public function handleAllPartApi()
+    public function handleAllPartApi($req)
     {
-        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->get();
+        // dd();
+        $category_id = $req->category_id;
+        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->when($category_id, function ($query) use ($category_id) {
+            return $query->where('category_id', $category_id);
+        })->where('status','active')->orderByDesc('id')->get();
         return ($parts);
     }
 
-     // Part GET
-     public function handleAllPart()
-     {
-         $parts = $this->part->all();
-         return ($parts);
-     }
+    // Part GET
+    public function handleAllPart()
+    {
+        $parts = $this->part->all();
+        return ($parts);
+    }
 
     // Part SHOW
     public function handleShowPart($id)
@@ -56,7 +60,7 @@ class PartService
         ]);
 
         if ($request->file('img')) {
-            $validatedData['img'] = 'storage/'.$request->file('img')->store('images/part');
+            $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');
         } else {
             $validatedData['img'] = 'images/part/default.jpg';
         }
@@ -73,7 +77,7 @@ class PartService
             if ($request->oldImg != "images/part/default.jpg") {
                 Storage::delete($request->oldImg);
             }
-            $newImg = 'storage/'.$request->file('img')->store('images/part');
+            $newImg = 'storage/' . $request->file('img')->store('images/part');
             $this->part->find($id)->update([
                 'img' => $newImg
             ]);
@@ -112,17 +116,17 @@ class PartService
     {
         if ($this->part->find($id)->sn_status == "sn") {
             $ifSn = true;
-        }else{
+        } else {
             $ifSn = false;
         }
-        return($ifSn);
+        return ($ifSn);
     }
 
     public function handleShowUomGroupByCategory($id)
     {
         $uomString = $this->part->find($id)->category->uom;
         $uomArray = explode(', ', $uomString);
-        return($uomArray);
+        return ($uomArray);
     }
 
     public function handleShowBrandGroupByCategory($id)
@@ -131,22 +135,19 @@ class PartService
         $brandsPerCategory = $this->brand->where('category_id', $category_id)->get();
         $brands = $this->brand->all()->groupBy('category_id');
         $brand = [];
-        foreach($brandsPerCategory as $brandPerCategory)
-        {
+        foreach ($brandsPerCategory as $brandPerCategory) {
             $brand['name'][] = $brandPerCategory->name;
             $brand['id'][] = $brandPerCategory->id;
         }
-        foreach ($brands as $key => $data)
-        {
-            foreach ($data as $item)
-            {
+        foreach ($brands as $key => $data) {
+            foreach ($data as $item) {
                 $brand['nameString'][$key][] = $item->name;
                 $brand['idString'][$key][] = $item->id;
             }
             $brand['nameString'][$key] = implode(', ', $brand['nameString'][$key]);
             $brand['idString'][$key] = implode(', ', $brand['idString'][$key]);
         }
-        return($brand);
+        return ($brand);
     }
 
     public function handleNameIdPart()

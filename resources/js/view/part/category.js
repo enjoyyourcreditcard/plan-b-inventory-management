@@ -6,9 +6,11 @@ import Table from '../../components/Table';
 import TabelHiddenColumn from '../../components/table_hidden_column';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
+import Filter from '../../utils/filter';
 
 function Category() {
     const api = new Api;
+    const filter = new Filter;
     const [rawData, setRawData] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
@@ -27,11 +29,22 @@ function Category() {
         }
     }, []);
 
+
     function filterNoStock() {
-        let data = noStock ? rawData : rawData.filter((i) => i.size === 1)
-        setData(data);
+        let result = filter.noStock(noStock,rawData);
+        setData(result);
         setNoStock(!noStock);
     }
+
+    
+    function SearchFilter(search, column) {
+        let result = filter.search(search,column,rawData);
+        setData(result);
+    }
+    function resetSearchFilter() {
+            setData(rawData);
+    }
+  
     const columns = React.useMemo(
 
         () => [
@@ -60,7 +73,7 @@ function Category() {
             }, 
             {
                 Header: 'Total Part',
-                accessor: 'parts',
+                accessor: 'total_part',
                 Cell: tableProps => (
                     <>
 
@@ -119,9 +132,10 @@ function Category() {
                     </button>
                     </div>
                     <TableSearch
-                        globalFilter={globalFilter}
-                        setGlobalFilter={setGlobalFilter} />
-
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter}/>
+                        
                     <div className='px-1'></div>
                     {/* <div class="btn-group h-25 ">
                         <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

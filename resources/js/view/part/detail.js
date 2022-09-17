@@ -197,7 +197,19 @@ function DetailPart() {
     const [data, setData] = useState(rawData);
     const [modalAddStock, setModalAddStock] = useState(false);
 
-
+    function SearchFilter(search, column) {
+        if (column === "brand") {
+            console.log('asdasd')
+            let data = rawData.filter(item => item.brand.name.toLowerCase().indexOf(search) > -1);
+            setData(data);
+        } else {
+            let data = rawData.filter(item => eval("item." + column).toLowerCase().indexOf(search) > -1);
+            setData(data);
+        }
+    }
+    function resetSearchFilter() {
+            setData(rawData);
+    }
 
     function filterNoStock() {
         let data = noStock ? rawData : rawData.filter((i) => i.stock === 0)
@@ -368,8 +380,9 @@ function DetailPart() {
                     </div>
 
                     <TableSearch
-                        globalFilter={globalFilter}
-                        setGlobalFilter={setGlobalFilter} />
+                        columns={columns}
+                        SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter}/>
 
                     <div className='px-1'></div>
                     <div class="btn-group h-25 ">

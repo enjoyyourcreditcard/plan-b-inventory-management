@@ -49,6 +49,7 @@ class PartController extends Controller
             'brandString'=>$brandString
         ]);
     }
+    
 
     public function ajaxIndex()
     {
@@ -104,6 +105,7 @@ class PartController extends Controller
         $uoms = $this->partService->handleShowUomGroupByCategory($id);
         $brand = $this->partService->handleShowBrandGroupByCategory($id);
         $notifications =  $this->notificationService->handleAllNotification();
+
         return view('part.detail', [
             'notifications' => $notifications,
             'historyprices' => $history_prices,
@@ -154,10 +156,12 @@ class PartController extends Controller
         return redirect()->back();
     }
 
-    public function getAllPart()
+    public function getAllPart(Request $req)
     {
-        return ResponseJSON($this->partService->handleAllPartApi(), 200);
+        return ResponseJSON($this->partService->handleAllPartApi($req), 200);
     }
+
+
     public function getDeactivePart($id)
     {
         return ResponseJSON($this->partService->handleDeactivePart($id), 200);
