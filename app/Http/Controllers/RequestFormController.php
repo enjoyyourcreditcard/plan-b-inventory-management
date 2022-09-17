@@ -23,7 +23,7 @@ class RequestFormController extends Controller
     public function index ()
     {
         $notifications =  $this->notificationService->handleAllNotification();
-        $requestForms = $this->requestFormService->handleGetByUserGrfRequestForm();
+        $requestForms = $this->requestFormService->handleGetByUserRequestForm();
         $grf_code = $this->requestFormService->handleGenerateGrfCode();
         return view('transaction.request_form.request_form', [
             'notifications' => $notifications,            
@@ -32,38 +32,44 @@ class RequestFormController extends Controller
         ]);   
     }
 
-    public function create ($grf_code)
+    public function create ($code)
     {
         $notifications =  $this->notificationService->handleAllNotification();
-        $requestForms = $this->requestFormService->handleShowRequestForm($grf_code);
+        $grf = $this->requestFormService->handleGetCurrentGrf($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->warehouseService->handleAllWareHouse();
-        // return ($parts);
         return view('transaction.request_form.create', [
             'notifications' => $notifications,            
             'requestForms' => $requestForms,
             'parts' => $parts,
             'brands' => $brands,
-            'warehouses' => $warehouses
-        ]);   
+            'warehouses' => $warehouses,
+            'grf' => $grf
+        ]);
     }
 
-    public function ajaxIndex ()
+    public function store (Request $request, $id)
     {
-        $parts = $this->partService->handleNameIdPart();
-        return response()->json($parts);
+        $this->requestFormService->handleStore($request, $id);
+        return redirect()->back();
     }
 
-    public function store (Request $request)
+    public function storeGrf (Request $request)
     {
-        $this->requestFormService->handleStoreRequestForm($request);
+        $this->requestFormService->handleStoreGrf($request);
         return redirect('/request-form/' . str_replace('/', '~', strtolower($request->grf_code)));
     }
 
-    public function update (Request $request)
+    public function update (Request $request, $id)
     {
-        $this->requestFormService->handleUpdateRequestForm($request);
+        $this->requestFormService->handleUpdateRequestForm($request, $id);
+        return redirect()->back();
+    }
+
+    public function destroy ($id) {
+        $this->requestFormService->handleDeleteRequestForm($id);
         return redirect()->back();
     }
 }

@@ -27,10 +27,12 @@ class Part extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
     public function build()
     {
         return $this->hasMany(Build::class);
     }
+    
     public function requestForms()
     {
         return $this->hasMany(RequestForm::class);

@@ -56,8 +56,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function requestForms()
+    public function grfs()
     {
-        return $this->hasMany(RequestForm::class);
+        return $this->hasMany(Grf::class);
     }
 }

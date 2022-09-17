@@ -10,23 +10,15 @@ class RequestForm extends Model
     use HasFactory;
 
     protected $table = 'dbs_request_forms';
-
-    protected $guarded = [
-        'id'
-    ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $guarded = ['id'];
 
     public function part()
     {
-        return $this->belongsTo(Part::class, 'part_id');
+        return $this->belongsTo(Part::class);
     }
 
-    public function warehouse()
+    public function grf ()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsTo(Grf::class);
     }
 }

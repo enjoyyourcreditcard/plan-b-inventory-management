@@ -113,7 +113,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 */
 Route::get('/request-form', [RequestFormController::class, 'index'])->middleware('auth');
-Route::get('/ajax/request-form', [RequestFormController::class, 'ajaxIndex'])->middleware('auth');
-Route::post('/request-form', [RequestFormController::class, 'store'])->middleware('auth');
-Route::post('/request-form/{grf_code}', [RequestFormController::class, 'update'])->middleware('auth');
 Route::get('/request-form/{grf_code}', [RequestFormController::class, 'create'])->middleware('auth');
+Route::post('/request-form', [RequestFormController::class, 'storeGrf'])->middleware('auth');
+Route::post('/request-form/{id}', [RequestFormController::class, 'store'])->middleware('auth');
+Route::put('/request-form/{id}', [RequestFormController::class, 'update'])->middleware('auth');
+Route::delete('/request-form/{code}', [RequestFormController::class, 'destroy'])->middleware('auth');

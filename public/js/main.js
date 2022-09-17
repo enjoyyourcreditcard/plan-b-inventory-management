@@ -112,19 +112,12 @@ $(".editBuildSelect2").select2({
 // *: End Build JS
 
 // *: Request Form JS
-var requestForms = $('#request-forms').data('request_forms');
-var parts = $(".inputPartRequestFormSelect2");
-
 $(".inputPartRequestFormSelect2").select2({
     dropdownParent: $("#inputRequestFormParent"),
     placeholder: "select part..",
     theme: "bootstrap"
 }
 );
-
-parts.each(function (i) {
-    $(this).val(requestForms[i]['part_id']).change();
-});
 
 $(".inputBrandRequestFormSelect2").select2({
     dropdownParent: $("#inputRequestFormParent"),
@@ -199,12 +192,6 @@ $('#modalEditBuild').on('show.bs.modal', function(event) {
 // *: Request Form Append New Input JS
 $(function () {
     // Set a variables
-    var datas;
-    $.get('/ajax/request-form', function (data) {
-        console.log(data);
-        datas = data;
-        return datas;
-    });
     i = 0;
 
     // Append a row
@@ -218,36 +205,7 @@ $(function () {
             dropdownParent: $("#inputRequestFormParent"),
             theme: "bootstrap"
         });
-        $(".inputBrandRequestFormSelect2").select2({
-            // data: brandDatas,
-            width: '100%',
-            height: '100%',
-            placeholder: "select brand..",
-            dropdownParent: $("#inputRequestFormParent"),
-            theme: "bootstrap"
-        });
         i++;
-    });
-
-    // On changes
-    $('#inputRequestAppend').on('change', '.partOnChange', function (event) {
-        var select = $(event.currentTarget);
-        var value = select.val();
-        var data_filtered = datas.filter(v => v.id == value)[0]; 
-        
-        var im_code = data_filtered['im_code']; 
-        var uom = data_filtered['uom'];
-
-        console.log(select);
-    });
-    
-
-    // Delete a row
-    $('#inputRequestAppend').on('click', '.request-form-delete', function(event){
-        var button = $(event.currentTarget);
-        var id = button.data('id');
-        var inputRequestFormDelete = $('#'+id);
-        inputRequestFormDelete.remove();
     });
 });
 // *: End Request Form Append New Input JS

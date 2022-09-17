@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\GrfSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PartSeeder;
 use Database\Seeders\UserSeeder;
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HistoryPriceSeeder::class);
         $this->call(AttachmentSeeder::class);
         $this->call(BuildSeeder::class);
+        $this->call(GrfSeeder::class);
         $this->call(RequestFormSeeder::class);
     }
 }
