@@ -24,4 +24,9 @@ class RequestForm extends Model
     {
         return $this->belongsTo(Part::class);
     }
+
+    protected function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
 }

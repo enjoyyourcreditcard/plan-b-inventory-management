@@ -16,6 +16,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\WarehouseApprovController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,3 +118,16 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 Route::get('/request-form', [RequestFormController::class, 'index'])->middleware('auth');
 Route::post('/request-form', [RequestFormController::class, 'store'])->middleware('auth');
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Approval
+|--------------------------------------------------------------------------
+*/
+Route::get('/warehouse-approv', [WarehouseApprovController::class, 'index']);
+Route::get('/warehouse-approv/{id}', [WarehouseApprovController::class, 'show']);
+Route::put('/warehouse-approv', [WarehouseApprovController::class, 'update']);
