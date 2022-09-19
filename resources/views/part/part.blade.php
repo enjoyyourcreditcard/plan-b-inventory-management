@@ -307,7 +307,6 @@
             <label for="partCategory" class="form-label">Category</label>
             <select class="form-control inputPartCategorySelect2" id="partCategory" name="category_id" form="addPartForm" required>
               @foreach ($categories as $category)
-              {{-- <option value="{{ $category->id }}" data-uom="{{ $category->uom }}" data-brandname="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['name'] }}" data-brandid="{{ isset($brandString[$category->id]) == false ? '' : $brandString[$category->id]['id'] }}">{{ $category->name }}</option> --}}
               @endforeach
             </select>
           </div>
@@ -334,7 +333,7 @@
 
           <div class="mb-2">
             <label for="partColor" class="form-label">Color</label>
-            <select class="form-select select3" id="partColor" name="color" form="addPartForm" required>
+            <select class="form-select inputPartAllSelect2" id="partColor" name="color" form="addPartForm" required>
               <option value="Black">Black</option>
               <option value="White">White</option>
               <option value="Grey">Grey</option>
@@ -359,10 +358,10 @@
             <textarea class="form-control" id="partDescription" rows="3" name="description" form="addPartForm" required></textarea>
           </div>
 
-          <div class="mb-2">
+          {{-- <div class="mb-2">
             <label for="partNote" class="form-label">Note</label>
             <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
-          </div>
+          </div> --}}
 
           <div class="mb-4">
             <label for="partImage" class="form-label">Part Image</label>
@@ -376,7 +375,7 @@
       </div>
     </div>
     {{--  --}}
-    <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2);">
+    <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
       <div class="modal-header">
         <h5 class="modal-title">Create Category</h5>
         <button type="button" class="btn-close" onclick="bye()"></button>
@@ -411,9 +410,9 @@
         </div>
       </div>
     </div>
-    {{--  --}}
   </div>
 </div>
+
 
 {{-- *
 *|--------------------------------------------------------------------------

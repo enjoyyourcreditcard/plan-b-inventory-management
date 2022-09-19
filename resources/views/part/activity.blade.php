@@ -1,5 +1,5 @@
 @extends('layouts.main') @section('content')
-<div class="wrapper">]
+<div class="wrapper">
     <div class="page-wrapper">
         <div class="container-xl">
             <!-- Page title -->

@@ -68,10 +68,10 @@ function Stock() {
 
             Header: 'Name',
             accessor: 'part_name',
-            style: { 'maxWidth': 10 },
-
+            // style: {  },
+            
             Cell: tableProps => (
-                <>
+                <div style={{ "minWidth": 300 }}>
                     <ReactTooltip place="right" effect="solid" backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
                         <img src={"/" + tableProps.row.original.part.img} />} />
 
@@ -81,7 +81,7 @@ function Stock() {
                         </a>
                         <a href={"/part/" + tableProps.row.original.part.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.part_name}</a>
                     </div>
-                </>
+                </div>
             )
         }, {
             Header: 'Warehouse',
@@ -95,25 +95,14 @@ function Stock() {
             )
 
         },
-        {
-            Header: 'Created At',
-            accessor: 'created_at',
-
-            Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{moment(tableProps.row.original.created_at).format('DD-MM-YYYY')}</p>
-                </>
-
-            )
-
-        },
+      
         {
             Header: 'Category',
             accessor: 'category_name',
 
             Cell: tableProps => (
                 <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.category_name}</p>
+                    <p >{tableProps.row.original.category_name}</p>
                 </>
 
             )
@@ -125,7 +114,7 @@ function Stock() {
 
             Cell: tableProps => (
                 <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.part.uom}</p>
+                    <p>{tableProps.row.original.part.uom}</p>
                 </>
 
             )
@@ -167,6 +156,31 @@ function Stock() {
             )
 
         },
+        {
+            Header: 'Condition',
+            accessor: 'condition',
+
+            Cell: tableProps => (
+                <>
+                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.condition}</p>
+                </>
+
+            )
+
+        },
+        
+        {
+            Header: 'Created At',
+            accessor: 'created_at',
+
+            Cell: tableProps => (
+                <>
+                    <p >{moment(tableProps.row.original.created_at).format('DD-MM-YYYY')}</p>
+                </>
+
+            )
+
+        },
 
         ],
         []
@@ -177,7 +191,7 @@ function Stock() {
             "uom",
             "sn_status",
             "color",
-            "brand",
+            "brand_name",
             "category"]
     };
 

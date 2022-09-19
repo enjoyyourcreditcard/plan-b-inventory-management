@@ -9313,11 +9313,12 @@ function Stock() {
     }, {
       Header: 'Name',
       accessor: 'part_name',
-      style: {
-        'maxWidth': 10
-      },
+      // style: {  },
       Cell: function Cell(tableProps) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          style: {
+            "minWidth": 300
+          },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_tooltip__WEBPACK_IMPORTED_MODULE_9__["default"], {
             place: "right",
             effect: "solid",
@@ -9362,27 +9363,11 @@ function Stock() {
         });
       }
     }, {
-      Header: 'Created At',
-      accessor: 'created_at',
-      Cell: function Cell(tableProps) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
-            style: {
-              "minWidth": 300
-            },
-            children: moment__WEBPACK_IMPORTED_MODULE_8___default()(tableProps.row.original.created_at).format('DD-MM-YYYY')
-          })
-        });
-      }
-    }, {
       Header: 'Category',
       accessor: 'category_name',
       Cell: function Cell(tableProps) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
-            style: {
-              "minWidth": 300
-            },
             children: tableProps.row.original.category_name
           })
         });
@@ -9393,9 +9378,6 @@ function Stock() {
       Cell: function Cell(tableProps) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
-            style: {
-              "minWidth": 300
-            },
             children: tableProps.row.original.part.uom
           })
         });
@@ -9439,10 +9421,33 @@ function Stock() {
           })
         });
       }
+    }, {
+      Header: 'Condition',
+      accessor: 'condition',
+      Cell: function Cell(tableProps) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
+            style: {
+              "minWidth": 300
+            },
+            children: tableProps.row.original.condition
+          })
+        });
+      }
+    }, {
+      Header: 'Created At',
+      accessor: 'created_at',
+      Cell: function Cell(tableProps) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
+            children: moment__WEBPACK_IMPORTED_MODULE_8___default()(tableProps.row.original.created_at).format('DD-MM-YYYY')
+          })
+        });
+      }
     }];
   }, []);
   var initialState = {
-    hiddenColumns: ["uom", "sn_status", "color", "brand", "category"]
+    hiddenColumns: ["uom", "sn_status", "color", "brand_name", "category"]
   };
 
   var _useTable = (0,react_table__WEBPACK_IMPORTED_MODULE_2__.useTable)({

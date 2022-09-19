@@ -48,6 +48,11 @@
         width: 100%;
         height: 400px;
     }
+
+    .select2-selection.select2-selection--single{
+            height: 36px;
+            border: 1px solid gainsboro;
+}
 </style>
 
 <body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;;
@@ -142,7 +147,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <<<<<<< HEAD=======>>>>>>> origin/user_friendly_modal_part
                                     </div>
                                     @endforeach --}}
                                 </div>
@@ -234,8 +238,8 @@
                                     {{-- <span class="badge badge-sm bg-red">2</span> --}}
                                 </a>
                             </li>
-                            <li class="nav-item {{ Request::is('inbound*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/inbound">
+                            <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
+                                <a class="nav-link" href="/transaction">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-tabler icon-tabler-receipt" width="24" height="24"
@@ -253,6 +257,19 @@
                                     {{-- <span class="badge badge-sm bg-red">2</span> --}}
                                 </a>
                             </li>
+                            {{-- <li class="nav-item {{ Request::is('rekondisi*') ? 'active' : '' }}">
+                                <a class="nav-link" href="/rekondisi">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tool" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5"></path>
+                                         </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        <b>Rekondisi</b>
+                                    </span>
+                                </a>
+                            </li> --}}
                             {{-- <li class="nav-item {{ Request::is('outbound*') ? 'active' : '' }}">
                                 <a class="nav-link" href="/outbound">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">

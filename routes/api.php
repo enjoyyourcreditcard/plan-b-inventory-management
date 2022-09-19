@@ -14,6 +14,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,17 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
 });
 
 Route::get('/tes123', function () {
+    $user = User::all()->map(function($item){
+        $item->umur = 2;
+        return $item;
+    });
+    // foreach ($user as $item) {
+    //     $item->umur = 1;
+    // };
+    // dd($user);
+    return $user;
     // return Auth::user()->tokenCan('show-part');
-})->middleware(["auth:sanctum"]);
+});
 
 
 

@@ -35,6 +35,24 @@ Route::get('/', function () {
 });
 
 
+Route::get('/transaction', function () {
+    return view("transaction.transaction");
+});
+
+Route::get('/rekondisi', function () {
+    return view("rekondisi.rekondisi");
+});
+
+Route::get('/detail/grf', function () {
+    // return view("rekondisi.rekondisi");
+    dd("asdad");
+});
+
+
+// Route::get('/transaction', [::class, 'index']);
+
+
+
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::get('/me', function (Request $request) {
 //         return Auth::user()->tokens;

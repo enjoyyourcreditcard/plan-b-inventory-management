@@ -3,6 +3,12 @@
 
     <div class="row" style="margin: 0px">
         <div class="container">
+
+            {{-- *
+            *|--------------------------------------------------------------------------
+            *| Inactive Component
+            *|--------------------------------------------------------------------------
+            *--}}
             @if ($part->status === "inactive")
             <div class="card card-md mb-3">
                 <div class="card-stamp card-stamp-lg">
@@ -37,6 +43,11 @@
             @endif
 
 
+            {{-- *
+            *|--------------------------------------------------------------------------
+            *| Part Detail Component
+            *|--------------------------------------------------------------------------
+            *--}}
             <div class="card mb-3">
                 <div class="card-header">
                     <h3 class="card-title" style="font-size:18px">{{$part->name}}</h3>
@@ -285,8 +296,8 @@
                             </div>
                             {{-- <div class="card card-sm mt-1">
                                 <div class="card-body">
-                                 <button class="btn btn-warning">Update</button>
-                                 <button class="btn btn-danger">Delete</button>
+                                    <button class="btn btn-warning">Update</button>
+                                    <button class="btn btn-danger">Delete</button>
                                 </div>
                             </div> --}}
                         </div>
@@ -356,23 +367,29 @@
                 </ul>
                 <div class="card-body">
                     <div class="tab-content">
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab Stock
+                        *|--------------------------------------------------------------------------
+                        *--}}
                         <div class="tab-pane active show" id="tabs-home-12" role="tabpanel">
                             <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
-                                        <div> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectStockModal">
+                                        <div> <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#selectStockModal">
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-plus" width="24" height="24"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            </svg>
-                                            New Stock
-                                        </button>
-                </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                </svg>
+                                                New Stock
+                                            </button>
+                                        </div>
                                         <div class="ms-auto text-muted">
                                             <div class="input-icon mb-3"><input type="text" class="form-control"
                                                     placeholder="Search…" value=""><span class="input-icon-addon"><svg
@@ -443,16 +460,15 @@
                                     <table role="table" class="table table-bordered table-striped">
                                         <thead>
                                             <tr role="row">
-                                                <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>Warehouse ID</b><svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        class="icon icon-sm text-dark icon-thick" width="24" height="24"
-                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                        <polyline points="6 15 12 9 18 15"></polyline>
-                                                    </svg></th>
-                                                @if ($is_sn == true)
+                                                {{-- <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
+                                                style="cursor: pointer;"><b>Part Name</b><svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-sm text-dark icon-thick" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <polyline points="6 15 12 9 18 15"></polyline>
+                                                </svg></th> --}}
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>SN Code</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -462,7 +478,17 @@
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
-                                                @endif
+                                                <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
+                                                    style="cursor: pointer;"><b>Warehouse ID</b><svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="icon icon-sm text-dark icon-thick" width="24" height="24"
+                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <polyline points="6 15 12 9 18 15"></polyline>
+                                                    </svg></th>
+                                                {{-- @if ($is_sn == true) --}}
+                                                {{-- @endif --}}
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>Condition</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -481,17 +507,17 @@
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
-                                                {{-- <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>Stock Status</b><svg
-                                                        xmlns="http://www.w3.org/2000/svg"
+                                                {{-- <th class="w-1" colspan="1" role="columnheader"
+                                                    title="Toggle SortBy" style="cursor: pointer;"><b>Stock
+                                                        Status</b><svg xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th> --}}
-                                                {{-- <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>Status</b><svg
+                                                {{-- <th class="w-1" colspan="1" role="columnheader"
+                                                    title="Toggle SortBy" style="cursor: pointer;"><b>Status</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -506,15 +532,18 @@
                                         <tbody role="rowgroup">
                                             @foreach ($stocks as $stock)
                                             <tr role="row">
-                                                @if($is_sn == true)
+
+                                                {{-- @if($is_sn == true)
                                                 <td role="cell">{{ $stock->sn_code }}</td>
-                                                @endif
+                                                @endif --}}
+
+                                                <td role="cell">{{ $is_sn  ?  "-" : $stock->sn_code }}</td>
                                                 <td role="cell">{{ $stock->warehouse->name }}</td>
                                                 <td role="cell">{{ $stock->condition }}</td>
                                                 <td role="cell">{{ $stock->expired_date }}</td>
                                                 {{-- <td role="cell">{{ $stock->stock_status }}</td> --}}
-                                                {{-- <td role="cell">{{ $stock->status }}</td>
-                                                <td role="cell">
+                                                {{-- <td role="cell">{{ $stock->status }}</td> --}}
+                                                {{-- <td role="cell">
                                                     <form action="/stock/{{ $stock->id }}" method="POST">
                                                         @csrf
                                                         @method('delete')
@@ -558,8 +587,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tabs-profile-12" role="tabpanel">
-                        </div>
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab Attachment
+                        *|--------------------------------------------------------------------------
+                        *--}}
                         <div class="tab-pane" id="tabs-attachments" role="tabpanel">
 
                             <div class="col-12">
@@ -606,6 +638,11 @@
                             </div>
 
                         </div>
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab History Price
+                        *|--------------------------------------------------------------------------
+                        *--}}
                         <div class="tab-pane" id="tabs-hp" role="tabpanel">
                             <div class="col-12">
                                 <a href="#" class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal"
@@ -659,10 +696,12 @@
     </div>
 </div>
 
-{{-- Store Stock Modal --}}
 
-
-{{-- Edit Stock Modal --}}
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Edit Stock
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="editStockModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -675,7 +714,6 @@
                     @method('put')
                     @csrf
                     <input type="hidden" name="part_id" value="{{ $part->id }}">
-
                     <div class="mb-3">
                         <label for="stockWhId" class="form-label">Warehouse</label>
                         <select class="form-control" id="stockWhId" name="warehouse_id" required>
@@ -706,7 +744,11 @@
     </div>
 </div>
 
-{{-- Modal Create Price --}}
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Price
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="modal-add-price" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -735,7 +777,11 @@
     </div>
 </div>
 
-{{-- Modal Create Attachment --}}
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Attecment
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="modal-add-attachment" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -776,7 +822,11 @@
     </div>
 </div>
 
-{{-- Modal Edit Part --}}
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Edit Stock
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="EditPartModal">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -796,12 +846,19 @@
                         </div>
                         <div class="mb-2">
                             <label for="editPartCategory" class="form-label">Category</label>
-                            <select class="form-control select2EditPart" id="editPartCategory" name="category_id" required>
+                            <select class="form-control select2EditPart" id="editPartCategory" name="category_id"
+                                required>
                                 @foreach ($categories as $category)
                                 @if ($part->category_id == $category->id)
-                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}" data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}" data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
-                                @else   
-                                <option value="{{ $category->id }}" data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}" data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}" data-uom="{{ $category->uom }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                    data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}"
+                                    data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}"
+                                    data-uom="{{ $category->uom }}" selected>{{ $category->name }}</option>
+                                @else
+                                <option value="{{ $category->id }}"
+                                    data-brandname="{{ $brand == null ? '' : (isset($brand['nameString'][$category->id]) == true ? $brand['nameString'][$category->id] : '') }}"
+                                    data-brandid="{{ $brand == null ? '' : (isset($brand['idString'][$category->id]) == true ? $brand['idString'][$category->id] : '') }}"
+                                    data-uom="{{ $category->uom }}">{{ $category->name }}</option>
                                 @endif
                                 @endforeach
                             </select>
@@ -809,13 +866,14 @@
                         <div class="mb-2">
                             <label for="partBrand" class="form-label">Brand</label>
                             <select class="form-select select2EditPart" id="partBrand" name="brand_id" required>
-                                @for ($i = 0; $i < count($brand['id']); $i++)
-                                @if ($part->brand_id == $brand['id'][$i])
-                                <option class="partBrandOption" value="{{ $brand['id'][$i] }}" selected>{{ $brand['name'][$i] }}</option>
-                                @else
-                                <option class="partBrandOption" value="{{ $brand['id'][$i] }}">{{ $brand['name'][$i] }}</option>
-                                @endif
-                                @endfor
+                                @for ($i = 0; $i < count($brand['id']); $i++) @if ($part->brand_id == $brand['id'][$i])
+                                    <option class="partBrandOption" value="{{ $brand['id'][$i] }}" selected>{{
+                                        $brand['name'][$i] }}</option>
+                                    @else
+                                    <option class="partBrandOption" value="{{ $brand['id'][$i] }}">{{ $brand['name'][$i]
+                                        }}</option>
+                                    @endif
+                                    @endfor
                             </select>
                         </div>
 
@@ -823,11 +881,11 @@
                             <label for="partUom" class="form-label">Uom</label>
                             <select class="form-select select2EditPart" id="partUom" name="uom" required>
                                 @foreach ($uoms as $uom)
-                                    @if ($uom == $part->uom)
-                                    <option class="partUomOption" value="{{ $uom }}" selected>{{ $uom }}</option>
-                                    @else
-                                    <option class="partUomOption" value="{{ $uom }}">{{ $uom }}</option>
-                                    @endif
+                                @if ($uom == $part->uom)
+                                <option class="partUomOption" value="{{ $uom }}" selected>{{ $uom }}</option>
+                                @else
+                                <option class="partUomOption" value="{{ $uom }}">{{ $uom }}</option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -895,6 +953,11 @@
 </div>
 
 
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Select Stock
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="selectStockModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -910,7 +973,8 @@
                             Bulk</button>
                     </div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-primary w-100"  data-toggle="modal" data-target="#createStockModal" data-dismiss="modal">Pieces</button>
+                        <button type="button" class="btn btn-primary w-100" data-toggle="modal"
+                            data-target="#createStockModal" data-dismiss="modal">Pieces</button>
 
                     </div>
 
@@ -920,6 +984,14 @@
     </div>
 </div>
 
+
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Stock
+*|--------------------------------------------------------------------------
+*--}}
 <div class="modal modal-blur fade" id="createStockModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -932,7 +1004,7 @@
                     @csrf
 
                     <div class="mb-3">
-                     <input type="hidden" name="part_id" value="{{$part_id}}"/>
+                        <input type="hidden" name="part_id" value="{{$part_id}}" />
                         {{-- <select class="form-control" name="part_id" required>
                             @foreach ($parts as $part)
                             <option value="{{$part->id}}">{{$part->name}}</option>

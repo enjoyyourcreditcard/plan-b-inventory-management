@@ -55,11 +55,11 @@ $(".inputPartAllSelect2").prepend('<option selected></option>').select2({
 $(".select3").select2({
     width: '100%',
     // height: '10px',
-    // tags: true,
+    tags: true,
     placeholder: "Select a state",
     allowClear: true,
     dropdownParent: $("#createPartModal"),
-    theme: "bootstrap"
+    theme: "classic"
 }
 );
 

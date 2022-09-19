@@ -32,7 +32,7 @@ class PartSeeder extends Seeder
                         'inventory_code' => $data[3],
                         'orafin_code' => $data[4],
                         'name' => $data[5],
-                        'brand_id' => 1,
+                        'brand_id' => $data[6],
                         'uom' => $data[7],
                         'sn_status' => $data[8],
                         'color' => $data[9],

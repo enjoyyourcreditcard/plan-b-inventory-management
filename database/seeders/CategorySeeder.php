@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Throwable;
+use Faker\Factory as Faker;
 
 class CategorySeeder extends Seeder
 {
@@ -14,34 +16,50 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        // Category::create([
-        //     'name' => 'Mechanical/Enclosures',
-        //     'description' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae hic nulla quis vitae, eveniet, sunt quidem eaque quae, non quisquam quaerat delectus beatae vero soluta dolores! Est praesentium perspiciatis neque!',
-        //     'uom' => 'set, unit, each'
-        // ]);
-        
-        // Category::create([
-        //     'name' => 'Electronics/Connectors/Pin Headers',
-        //     'description' => 'sunt quidem eaque quae, non quisquam quaerat delectus beatae vero soluta dolores! Est praesentium perspiciatis neque Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae hic nulla quis vitae, eveniet,!',
-        //     'uom' => 'meter, roll, batang'
-        // ]);
+    
+
+        $csvFile = fopen(base_path("public/seeder_data/part.csv"), "r");
+        $no = 0;
+        $faker = Faker::create('id_ID');
+
+        while (!feof($csvFile)) {
+            $data = explode(';', fgetcsv($csvFile)[0]);
+            if ($no != 0 && $no <= 116) {
+                try {
+                    Category::create([
+                        'name' => $data[23],
+                        'description' => 'none',
+                        'uom' => 'set, unit, each'
+                       
+                    ]);
+                } catch (Throwable $e) {
+                    report($e);
+                    // dd($e);
+                }
+            }
+
+            $no++;
+
+        }
+        fclose($csvFile);
+    }
+
+
 
         
-        Category::create([
-            'name' => 'MATERIAL',
-            'description' => 'none',
-            'uom' => 'set, unit, each'
-        ]);
-        Category::create([
-            'name' => 'CPE',
-            'description' => 'none',
-            'uom' => 'set, unit, each'
-        ]);
-        Category::create([
-            'name' => 'ASSESORIES',
-            'description' => 'none',
-            'uom' => 'set, unit, each'
-        ]);
-     
-    }
+        // Category::create([
+        //     'name' => 'MATERIAL',
+        //     'description' => 'none',
+        //     'uom' => 'set, unit, each'
+        // ]);
+        // Category::create([
+        //     'name' => 'CPE',
+        //     'description' => 'none',
+        //     'uom' => 'set, unit, each'
+        // ]);
+        // Category::create([
+        //     'name' => 'ASSESORIES',
+        //     'description' => 'none',
+        //     'uom' => 'set, unit, each'
+        // ]);
 }
