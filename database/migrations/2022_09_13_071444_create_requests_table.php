@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequestFormsTable extends Migration
+class CreateRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRequestFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dbs_request_forms', function (Blueprint $table) { 
+        Schema::create('db_requests', function (Blueprint $table) {
             $table->id(); 
             $table->string('grf_code'); 
             $table->unsignedInteger('user_id'); 
@@ -24,9 +24,10 @@ class CreateRequestFormsTable extends Migration
             $table->foreign('part_id')->references('id')->on('parts'); 
             $table->integer('quantity'); 
             $table->string('remarks'); 
-            $table->boolean('warehouse_check')->default(false); 
+            $table->boolean('warehouse_check')->default(false);
+            $table->enum('status', ['active', 'inactive']); 
             $table->timestamps(); 
-        }); 
+        });
     }
 
     /**
@@ -36,6 +37,6 @@ class CreateRequestFormsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_forms');
+        Schema::dropIfExists('db_requests');
     }
 }

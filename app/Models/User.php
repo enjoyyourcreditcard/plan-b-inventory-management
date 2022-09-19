@@ -60,4 +60,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(RequestForm::class);
     }
+    public function requester()
+    {
+        return $this->hasMany(Request::class);
+    }
 }

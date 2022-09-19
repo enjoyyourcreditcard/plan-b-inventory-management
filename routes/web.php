@@ -16,6 +16,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,3 +118,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 Route::get('/request-form', [RequestFormController::class, 'index'])->middleware('auth');
 Route::post('/request-form', [RequestFormController::class, 'store'])->middleware('auth');
+
+
+Route::get('/request', [RequestController::class, 'index'])->name('get.index.request')->middleware('auth');
