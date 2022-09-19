@@ -123,9 +123,23 @@ $(".addStockSelect2").select2({
 });
 
 // *: Request Form JS
-$(".inputRequestFormSelect2").select2({
+$(".inputPartRequestFormSelect2").select2({
     dropdownParent: $("#inputRequestFormParent"),
-    placeholder: "Select part..",
+    placeholder: "select part..",
+    theme: "bootstrap"
+}
+);
+
+$(".inputBrandRequestFormSelect2").select2({
+    dropdownParent: $("#inputRequestFormParent"),
+    placeholder: "select brand..",
+    theme: "bootstrap"
+}
+);
+
+$(".inputWarehouseRequestFormSelect2").select2({
+    dropdownParent: $("#inputRequestFormParent"),
+    placeholder: "select warehouse..",
     theme: "bootstrap"
 }
 );
@@ -188,32 +202,21 @@ $('#modalEditBuild').on('show.bs.modal', function(event) {
 
 // *: Request Form Append New Input JS
 $(function () {
+    // Set a variables
     i = 0;
-    var datas = [];
-    var options = $('.inputRequestFormSelect2');
-    for (i = 0; i < options.children().length; i++) {
-        datas.push({
-            id: options.children()[i].value,
-            text: options.children()[i].text
-        });
-    }
+
+    // Append a row
     $('#request-form-append-new').click(function () {
-        $( "#inputRequestAppend" ).append('<div class="mb-3" id="' + i + '"><hr><div class="row"><div class="col-md-10 col-6"><select class="form-control inputRequestFormAppendSelect2" name="part_id[]" required><option></option></select></div><div class="col-md-1 col-3"><input type="number" class="form-control" name="quantity[]" placeholder="Input placeholder" value="1" min="1"></div><div class="col-md-1 col-3"><button class="btn request-form-delete" data-id="'+ i +'"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash mx-auto" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="4" y1="7" x2="20" y2="7"></line><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg></button></div></div><div class="col-11 mt-3"><textarea class="form-control" rows="3" name="remarks[]" placeholder="Note.."></textarea></div></div>');
-        $(".inputRequestFormAppendSelect2").select2({
+        $( "#inputRequestAppend" ).append('<tr id="' + i + '"><td class="sort-im-code"><input type="text" class="form-control" disabled></td><td class="sort-material"><select id="' + i + '" class="form-control inputPartRequestFormSelect2' + i + ' partOnChange" name="part_id[]" required><option></option></select></td><td class="sort-material"><select class="form-control inputBrandRequestFormSelect2" name="brand_id[]" required><option></option></select></td><td class="sort-quantity"><input type="number" name="quantity[]" class="form-control" value="1" min="1" required></td><td class="sort-uom"><input type="text" class="form-control" disabled></td><td class="sort-remark"><textarea class="form-control" name="remarks[]" rows="1" placeholder="Note.."></textarea></td><td class="text-center"><button class="btn request-form-delete" data-id="'+ i +'"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash mx-auto" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="4" y1="7" x2="20" y2="7"></line><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg></button></td></tr>');
+        $(".inputPartRequestFormSelect2" + i).select2({
             data: datas,
             width: '100%',
             height: '100%',
-            placeholder: "Select part..",
+            placeholder: "select part..",
             dropdownParent: $("#inputRequestFormParent"),
             theme: "bootstrap"
         });
         i++;
-    });
-    $('#inputRequestAppend').on('click', '.request-form-delete', function(event){
-        var button = $(event.currentTarget);
-        var id = button.data('id');
-        var inputRequestFormDelete = $('#'+id);
-        inputRequestFormDelete.remove();
     });
 });
 // *: End Request Form Append New Input JS
@@ -329,8 +332,6 @@ $('#editPartCategory').on('change', function (e) {
     var uom = optionSelected.data('uom');
     var brandId = optionSelected.data('brandid');
     var brandName = optionSelected.data('brandname');
-    console.log('Pertama ' + uom);
-    console.log('Kedua ' + brandId);
 
     //Strings to Arrays
     uomArray = uom.split(', ');
@@ -371,7 +372,7 @@ $('#editPartCategory').on('change', function (e) {
 |--------------------------------------------------------------------------
 */
 
-
+// Store Part & Category
 $(document).ready(function () {
     $.get('/ajax/part', function (data) {
         for (let i = 0; i < data['categories'].length; i++) {

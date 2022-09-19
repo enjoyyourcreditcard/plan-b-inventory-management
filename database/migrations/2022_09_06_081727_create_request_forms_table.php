@@ -15,8 +15,8 @@ class CreateRequestFormsTable extends Migration
     {
         Schema::create('dbs_request_forms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('grf_id');
+            $table->foreign('grf_id')->references('id')->on('db_grfs');
             $table->unsignedBigInteger('part_id');
             $table->foreign('part_id')->references('id')->on('parts');
             $table->integer('quantity');

@@ -17,8 +17,8 @@ class CreatePartsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->unsignedBigInteger('segment_id');
-            $table->foreign('segment_id')->references('id')->on('segments');
+            // $table->unsignedBigInteger('segment_id');
+            // $table->foreign('segment_id')->references('id')->on('segments');
             $table->string('im_code')->nullable();
             $table->string('inventory_code')->nullable();
             $table->string('orafin_code')->nullable();
@@ -27,7 +27,7 @@ class CreatePartsTable extends Migration
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->enum('uom', ['METER', 'SET', 'EACH', 'ROLL', 'UNIT', 'BATANG', 'LITER', 'KALENG', 'KG', 'KUBIC', 'PACK']);
             $table->enum('sn_status', ['SN', 'NON SN']);
-            $table->string('segment')->nullable();
+            // $table->string('segment')->nullable();
             $table->string('color');
             $table->integer('size');
             $table->text('description');

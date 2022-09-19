@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\RequestForm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,10 +27,12 @@ class Part extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
     public function build()
     {
         return $this->hasMany(Build::class);
     }
+    
     public function requestForms()
     {
         return $this->hasMany(RequestForm::class);

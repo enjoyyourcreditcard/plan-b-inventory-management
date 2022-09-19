@@ -37,8 +37,6 @@ class PartService
         return ($parts);
     }
 
-
-
     // Part SHOW
     public function handleShowPart($id)
     {
@@ -150,5 +148,12 @@ class PartService
             $brand['idString'][$key] = implode(', ', $brand['idString'][$key]);
         }
         return ($brand);
+    }
+
+    public function handleNameIdPart()
+    {
+        // $parts = $this->part->get(['id', 'name as text']);
+        $parts = $this->part->with('requestForms')->get(['id', 'name as text', 'im_code', 'uom']);
+        return ($parts);
     }
 }

@@ -29,6 +29,10 @@ class Warehouse extends Model
     public function stocks() {
         return $this->hasMany(Stock::class);
     }
+
+    public function grfs() {
+        return $this->hasMany(Grf::class);
+    }
     
 }
 

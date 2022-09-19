@@ -39,7 +39,14 @@
 
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-</head>
+    
+    <style>
+        #mapid {
+            z-index: 0;
+            display: block;
+            width: 100%;
+            height: 400px;
+        }
 
 <style>
     #mapid {
@@ -55,9 +62,8 @@
 }
 </style>
 
-<body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;;
 
-">
+<body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light d-print-none">
             <div class="container container-header">
