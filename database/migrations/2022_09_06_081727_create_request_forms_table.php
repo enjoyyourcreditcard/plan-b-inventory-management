@@ -13,16 +13,20 @@ class CreateRequestFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dbs_request_forms', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('grf_id');
-            $table->foreign('grf_id')->references('id')->on('db_grfs');
-            $table->unsignedBigInteger('part_id');
-            $table->foreign('part_id')->references('id')->on('parts');
-            $table->integer('quantity');
-            $table->string('remarks');
-            $table->timestamps();
-        });
+        Schema::create('dbs_request_forms', function (Blueprint $table) { 
+            $table->id(); 
+            $table->string('grf_code'); 
+            $table->unsignedInteger('user_id'); 
+            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->bigInteger('warehouse_id')->unsigned(); 
+            $table->foreign('warehouse_id')->references('id')->on('warehouse'); 
+            $table->unsignedBigInteger('part_id'); 
+            $table->foreign('part_id')->references('id')->on('parts'); 
+            $table->integer('quantity'); 
+            $table->string('remarks'); 
+            $table->boolean('warehouse_check')->default(false); 
+            $table->timestamps(); 
+        }); 
     }
 
     /**

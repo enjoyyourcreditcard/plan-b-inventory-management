@@ -17,6 +17,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Models\Warehouse;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
