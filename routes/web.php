@@ -16,6 +16,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Warehouse;
 
 /*
@@ -39,14 +40,9 @@ Route::get('/transaction', function () {
     return view("transaction.transaction");
 });
 
-Route::get('/rekondisi', function () {
-    return view("rekondisi.rekondisi");
-});
-
-Route::get('/detail/grf', function () {
-    // return view("rekondisi.rekondisi");
-    dd("asdad");
-});
+// Route::get('/rekondisi', function () {
+//     return view("rekondisi.rekondisi");
+// });
 
 
 // Route::get('/transaction', [::class, 'index']);
@@ -94,6 +90,11 @@ Route::post('/category/update', [CategoryController::class, 'update'])->name('po
 Route::get('/notification/delete/{id}', [NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
 Route::get('/notification', [NotificationController::class, 'index'])->name('get.index.notif')->middleware("auth");
 
+
+
+
+
+Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth");
 
 
 

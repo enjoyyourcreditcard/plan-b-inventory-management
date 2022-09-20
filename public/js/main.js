@@ -486,3 +486,11 @@ google.maps.event.addListener(map, 'click',
 *| Detail Part Javascript
 *|--------------------------------------------------------------------------
 */
+
+
+
+$(".editPartGRF").select2({
+    placeholder: "Select a state",
+    theme: "bootstrap"
+}
+);

@@ -63,6 +63,8 @@
 </style>
 
 
+@yield("style")
+
 <body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light d-print-none">
