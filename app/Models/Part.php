@@ -37,4 +37,8 @@ class Part extends Model
     {
         return $this->hasMany(RequestForm::class);
     }
+    public function requester()
+    {
+        return $this->hasMany(Request::class);
+    }
 }

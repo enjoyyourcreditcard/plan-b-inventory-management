@@ -18,6 +18,7 @@ use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Warehouse;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
