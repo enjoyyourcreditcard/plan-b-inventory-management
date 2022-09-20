@@ -35,11 +35,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($whGroup as $key => $data)
+                                                @foreach ($whapproval as $data)
                                                 <tr>
-                                                    <td>{{ $key }}</td>
-                                                    <td>{{ $whGroup[$key][0]->user->name }}</td>
-                                                    <td><a href="/warehouse-approv/{{ str_replace('/', '~', $key) }}" class="btn btn-primary col-12"><b>CHECKLIST</b></a></td>
+                                                    <td>{{ $data->grf_code }}</td>
+                                                    <td>{{ $data->user->name }}</td>
+                                                    <td><a href="/warehouse-approv/{{ str_replace('/', '~', $data->grf_code) }}" class="btn btn-primary col-12"><b>CHECKLIST</b></a></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

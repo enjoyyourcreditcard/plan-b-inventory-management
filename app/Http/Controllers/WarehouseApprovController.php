@@ -16,11 +16,8 @@ class WarehouseApprovController extends Controller
 
     public function index() {
         $whapproval = $this->whapprovalService->handleAllWhApproval();
-        $whGroup = $this->whapprovalService->handleGroubWhApproval();
         return view('approval.warehouse_approval', [
             'whapproval' => $whapproval,
-            'whGroup' => $whGroup,
-            'groupedWarehouse' => $whapproval->groupBy('grf_code'),
         ]);
     }
 

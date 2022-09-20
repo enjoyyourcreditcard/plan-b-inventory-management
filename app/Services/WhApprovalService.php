@@ -3,27 +3,30 @@
 namespace App\Services;
 
 use App\Models\RequestForm;
+use App\Models\Grf;
 use Illuminate\Http\Request;
 
 class WhApprovalService{
 
-    public function __construct(RequestForm $requestForm)
+    public function __construct(RequestForm $requestForm, Grf $grf)
     {
-        $this->whapprov = $requestForm;
+        $this->requestForm = $requestForm;
+        $this->grf = $grf;
     }
 
     // *: Untuk mengambil semua data dan tampil di views
     public function handleAllWhApproval()
     {
-        $whapproval = $this->whapprov->all();
-        return ($whapproval);
+        $grfs = $this->grf->with('user')->get();
+        return ($grfs);
     }
 
     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode
     public function handleShowWhApproval($id)
     {
         $wherewh = str_replace('~', '/',$id);
-        $whapproval = $this->whapprov->where('grf_code', $wherewh)->get();
+        $whapproval = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
+        // dd ($whapproval);
         return ($whapproval);
     }
 

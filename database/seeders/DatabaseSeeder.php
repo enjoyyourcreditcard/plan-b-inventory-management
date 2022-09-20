@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AttachmentSeeder::class);
         $this->call(BuildSeeder::class);
         $this->call(RequestFormSeeder::class);
+        $this->call(GrfSeeder::class);
     }
 }

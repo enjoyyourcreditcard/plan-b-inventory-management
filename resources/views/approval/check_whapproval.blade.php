@@ -27,7 +27,7 @@
                                         </line>
                                     </svg>
                                     <p style="font-size: 15px">
-                                        GRF CODE : <strong>{{ $whapprov->first()->grf_code }}</strong>
+                                        GRF CODE : <strong>{{ $whapprov->grf_code }}</strong>
                                     </p>
                                 </div>
                                 <div class="mb-2 d-flex gap-1">
@@ -41,7 +41,7 @@
                                         <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
                                     </svg>
                                     <p style="font-size: 15px">
-                                        Requester Name : <strong>{{ $whapprov->first()->user->name }}</strong>
+                                        Requester Name : <strong>{{ $whapprov->user->name }}</strong>
                                     </p>
                                 </div>
                                 <div class="mb-2 d-flex gap-1">
@@ -55,7 +55,7 @@
                                         <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
                                     </svg>
                                     <p style="font-size: 15px">
-                                        WareHouse Location : <strong>{{ $whapprov->first()->warehouse->wh_name }}</strong>
+                                        WareHouse Location : <strong>{{ $whapprov->warehouse->wh_name }}</strong>
                                     </p>
                                 </div>
                             </div>
@@ -84,11 +84,9 @@
                                                     <form action="/warehouse-approv" method="POST" id="save-sn">
                                                         @csrf
                                                         @method('PUT')
-                                                        <input type="hidden" name="grf_code"
-                                                            value="{{ $whapprov->first()->grf_code }}">
-                                                        @foreach ($whapprov as $item)
-                                                            <input type="hidden" name="id[]"
-                                                                value="{{ $item->id }}">
+                                                        <input type="hidden" name="grf_code" value="{{ $whapprov->grf_code }}">
+                                                        @foreach ($whapprov->requestForms as $item)
+                                                            <input type="hidden" name="id[]" value="{{ $item->id }}">
                                                             <tr>
                                                                 <td>{{ $item->part->name }}</td>
                                                                 <td>{{ $item->quantity }}</td>
