@@ -19,6 +19,7 @@ use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Warehouse;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\WarehouseApprovController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('/transaction', function () {
-    return view("transaction.transaction");
-});
+// Route::get('/transaction', function () {
+// });
 
 // Route::get('/rekondisi', function () {
 //     return view("rekondisi.rekondisi");
@@ -96,8 +96,7 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('get
 
 
 Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth");
-
-
+Route::get('/transaction', [TransactionController::class, 'index'])->middleware("auth");
 
 
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
@@ -143,3 +142,16 @@ Route::post('/request-form', [RequestFormController::class, 'storeGrf'])->middle
 Route::post('/request-form/{id}', [RequestFormController::class, 'store'])->middleware('auth');
 Route::put('/request-form/{id}', [RequestFormController::class, 'update'])->middleware('auth');
 Route::delete('/request-form/{code}', [RequestFormController::class, 'destroy'])->middleware('auth');
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Approval
+|--------------------------------------------------------------------------
+*/
+Route::get('/warehouse-approv', [WarehouseApprovController::class, 'index']);
+Route::get('/warehouse-approv/{id}', [WarehouseApprovController::class, 'show']);
+Route::put('/warehouse-approv', [WarehouseApprovController::class, 'update']);

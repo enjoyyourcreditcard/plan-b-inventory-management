@@ -27,7 +27,9 @@ class TransactionController extends Controller
 
     public function index()
     {
-        //
+
+        return view("transaction.transaction");
+
     }
 
     /**
@@ -66,8 +68,7 @@ class TransactionController extends Controller
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->warehouseService->handleAllWareHouse();
-        // return view('');
-
+        
         return view('transaction.IC.detail_transaction', [
             'notifications' => $notifications,            
             'requestForms' => $requestForms,
@@ -76,9 +77,11 @@ class TransactionController extends Controller
             'warehouses' => $warehouses,
             'grf' => $grf
         ]);
-        //
     }
 
+
+
+    
     /**
      * Show the form for editing the specified resource.
      *
