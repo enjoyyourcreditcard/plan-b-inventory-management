@@ -9,6 +9,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\BrandSeeder;
 use Database\Seeders\BuildSeeder;
 use Database\Seeders\StockSeeder;
+use Database\Seeders\SegmentSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RequestFormSeeder;
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     *
+     *  
      * @return void
      */
     public function run()
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(UserPermissionSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(SegmentSeeder::class);
         $this->call(BrandSeeder::class);
         $this->call(WarehouseSeeder::class);
         $this->call(NotificationSeeder::class);

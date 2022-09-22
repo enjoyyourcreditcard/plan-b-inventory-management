@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Segment extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function parts()
+    {
+        return $this->hasMany(Part::class);
+    }
+
+    public function brands()
+    {
+        return $this->hasMany(Brand::class);
+    }
 }

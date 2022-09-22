@@ -5,7 +5,7 @@
 *|--------------------------------------------------------------------------
 */
 
-$(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
+$(".inputPartSegmentSelect2").select2({
     width: '100%',
     height: '10px',
     dropdownParent: $("#createPartModal"),
@@ -14,7 +14,7 @@ $(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
     _type: "open",
     language: {
         "noResults": function(){
-            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Segment</a>";
         }
     },
     escapeMarkup: function (markup) {
@@ -25,15 +25,17 @@ $(".inputPartCategorySelect2").prepend('<option selected></option>').select2({
 
 function showPartCategoryModal () {
     $('#createPartCategoryModal').show();
-    $(".inputPartCategorySelect2").select2("close");
+    $(".inputPartSegmentSelect2").select2("close");
 };
 function bye () {
     $('#createPartCategoryModal').hide();
-    $(".inputPartCategorySelect2").select2({
+    $(".inputPartSegmentSelect2").select2({
         dropdownParent: $("#createPartModal"),
+        theme: "bootstrap",
+        placeholder: "Select..",
         "language": {
             "noResults": function(){
-                return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+                return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Segment</a>";
             }
         },
         escapeMarkup: function (markup) {
@@ -41,6 +43,15 @@ function bye () {
         }
     });
 };
+
+$('.inputPartCategorySelect2').select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createPartCategoryModal"),
+    placeholder: "Select..",
+    theme: "bootstrap"
+}
+);
 
 $(".inputPartAllSelect2").prepend('<option selected></option>').select2({
     width: '100%',
@@ -63,6 +74,18 @@ $(".select3").select2({
 }
 );
 
+// *: Segment JS
+$(".inputSegmentSelect2").select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#createSegment"),
+    theme: "bootstrap",
+    placeholder: "select category.."
+}
+);
+// *: End Segment JS
+
+// *: Category JS
 $(".select5").select2({
     width: '100%',
     height: '10px',
@@ -79,6 +102,18 @@ $(".select6").select2({
     theme: "classic"
 }
 );
+// *: End Category JS
+
+// *: Brand JS
+$('.inputBrandSelect2').select2({
+    width: '100%',
+    height: '10px',
+    dropdownParent: $("#modal-create-brand"),
+    theme: "bootstrap",
+    placeholder: 'select segment..'
+}
+);
+// *: End Brand JS
 
 $(".select2EditPart").select2({
     width: '100%',
@@ -293,6 +328,7 @@ $('#partCategory').on('change', function (e) {
     var uom = optionSelected.data('uom');
     var brandId = optionSelected.data('brandid');
     var brandName = optionSelected.data('brandname');
+    console.log(brandName);
     
     //Strings to Arrays
     uomArray = uom.split(', ');
@@ -375,15 +411,15 @@ $('#editPartCategory').on('change', function (e) {
 // Store Part & Category
 $(document).ready(function () {
     $.get('/ajax/part', function (data) {
-        for (let i = 0; i < data['categories'].length; i++) {
-            $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+        for (let i = 0; i < data['segments'].length; i++) {
+            $('#partCategory').append('<option class="partCategoryOption" value="' + data['segments'][i]['id'] + '" data-uom="' + data['segments'][i]['category']['uom'] + '" data-brandname="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['name'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['id'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['id'])) + '">' + data['segments'][i]['name'] + '</option>')
         }
     });
 
     $('#submitStoreCategory').click(function (e) {
         e.preventDefault();
         $.ajaxSetup({
-            url: '/category',
+            url: '/segment',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -391,15 +427,16 @@ $(document).ready(function () {
         $.ajax({
             method: 'post',
             data: {
-                name: jQuery('#categoryName').val(),
-                description: jQuery('#categoryDescription').val(),
-                uom: jQuery('#storeCategoryUom').val(),
+                name: jQuery('#segmentName').val(),
+                category_id: jQuery('#segmentCategoryId').val(),
                 isAjax: 'yep'
             },
             success: function () {
                 $('#createPartCategoryModal').hide();
-                $(".inputPartCategorySelect2").select2({
+                $(".inputPartSegmentSelect2").select2({
                     dropdownParent: $("#createPartModal"),
+                    theme: "bootstrap",
+                    placeholder: "Select..",
                     "language": {
                         "noResults": function(){
                             return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
@@ -411,8 +448,8 @@ $(document).ready(function () {
                 });
                 $('.partCategoryOption').remove();
                 $.get('/ajax/part', function (data) {
-                    for (let i = 0; i < data['categories'].length; i++) {
-                        $('#partCategory').append('<option class="partCategoryOption" value="' + data['categories'][i]['id'] + '" data-uom="' + data['categories'][i]['uom'] + '" data-brandname="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['name'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['categories'][i]['id']] == 'undefined' ? '' : (typeof data['brandString'][data['categories'][i]['id']]['id'] == 'undefined' ? '' : data['brandString'][data['categories'][i]['id']]['id'])) + '">' + data['categories'][i]['name'] + '</option>')
+                    for (let i = 0; i < data['segments'].length; i++) {
+                        $('#partCategory').append('<option class="partCategoryOption" value="' + data['segments'][i]['category']['id'] + '" data-uom="' + data['segments'][i]['category']['uom'] + '" data-brandname="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['name'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['id'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['id'])) + '">' + data['segments'][i]['category']['name'] + '</option>')
                     }
                 });
             }

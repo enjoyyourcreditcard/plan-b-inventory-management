@@ -40,14 +40,6 @@
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
     
-    <style>
-        #mapid {
-            z-index: 0;
-            display: block;
-            width: 100%;
-            height: 400px;
-        }
-
 <style>
     #mapid {
         z-index: 0;
@@ -59,7 +51,7 @@
     .select2-selection.select2-selection--single{
             height: 36px;
             border: 1px solid gainsboro;
-}
+    }
 </style>
 
 

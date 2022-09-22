@@ -1,22 +1,23 @@
 <?php
 
 use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 
+use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\HistoryPriceController;
-use App\Models\Warehouse;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,9 @@ Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.s
 Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
 Route::get('/category/{id}', [CategoryController::class, 'show'])->middleware("auth");
 Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+
+
+Route::resource('/segment', SegmentController::class)->middleWare('auth');
 
 
 Route::get('/notification/delete/{id}', [NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");

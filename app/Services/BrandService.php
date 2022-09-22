@@ -21,7 +21,7 @@ class BrandService
 
     public function handleAllBrand()
     {
-        $brands = $this->brand->with('category')->get();
+        $brands = $this->brand->with('segment.category')->withCount('parts')->get();
         return ($brands);
     }
 
@@ -29,7 +29,7 @@ class BrandService
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:brands',
-            'category_id' => 'required',
+            'segment_id' => 'required',
         ]);
 
         $validatedData['status'] = 'active';
@@ -54,7 +54,7 @@ class BrandService
 
     public function handleGetAllBrandGroupByCategory()
     {
-        $brands = $this->brand->all()->groupBy('category_id');
+        $brands = $this->brand->all()->groupBy('segment_id');
         if (count($brands) == 0) {
             $brandString = '';
         }else{

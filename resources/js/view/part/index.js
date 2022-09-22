@@ -93,8 +93,16 @@ function Parts() {
                 accessor: 'category',
                 Cell: tableProps => (
                     <>
+                        <a href={'/category/' + tableProps.row.original.segment.category.id} className="text-primary">{tableProps.row.original.segment.category.name}</a>
+                    </>
+                )
 
-                        <a href={'/category/' + tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
+            }, {
+                Header: 'Segment',
+                accessor: 'segment',
+                Cell: tableProps => (
+                    <>
+                        <a href={'/segment/' + tableProps.row.original.segment.id} className="text-primary">{tableProps.row.original.segment.name}</a>
                     </>
                 )
 

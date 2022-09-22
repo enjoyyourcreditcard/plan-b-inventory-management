@@ -65,11 +65,8 @@
                                             <polyline points="16 4 16 6 "></polyline>
                                         </svg>
                                         UOM: 
-
                                         @foreach ($uom as $item)
                                         <span class="badge badge-primary">{{$item}}</span>
-
-                                        {{-- <strong>{{ $item }}</strong> --}}
                                         @endforeach
                                     </div>
                                     <div class="mb-2">
@@ -127,7 +124,7 @@
                                                 <b>Total Part</b>
                                             </div>
                                             <div class="text-muted">
-                                                {{ $category->parts->count() }}
+                                                {{ $count['parts'] }}
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +157,7 @@
                                                 <b>Total Brand</b>
                                             </div>
                                             <div class="text-muted">
-                                                {{ $category->brands->count() }}
+                                                {{ $count['brands'] }}
                                             </div>
                                         </div>
                                     </div>
@@ -204,9 +201,8 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active show" id="tabs-part" role="tabpanel">
-                            @if (count($category->parts))
+                            @if ($count['parts'])
                             <div id="detail-category" data-categoryid="{{$category->id}}"></div>
-
                             @else
                             <div class="card card-md mb-3">
                                 <div class="card-stamp card-stamp-lg">
@@ -238,7 +234,7 @@
                             @endif
                         </div>
                         <div class="tab-pane" id="tabs-brand" role="tabpanel">
-                            @if (count($category->brands))
+                            @if ($count['brands'])
                             <div>
                                 <div class="pt-3 ">
                                     <div class="d-flex">
@@ -333,11 +329,14 @@
                                             </tr>
                                         </thead>
                                         <tbody role="rowgroup">
-                                            @foreach ($category->brands as $brand)
-                                            <tr role="row">
-                                                <td role="cell">{{ $brand->name }}</td>
-                                                <td role="cell">{{ $brand->status }}</td>
-                                            </tr>
+                                            {{-- @foreach ($category->brands as $brand) --}}
+                                            @foreach ($category->segments as $segment)
+                                                @foreach ($segment->brands as $brand)
+                                                <tr role="row">
+                                                    <td role="cell">{{ $brand->name }}</td>
+                                                    <td role="cell">{{ $brand->status }}</td>
+                                                </tr>
+                                                @endforeach
                                             @endforeach
                                         </tbody>
                                     </table>

@@ -157,7 +157,7 @@
                                             <line x1="12" y1="9" x2="12" y2="12"></line>
                                         </svg>
                                         Category: <strong><a href="#"
-                                                class="text-primary">{{$part->category->name}}</a></strong>
+                                                class="text-primary">{{$part->segment->category->name}}</a></strong>
                                     </div>
                                     <div class="mb-2">
                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -537,7 +537,7 @@
                                                 <td role="cell">{{ $stock->sn_code }}</td>
                                                 @endif --}}
 
-                                                <td role="cell">{{ $is_sn  ?  "-" : $stock->sn_code }}</td>
+                                                <td role="cell">{{ $is_sn == null  ?  "-" : $stock->sn_code }}</td>
                                                 <td role="cell">{{ $stock->warehouse->name }}</td>
                                                 <td role="cell">{{ $stock->condition }}</td>
                                                 <td role="cell">{{ $stock->expired_date }}</td>

@@ -56,12 +56,36 @@ function Brand() {
                 )
             }, 
             {
+                Header: 'Segment',
+                accessor: 'segment',
+                Cell: tableProps => (
+                    <>
+
+                        <a href='#' className='text-primary '>{tableProps.row.original.segment.name}</a>
+                    </>
+
+                )
+
+            },
+            {
                 Header: 'Category',
                 accessor: 'category',
                 Cell: tableProps => (
                     <>
 
-                        <a href='#' className='text-primary '>{tableProps.row.original.category.name}</a>
+                        <a href='#' className='text-primary '>{tableProps.row.original.segment.category.name}</a>
+                    </>
+
+                )
+
+            },
+            {
+                Header: 'Total Part',
+                accessor: 'total_part',
+                Cell: tableProps => (
+                    <>
+
+                        <a href='#' className='text-primary '>{tableProps.row.original.parts_count}</a>
                     </>
 
                 )
@@ -101,7 +125,7 @@ function Brand() {
                 <div className="d-flex">
                     <div>
 
-                    <button className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-create">
+                    <button className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-create-brand">
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-plus" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round">

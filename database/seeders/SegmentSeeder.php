@@ -14,10 +14,14 @@ class SegmentSeeder extends Seeder
      */
     public function run()
     {
-
         Segment::create([
-            'name' => 'active',
+            'category_id' => 1,
+            'name' => 'Cable',
         ]);
 
+        Segment::create([
+            'category_id' => 2,
+            'name' => 'Tire',
+        ]);
     }
 }

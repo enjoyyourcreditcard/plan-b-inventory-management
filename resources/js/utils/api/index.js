@@ -34,6 +34,14 @@ export default class Api {
       });
   };
 
+  getSegment = () => {
+    return this.init()
+      .get(`segment`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
   getCategory = () => {
     return this.init()
       .get(`category`)

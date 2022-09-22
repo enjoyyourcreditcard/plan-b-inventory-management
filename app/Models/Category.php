@@ -9,12 +9,14 @@ class Category extends Model
 {
     use HasFactory;
     
-    protected $guarded = [
-        'id'
-    ];
+    protected $guarded = ['id'];
 
     public function parts() {
         return $this->hasMany(Part::class);
+    }
+
+    public function segments() {
+        return $this->hasMany(Segment::class);
     }
 
     public function brands() {

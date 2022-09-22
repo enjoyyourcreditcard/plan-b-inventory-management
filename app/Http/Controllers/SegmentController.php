@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Segment;
 use Illuminate\Http\Request;
+use App\Services\SegmentService;
 
 class SegmentController extends Controller
 {
+    public function __construct (SegmentService $segmentService)
+    {
+        $this->segmentService = $segmentService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +39,9 @@ class SegmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store (Request $request)
     {
-        //
+        return $this->segmentService->handleStoreSegment($request);
     }
 
     /**
@@ -81,5 +87,16 @@ class SegmentController extends Controller
     public function destroy(Segment $segment)
     {
         //
+    }
+
+    /**
+     * Show JSON from storage.
+     *
+     * @param  \App\Models\Segment  $segment
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllSegment(Request $req)
+    {
+        return ResponseJSON($this->segmentService->handleAllSegmentApi($req), 200);
     }
 }

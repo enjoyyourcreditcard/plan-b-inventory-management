@@ -22,11 +22,12 @@ class PartService
     // API Part GET
     public function handleAllPartApi($req)
     {
-        // dd();
         $category_id = $req->category_id;
-        $parts = $this->part->with('category')->with('brand')->withCount('stocks')->when($category_id, function ($query) use ($category_id) {
-            return $query->where('category_id', $category_id);
-        })->where('status','active')->orderByDesc('id')->get();
+        $parts = $this->part->with('segment.category', 'brand')->withCount('stocks')->when($category_id, function ($query) use ($category_id) {
+                return $query->whereHas('segment', function ($query) use ($category_id) {
+                    $query->where('category_id', $category_id);
+                });
+            })->where('status','active')->orderByDesc('id')->get();
         return ($parts);
     }
 
@@ -48,7 +49,7 @@ class PartService
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:parts',
-            'category_id' => 'required',
+            'segment_id' => 'required',
             'brand_id' => 'required',
             'uom' => 'required',
             'sn_status' => 'required',
@@ -124,16 +125,16 @@ class PartService
 
     public function handleShowUomGroupByCategory($id)
     {
-        $uomString = $this->part->find($id)->category->uom;
+        $uomString = $this->part->with('segment.category')->find($id)->segment->category->uom;
         $uomArray = explode(', ', $uomString);
         return ($uomArray);
     }
 
     public function handleShowBrandGroupByCategory($id)
     {
-        $category_id = $this->part->find($id)->category_id;
-        $brandsPerCategory = $this->brand->where('category_id', $category_id)->get();
-        $brands = $this->brand->all()->groupBy('category_id');
+        $segment_id = $this->part->with('segment.category')->find($id)->segment->id;
+        $brandsPerCategory = $this->brand->where('segment_id', $segment_id)->get();
+        $brands = $this->brand->all()->groupBy('segment_id');
         $brand = [];
         foreach ($brandsPerCategory as $brandPerCategory) {
             $brand['name'][] = $brandPerCategory->name;
@@ -152,7 +153,6 @@ class PartService
 
     public function handleNameIdPart()
     {
-        // $parts = $this->part->get(['id', 'name as text']);
         $parts = $this->part->with('requestForms')->get(['id', 'name as text', 'im_code', 'uom']);
         return ($parts);
     }

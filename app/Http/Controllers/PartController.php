@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 use App\Services\PartService;
 use App\Services\BrandService;
 use App\Services\StockService;
+use App\Services\SegmentService;
 use App\Services\CategoryService;
+use App\Services\WareHouseService;
 use App\Services\AttachmentService;
+use Illuminate\Support\Facades\Auth;
 use App\Services\HistoryPriceService;
 use App\Services\NotificationService;
-use App\Services\WareHouseService;
-use Illuminate\Support\Facades\Auth;
 
 class PartController extends Controller
 {
 
-    public function __construct(stockService $stockService, HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService, WareHouseService $warehouseService)
+    public function __construct(stockService $stockService, HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService, WareHouseService $warehouseService, SegmentService $segmentService)
     {
         $this->historypriceService = $historypriceService;
         $this->attachmentService = $attachmentService;
@@ -27,6 +28,7 @@ class PartController extends Controller
         $this->warehouseService = $warehouseService;
         $this->stockService = $stockService;
         $this->notificationService = $notificationService;
+        $this->segmentService = $segmentService;
     }
 
     /* 
@@ -38,7 +40,7 @@ class PartController extends Controller
     {
         $categories =  $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleAllBrand();
-        // $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
+        $segments = $this->segmentService->handleAllSegment();
         $part = $this->partService->handleAllPart();
         $notifications =  $this->notificationService->handleAllNotification();
         return view('part.part', [
@@ -46,7 +48,7 @@ class PartController extends Controller
             'categories' => $categories,
             'brands' => $brands,
             'part' => $part,
-            // 'brandString'=>$brandString
+            'segments' => $segments,
         ]);
     }
 
@@ -58,9 +60,9 @@ class PartController extends Controller
     public function ajaxIndex()
     {
         $brandString = $this->brandService->handleGetAllBrandGroupByCategory();
-        $categories =  $this->categoryService->handleGetAllCategory();
+        $segments = $this->segmentService->handleAllSegment();
         return response()->json([
-            'categories' => $categories,
+            'segments' => $segments,
             'brandString' => $brandString
         ]); //? pake helper ResponseJSON
     }
@@ -92,7 +94,7 @@ class PartController extends Controller
         $brands = $this->brandService->handleGetAllBrand();
         $is_sn = $part->sn_status == "sn";
         $uoms = $this->partService->handleShowUomGroupByCategory($id);
-        $brand = $this->partService->handleShowBrandGroupByCategory($id); //todo nama variabel diganti jadi $brandByCategory
+        $brandByCategory = $this->partService->handleShowBrandGroupByCategory($id); //todo nama variabel diganti jadi $brandByCategory
         $notifications =  $this->notificationService->handleAllNotification();
 
         return view('part.detail', [
@@ -107,7 +109,7 @@ class PartController extends Controller
             'brands' => $brands,
             'uoms' => $uoms,
             'is_sn' => $is_sn,
-            'brand' => $brand
+            'brand' => $brandByCategory
         ]);
     }
 

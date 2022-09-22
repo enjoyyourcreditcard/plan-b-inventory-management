@@ -9,23 +9,26 @@ class Part extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id'
-    ];
+    protected $guarded = ['id'];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function stocks()
+    public function segment()
     {
-        return $this->hasMany(Stock::class);
+        return $this->belongsTo(Segment::class);
     }
 
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
     }
 
     public function build()

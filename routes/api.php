@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\AuthController;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,12 +10,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StockController;
-use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,11 @@ Route::get('/tes123', function () {
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
+
+
+Route::group(['prefix' => 'segment'], function () {
+    Route::get('/', [SegmentController::class, 'getAllSegment']);
 });
 
 

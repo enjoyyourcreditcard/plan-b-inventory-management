@@ -17,7 +17,7 @@ function DetailCategory(props) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        // console.log()
+        console.log('sup')
         async function getData() {
             api.getCategoryById(props.categoryid).then((response) => {
                 console.log(response.data.data.parts)
@@ -99,7 +99,7 @@ function DetailCategory(props) {
                 Cell: tableProps => (
                     <>
 
-                        <a href={'/category/'+tableProps.row.original.category.id} className="text-primary">{tableProps.row.original.category.name}</a>
+                        <a href={'/category/'+tableProps.row.original.segment.category.id} className="text-primary">{tableProps.row.original.segment.category.name}</a>
                     </>
                 )
 

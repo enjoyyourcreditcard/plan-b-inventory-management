@@ -4,11 +4,12 @@ import { useTable, usePagination, useGlobalFilter, useSortBy, useFilters } from 
 import TabelFooter from '../../components/tabel_footer';
 import Table from '../../components/Table';
 import TabelHiddenColumn from '../../components/table_hidden_column';
+import TableLoading from '../../components/table_loding';
 import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
 import Filter from '../../utils/filter';
 
-function Category() {
+function Segment() {
     const api = new Api;
     const filter = new Filter;
     const [rawData, setRawData] = useState([]);
@@ -18,7 +19,7 @@ function Category() {
 
     useEffect(() => {
         async function getData() {
-            api.getCategory().then((response) => {
+            api.getSegment().then((response) => {
                 setRawData(response.data.data)
                 setData(response.data.data);
                 setLoadingData(false);
@@ -29,14 +30,7 @@ function Category() {
         }
     }, []);
 
-
-    function filterNoStock() {
-        let result = filter.noStock(noStock,rawData);
-        setData(result);
-        setNoStock(!noStock);
-    }
-
-    
+  
     function SearchFilter(search, column) {
         let result = filter.search(search,column,rawData);
         setData(result);
@@ -57,30 +51,28 @@ function Category() {
                 style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: tableProps => (
                     <>
-                            <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
+                            <a href='#' className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                     </>
                 )
-            }, {
-                Header: 'Description',
-                accessor: 'description',
-                Cell: tableProps => (
-                    <>
-                        <p style={{ "minWidth": 300 }}>{tableProps.row.original.description}</p>
-                    </>
-
-                )
-
             }, 
             {
-                Header: 'Total Segment',
-                accessor: 'total_segment',
+                Header: 'Category',
+                accessor: 'category',
                 Cell: tableProps => (
                     <>
 
-                        <a href='#' className='text-primary '>{tableProps.row.original.segments.length}</a>
+                        <a href='#' className='text-primary '>{tableProps.row.original.category.name}</a>
+                    </>
 
-                       
+                )
 
+            },
+            {
+                Header: 'Total Part',
+                accessor: 'total_part',
+                Cell: tableProps => (
+                    <>
+                        <a href='#' className='text-primary '>{tableProps.row.original.parts_count}</a>
                     </>
 
                 )
@@ -119,23 +111,25 @@ function Category() {
             <div className="pt-3 ">
                 <div className="d-flex">
                     <div>
-                        {/* TODO: data-bs-target dibikin props */}
-                        <button data-bs-toggle="modal" data-bs-target="#createCategoryModal" class="btn btn-primary w-100">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                      New Category
-                    </button>
+
+                    <button className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createSegment">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            New Segment
+                        </button>
+                        
                     </div>
                     <TableSearch
                         columns={columns}
                         SearchFilter={SearchFilter}
                         resetSearchFilter={resetSearchFilter}/>
                         
+
                     <div className='px-1'></div>
                     {/* <div class="btn-group h-25 ">
                         <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -155,7 +149,7 @@ function Category() {
                 </div>
             </div>
             {loadingData ? (
-                <p>Loading Please wait...</p>
+                <TableLoading/>
             ) : (
                 <Table
                     getTableProps={getTableProps}
@@ -178,8 +172,8 @@ function Category() {
     );
 }
 
-export default Category;
+export default Segment;
 
-if (document.getElementById('part-category')) {
-    ReactDOM.render(<Category />, document.getElementById('part-category'));
+if (document.getElementById('part-segment')) {
+    ReactDOM.render(<Segment />, document.getElementById('part-segment'));
 }

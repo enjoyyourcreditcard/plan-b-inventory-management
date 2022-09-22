@@ -16,30 +16,30 @@ class BrandSeeder extends Seeder
     {
         $brands = [
             [
-                'category_id' => 1,
                 'name' => 'HUAWEI',
                 'status' => 'active',
+                'segment_id' => 1,
                 'created_at' => '2022-08-23 10:53:17',
                 'updated_at' => '2022-08-23 10:53:17',
             ],
             [
-                'category_id' => 2,
-                'status' => 'active',
                 'name' => 'SPOTELINDO MITRA UTAMA',
+                'status' => 'active',
+                'segment_id' => 2,
                 'created_at' => '2022-08-23 10:53:17',
                 'updated_at' => '2022-08-23 10:53:17',
             ],
             [
-                'category_id' => 2,
-                'status' => 'active',
                 'name' => 'ZTE',
+                'status' => 'active',
+                'segment_id' => 2,
                 'created_at' => '2022-08-23 10:53:17',
                 'updated_at' => '2022-08-23 10:53:17',
             ],
             [
-                'category_id' => 1,
-                'status' => 'active',
                 'name' => 'POWER CELL',
+                'status' => 'active',
+                'segment_id' => 1,
                 'created_at' => '2022-08-23 10:53:17',
                 'updated_at' => '2022-08-23 10:53:17',
             ]
