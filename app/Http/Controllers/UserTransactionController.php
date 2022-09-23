@@ -9,7 +9,7 @@ use App\Services\WarehouseService;
 use App\Services\RequestFormService;
 use App\Services\NotificationService;
 
-class RequestFormController extends Controller
+class UserTransactionController extends Controller
 {
     public function __construct(NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $warehouseService)
     {

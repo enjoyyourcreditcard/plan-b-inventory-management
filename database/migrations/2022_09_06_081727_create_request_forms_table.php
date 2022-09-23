@@ -21,7 +21,7 @@ class CreateRequestFormsTable extends Migration
             $table->foreign('part_id')->references('id')->on('parts');
             $table->integer('quantity');
             $table->string('remarks');
-            $table->string('sn_code')->nullable();
+            // $table->string('sn_code')->nullable();
             $table->timestamps();
         });
     }

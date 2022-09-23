@@ -279,12 +279,11 @@
                     </div>
                     @endif
                 </div>
-                <form action="/request-form/{{ $grf->id }}" class="card-footer" method="POST">
+                <form action="{{Route('post.approve.IC')}}" class="card-footer" method="POST">
                     @csrf
-                    @method('PUT')
                     <div class="d-flex justify-content-end gap-3">
                         <button class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
-                            <input type="hidden" name="status" value="submited">
+                            <input type="hidden" name="id" value="{{$grf->id}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 fill="none" stroke-linecap="round" stroke-linejoin="round">

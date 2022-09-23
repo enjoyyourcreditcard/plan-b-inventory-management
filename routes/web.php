@@ -14,12 +14,12 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\RequestFormController;
+use App\Http\Controllers\UserTransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Warehouse;
 use App\Http\Controllers\RequestController;
-use App\Http\Controllers\WarehouseApprovController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,13 +62,14 @@ Route::get('/', function () {
 // })->middleware(["auth:sanctum", 'ability:check-status']);   
 
 
-/*
-|--------------------------------------------------------------------------
-| Part Routes
-|--------------------------------------------------------------------------
+
+
+/* 
+*|--------------------------------------------------------------------------
+*|  Part Routes 
+*|--------------------------------------------------------------------------
 */
 Route::resource('/part' , PartController::class)->middleware("auth");
-Route::resource('/warehouse' , WarehouseController::class)->middleware("auth");
 
 Route::get('/ajax/part' , [PartController::class, 'ajaxIndex'])->middleware("auth");
 Route::post('/historyprice', [App\Http\Controllers\HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
@@ -95,9 +96,8 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('get
 
 
 
-Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth");
+Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware("auth");
-
 
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 // Route::resource('/brand', BrandController::class);
@@ -106,10 +106,11 @@ Route::get('/transaction', [TransactionController::class, 'index'])->middleware(
 
 
 /*
-|--------------------------------------------------------------------------
-| Build Routes
-|--------------------------------------------------------------------------
+*|--------------------------------------------------------------------------
+*| Build Routes
+*|--------------------------------------------------------------------------
 */
+
 Route::get('/build', [BuildController::class, 'index']);
 Route::post('/build', [BuildController::class, 'store']);
 Route::put('/build/{id}', [BuildController::class, 'update']);
@@ -120,9 +121,9 @@ Route::delete('/build/{id}', [BuildController::class, 'delete']);
 
 
 /*
-|--------------------------------------------------------------------------
-| Stock Routes
-|--------------------------------------------------------------------------
+*--------------------------------------------------------------------------
+* Stock Routes
+*--------------------------------------------------------------------------
 */
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -132,26 +133,48 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 /*
-|--------------------------------------------------------------------------
-| Transactions
-|--------------------------------------------------------------------------
+*--------------------------------------------------------------------------
+* Transactions
+*--------------------------------------------------------------------------
 */
-Route::get('/request-form', [RequestFormController::class, 'index'])->middleware('auth');
-Route::get('/request-form/{grf_code}', [RequestFormController::class, 'create'])->middleware('auth');
-Route::post('/request-form', [RequestFormController::class, 'storeGrf'])->middleware('auth');
-Route::post('/request-form/{id}', [RequestFormController::class, 'store'])->middleware('auth');
-Route::put('/request-form/{id}', [RequestFormController::class, 'update'])->middleware('auth');
-Route::delete('/request-form/{code}', [RequestFormController::class, 'destroy'])->middleware('auth');
+
+
+
+/*
+*--------------------------------------------------------------------------
+* Auth Warehouse Home
+*--------------------------------------------------------------------------
+*/
+Route::get('/warehouse', [WarehouseTransactionController::class, 'index']);
+Route::get('/warehouse/action/grf/{id}', [WarehouseTransactionController::class, 'show'])->name("get.warehouse.show.action.grf");
+
+
+
+/*
+*--------------------------------------------------------------------------
+* Auth User Home
+*--------------------------------------------------------------------------
+*/
+Route::get('/request-form', [UserTransactionController::class, 'index'])->middleware('auth');
+Route::get('/request-form/{grf_code}', [UserTransactionController::class, 'create'])->middleware('auth');
+Route::post('/request-form', [UserTransactionController::class, 'storeGrf'])->middleware('auth');
+Route::post('/request-form/{id}', [UserTransactionController::class, 'store'])->middleware('auth');
+Route::put('/request-form/{id}', [UserTransactionController::class, 'update'])->middleware('auth');
+Route::delete('/request-form/{code}', [UserTransactionController::class, 'destroy'])->middleware('auth');
 
 
 
 
 
 /*
-|--------------------------------------------------------------------------
-| Approval
-|--------------------------------------------------------------------------
+*--------------------------------------------------------------------------
+* Approval Routes
+*--------------------------------------------------------------------------
 */
-Route::get('/warehouse-approv', [WarehouseApprovController::class, 'index']);
-Route::get('/warehouse-approv/{id}', [WarehouseApprovController::class, 'show']);
-Route::put('/warehouse-approv', [WarehouseApprovController::class, 'update']);
+Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
+Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->middleware("auth")->name("post.approve.IC");
+
+
+
+
+// Route::resource('/warehouse' , WarehouseController::class)->middleware("auth");

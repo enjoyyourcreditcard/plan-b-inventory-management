@@ -6,6 +6,7 @@ use App\Services\BrandService;
 use App\Services\NotificationService;
 use App\Services\PartService;
 use App\Services\RequestFormService;
+use App\Services\TransactionService;
 use App\Services\WareHouseService;
 use Illuminate\Http\Request;
 
@@ -16,20 +17,24 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WareHouseService $warehouseService)
+    public function __construct(TransactionService $transactionService, NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WareHouseService $warehouseService)
     {
-        $this->notificationService = $notificationService; 
-        $this->requestFormService = $requestFormService; 
-        $this->partService = $partService; 
-        $this->brandService = $brandService; 
-        $this->warehouseService = $warehouseService; 
+        $this->notificationService = $notificationService;
+        $this->transactionService = $transactionService;
+        $this->requestFormService = $requestFormService;
+        $this->partService = $partService;
+        $this->brandService = $brandService;
+        $this->warehouseService = $warehouseService;
     }
 
     public function index()
     {
 
-        return view("transaction.transaction");
-
+        $requestForms = $this->requestFormService->handleAllRequestFormInbound();
+        // dd($requestForms);
+        return view("transaction.transaction", [
+            'requestForms' => $requestForms
+        ]);
     }
 
     /**
@@ -50,7 +55,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         //
     }
 
@@ -68,9 +73,9 @@ class TransactionController extends Controller
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->warehouseService->handleAllWareHouse();
-        
+
         return view('transaction.IC.detail_transaction', [
-            'notifications' => $notifications,            
+            'notifications' => $notifications,
             'requestForms' => $requestForms,
             'parts' => $parts,
             'brands' => $brands,
@@ -81,7 +86,7 @@ class TransactionController extends Controller
 
 
 
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -115,4 +120,12 @@ class TransactionController extends Controller
     {
         //
     }
+
+
+    public function postApproveIC(Request $request)
+    {
+        $this->transactionService->handlePostApproveIC($request); 
+        return redirect()->back();
+    }
+
 }
