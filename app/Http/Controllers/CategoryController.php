@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\PartService;
 use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService, PartService $partService)
     {
         $this->categoryService = $categoryService;
+        $this->partService = $partService;
     }
 
     public function show($id)
     {
         $category = $this->categoryService->handleShowCategory($id);
+        $count = $this->categoryService->handlePartCount($id);
         $uom = explode(', ', $category->uom);
         return view('category.detail', [
             'category' => $category,
             'uom' => $uom,
+            'count' => $count,
         ]);
     }
 

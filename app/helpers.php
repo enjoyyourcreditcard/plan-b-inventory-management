@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\Audit;
+use App\Models\PersonalAccessTokens;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
 function ResponseJSON($data, $code = 200)
@@ -33,6 +36,23 @@ function ResponseJSON($data, $code = 200)
     return response()->json($respon, $code)->header('Accept', 'application/json');
 }
 
+
+
+
+ function AuthPermission($permission)
+{
+
+    $user_id = Auth::user()->id;
+    $permission_row = PersonalAccessTokens::where("tokenable_id",$user_id)->orderBy('created_at', 'desc')->first();
+   
+    if($permission_row === null){
+        // dd("adasd");
+        return redirect('/login');
+    }; //todo: belom kelar
+    $permission_array = json_decode($permission_row->abilities);
+    $array_search = array_search($permission,$permission_array);
+    return gettype($array_search) == "integer" ? true : false;
+}
 
  function redirectTab($tabID)
 {

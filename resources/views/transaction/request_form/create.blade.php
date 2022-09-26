@@ -1,87 +1,106 @@
 @extends('layouts.main') @section('content')
 <div class="container-fluid">
   <div class="row " style="margin: 0px">
-      <div class="col-md-4">
-        <div id="inputRequestFormParent" class="card mb-3">
-          <div class="card-header">
-            <h3 class="card-title">Good Request Form</h3>
-          </div>
-          <div class="card-body">
-            <form action="/request-form/{{ $grf->id }}" method="POST">
-              @csrf
+    <div class="col-md-4">
+      <div id="inputRequestFormParent" class="card mb-3">
+        <div class="card-header">
+          <h3 class="card-title">Good Request Form</h3>
+        </div>
+        <div class="card-body">
+          <form action="/request-form/{{ $grf->id }}" method="POST">
+            @csrf
+            <div class="form-group ">
+              <label class="col-md-1 col-form-label text-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-id" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                  <circle cx="9" cy="10" r="2"></circle>
+                  <line x1="15" y1="8" x2="17" y2="8"></line>
+                  <line x1="15" y1="12" x2="17" y2="12"></line>
+                  <line x1="7" y1="16" x2="17" y2="16"></line>
+                </svg>&nbsp;
+                GRF CODE :
+              </label>
+              <input type="text" class="form-control" name="grf_code" value="{{ $grf->grf_code }}"
+                style="cursor: pointer" disabled>
+            </div>
+            <div class="form-group mb-3 row">
+              <label class="col-md-1 col-form-label text-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-warehouse"
+                  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M3 21v-13l9 -4l9 4v13"></path>
+                  <path d="M13 13h4v8h-10v-6h6"></path>
+                  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
+                </svg>&nbsp;
+                Warehouse :
+              </label>
+              <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ $grf->status
+                == 'submited' ? 'disabled' : null }}>
+                <option></option>
+                @foreach ($warehouses as $warehouse)
+                <option value="{{ $warehouse->id }}" {{$grf->warehouse_id == $warehouse->id ? "selected" : ""}}>{{
+                  $warehouse->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            @if ($grf->status == 'draft')
+            <hr class="my-1">
+            <div class="row mb-2">
               <div class="form-group ">
-                <label class="col-md-1 col-form-label text-nowrap">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <rect x="3" y="4" width="18" height="16" rx="3"></rect>
-                    <circle cx="9" cy="10" r="2"></circle>
-                    <line x1="15" y1="8" x2="17" y2="8"></line>
-                    <line x1="15" y1="12" x2="17" y2="12"></line>
-                    <line x1="7" y1="16" x2="17" y2="16"></line>
-                  </svg>&nbsp;
-                  GRF CODE :
-                </label>
-                <input type="text" class="form-control" name="grf_code" value="{{ $grf->grf_code }}" style="cursor: pointer" disabled>
+                <label class="col-form-label">Material Description</label>
+                <select class="form-control inputPartRequestFormSelect2" name="part_id">
+                  <option></option>
+                  @foreach ($parts as $part)
+                  <option value="{{ $part->id }}">{{ $part->name }}</option>
+                  @endforeach
+                </select>
               </div>
-              <div class="form-group mb-3 row">
-                <label class="col-md-1 col-form-label text-nowrap">
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
-                      viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M3 21v-13l9 -4l9 4v13"></path>
-                      <path d="M13 13h4v8h-10v-6h6"></path>
-                      <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                  </svg>&nbsp;
-                  Warehouse :
-                </label>
-                  <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ $grf->status == 'submited' ? 'disabled' : null }}>
-                    <option></option>
-                    @foreach ($warehouses as $warehouse)
-                      <option value="{{ $warehouse->id }}" {{$grf->warehouse_id == $warehouse->id ? "selected" : ""}}>{{ $warehouse->name }}</option>
-                    @endforeach
-                  </select>
+              <div class="form-group ">
+                <label class="col-form-label">Material Brand</label>
+                <select class="form-control inputBrandRequestFormSelect2" name="brand_id">
+                  <option></option>
+                  @foreach ($brands as $brand)
+                  <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                  @endforeach
+                </select>
               </div>
-              @if ($grf->status == 'draft')
-              <hr class="my-1">
-              <div class="row mb-2">
-                <div class="form-group ">
-                  <label class="col-form-label">Material Description</label>
-                  <select class="form-control inputPartRequestFormSelect2" name="part_id">
-                    <option></option>
-                    @foreach ($parts as $part)
-                    <option value="{{ $part->id }}">{{ $part->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group ">
-                  <label class="col-form-label">Material Brand</label>
-                  <select class="form-control inputBrandRequestFormSelect2" name="brand_id">
-                    <option></option>
-                    @foreach ($brands as $brand)
-                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group ">
-                  <label class="col-form-label">Quantity Request</label>
-                  <input type="number" class="form-control" name="quantity" value="1" min="1">
-                </div>
-                <div class="form-group ">
-                  <label class="col-form-label">Remarks</label>
-                  <textarea class="form-control" name="remarks" rows="1" placeholder="note.."></textarea>
-                </div>
-                <div class="form-group mt-3  d-flex flex-column justify-content-end">
-                  <button class="btn btn-primary" type="submit">Add to list</button>
-                </div>
+              <div class="form-group ">
+                <label class="col-form-label">Quantity Request</label>
+                <input type="number" class="form-control" name="quantity" value="1" min="1">
               </div>
-              @endif
-            </form>
-          </div>
+              <div class="form-group ">
+                <label class="col-form-label">Remarks</label>
+                <textarea class="form-control" name="remarks" rows="1" placeholder="note.."></textarea>
+              </div>
+              <div class="form-group mt-3  d-flex flex-column justify-content-end">
+                <button class="btn btn-primary" type="submit">Add to list</button>
+              </div>
+            </div>
+            @else
+            <hr class="my-1">
+            <h3>Status : @switch($grf->status)
+              @case("ic_approved")
+              <span>On progres (inbound)</span>
+              @break
+
+              @case("wh_approved")
+              <span>Delivered (<a href="#">Download surat jalan</a>)</span>
+              @break
+
+              @default
+              <span>New</span>
+              @endswitch
+            </h3>
+            @endif
+          </form>
         </div>
       </div>
-      <div class="col-md-8">
+    </div>
+    <div class="col-md-8">
 
       <div class="card">
         <div class="card-header">
@@ -101,7 +120,7 @@
                   <th class="col-1">UOM</th>
                   <th class="col-2">REMARKS</th>
                   @if ($grf->status == 'draft')
-                    <th></th>
+                  <th></th>
                   @endif
                 </tr>
               </thead>
@@ -136,8 +155,8 @@
                       @method('delete')
                       <button type="submit" class="btn request-form-delete">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash mx-auto"
-                          width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                          fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                          stroke-linecap="round" stroke-linejoin="round">
                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                           <line x1="4" y1="7" x2="20" y2="7"></line>
                           <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -202,24 +221,28 @@
           @method('PUT')
           <div class="d-flex justify-content-end gap-3">
             <a href="/request-form" class="btn btn-outline-primary outline-button">
-              {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <line x1="5" y1="12" x2="11" y2="18"></line>
                 <line x1="5" y1="12" x2="11" y2="6"></line>
-             </svg> --}}
+              </svg> --}}
               Draft
             </a>
             @if ($grf->status == 'draft')
-            <button class="btn btn-primary" {{ count($requestForms) > 0 ? null : 'disabled' }}>
+            <button class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
               <input type="hidden" name="status" value="submited">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path>
                 <path d="M14 19l2 2l4 -4"></path>
                 <path d="M9 8h4"></path>
                 <path d="M9 12h2"></path>
-             </svg>
+              </svg>
               Submit Request
             </button>
             @endif

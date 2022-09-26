@@ -19,9 +19,6 @@ class CreateCategoriesTable extends Migration
             $table->text('description');
             $table->text('uom')->nullable();
             $table->timestamps();
-            $table->string('started')->nullable();
-            $table->string('updated')->nullable();
-            $table->string('ended')->nullable();
             $table->string('status')->default('active');
         });
     }

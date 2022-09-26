@@ -8,7 +8,7 @@ import TableSearch from '../../components/table_search';
 import Api from '../../utils/api';
 import Filter from '../../utils/filter';
 
-function Category() {
+function MasterUser() {
     const api = new Api;
     const filter = new Filter;
     const [rawData, setRawData] = useState([]);
@@ -18,7 +18,7 @@ function Category() {
 
     useEffect(() => {
         async function getData() {
-            api.getCategory().then((response) => {
+            api.getUser().then((response) => {
                 setRawData(response.data.data)
                 setData(response.data.data);
                 setLoadingData(false);
@@ -31,20 +31,20 @@ function Category() {
 
 
     function filterNoStock() {
-        let result = filter.noStock(noStock,rawData);
+        let result = filter.noStock(noStock, rawData);
         setData(result);
         setNoStock(!noStock);
     }
 
-    
+
     function SearchFilter(search, column) {
-        let result = filter.search(search,column,rawData);
+        let result = filter.search(search, column, rawData);
         setData(result);
     }
     function resetSearchFilter() {
-            setData(rawData);
+        setData(rawData);
     }
-  
+
     const columns = React.useMemo(
 
         () => [
@@ -57,30 +57,42 @@ function Category() {
                 style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: tableProps => (
                     <>
-                            <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
+                        <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                     </>
                 )
             }, {
-                Header: 'Description',
-                accessor: 'description',
+                Header: 'Email',
+                accessor: 'email',
                 Cell: tableProps => (
                     <>
-                        <p style={{ "minWidth": 300 }}>{tableProps.row.original.description}</p>
+                        <p style={{ "minWidth": 300 }}>{tableProps.row.original.email}</p>
                     </>
 
                 )
 
-            }, 
+            },
             {
-                Header: 'Total Segment',
-                accessor: 'total_segment',
+                Header: 'Status',
+                accessor: 'status',
                 Cell: tableProps => (
                     <>
 
-                        <a href='#' className='text-primary '>{tableProps.row.original.segments.length}</a>
+                        <p>{tableProps.row.original.status}</p>
 
-                       
 
+
+                    </>
+
+                )
+
+            },
+            {
+                Header: 'Action',
+                Cell: tableProps => (
+                    <>
+                        <button type="button" class="btn btn-danger" data-id={tableProps.row.original.id} data-toggle="modal" data-target="#modal-confirmation-deactive">
+                            Deactive
+                        </button>
                     </>
 
                 )
@@ -120,22 +132,22 @@ function Category() {
                 <div className="d-flex">
                     <div>
                         {/* TODO: data-bs-target dibikin props */}
-                        <button data-bs-toggle="modal" data-bs-target="#createCategoryModal" class="btn btn-primary w-100">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                      New Category
-                    </button>
+                        <button data-bs-toggle="modal" data-bs-target="#modalAddUser" class="btn btn-primary w-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add User
+                        </button>
                     </div>
                     <TableSearch
                         columns={columns}
                         SearchFilter={SearchFilter}
-                        resetSearchFilter={resetSearchFilter}/>
-                        
+                        resetSearchFilter={resetSearchFilter} />
+
                     <div className='px-1'></div>
                     {/* <div class="btn-group h-25 ">
                         <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -178,8 +190,8 @@ function Category() {
     );
 }
 
-export default Category;
+export default MasterUser;
 
-if (document.getElementById('part-category')) {
-    ReactDOM.render(<Category />, document.getElementById('part-category'));
+if (document.getElementById('admin-user')) {
+    ReactDOM.render(<MasterUser />, document.getElementById('admin-user'));
 }

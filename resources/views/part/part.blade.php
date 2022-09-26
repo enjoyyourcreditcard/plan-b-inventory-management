@@ -4,6 +4,7 @@
     <div class="container">
       <div class="card">
         <ul class="nav nav-tabs nav-tabs-alt" data-bs-toggle="tabs" role="tablist">
+          @if (AuthPermission("part:view"))
           <li class="nav-item" role="presentation">
             <a href="#tabs-part-12" class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -14,6 +15,29 @@
                 <line x1="12" y1="12" x2="4" y2="7.5"></line>
              </svg>&nbsp;PART</a>
           </li>
+          @endif
+          
+          @if (AuthPermission("part:view"))
+          <li class="nav-item" role="presentation">
+            <a href="#tabs-segment" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-container" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M20 4v.01"></path>
+                <path d="M20 20v.01"></path>
+                <path d="M20 16v.01"></path>
+                <path d="M20 12v.01"></path>
+                <path d="M20 8v.01"></path>
+                <rect x="8" y="4" width="8" height="16" rx="1"></rect>
+                <path d="M4 4v.01"></path>
+                <path d="M4 20v.01"></path>
+                <path d="M4 16v.01"></path>
+                <path d="M4 12v.01"></path>
+                <path d="M4 8v.01"></path>
+             </svg>&nbsp;
+              Segment</a>
+          </li>
+          @endif
+
           <li class="nav-item" role="presentation">
             <a href="#tabs-category" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24"
@@ -68,6 +92,16 @@
             <div class="tab-pane active show" id="tabs-part-12" role="tabpanel">
               <div id="parts"></div>
             </div>
+
+             {{-- *
+             *|--------------------------------------------------------------------------
+             *| Tab Segment
+             *|--------------------------------------------------------------------------
+             *--}}
+            <div class="tab-pane" id="tabs-segment" role="tabpanel">
+                <div id="part-segment"></div>
+            </div>
+
              {{-- *
              *|--------------------------------------------------------------------------
              *| Tab Category
@@ -75,129 +109,7 @@
              *--}}
             <div class="tab-pane" id="tabs-category" role="tabpanel">
                 <div id="part-category"></div>
-                {{-- <div class="d-flex">
-                  <div>
-                    <button data-bs-toggle="modal" data-bs-target="#createCategoryModal" class="btn btn-primary w-100">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                      New Category
-                    </button>
-                  </div>
-                  <div class="ms-auto text-muted">
-                    <div class="input-icon mb-3"><input type="text" class="form-control" placeholder="Search…"
-                        value=""><span class="input-icon-addon"><svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                          width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                          stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <circle cx="10" cy="10" r="7"></circle>
-                          <line x1="21" y1="21" x2="15" y2="15"></line>
-                        </svg></span></div>
-                  </div>
-                  <div class="px-1"></div>
-                  <div class="btn-group h-25 "><button type="button" class=" btn btn-outline-light  dropdown-toggle"
-                      data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-filter" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M5.5 5h13a1 1 0 0 1 .5 1.5l-5 5.5l0 7l-4 -3l0 -4l-5 -5.5a1 1 0 0 1 .5 -1.5">
-                        </path>
-                      </svg></button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><button class="dropdown-item"
-                        href="#"><input type="checkbox">&nbsp; No
-                        Stock</button></div>
-                  </div>
-                  <div class="px-1"></div>
-                  <div class="btn-group h-25 "><button type="button" class=" btn btn-outline-light  dropdown-toggle"
-                      data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="6" cy="10" r="2"></circle>
-                        <line x1="6" y1="4" x2="6" y2="8"></line>
-                        <line x1="6" y1="12" x2="6" y2="20"></line>
-                        <circle cx="12" cy="16" r="2"></circle>
-                        <line x1="12" y1="4" x2="12" y2="14"></line>
-                        <line x1="12" y1="18" x2="12" y2="20"></line>
-                        <circle cx="18" cy="7" r="2"></circle>
-                        <line x1="18" y1="4" x2="18" y2="5"></line>
-                        <line x1="18" y1="9" x2="18" y2="20"></line>
-                      </svg></button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><button class="dropdown-item"
-                        href="#"><input type="checkbox" title="Toggle Column Visible" checked=""
-                          style="cursor: pointer;">&nbsp; IPN</button><button class="dropdown-item" href="#"><input
-                          type="checkbox" title="Toggle Column Visible" checked="" style="cursor: pointer;">&nbsp;
-                        Part</button><button class="dropdown-item" href="#"><input type="checkbox"
-                          title="Toggle Column Visible" checked="" style="cursor: pointer;">&nbsp;
-                        Description</button><button class="dropdown-item" href="#"><input type="checkbox"
-                          title="Toggle Column Visible" checked="" style="cursor: pointer;">&nbsp;
-                        Category</button><button class="dropdown-item" href="#"><input type="checkbox"
-                          title="Toggle Column Visible" checked="" style="cursor: pointer;">&nbsp; Stock</button><button
-                        class="dropdown-item" href="#"><input type="checkbox" title="Toggle Column Visible" checked=""
-                          style="cursor: pointer;">&nbsp; Link</button></div>
-                  </div>
-                </div> --}}
-
-             
-                {{-- <div className="tabel-horizontal-scroll">
-                  <table class="table table-bordered table-striped">
-                      <thead>
-                        <th >
-                          Category
-                        </th>
-                        <th >
-                          Description
-                        </th >
-                        <th >
-                          Total Part
-                        </th >
-                        <th >
-                          Act
-                        </th >
-                      </thead>
-                      <tbody>
-                        @foreach ($categories as $category)
-                        <tr >
-                          <td >
-                            <a href="#" style="min-width: 300px;" class="name">{{ $category->name }}</a>
-                          </td>
-                          <td >
-                              {{ $category->description }}
-                          </td>
-                          <td >
-                            <a href="#">{{ $category->parts->count() }}</a>
-                          </td>
-                          <td >
-                            <button class="btn px-2 border-0 m-auto tombol-edit"
-                              data-bs-toggle="modal"
-                              data-bs-target="#editCategoryModal"
-                              data-id="{{ $category->id }}"
-                              data-uom="{{ $category->uom }}"
-                              data-name="{{ $category->name }}"
-                              data-description="{{$category->description}}">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path
-                                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                <path fill-rule="evenodd"
-                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                        @endforeach
-
-                  </tbody>
-                </table>
-              </div> --}}
             </div>
-
 
             {{-- *
              *|--------------------------------------------------------------------------
@@ -206,50 +118,6 @@
              *--}}
             <div class="tab-pane" id="tabs-merek" role="tabpanel">
               <div id="part-brand"></div>
-              {{-- <button class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#modal-create"
-                class="btn btn-primary w-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24"
-                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                New Brand
-              </button>
-              @if (session()->has('success'))
-              <div class="alert alert-success position-absolute" role="alert">
-                {{ session('success') }}
-              </div>
-              @endif
-              <div class="card">
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <th>Brand</th>
-                      <th>
-                        Total Part
-                      </th>
-                      <th>
-                        Create Date
-                      </th>
-                    </thead>
-                    <tbody>
-                      @foreach ($brands as $brand)
-                      <tr>
-                        <td class="name text-capitalize">{{ $brand->name }}</td>
-                        <td class="text-capitalize">0</td>
-                        <td class="text-capitalize">{{ $brand->created_at->format('j F, Y') }}</td>
-                      </tr>
-                      @endforeach
-
-                    </tbody>
-                  </table>
-                  <div class="float-end me-3">
-                    {{ $brands->links() }}
-                  </div>
-                </div>
-              </div> --}}
             </div>
 
             {{-- *
@@ -257,7 +125,6 @@
              *| Tab Build
              *|--------------------------------------------------------------------------
              *--}}
-
              <div class="tab-pane" id="tabs-build" role="tabpanel">
               <div id="part-build"></div>
             </div>
@@ -304,10 +171,9 @@
             <input type="text" class="form-control" id="partName" name="name" form="addPartForm" required>
           </div>
           <div class="mb-2">
-            <label for="partCategory" class="form-label">Category</label>
-            <select class="form-control inputPartCategorySelect2" id="partCategory" name="category_id" form="addPartForm" required>
-              @foreach ($categories as $category)
-              @endforeach
+            <label for="partCategory" class="form-label">Segment</label>
+            <select class="form-control inputPartSegmentSelect2" id="partCategory" name="segment_id" form="addPartForm" required>
+              <option></option>
             </select>
           </div>
 
@@ -365,7 +231,7 @@
 
           <div class="mb-4">
             <label for="partImage" class="form-label">Part Image</label>
-            <input class="form-control" type="file" id="partImage" name="img" accept="image/*">
+            <input class="form-control" type="file" id="partImage" name="img" accept="image/*" form="addPartForm">
           </div>
         </div>
       </div>
@@ -374,8 +240,7 @@
         <button type="submit" class="btn btn-primary" form="addPartForm">Save</button>
       </div>
     </div>
-    {{--  --}}
-    <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
+    {{-- <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
       <div class="modal-header">
         <h5 class="modal-title">Create Category</h5>
         <button type="button" class="btn-close" onclick="bye()"></button>
@@ -383,32 +248,63 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="categoryName" class="form-label">Name</label>
-          <input type="text" class="form-control" id="categoryName" name="name" form="addCategoryForm" required>
+          <input type="text" class="form-control" id="segmentName" name="name" form="addCategoryForm" required>
         </div>
+        <div>
         <div class="mb-3">
-          <label for="categoryDescription" class="form-label">Description</label>
-          <textarea class="form-control" id="categoryDescription" rows="3" name="description" form="addCategoryForm" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="categoryUom" class="form-label">Uom</label>
-          <select id="storeCategoryUom" class="form-select select3" name="uom[]" form="addCategoryForm" required multiple="multiple">
-            <option value="meter">Meter</option>
-            <option value="set">Set</option>
-            <option value="each">Each</option>
-            <option value="roll">Roll</option>
-            <option value="unit">Unit</option>
-            <option value="batang">Batang</option>
-            <option value="liter">Liter</option>
-            <option value="kaleng">Kaleng</option>
-            <option value="kg">Kg</option>
-            <option value="kubic">Kubic</option>
-            <option value="pack">Pack</option>
+          <label for="categoryName" class="form-label">Category</label>
+          <select name="category_id" class="form-control inputPartCategorySelect2" id="segmentCategoryId" form="addCategoryForm" required>
+            <option></option>
+            @foreach ($categories as $category)
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
           </select>
         </div>
         <div>
           <button id="submitStoreCategory" type="submit" class="btn btn-primary float-end" form="addCategoryForm">Save</button>
         </div>
       </div>
+    </div> --}}
+  
+  </div>
+</div> 
+
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Segment
+*|--------------------------------------------------------------------------
+*--}}
+<div class="modal modal-blur fade" id="createSegment" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a new Segment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/segment" method="post">
+        @csrf
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Category</label>
+              <select name="category_id" class="form-control inputSegmentSelect2">
+                <option></option>
+                @foreach ($categories as $item)
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+              </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -518,7 +414,7 @@
 *| Modal Add Brand
 *|--------------------------------------------------------------------------
 *--}}
-<div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-create-brand" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -534,14 +430,14 @@
           </div>
 
           <div class="mb-3">
-            <label for="name" class="form-label">Category</label>
-              <select name="category_id" class="form-control" >
-                @foreach ($categories as $item)
+            <label class="form-label">Segment</label>
+              <select name="segment_id" class="form-control inputBrandSelect2" >
+                <option></option>
+                @foreach ($segments as $item)
                 <option value="{{$item->id}}">{{$item->name}}</option>
                 @endforeach
               </select>
           </div>
-
 
           <div class="mb-3">
             <input type="hidden" class="form-control" name="status">

@@ -34,6 +34,14 @@ export default class Api {
       });
   };
 
+  getSegment = () => {
+    return this.init()
+      .get(`segment`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
   getCategory = () => {
     return this.init()
       .get(`category`)
@@ -83,6 +91,15 @@ export default class Api {
   getCategoryById = (id) => {
     return this.init()
       .get(`part?category_id=`+id)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  getUser = () => {
+    return this.init()
+      .get(`user`)
       .catch((error) => {
         // this.addError(error.message);
       });

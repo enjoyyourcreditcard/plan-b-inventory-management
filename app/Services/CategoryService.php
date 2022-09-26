@@ -35,20 +35,31 @@ class CategoryService
     // Category INDEX
     public function handleGetAllCategory()
     {
-        return $this->category::with('parts')->get();
+        return $this->category::with('segments.parts')->get();
     }
 
-
+    // Category Name Only
     public function handleGetAllCategoryForSelect()
     {
         return $this->category->select("name")->get();
     }
 
-
     // Category SHOW
     public function handleShowCategory($id)
     {
-        return $this->category->with('parts')->with('brands')->find($id);
+        return $this->category->with('segments.parts')->with('segments.brands')->find($id);
+    }
+
+    // Counting Part by Category
+    public function handlePartCount($id)
+    {
+        $category = $this->category->with('segments.parts')->with('segments.brands')->find($id);
+        $count = ['parts' => 0, 'brands' => 0];
+        foreach ($category->segments as $segment) {
+            $count['parts'] += count($segment->parts);
+            $count['brands'] += count($segment->brands);
+        }
+        return $count;
     }
 
     // Category UPDATE 

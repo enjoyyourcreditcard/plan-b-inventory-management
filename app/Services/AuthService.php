@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserPermission;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,7 @@ class AuthService
 
     public function handleLogin($request)
     {
+
         $credentials = request(['email', 'password']);
         $credentials = Arr::add($credentials, 'status', 'aktif');
         if (!Auth::attempt($credentials)) {
@@ -27,9 +30,12 @@ class AuthService
         if (!Hash::check($request->password, $user->password, [])) {
             throw new \Exception('Error in Login');
         }
-        // $tokenResult = $user->createToken('token-auth', ['server:update'])->plainTextToken;
+        $permission_user = UserPermission::where('user_id',$user->id)->with('permission')->get()->map(function ($item)
+        {
+            return $item->permission->name;
+        })->toArray();
         $request->session()->regenerate();
-        $request->session()->get('token', $user->createToken('token-auth', ['show-part'])->plainTextToken);
+        $request->session()->get('token', $user->createToken('token-auth', $permission_user)->plainTextToken);
         
         return ResponseJSON([
             'user' => $user,
@@ -47,6 +53,7 @@ class AuthService
     {
         $user = $request->user();
         $user->tokens()->delete();
+        Auth::logout();
         return "Logout successfully";
     }
 }

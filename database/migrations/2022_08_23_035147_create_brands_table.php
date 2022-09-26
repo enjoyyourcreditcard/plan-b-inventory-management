@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSegmentsTable extends Migration
+class CreateBrandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateSegmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('segments', function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('segment_id');
+            $table->foreign('segment_id')->references('id')->on('segments');
+            $table->string('name');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateSegmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('segments');
+        Schema::dropIfExists('brands');
     }
 }

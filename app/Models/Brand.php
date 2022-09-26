@@ -17,7 +17,11 @@ class Brand extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function segment() {
+        return $this->belongsTo(Segment::class);
+    }
+
     public function parts() {
         return $this->hasMany(Part::class);
-    }    
+    }
 }

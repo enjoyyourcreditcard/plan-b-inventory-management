@@ -40,12 +40,15 @@ class AuthController extends Controller
 
     public function logoutall(Request $request)
     {
-        $result = $this->authService->handleLogoutAll($request);
-        $respon = [
-            'status' => 'success',
-            'msg' => 'Logout successfully',
-            'data' => $result,
-        ];
-        return response()->json($respon, 200);
+       $this->authService->handleLogoutAll($request);
+        // $respon = [
+        //     'status' => 'success',
+        //     'msg' => 'Logout successfully',
+        //     'data' => $result,
+        // ];
+
+        return redirect()->back();
+
+        // return response()->json($respon, 200);
     }
 }

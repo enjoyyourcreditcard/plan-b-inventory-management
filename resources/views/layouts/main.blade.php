@@ -39,7 +39,7 @@
 
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-    
+
     <style>
         #mapid {
             z-index: 0;
@@ -48,24 +48,25 @@
             height: 400px;
         }
 
-<style>
-    #mapid {
-        z-index: 0;
-        display: block;
-        width: 100%;
-        height: 400px;
-    }
-
-    .select2-selection.select2-selection--single{
+        .select2-selection.select2-selection--single {
             height: 36px;
             border: 1px solid gainsboro;
-}
-</style>
+        }
+
+        .modal:nth-of-type(even) {
+            z-index: 1052 !important;
+        }
+
+        .modal-backdrop.show:nth-of-type(even) {
+            z-index: 1051 !important;
+        }
+    </style>
 
 
-@yield("style")
+    @yield("style")
 
-<body style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;">
+<body
+    style="background-image: url(IM_PATTERN_035.png);background-size: auto;background-repeat:repeat;  background-size: cover;">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light d-print-none">
             <div class="container container-header">
@@ -169,105 +170,112 @@
                                             <circle cx="17" cy="17" r="3"></circle>
                                             <circle cx="7" cy="7" r="3"></circle>
                                         </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        <b>Parts</b>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item {{ Request::is('stock*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/stock">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-packages" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <rect x="2" y="13" width="8" height="8" rx="2"></rect>
-                                            <path d="M6 13v3"></path>
-                                            <rect x="8" y="3" width="8" height="8" rx="2"></rect>
-                                            <path d="M12 3v3"></path>
-                                            <rect x="14" y="13" width="8" height="8" rx="2"></rect>
-                                            <path d="M18 13v3"></path>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        <b>Stock</b>
-                                    </span>
-                                    {{-- <span class="badge badge-sm bg-red">2</span> --}}
-                                </a>
-                            </li>
-                            <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/transaction">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-receipt" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M5.576 5.595a1.994 1.994 0 0 0 -.576 1.405v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2m0 -4v-8a2 2 0 0 0 -2 -2h-2">
-                                            </path>
-                                            <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
-                                            <path d="M3 3l18 18"></path>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        <b>Transaksi</b>
-                                    </span>
-                                    {{-- <span class="badge badge-sm bg-red">2</span> --}}
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item {{ Request::is('rekondisi*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/rekondisi">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tool" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5"></path>
-                                         </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        <b>Rekondisi</b>
-                                    </span>
-                                </a>
-                            </li> --}}
-                            {{-- <li class="nav-item {{ Request::is('outbound*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/outbound">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-packge-export" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
-                                            <path d="M12 12l8 -4.5"></path>
-                                            <path d="M12 12v9"></path>
-                                            <path d="M12 12l-8 -4.5"></path>
-                                            <path d="M15 18h7"></path>
-                                            <path d="M19 15l3 3l-3 3"></path>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        <b>Outbound</b>
-                                    </span>
-                                </a>
-                            </li> --}}
-                            {{-- <li class="nav-item {{ Request::is('logistik*') ? 'active' : '' }}">
-                                <a class="nav-link" href="/logistik">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-report-off" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M5.576 5.595a1.994 1.994 0 0 0 -.576 1.405v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2m0 -4v-8a2 2 0 0 0 -2 -2h-2">
-                                            </path>
-                                            <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
-                                            <path d="M3 3l18 18"></path>
-                                        </svg>
-                                        >>>>>>> origin/user_friendly_modal_part
+                                        </span>
+                                        <span class="nav-link-title">
+                                            <b>Parts</b>
+                                        </span>
                                     </a>
+                                    </li>
+                                    <li class="nav-item {{ Request::is('stock*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="/stock">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-packages" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <rect x="2" y="13" width="8" height="8" rx="2"></rect>
+                                                    <path d="M6 13v3"></path>
+                                                    <rect x="8" y="3" width="8" height="8" rx="2"></rect>
+                                                    <path d="M12 3v3"></path>
+                                                    <rect x="14" y="13" width="8" height="8" rx="2"></rect>
+                                                    <path d="M18 13v3"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="nav-link-title">
+                                                <b>Stock</b>
+                                            </span>
+                                            {{-- <span class="badge badge-sm bg-red">2</span> --}}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="/transaction">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-receipt" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path
+                                                        d="M5.576 5.595a1.994 1.994 0 0 0 -.576 1.405v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2m0 -4v-8a2 2 0 0 0 -2 -2h-2">
+                                                    </path>
+                                                    <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
+                                                    <path d="M3 3l18 18"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="nav-link-title">
+                                                <b>Transaksi</b>
+                                            </span>
+                                            {{-- <span class="badge badge-sm bg-red">2</span> --}}
+                                        </a>
+                                    </li>
+                                    {{-- <li class="nav-item {{ Request::is('rekondisi*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="/rekondisi">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-tool" width="24" height="24"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path
+                                                        d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5">
+                                                    </path>
+                                                </svg>
+                                            </span>
+                                            <span class="nav-link-title">
+                                                <b>Rekondisi</b>
+                                            </span>
+                                        </a>
+                                    </li> --}}
+                                    {{-- <li class="nav-item {{ Request::is('outbound*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="/outbound">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-packge-export" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
+                                                    <path d="M12 12l8 -4.5"></path>
+                                                    <path d="M12 12v9"></path>
+                                                    <path d="M12 12l-8 -4.5"></path>
+                                                    <path d="M15 18h7"></path>
+                                                    <path d="M19 15l3 3l-3 3"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="nav-link-title">
+                                                <b>Outbound</b>
+                                            </span>
+                                        </a>
+                                    </li> --}}
+                                    {{-- <li class="nav-item {{ Request::is('logistik*') ? 'active' : '' }}">
+                                        <a class="nav-link" href="/logistik">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-report-off" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path
+                                                        d="M5.576 5.595a1.994 1.994 0 0 0 -.576 1.405v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2m0 -4v-8a2 2 0 0 0 -2 -2h-2">
+                                                    </path>
+                                                    <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 1 1 0 4h-2"></path>
+                                                    <path d="M3 3l18 18"></path>
+                                                </svg>
+                                                >>>>>>> origin/user_friendly_modal_part
+                                        </a>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +302,11 @@
             <a href="#" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">Settings</a>
-            <a href="#" class="dropdown-item">Logout</a>
+            <form action="/api/logoutall" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">Logout</button>
+            </form>
+
         </div>
     </div>
     </div>
@@ -397,91 +409,91 @@
                     </a>
                 </li>
                 {{-- <li class="nav-item {{ Request::is('outbound*') ? 'active' : '' }}">
-                <a class="nav-link" href="/outbound">
-                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-export"
-                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
-                            <path d="M12 12l8 -4.5"></path>
-                            <path d="M12 12v9"></path>
-                            <path d="M12 12l-8 -4.5"></path>
-                            <path d="M15 18h7"></path>
-                            <path d="M19 15l3 3l-3 3"></path>
-                        </svg>
-                    </span>
-                    <span class="nav-link-title">
-                        <b>Outbound</b>
-                    </span>
-                </a>
+                    <a class="nav-link" href="/outbound">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-export"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
+                                <path d="M12 12l8 -4.5"></path>
+                                <path d="M12 12v9"></path>
+                                <path d="M12 12l-8 -4.5"></path>
+                                <path d="M15 18h7"></path>
+                                <path d="M19 15l3 3l-3 3"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            <b>Outbound</b>
+                        </span>
+                    </a>
                 </li> --}}
                 {{-- <li class="nav-item {{ Request::is('logistik*') ? 'active' : '' }}">
-                <a class="nav-link" href="/logistik">
-                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-truck" width="24"
-                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <circle cx="7" cy="17" r="2"></circle>
-                            <circle cx="17" cy="17" r="2"></circle>
-                            <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5">
-                            </path>
-                        </svg>
-                    </span>
-                    <span class="nav-link-title">
-                        <b>Logistik</b>
-                    </span>
-                </a>
+                    <a class="nav-link" href="/logistik">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-truck"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="7" cy="17" r="2"></circle>
+                                <circle cx="17" cy="17" r="2"></circle>
+                                <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            <b>Logistik</b>
+                        </span>
+                    </a>
                 </li> --}}
                 {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        Third
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="./#">
-                                        First
-                                    </a>
-                                    <a class="dropdown-item" href="./#">
-                                        Second
-                                    </a>
-                                    <a class="dropdown-item" href="./#">
-                                        Third
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled" href="./#">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        Disabled
-                                    </span>
-                                </a>
-                            </li> --}}
+                    <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Third
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="./#">
+                            First
+                        </a>
+                        <a class="dropdown-item" href="./#">
+                            Second
+                        </a>
+                        <a class="dropdown-item" href="./#">
+                            Third
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="./#">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Disabled
+                        </span>
+                    </a>
+                </li> --}}
             </ul>
         </div>
     </div>
@@ -501,36 +513,36 @@
                             <li class="list-inline-item"><a href="./docs/index.html"
                                     class="link-secondary">Documentation</a></li>
                             {{-- <li class="list-inline-item"><a href="./license.html"
-                                        class="link-secondary">License</a>
-                                </li> --}}
+                                    class="link-secondary">License</a>
+                            </li> --}}
 
                             {{-- <li class="list-inline-item">
-                                    <a href="https://github.com/sponsors/codecalm" target="_blank"
-                                        class="link-secondary" rel="noopener">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon text-pink icon-filled icon-inline" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                                        </svg>
-                                        Sponsor
-                                    </a>
-                                </li> --}}
+                                <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary"
+                                    rel="noopener">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="icon text-pink icon-filled icon-inline" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                                    </svg>
+                                    Sponsor
+                                </a>
+                            </li> --}}
                         </ul>
                     </div>
                     {{-- <div class="col-12 col-lg-auto mt-lg-0">
-                            <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item">
-                                    Copyright &copy; 2022
-                                    <a href="." class="link-secondary">Inventory Management</a>.
-                                    All rights reserved.
-                                </li>
+                        <ul class="list-inline list-inline-dots mb-0">
+                            <li class="list-inline-item">
+                                Copyright &copy; 2022
+                                <a href="." class="link-secondary">Inventory Management</a>.
+                                All rights reserved.
+                            </li>
 
-                            </ul>
-                        </div> --}}
+                        </ul>
+                    </div> --}}
                 </div>
             </div>
         </footer>

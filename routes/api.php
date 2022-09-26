@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\AuthController;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,12 +10,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StockController;
-use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
-use App\Models\User;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,23 +30,21 @@ use App\Models\User;
 */
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('logoutall', [AuthController::class, 'logoutall']);
+
 Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('logoutall', [AuthController::class, 'logoutall']);
+    // Route::post('logout', [AuthController::class, 'logout']);
+    // Route::post('logoutall', [AuthController::class, 'logoutall']);
 });
 
-Route::get('/tes123', function () {
-    $user = User::all()->map(function($item){
-        $item->umur = 2;
-        return $item;
-    });
-    // foreach ($user as $item) {
-    //     $item->umur = 1;
-    // };
-    // dd($user);
-    return $user;
-    // return Auth::user()->tokenCan('show-part');
-});
+Route::get('/tes123', function (Request $req) {
+
+    AuthPermission("part:view");
+    // dd(
+    // dd(Auth::user()->token);
+// dd($req->user()->tokenCan("show-part"));
+// dd(auth('sanctum')->tokenCan("show-part"));
+})->middleware('auth');
 
 
 
@@ -52,6 +52,11 @@ Route::get('/tes123', function () {
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
+});
+
+
+Route::group(['prefix' => 'segment'], function () {
+    Route::get('/', [SegmentController::class, 'getAllSegment']);
 });
 
 
@@ -106,6 +111,15 @@ Route::group(['prefix' => 'request'], function () {
     Route::put('/{id}', [RequestController::class, 'putUpdateRequest']);
     Route::delete('/{id}', [RequestController::class, 'getInactiveRequest']);
 });
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'getAllUser']);
+});
+
+
+
+
+
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
 //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);

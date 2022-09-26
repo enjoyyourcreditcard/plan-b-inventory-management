@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Segment;
+use App\Services\UserService;
 use Illuminate\Http\Request;
-use App\Services\SegmentService;
+use Throwable;
 
-class SegmentController extends Controller
+class UserController extends Controller
 {
-    public function __construct (SegmentService $segmentService)
+
+
+
+    public function __construct(UserService $userService)
     {
-        $this->segmentService = $segmentService;
+        $this->userService = $userService;
     }
 
     /**
@@ -20,7 +23,7 @@ class SegmentController extends Controller
      */
     public function index()
     {
-        //
+        return view('master_user');
     }
 
     /**
@@ -39,18 +42,18 @@ class SegmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        return $this->segmentService->handleStoreSegment($request);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Segment  $segment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Segment $segment)
+    public function show($id)
     {
         //
     }
@@ -58,10 +61,10 @@ class SegmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Segment  $segment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Segment $segment)
+    public function edit($id)
     {
         //
     }
@@ -70,10 +73,10 @@ class SegmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Segment  $segment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Segment $segment)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -81,22 +84,29 @@ class SegmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Segment  $segment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Segment $segment)
+    public function postDeactive(Request $req)
     {
-        //
+        try {
+            $this->userService->handleDeactive($req->id);
+            return redirect()->back();
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+
+
     }
 
-    /**
-     * Show JSON from storage.
-     *
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
-    public function getAllSegment(Request $req)
+ /* 
+    *|--------------------------------------------------------------------------
+    *| Api Get All User  
+    *|--------------------------------------------------------------------------
+    */
+    public function getAllUser(Request $req)
     {
-        return ResponseJSON($this->segmentService->handleAllSegmentApi($req), 200);
-    }
+        return ResponseJSON($this->userService->handleAllUserApi($req), 200);
+    } 
 }

@@ -27,12 +27,12 @@ class PartSeeder extends Seeder
             if ($no != 0) {
                 try {
                     Part::create([
-                        'category_id' =>1,
+                        'segment_id' => 2,
+                        'brand_id' => 1,
                         'im_code' => $data[2],
                         'inventory_code' => $data[3],
                         'orafin_code' => $data[4],
                         'name' => $data[5],
-                        'brand_id' => $data[6],
                         'uom' => $data[7],
                         'sn_status' => $data[8],
                         'color' => $data[9],

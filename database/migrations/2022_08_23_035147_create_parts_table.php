@@ -15,19 +15,16 @@ class CreatePartsTable extends Migration
     {
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
-            // $table->unsignedBigInteger('segment_id');
-            // $table->foreign('segment_id')->references('id')->on('segments');
+            $table->unsignedBigInteger('segment_id');
+            $table->foreign('segment_id')->references('id')->on('segments');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('im_code')->nullable();
             $table->string('inventory_code')->nullable();
             $table->string('orafin_code')->nullable();
             $table->string('name');
-            $table->unsignedBigInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');
             $table->enum('uom', ['METER', 'SET', 'EACH', 'ROLL', 'UNIT', 'BATANG', 'LITER', 'KALENG', 'KG', 'KUBIC', 'PACK']);
             $table->enum('sn_status', ['SN', 'NON SN']);
-            // $table->string('segment')->nullable();
             $table->string('color');
             $table->integer('size');
             $table->text('description');

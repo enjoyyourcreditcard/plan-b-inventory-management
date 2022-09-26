@@ -35,7 +35,10 @@
                 <div class="card-body text-center">
                   <div class="text-uppercase text-muted font-weight-medium">{{ $requestForm->grf_code }}</div>
                   <div class="h-5 fw-bold my-3">
-                  @switch($requestForm->status)
+                 
+                  
+                   
+                  {{-- 
                       @case('draft')
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-pause-fill text-warning pb-2" viewBox="0 0 16 16">
                           <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
@@ -47,20 +50,43 @@
                         </svg>
                           @break
                       @default
-                  @endswitch
-                  <span class="h1 text-uppercase">{{ $requestForm->status }}</span>
-                  </div>
+                  @endswitch --}}
                   @switch($requestForm->status)
-                      @case('draft')
-                          <p class="mb-5">waiting for submit</p>
-                          @break
-                      @case('submited')
-                          <p class="mb-5">waiting for approval</p>
-                          @break
-                      @default
+
+                
+                  @case("draft")
+                 
+                  <span class="h1 text-uppercase ">{{ $requestForm->status }}</span>
+                  @break
+
+                  @case("submited")
+
+                  <span class="h1 text-uppercase">On progres</span>
+                  @break
+
+                  @case("ic_approved")
+                  <span class="h1 text-uppercase ">On progres</span>
+                  @break
+    
+                  @case("wh_approved")
+                  
+                  <span class="h1 text-uppercase">Delivered </span>
+                  @break
+    
+                  @default
+                  <span class="h1 text-uppercase">New</span>
                   @endswitch
+                  </div>
+                 
                   <div class="text-center mt-4">
-                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100">Show</a>
+                    
+                    
+                    @if ($requestForm->status == 'wh_approved')
+                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100 mb-2">Download Surat jalan</a>
+                        
+                    @endif
+                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100 float-left">Show</a>
+
                   </div>
                 </div>
               </div>
