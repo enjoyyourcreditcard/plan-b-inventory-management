@@ -7,7 +7,27 @@
           <h3 class="card-title">Good Request Form</h3>
         </div>
         <div class="card-body">
-          <div class="row row-cards">
+          <div class="col-12">
+            <div class="card card-md">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h2 class="h3">Requestor memiliki maksimal 3 slot request sampai status request ditutup.</h2>
+                    <p class="m-0 text-muted">Requestor dapat menekan tombol <b>Emergency Request</b>.</p>
+                  </div>
+                  <div class="col-auto">
+                    <a href="#" class="btn btn-danger">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                      </svg>&nbsp;
+                      Emergency Request
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row row-cards mt-2">
             @foreach ($requestForms->take(3) as $requestForm)
             {{-- ============================================================= OCCUPIED SLOT ============================================================= --}}
             <div class="col-sm-6 col-lg-4">
@@ -65,26 +85,7 @@
             </form>
             @endif
             
-            <div class="col-12">
-              <div class="card card-md">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <h2 class="h3">Requestor memiliki maksimal 3 slot request sampai status request ditutup.</h2>
-                      <p class="m-0 text-muted">Requestor dapat menekan tombol <b>Emergency Request</b>.</p>
-                    </div>
-                    <div class="col-auto">
-                      <a href="#" class="btn btn-danger">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                        </svg>&nbsp;
-                        Emergency Request
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>

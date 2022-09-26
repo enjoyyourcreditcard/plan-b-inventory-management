@@ -245,7 +245,6 @@
           <label for="categoryName" class="form-label">Name</label>
           <input type="text" class="form-control" id="segmentName" name="name" form="addCategoryForm" required>
         </div>
-        <div>
         <div class="mb-3">
           <label for="categoryName" class="form-label">Category</label>
           <select name="category_id" class="form-control inputPartCategorySelect2" id="segmentCategoryId" form="addCategoryForm" required>

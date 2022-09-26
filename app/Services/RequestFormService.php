@@ -25,10 +25,29 @@ class RequestFormService
         return ($requestForms);
     }
 
+    // Request Form SHOW
+    public function handleAllRequestFormInbound()
+    {
+        $requestForms = $this->grf->where('status','=','submited')->orWhere('status','=','ic_approved')->orWhere('status','=','wh_approved')->orWhere('status','=','delivery_approved')->orWhere('status','=','user_pickup')->get();
+        return ($requestForms);
+    }
+
+    public function handleAllRequestFormOutbound()
+    {
+        $requestForms = $this->grf->where('status','=','return')->get();
+        return ($requestForms);
+    }
+
+    // public function handleAllRequestFormExceptStatus($status)
+    // {
+    //     $requestForms = $this->grf->where('status','!=',$status)->get();
+    //     return ($requestForms);
+    // }
+
     // Request Form By User
     public function handleGetByUserRequestForm()
     {
-        $requestForms = $this->grf->where([['user_id', '=' , Auth::user()->id], ['status', '!=', 'closed']])->with('requestForms')->get();
+        $requestForms = $this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->with('requestForms')->get();
         return ($requestForms);
     }
 
@@ -42,7 +61,7 @@ class RequestFormService
     // Request Form Has GRF_Code
     public function handleRequestFormHasGrf($code)
     {
-        $exist = Arr::has($this->requestForm->where([['user_id', '=' , Auth::user()->id], ['status', '!=', 'closed']])->get()->groupBy('grf_code'), str_replace('~', '/', strtoupper($code)));
+        $exist = Arr::has($this->requestForm->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->get()->groupBy('grf_code'), str_replace('~', '/', strtoupper($code)));
         return ($exist);
     }
 
@@ -95,7 +114,7 @@ class RequestFormService
     public function handleDeleteRequestForm($id)
     {
         $requestForm = $this->requestForm->find($id)->delete();
-        return ResponseJSON ($requestForm, 200);
+        return ResponseJSON($requestForm, 200);
     }
 
     // Request Form Generate GRF CODE
@@ -109,7 +128,7 @@ class RequestFormService
             $returnValue = '';
             while ($rawMonth > 0) {
                 foreach ($map as $roman => $int) {
-                    if($rawMonth >= $int) {
+                    if ($rawMonth >= $int) {
                         $rawMonth -= $int;
                         $returnValue .= $roman;
                         break;
@@ -125,15 +144,17 @@ class RequestFormService
             if ($allGrfs > 0) {
                 if ($allGrfs >= 9) {
                     $grf_code = '0' . $attempt . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
-                }else{
+                } else {
                     $grf_code = '00' . $attempt . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
                 }
-            }else{
+            } else {
                 $grf_code = '001' . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
             }
-        }else{
+        } else {
             $grf_code = null;
         }
         return ($grf_code);
     }
+
+    
 }

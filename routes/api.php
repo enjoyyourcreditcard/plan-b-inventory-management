@@ -105,6 +105,13 @@ Route::group(['prefix' => 'notification'], function () {
     Route::put('/{id}', [NotificationController::class, 'putUpdateNotification']);
     Route::delete('/{id}', [NotificationController::class, 'getDeleteNotification']);
 });
+
+Route::group(['prefix' => 'request'], function () {
+    Route::get('/', [RequestController::class, 'getAllRequest']);
+    Route::post('/', [RequestController::class, 'postStoreRequest']);
+    Route::put('/{id}', [RequestController::class, 'putUpdateRequest']);
+    Route::delete('/{id}', [RequestController::class, 'getInactiveRequest']);
+});
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
 //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
