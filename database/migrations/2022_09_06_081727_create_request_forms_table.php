@@ -17,8 +17,8 @@ class CreateRequestFormsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('grf_id');
             $table->foreign('grf_id')->references('id')->on('db_grfs');
-            $table->unsignedBigInteger('part_id');
-            $table->foreign('part_id')->references('id')->on('parts');
+            $table->unsignedBigInteger('segment_id');
+            $table->foreign('segment_id')->references('id')->on('segments');
             $table->integer('quantity');
             $table->string('remarks');
             // $table->string('sn_code')->nullable();

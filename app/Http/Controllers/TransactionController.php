@@ -67,9 +67,22 @@ class TransactionController extends Controller
      */
     public function show($code)
     {
+
+
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $stock = collect();
+        $parts_segment = collect();
+
+        foreach ($requestForms as $item) {
+            $part = $this->partService->handleGetAllPartsBySegment($item->segment_id);
+            $stock = $stock->merge($part);
+
+            $parts_segment->push($part);
+        };
+        // dd($parts_segment);
+        
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->warehouseService->handleAllWareHouse();
@@ -77,7 +90,9 @@ class TransactionController extends Controller
         return view('transaction.IC.detail_transaction', [
             'notifications' => $notifications,
             'requestForms' => $requestForms,
+            'stock'=>$stock,
             'parts' => $parts,
+            'parts_segment'=>$parts_segment,
             'brands' => $brands,
             'warehouses' => $warehouses,
             'grf' => $grf
@@ -124,8 +139,17 @@ class TransactionController extends Controller
 
     public function postApproveIC(Request $request)
     {
-        $this->transactionService->handlePostApproveIC($request); 
+        $this->transactionService->handlePostApproveIC($request);
         return redirect()->back();
     }
 
+    public function getAllStockListByGRF($code)
+    {
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $stock = collect();
+        foreach ($requestForms as $item) {
+            $stock = $stock->merge($this->partService->handleGetAllPartsBySegment($item->segment_id));
+        };
+        return ResponseJSON($stock);
+    }
 }

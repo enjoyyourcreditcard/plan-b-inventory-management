@@ -107,6 +107,26 @@ export default class Api {
 
 
 
+  getStockByGRF = (code) => {
+    return this.init()
+      .get(`/grf/stock/list/`+code)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+  // http://localhost:8000/api001~hajidalakhtar~ib~ix~2022
+  getWarehouseApproved = () => {
+    return this.init()
+      .get(`grf/warehouse`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  
+
 
 /*
 *|--------------------------------------------------------------------------

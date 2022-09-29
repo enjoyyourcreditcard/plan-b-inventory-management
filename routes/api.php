@@ -16,7 +16,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,7 @@ Route::get('/', [StockController::class, 'getAllStock']);
 
 Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
+    
 
 });
 
@@ -115,6 +118,16 @@ Route::group(['prefix' => 'request'], function () {
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'getAllUser']);
 });
+
+
+
+
+Route::group(['prefix' => 'grf'], function () {
+    Route::get('/warehouse', [WarehouseTransactionController::class, 'getAllWarehouseApproval']);
+    Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
+    
+});
+
 
 
 

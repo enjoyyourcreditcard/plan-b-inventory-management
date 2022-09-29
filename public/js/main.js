@@ -325,18 +325,26 @@ $('#editWarehouseModal').on('show.bs.modal', function (event) {
 $('#partCategory').on('change', function (e) {
     //Set Variables
     var optionSelected = $(this).find("option:selected");
-    var uom = optionSelected.data('uom');
+    // var uom = optionSelected.data('uom');
     var brandId = optionSelected.data('brandid');
     var brandName = optionSelected.data('brandname');
-    console.log(brandName);
     
     //Strings to Arrays
-    uomArray = uom.split(', ');
+    // uomArray = uom.split(', ');
     brandArray = [];
-    if (typeof(brandId) == 'string')
+    
+    if (brandName !== 'undefined')
     {
-        brandArray['id'] = brandId.split(', ');
-        brandArray['name'] = brandName.split(', ');
+        if (brandName.includes(','))
+        {
+            brandArray['id'] = brandId.split(', ');
+            brandArray['name'] = brandName.split(', ');
+        }
+        else
+        {
+            brandArray['id'] = [brandId];
+            brandArray['name'] = [brandName];
+        }
     }
     else
     {
@@ -345,13 +353,13 @@ $('#partCategory').on('change', function (e) {
     }
 
     // Delete Other Options
-    $('.partUomOption').remove();
+    // $('.partUomOption').remove();
     $('.partBrandOption').remove();
 
     // Create New Options for UOM
-    uomArray.forEach(e => {
-        $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
-    });
+    // uomArray.forEach(e => {
+    //     $('#partUom').append("<option class='partUomOption' value='"+ e +"'>"+ e +"</option>");
+    // });
 
     // Create New Options for Brands
     let i = 0;
@@ -408,11 +416,14 @@ $('#editPartCategory').on('change', function (e) {
 |--------------------------------------------------------------------------
 */
 
-// Store Part & Category
+// Store Part & Segment
 $(document).ready(function () {
     $.get('/ajax/part', function (data) {
         for (let i = 0; i < data['segments'].length; i++) {
-            $('#partCategory').append('<option class="partCategoryOption" value="' + data['segments'][i]['id'] + '" data-uom="' + data['segments'][i]['category']['uom'] + '" data-brandname="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['name'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['id'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['id'])) + '">' + data['segments'][i]['name'] + '</option>')
+            var segment = data['segments'][i];
+            var brandString = data['brandString'].hasOwnProperty([segment['id']]) ? data['brandString'][segment['id']] : '';
+
+            $('#partCategory').append('<option class="partCategoryOption" value="' + segment['id'] + '" data-uom="' + segment['category']['uom'] + '" data-brandname="' + brandString['name'] + '" data-brandid="' + brandString['id'] + '">' + segment['name'] + '</option>')
         }
     });
 
@@ -439,7 +450,7 @@ $(document).ready(function () {
                     placeholder: "Select..",
                     "language": {
                         "noResults": function(){
-                            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Category</a>";
+                            return "No Results Found.. <a class='btn btn-sm float-end mb-2' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample' onClick='showPartCategoryModal()'>Create Segment</a>";
                         }
                     },
                     escapeMarkup: function (markup) {
@@ -449,7 +460,10 @@ $(document).ready(function () {
                 $('.partCategoryOption').remove();
                 $.get('/ajax/part', function (data) {
                     for (let i = 0; i < data['segments'].length; i++) {
-                        $('#partCategory').append('<option class="partCategoryOption" value="' + data['segments'][i]['category']['id'] + '" data-uom="' + data['segments'][i]['category']['uom'] + '" data-brandname="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['name'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['name'])) + '" data-brandid="' + (typeof data['brandString'][data['segments'][i]['category']['id']] == 'undefined' ? '' : (typeof data['brandString'][data['segments'][i]['category']['id']]['id'] == 'undefined' ? '' : data['brandString'][data['segments'][i]['category']['id']]['id'])) + '">' + data['segments'][i]['category']['name'] + '</option>')
+                        var segment = data['segments'][i];
+                        var brandString = data['brandString'].hasOwnProperty([segment['id']]) ? data['brandString'][segment['id']] : '';
+
+                        $('#partCategory').append('<option class="partCategoryOption" value="' + segment['id'] + '" data-uom="' + segment['category']['uom'] + '" data-brandname="' + brandString['name'] + '" data-brandid="' + brandString['id'] + '">' + segment['name'] + '</option>')
                     }
                 });
             }
@@ -528,6 +542,11 @@ google.maps.event.addListener(map, 'click',
 
 $(".editPartGRF").select2({
     placeholder: "Select a state",
+        // width: 'resolve' // need to override the changed default
+
+    // containerCss: "wrap",
+    // containerCssClass: "error",
+    // dropdownCssClass: "test",
     theme: "bootstrap"
 }
 );

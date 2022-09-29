@@ -52,10 +52,10 @@
             <div class="row mb-2">
               <div class="form-group ">
                 <label class="col-form-label">Material Description</label>
-                <select class="form-control inputPartRequestFormSelect2" name="part_id">
+                <select class="form-control inputPartRequestFormSelect2" name="segment_id">
                   <option></option>
-                  @foreach ($parts as $part)
-                  <option value="{{ $part->id }}">{{ $part->name }}</option>
+                  @foreach ($segment as $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach
                 </select>
               </div>
@@ -113,14 +113,12 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th class="col-2">IM CODE</th>
                   <th class="col-3">MATERIAL DESCRIPTION</th>
                   <th class="col-2">MATERIAL BRAND</th>
                   <th class="col-1">QUANTITY </th>
-                  <th class="col-1">UOM</th>
                   <th class="col-2">REMARKS</th>
                   @if ($grf->status == 'draft')
-                  <th></th>
+                  <th>Action</th>
                   @endif
                 </tr>
               </thead>
@@ -131,19 +129,13 @@
                     {{ $loop->iteration }}
                   </td style="font-size: 12px ">
                   <td style="font-size: 12px ">
-                    {{ $requestForm->part->im_code }}
-                  </td style="font-size: 12px ">
-                  <td style="font-size: 12px ">
-                    {{ $requestForm->part->name }}
+                    {{ $requestForm->segment->name }}
                   </td style="font-size: 12px ">
                   <td style="font-size: 12px ">
                     #
                   </td style="font-size: 12px ">
                   <td style="font-size: 12px ">
                     {{ $requestForm->quantity }}
-                  </td style="font-size: 12px ">
-                  <td style="font-size: 12px ">
-                    {{ $requestForm->part->uom }}
                   </td style="font-size: 12px ">
                   <td style="font-size: 12px ">
                     {{ $requestForm->remarks }}

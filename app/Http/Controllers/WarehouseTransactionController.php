@@ -18,7 +18,7 @@ class WarehouseTransactionController extends Controller
 
     public function index() {
         $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
-        return view('transaction.warehouse.home', [
+        return view('warehouse.home', [
             'whapproval' => $whapproval,
         ]);
     }
@@ -30,8 +30,7 @@ class WarehouseTransactionController extends Controller
 
     public function show($id) {
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
-        // dd($whapprov);
-        return view('transaction.warehouse.check_whapproval', compact('whapprov'));
+        return view('warehouse.check_whapproval', compact('whapprov'));
     }
 
     public function postApproveWH(Request $request)

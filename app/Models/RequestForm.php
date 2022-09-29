@@ -16,6 +16,10 @@ class RequestForm extends Model
     {
         return $this->belongsTo(Part::class);
     }
+    public function segment()
+    {
+        return $this->belongsTo(Segment::class);
+    }
 
     public function grf ()
     {

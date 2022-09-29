@@ -25,6 +25,8 @@ require('./view/part/brand');
 require('./view/part/build');
 require('./view/part/segment');
 require('./view/admin/user');
+require('./view/warehouse');
+require('./view/transaction/stock');
 
 
 

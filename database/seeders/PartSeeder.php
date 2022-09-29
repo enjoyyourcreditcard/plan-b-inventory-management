@@ -49,12 +49,67 @@ class PartSeeder extends Seeder
             }
 
             $no++;
-
         }
         fclose($csvFile);
+
+
+        Part::where('name', 'like', '%INLINE CLOSURE%')->update([
+            'segment_id' => 1
+        ]);;
+
+        Part::where('name', 'like', '%PATCH CORD SC/APC%')->update([
+            'segment_id' => 2
+        ]);;
+
+        Part::where('name', 'like', '%CABLE DROP WIRE FIBER OPTIC%')->update([
+            'segment_id' => 3
+        ]);;
+
+        Part::where('name', 'like', 'CONTACTOR%')->update([
+            'segment_id' => 4
+        ]);;
+
+        Part::where('name', 'like', '%BREAKER 2 PHASE/LINE%')->update([
+            'segment_id' => 5
+        ]);;
+
+        Part::where('name', 'like', '%CABLE DROP WIRE FIBER OPTIC SINGLE CORE%')->update([
+            'segment_id' => 6
+        ]);;
+
+
+        Part::where('name', 'like', '%HEATSHRINK%')->update([
+            'segment_id' => 7
+        ]);;
+
+        Part::where('name', 'like', '%ATTENUATOR FC/APC FEMALE%')->update([
+            'segment_id' => 8
+        ]);;
+
+        Part::where('name', 'like', '%PIPA HDPE VINILON BLUE/YELLOW%')->update([
+            'segment_id' => 9
+        ]);;
+
+        Part::where('name', 'like', '%ATTENUATOR FC FEMALE FIXED ATTENUATOR%')->update([
+            'segment_id' => 10
+        ]);;
+
+        Part::where('name', 'like', '%COUPLER ADAPTER%')->update([
+            'segment_id' => 11
+        ]);;
+
+        Part::where('name', 'like', '%CABLE FO DUCT SINGLE MODE%')->update([
+            'segment_id' => 12
+        ]);;
+
+        Part::where('name', 'like', '%CABLE FO ADSS SHORT PAN SINGLE MODE%')->update([
+            'segment_id' => 12
+        ]);;
+
+        Part::where('name', 'like', '%ONE CLICK CLEANER%')->update([
+            'segment_id' => 12
+        ]);;
     }
-
-
 
     // print($csvFile);
     //     $no = 0;

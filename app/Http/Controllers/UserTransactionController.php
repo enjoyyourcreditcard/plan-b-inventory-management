@@ -8,15 +8,17 @@ use App\Services\BrandService;
 use App\Services\WarehouseService;
 use App\Services\RequestFormService;
 use App\Services\NotificationService;
+use App\Services\SegmentService;
 
 class UserTransactionController extends Controller
 {
-    public function __construct(NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $warehouseService)
+    public function __construct(SegmentService $segmentService, NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $warehouseService)
     {
         $this->notificationService = $notificationService; 
         $this->requestFormService = $requestFormService; 
         $this->partService = $partService; 
         $this->brandService = $brandService; 
+        $this->segmentService = $segmentService;
         $this->warehouseService = $warehouseService; 
     }
 
@@ -38,13 +40,12 @@ class UserTransactionController extends Controller
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $brands = $this->brandService->handleGetAllBrand();
-        $parts = $this->partService->handleAllPart();
+        $segment = $this->segmentService->handleAllSegment();
         $warehouses = $this->warehouseService->handleAllWareHouse();
-        // dd($warehouses);
         return view('transaction.request_form.create', [
             'notifications' => $notifications,            
             'requestForms' => $requestForms,
-            'parts' => $parts,
+            'segment' => $segment,
             'brands' => $brands,
             'warehouses' => $warehouses,
             'grf' => $grf

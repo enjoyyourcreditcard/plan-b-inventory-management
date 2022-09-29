@@ -16,7 +16,7 @@
              </svg>&nbsp;PART</a>
           </li>
           @endif
-          
+
           @if (AuthPermission("part:view"))
           <li class="nav-item" role="presentation">
             <a href="#tabs-segment" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
@@ -186,6 +186,17 @@
           <div class="mb-2">
             <label for="partUom" class="form-label">Uom</label>
             <select class="form-select inputPartAllSelect2" id="partUom" name="uom" form="addPartForm" required>
+              <option value="meter">Meter</option>
+              <option value="set">Set</option>
+              <option value="each">Each</option>
+              <option value="roll">Roll</option>
+              <option value="unit">Unit</option>
+              <option value="batang">Batang</option>
+              <option value="liter">Liter</option>
+              <option value="kaleng">Kaleng</option>
+              <option value="kg">Kg</option>
+              <option value="kubic">Kubic</option>
+              <option value="pack">Pack</option>
             </select>
           </div>
 
@@ -240,7 +251,7 @@
         <button type="submit" class="btn btn-primary" form="addPartForm">Save</button>
       </div>
     </div>
-    {{-- <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
+    <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
       <div class="modal-header">
         <h5 class="modal-title">Create Category</h5>
         <button type="button" class="btn-close" onclick="bye()"></button>
@@ -250,7 +261,6 @@
           <label for="categoryName" class="form-label">Name</label>
           <input type="text" class="form-control" id="segmentName" name="name" form="addCategoryForm" required>
         </div>
-        <div>
         <div class="mb-3">
           <label for="categoryName" class="form-label">Category</label>
           <select name="category_id" class="form-control inputPartCategorySelect2" id="segmentCategoryId" form="addCategoryForm" required>
@@ -264,7 +274,7 @@
           <button id="submitStoreCategory" type="submit" class="btn btn-primary float-end" form="addCategoryForm">Save</button>
         </div>
       </div>
-    </div> --}}
+    </div>
   
   </div>
 </div> 

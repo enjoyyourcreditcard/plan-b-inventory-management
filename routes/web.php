@@ -2,11 +2,12 @@
 
 use App\Models\User;
 use App\Models\Warehouse;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Support\Facades\Request;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
@@ -194,4 +196,9 @@ Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->m
 
 
 // Route::resource('/warehouse' , WarehouseController::class)->middleware("auth");
-
+/*
+*--------------------------------------------------------------------------
+* MINI STOCK 
+*--------------------------------------------------------------------------
+*/
+Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");

@@ -21,7 +21,8 @@ class RequestFormService
     // Request Form SHOW
     public function handleShowRequestForm($code)
     {
-        $requestForms = $this->grf->with('requestForms.part')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
+        // dd($code);
+        $requestForms = $this->grf->with('requestForms.segment')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
         return ($requestForms);
     }
 
@@ -74,14 +75,12 @@ class RequestFormService
             ]);
             $this->grf->find($id)->update($validatedWarehouse_id);
         }
-
         $validatedData = $request->validate([
-            'part_id' => 'required',
+            'segment_id' => 'required',
             'quantity' => 'required|integer',
             'remarks' => 'required',
         ]);
         $validatedData['grf_id'] = $this->grf->find($id)->id;
-
         $this->requestForm->create($validatedData);
 
         // return ('Data has been stored');

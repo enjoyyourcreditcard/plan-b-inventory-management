@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Part;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Grf;
+use App\Models\RequestForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -12,11 +14,12 @@ use Illuminate\Support\Facades\Storage;
 class PartService
 {
 
-    public function __construct(Part $part, Category $category, Brand $brand)
+    public function __construct(Part $part, Category $category, Brand $brand,RequestForm $requestForm)
     {
         $this->part = $part;
         $this->brand = $brand;
         $this->category = $category;
+        $this->requestForm = $requestForm;
     }
 
     // API Part GET
@@ -128,6 +131,24 @@ class PartService
         $uomString = $this->part->with('segment.category')->find($id)->segment->category->uom;
         $uomArray = explode(', ', $uomString);
         return ($uomArray);
+    }
+
+
+    public function handleGetAllPartsByGRF($id)
+    {
+        $result = collect();
+        $requestForm = $this->requestForm->where('grf_id',$id)->get();
+        dd($requestForm);
+
+        // $this->requestForm
+    }
+
+
+
+    public function handleGetAllPartsBySegment($id)
+    {
+        $parts = $this->part->where("segment_id",$id)->get();
+        return ($parts);
     }
 
     public function handleShowBrandGroupByCategory($id)
