@@ -13,7 +13,9 @@ use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
 
@@ -112,6 +114,11 @@ Route::group(['prefix' => 'request'], function () {
     Route::put('/{id}', [RequestController::class, 'putUpdateRequest']);
     Route::delete('/{id}', [RequestController::class, 'getInactiveRequest']);
 });
+
+// Route::group(['prefix' => 'mini-stock'], function () {
+//     Route::get('/', [MiniStockController::class, 'getAllMiniStock']);
+// });
+
 // Route::prefix('detail')->group(function () {
 //     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
 //     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);

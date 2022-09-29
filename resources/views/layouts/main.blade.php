@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Inventory Management - MVN</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
@@ -28,6 +29,9 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+    {{-- Trix --}}
+    <link rel="stylesheet" type="text/css" href="/assets/libs/trix/trix.css">
+    <script type="text/javascript" src="/assets/libs/trix/trix.js"></script>
     {{-- mapbox --}}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
@@ -52,6 +56,14 @@
             height: 36px;
             border: 1px solid gainsboro;
     }
+
+    trix-toolbar [data-trix-button-group="file-tools"] {
+        display: none;
+    }
+
+    trix-editor {
+		height: 200px !important;
+	}
 </style>
 
 
@@ -389,7 +401,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('mini-stock') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route("get.mini.stock") }}">
+                    <a class="nav-link" href="/mini-stock">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-package" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -402,7 +414,7 @@
                              </svg>
                         </span>
                         <span class="nav-link-title">
-                            <b>My Stocks</b>
+                            <b>My Stock</b>
                         </span>
                         {{-- <span class="badge badge-sm bg-red">2</span> --}}
                     </a>
@@ -564,6 +576,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js" integrity="sha512-lteuRD+aUENrZPTXWFRPTBcDDxIGWe5uu0apPEn+3ZKYDwDaEErIK9rvR0QzUGmUQ55KFE2RqGTVoZsKctGMVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{asset('assets/js/tabler.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>

@@ -10,8 +10,8 @@
           <div class="col-12">
             <div class="card card-md">
               <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col">
+                <div class="row align-items-center justify-content-between gap-3">
+                  <div class="col-auto">
                     <h2 class="h3">Requestor memiliki maksimal 3 slot request sampai status request ditutup.</h2>
                     <p class="m-0 text-muted">Requestor dapat menekan tombol <b>Emergency Request</b>.</p>
                   </div>
@@ -28,6 +28,7 @@
             </div>
           </div>
           <div class="row row-cards mt-2">
+            <div class="coba"></div>
             @foreach ($requestForms->take(3) as $requestForm)
             {{-- ============================================================= OCCUPIED SLOT ============================================================= --}}
             <div class="col-sm-6 col-lg-4">
@@ -41,26 +42,39 @@
                           <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
                         </svg>
                           @break
-                      @case('submited')
+                      @case('submited' || 'ic_approved' || 'wh_approved' || 'delivery_approved' || 'user_pickup')
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-lg text-success pb-2" viewBox="0 0 16 16">
                           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
                         </svg>
                           @break
                       @default
                   @endswitch
-                  <span class="h1 text-uppercase">{{ $requestForm->status }}</span>
+                  <span class="h1 text-uppercase">{{ str_replace('_', ' ', $requestForm->status)  }}</span>
                   </div>
                   @switch($requestForm->status)
                       @case('draft')
                           <p class="mb-5">waiting for submit</p>
                           @break
                       @case('submited')
-                          <p class="mb-5">waiting for approval</p>
+                          <p class="mb-5">waiting for IC approval</p>
+                          @break
+                      @case('ic_approved')
+                          <p class="mb-5">waiting for WH approval</p>
+                          @break
+                      @case('delivery_approved')
+                          <p class="mb-5">Waiting to be picked up</p>
+                          @break
+                      @case('user_pickup')
+                          <p class="mb-5">waiting to be returned</p>
                           @break
                       @default
                   @endswitch
-                  <div class="text-center mt-4">
-                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100">Show</a>
+                  <div class="text-center mt-4 d-flex gap-3">
+                    @if ($requestForm->status == 'draft' || $requestForm->status == 'submited' || $requestForm->status == 'ic_approved' || $requestForm->status == 'wh_approved')
+                      <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100">Show</a>
+                    @elseIf ($requestForm->status == 'delivery_approved' || $requestForm->status == 'user_pickup')
+                      <a href="{!! Route("get.show.return.stock", ['code' => str_replace('/', '~', strtolower($requestForm->grf_code))]) !!}" class="btn w-100">Return</a>
+                    @endif
                   </div>
                 </div>
               </div>

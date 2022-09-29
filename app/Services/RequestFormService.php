@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Part;
 use App\Models\RequestForm;
@@ -48,6 +49,9 @@ class RequestFormService
     public function handleGetByUserRequestForm()
     {
         $requestForms = $this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->with('requestForms')->get();
+        $requestForms->map(function ($requestForm) {
+            $requestForm['ended'] = ($requestForm->delivery_approved_date == null ? null : Carbon::create($requestForm->delivery_approved_date)->addDay()->toDateTimeString());
+        });
         return ($requestForms);
     }
 

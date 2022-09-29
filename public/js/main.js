@@ -180,6 +180,26 @@ $(".inputWarehouseRequestFormSelect2").select2({
 );
 // *: End Request Form JS
 
+// *: Return Stock JS
+$('.inputReturnStockSelect2').select2({
+    dropdownParent: $("#inputReturnStockParent"),
+    placeholder: "select status..",
+    theme: "bootstrap"
+}
+);
+// *: End Return Stock JS
+
+$('.inputReturnStockSelect2').on('select2:select', function (e) {
+    var data = e.params.data;
+    var select = $(e.target);
+    
+    if (data.id == 'replace') {
+        select.siblings('.return-stock-sncode-parent').append('<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form">');
+    }else{
+        select.siblings('.return-stock-sncode-parent').children().remove();
+    };
+})
+
 $('#editCategoryModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('id')
@@ -471,7 +491,24 @@ $(document).ready(function () {
     });
 });
 
+$(function () {
+    var userId = $('.user-id').data('user');
 
+    console.log(userId);
+});
+
+$('[data-countdown]').each(function() {
+    var $this = $(this), finalDate = $(this).data('countdown');
+    $this.countdown(finalDate, function(event) {
+      $this.html(event.strftime('%D days %H hours left'));
+      if (event.strftime('%D : %H : %M : %S') == '00 : 00 : 00 : 00') {
+        $('.alert').show();  
+        $(this).html('This offer has expired!');
+        $(this).parent().parent().parent().children('.col-auto.align-self-center').children('.badge').show();
+      };
+    })
+
+});
 
 $('.btn_update').click(function(event) {
     var contract = $(event.currentTarget).data('tenggat');
@@ -490,6 +527,11 @@ $("select").change(function() {
         $(".disContract").removeAttr("disabled");
     }
 }).trigger("change");
+
+// Disable Trix File Input
+document.addEventListener('trix-file-accept', function (e) {
+    e.preventDefault();
+})
 
 
 

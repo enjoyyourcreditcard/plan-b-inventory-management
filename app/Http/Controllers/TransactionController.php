@@ -29,9 +29,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-
         $requestForms = $this->requestFormService->handleAllRequestFormInbound();
-        // dd($requestForms);
         return view("transaction.transaction", [
             'requestForms' => $requestForms
         ]);
@@ -127,5 +125,4 @@ class TransactionController extends Controller
         $this->transactionService->handlePostApproveIC($request); 
         return redirect()->back();
     }
-
 }

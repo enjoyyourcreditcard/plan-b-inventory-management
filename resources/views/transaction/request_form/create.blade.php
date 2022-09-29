@@ -2,14 +2,14 @@
 <div class="container-fluid">
   <div class="row " style="margin: 0px">
       <div class="col-md-4">
-        <div id="inputRequestFormParent" class="card mb-3">
+        <div id="inputRequestFormParent" class="card mb-3 h-100">
           <div class="card-header">
             <h3 class="card-title">Good Request Form</h3>
           </div>
           <div class="card-body">
             <form action="/request-form/{{ $grf->id }}" method="POST">
               @csrf
-              <div class="form-group ">
+              <div class="form-group mb-3">
                 <label class="col-md-1 col-form-label text-nowrap">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -36,7 +36,7 @@
                   </svg>&nbsp;
                   Warehouse :
                 </label>
-                  <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ $grf->status == 'submited' ? 'disabled' : null }}>
+                  <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ $grf->status != 'draft' ? 'disabled' : null }}>
                     <option></option>
                     @foreach ($warehouses as $warehouse)
                       <option value="{{ $warehouse->id }}" {{$grf->warehouse_id == $warehouse->id ? "selected" : ""}}>{{ $warehouse->name }}</option>
@@ -202,13 +202,7 @@
           @method('PUT')
           <div class="d-flex justify-content-end gap-3">
             <a href="/request-form" class="btn btn-outline-primary outline-button">
-              {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <line x1="5" y1="12" x2="11" y2="18"></line>
-                <line x1="5" y1="12" x2="11" y2="6"></line>
-             </svg> --}}
-              Draft
+              {{ $grf->status != 'draft' ? 'back' : 'Draft' }}
             </a>
             @if ($grf->status == 'draft')
             <button class="btn btn-primary" {{ count($requestForms) > 0 ? null : 'disabled' }}>

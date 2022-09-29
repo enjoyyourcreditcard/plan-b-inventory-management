@@ -4,88 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\MiniStockService;
+use App\Services\TransactionService;
 
 class MiniStockController extends Controller
 {
-    public function __construct (MiniStockService $miniStockService)
+    public function __construct (MiniStockService $miniStockService, TransactionService $transactionService)
     {
         $this->miniStockService = $miniStockService;
+        $this->transactionService = $transactionService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Index Menampilkan Halaman Ministock
+    |--------------------------------------------------------------------------
+    */
     public function index()
     {
-        // $this->miniStockService->handleGetAllMiniStock();
-        return view('transaction.miniStock.miniStock');
+        // Services
+        $stocks = $this->miniStockService->handleMiniStockByUser();
+        $timers = $this->transactionService->handleTimer();
+        
+        // Return View
+        return view('transaction.miniStock.miniStock', [
+            'stocks' => $stocks,
+            'timers' => $timers
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    /*
+    |--------------------------------------------------------------------------
+    | Api Mengambil MiniStock
+    |--------------------------------------------------------------------------
+    */
+    public function getAllMiniStock()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        // Return JSON
+        return ResponseJSON($this->miniStockService->handleMiniStockByUser(), 200);
     }
 }
