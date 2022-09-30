@@ -493,8 +493,6 @@ $(document).ready(function () {
 
 $(function () {
     var userId = $('.user-id').data('user');
-
-    console.log(userId);
 });
 
 $('[data-countdown]').each(function() {

@@ -9817,7 +9817,7 @@ function Stock() {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                api.getMiniStock().then(function (response) {
+                api.getStock().then(function (response) {
                   setRawData(response.data.data);
                   setData(response.data.data);
                   setLoadingData(false);

@@ -88,7 +88,7 @@
                                         {{ $miniStock->part->name }}
                                     </td>
                                     <td style="font-size: 12px ">
-                                        <strong>{{ $miniStock->sn_code }}</strong>
+                                        <strong>{{ $miniStock->sn }}</strong>
                                     </td>
                                     <td style="font-size: 12px ">
                                         #

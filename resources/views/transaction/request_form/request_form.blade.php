@@ -35,7 +35,7 @@
               <div class="card card-md">
                 <div class="card-body text-center">
                   <div class="text-uppercase text-muted font-weight-medium">{{ $requestForm->grf_code }}</div>
-                  <div class="h-5 fw-bold my-3">
+                  <div class="h-5 fw-bold my-3 text-nowrap">
                   @switch($requestForm->status)
                       @case('draft')
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-pause-fill text-warning pb-2" viewBox="0 0 16 16">
@@ -70,11 +70,10 @@
                       @default
                   @endswitch
                   <div class="text-center mt-4 d-flex gap-3">
-                    @if ($requestForm->status == 'draft' || $requestForm->status == 'submited' || $requestForm->status == 'ic_approved' || $requestForm->status == 'wh_approved')
-                      <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100">Show</a>
-                    @elseIf ($requestForm->status == 'delivery_approved' || $requestForm->status == 'user_pickup')
-                      <a href="{!! Route("get.show.return.stock", ['code' => str_replace('/', '~', strtolower($requestForm->grf_code))]) !!}" class="btn w-100">Return</a>
-                    @endif
+                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100">Show</a>
+                    @if ($requestForm->status == 'delivery_approved' || $requestForm->status == 'user_pickup')
+                    <a href="{!! Route("get.show.return.stock", ['code' => str_replace('/', '~', strtolower($requestForm->grf_code))]) !!}" class="btn w-100">Return</a>
+                    @endIf
                   </div>
                 </div>
               </div>

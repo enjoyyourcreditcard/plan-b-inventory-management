@@ -59,7 +59,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    @if (count($stocks))
+                    @if (count($miniStocks))
                     <div class="card-text">
                       {{-- <div id="MiniStock"></div> --}}
                       <div id="getting-started"></div>
@@ -127,23 +127,19 @@
                                           <th>GRF Code</th>
                                           <th>SN Code</th>
                                           <th>Part Name</th>
-                                          <th>Condition</th>
                                           <th>Warehouse</th>
-                                          <th>Created at</th>
+                                          <th>Requested at</th>
                                         </tr>
                                     </thead>
                                     <tbody role="rowgroup">
-                                        @foreach ($stocks as $key => $stock)
-                                          @foreach ($stock as $data)
+                                        @foreach ($miniStocks as $miniStock)
                                           <tr role="row">
-                                              <td>{{ $key }}</td>
-                                              <td>{{ $data->sn_code }}</td>
-                                              <td>{{ $data->part->name }}</td>
-                                              <td>{{ $data->condition }}</td>
-                                              <td>{{ $data->warehouse->name }}</td>
-                                              <td>{{ $stock->first()->created_at->format("F j, Y, g:i a") }}</td>
+                                              <td>{{ $miniStock->grf->grf_code }}</td>
+                                              <td>{{ $miniStock->sn }}</td>
+                                              <td>{{ $miniStock->part->name }}</td>
+                                              <td>{{ $miniStock->grf->warehouse->name }}</td>
+                                              <td>{{ $miniStock->grf->created_at->format("F j, Y, g:i a") }}</td>
                                           </tr>
-                                          @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>

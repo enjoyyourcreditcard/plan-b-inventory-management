@@ -4,15 +4,17 @@ namespace App\Services;
 
 use App\Models\Grf;
 use App\Models\Stock;
+use App\Models\RequestStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MiniStockService
 {
-    public function __construct (Stock $stock, Grf $grf)
+    public function __construct (Stock $stock, Grf $grf, RequestStock $requestStock)
     {
         $this->stock = $stock;
+        $this->requestStock = $requestStock;
         $this->grf = $grf;
     }
 
@@ -24,7 +26,7 @@ class MiniStockService
     public function handleShowMiniStock ($code)
     {
         $grf_code = str_replace('~', '/', strtoupper($code));
-        $miniStocks = $this->stock->with('grf', 'part', 'part.requestForms.grf')->whereHas('grf', function ($query) use ($grf_code) {
+        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) use ($grf_code) {
             $query->where('grf_code', $grf_code);
         })->get();
 
@@ -38,13 +40,11 @@ class MiniStockService
     */
     public function handleMiniStockByUser ()
     {
-        $grfs = $this->grf->with('stocks')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]])->get();
-        $stocks = [];
-        foreach ($grfs as $grf) {
-            $stocks[$grf->grf_code] = $grf->stocks->where('grf_id', '!=', null);
-        }
+        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) {
+            $query->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]]);
+        })->get();
 
-        return $stocks;
+        return $miniStocks;
     }
 
     /*
