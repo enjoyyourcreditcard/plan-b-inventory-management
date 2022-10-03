@@ -4,51 +4,65 @@ namespace App\Services;
 
 use App\Models\RequestForm;
 use App\Models\Grf;
+use App\Models\RequestStock;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class WarehouseTransactionService
-{
+class WarehouseTransactionService{
 
-    public function __construct(RequestForm $requestForm, Grf $grf)
+    public function __construct(RequestForm $requestForm, Grf $grf, Stock $stock, RequestStock $requestStock)
     {
         $this->requestForm = $requestForm;
         $this->grf = $grf;
+        $this->stock = $stock;
+        $this->requestStock = $requestStock;
     }
 
     // *: Untuk mengambil semua data dan tampil di views
     public function handleAllWhApproval()
     {
-        $grf = $this->grf->where('status', 'ic_approved')->where('warehouse_id', 1)->get();
-        return ($grf);
+        $grfs = $this->grf->with('user')->where('status','ic_approved')->get();
+        return ($grfs);
     }
 
     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode
     public function handleShowWhApproval($id)
     {
-        $wherewh = str_replace('~', '/', $id);
+        $wherewh = str_replace('~', '/',$id);
         $whapproval = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
-        // dd ($whapproval);
-        return ($whapproval);
+        $whapproval['quantity'] = 0;
+        foreach ($whapproval->requestForms as $requestForm) {
+            $whapproval['quantity'] += $requestForm->quantity;
+        }
+        return($whapproval);
     }
 
     // *: Untuk menggrouping banyak data menjadi 1 row
     public function handleGroubWhApproval()
     {
-        $whapproval = $this->requestForm->all()->groupBy('grf_code');
+        $whapproval = $this->whapprov->all()->groupBy('grf_code');
         return ($whapproval);
     }
 
-    public function inActive($id)
+    // *: untuk input sn_code satuan
+    public function handleStoreWhApproval($request)
     {
-        $whapproval = $this->requestForm->find($id);
-        $data = [];
-        $data['status'] = 'inactive';
-        $whapproval->update($data);
-        return ('');
+        foreach ($request->sn_code as $sn_code) {
+            $this->requestStock->create([
+                'request_form_id' => $request->request_form_id,
+                'grf_id' => $request->grf_id,
+                'part_id' => $request->part_id,
+                'sn' => $sn_code,
+            ]);
+        }
+
+
+        return('data stored!');
     }
 
-
+    
+    
 
     public function handlePostApproveWH($req, $transactionService)
     {

@@ -36,6 +36,7 @@ class UserTransactionController extends Controller
 
     public function create ($code)
     {
+
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
@@ -54,23 +55,29 @@ class UserTransactionController extends Controller
 
     public function store (Request $request, $id)
     {
+
         $this->requestFormService->handleStore($request, $id);
         return redirect()->back();
+    
     }
 
     public function storeGrf (Request $request)
     {
+
         $this->requestFormService->handleStoreGrf($request);
         return redirect('/request-form/' . str_replace('/', '~', strtolower($request->grf_code)));
     }
 
     public function update (Request $request, $id)
     {
+
         $this->requestFormService->handleUpdateRequestForm($request, $id);
-        return redirect()->back();
+    
+        return redirect()->route('get.requester.home');
     }
 
     public function destroy ($id) {
+
         $this->requestFormService->handleDeleteRequestForm($id);
         return redirect()->back();
     }

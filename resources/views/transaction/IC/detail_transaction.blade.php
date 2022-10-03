@@ -10,7 +10,7 @@
   white-space: normal !important;
 } */
 .select2-container--bootstrap{
-width: 350px !important;
+width: 300px !important;
 }
 </style>
 
@@ -25,7 +25,10 @@ width: 350px !important;
                 <div class="card-header">
                     <h3 class="card-title">Request List</h3>
                 </div>
+                <form action="{{Route('post.approve.IC')}}" class="card-footer" method="POST">
+                    @csrf
                 <div class="card-body">
+
                     <p class="mb-0"><b> No. Grf: {{$grf->grf_code}}</b></p>
                     <p class=""><b>Created: {{$grf->created_at}}</b></p>
                     @if(count($requestForms) > 0)
@@ -37,9 +40,9 @@ width: 350px !important;
                                     {{-- <th class="col-2">IM CODE</th> --}}
                                     <th class="col-3">SEGMENT</th>
                                     <th class="col-3">PART</th>
-                                    <th class="col-2">MATERIAL BRAND</th>
+                                    <th class="col-2">TOTAL ITEM</th>
                                     <th class="col-1">QUANTITY </th>
-                                    {{-- <th class="col-2">REMARKS</th> --}}
+                                    <th class="col-2">Action</th>
                                     @if ($grf->status == 'draft')
                                     <th></th>
                                     @endif
@@ -47,6 +50,8 @@ width: 350px !important;
                             </thead>
                             <tbody class="table-tbody">
                                 @foreach ($requestForms as $requestForm)
+                    <input type="hidden" name="segment_id[]" value="{{$requestForm->segment_id}}">
+
                                 <tr id="{{ $loop->iteration }}" class="request-form-row">
                                     <td style="font-size: 12px ">
                                         {{ $loop->iteration }}
@@ -56,37 +61,46 @@ width: 350px !important;
                                         {{ $requestForm->segment->name }}
                                     </td style="font-size: 12px ">
                                     <td style="font-size: 12px; ">
-                                        
 
 
-                                        <select name="part" class="editPartGRF">
+                                        <select name="part[]" class="editPartGRF">
                                             <option value="" style="width: 100%"> -- Select Part -- </option>
                                             @foreach ($parts_segment[$loop->iteration -1] as $item)
-                                            <option value="{{ $item->name }}" style="width: 100%">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}" style="width: 100%">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
 
 
                                         </td style="font-size: 12px ">
                                     <td style="font-size: 12px ">
-                                        <select name="brand" class="form-control">
-                                            <option value="Huwawei">Huwawei</option>
-                                        </select>
+                                        <p>{{$requestForm->quantity}}</p>
                                         </td style="font-size: 12px ">
                                     <td style="font-size: 12px ">
-                                        <input type="number" class="form-control" value="{{ $requestForm->quantity }}"
-                                        style="width: 160px">
+                                        <input type="number[]" class="form-control" name="quantity[]" value="{{ $requestForm->quantity }}"
+                                        style="width: 100px">
                                         {{-- {{ $requestForm->quantity }} --}}
                                     </td style="font-size: 12px ">
 
                                     {{-- <td style="font-size: 12px ">
                                         {{ $requestForm->remarks }}
                                     </td style="font-size: 12px "> --}}
-                                    @if ($grf->status == 'draft')
                                     <td class="text-center">
-                                        <form action="/request-form/{{ $requestForm->id }}" method="POST">
+                                        <a href="/delete/request-form/{{ $requestForm->id }}" class="btn request-form-delete">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-trash mx-auto" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                            </svg>
+                                        </a>
+                                        {{-- <form action="/request-form/{{ $requestForm->id }}" method="delete">
                                             @csrf
-                                            @method('delete')
                                             <button type="submit" class="btn request-form-delete">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="icon icon-tabler icon-tabler-trash mx-auto" width="24"
@@ -101,9 +115,8 @@ width: 350px !important;
                                                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                                                 </svg>
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     </td>
-                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -152,11 +165,11 @@ width: 350px !important;
                     </div>
                     @endif
                 </div>
-                <form action="{{Route('post.approve.IC')}}" class="card-footer" method="POST">
-                    @csrf
+               
                     <div class="d-flex justify-content-end gap-3">
                         <button class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
                             <input type="hidden" name="id" value="{{$grf->id}}">
+
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -169,8 +182,9 @@ width: 350px !important;
                             Submit Request
                         </button>
                     </div>
-                </form>
             </div>
+        </form>
+
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -266,7 +280,7 @@ width: 350px !important;
                     @method('PUT')
                     <div class="d-flex justify-content-end gap-3">
                   
-                        @if ($grf->status == 'draft')
+                        {{-- @if ($grf->status == 'draft')
                         <button class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
                             <input type="hidden" name="status" value="submited">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist"
@@ -280,7 +294,7 @@ width: 350px !important;
                             </svg>
                             Submit Request
                         </button>
-                        @endif
+                        @endif --}}
                     </div>
                 </form>
             </div>

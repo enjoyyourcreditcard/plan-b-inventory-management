@@ -42,6 +42,5 @@ class DatabaseSeeder extends Seeder
         $this->call(GrfSeeder::class);
         $this->call(RequestFormSeeder::class);
         $this->call(RequestFormSeeder::class);
-        $this->call(GrfSeeder::class);
     }
 }

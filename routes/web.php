@@ -104,7 +104,7 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('get
 
 
 Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
-Route::get('/transaction', [TransactionController::class, 'index'])->middleware("auth");
+Route::get('/transaction', [TransactionController::class, 'index'])->middleware("auth")->name("view.IC.transaction");
 
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 // Route::resource('/brand', BrandController::class);
@@ -152,8 +152,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 * Auth Warehouse Home
 *--------------------------------------------------------------------------
 */
-Route::get('/warehouse', [WarehouseTransactionController::class, 'index']);
+Route::get('/warehouse', [WarehouseTransactionController::class, 'index'])->name('get.warehouse.home');
 Route::get('/warehouse/action/grf/{id}', [WarehouseTransactionController::class, 'show'])->name("get.warehouse.show.action.grf");
+Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
 
 
 
@@ -162,12 +163,12 @@ Route::get('/warehouse/action/grf/{id}', [WarehouseTransactionController::class,
 * Auth User Home
 *--------------------------------------------------------------------------
 */
-Route::get('/request-form', [UserTransactionController::class, 'index'])->middleware('auth');
+Route::get('/request-form', [UserTransactionController::class, 'index'])->middleware('auth')->name('get.requester.home');
 Route::get('/request-form/{grf_code}', [UserTransactionController::class, 'create'])->middleware('auth');
 Route::post('/request-form', [UserTransactionController::class, 'storeGrf'])->middleware('auth');
 Route::post('/request-form/{id}', [UserTransactionController::class, 'store'])->middleware('auth');
 Route::put('/request-form/{id}', [UserTransactionController::class, 'update'])->middleware('auth');
-Route::delete('/request-form/{code}', [UserTransactionController::class, 'destroy'])->middleware('auth');
+Route::get('/delete/request-form/{code}', [UserTransactionController::class, 'destroy'])->middleware('auth');
 
 
 
@@ -180,6 +181,7 @@ Route::delete('/request-form/{code}', [UserTransactionController::class, 'destro
 */
 Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
 Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->middleware("auth")->name("post.approve.IC");
+Route::post('/transaction/approve/SJ', [TransactionController::class, 'postApproveSJ'])->middleware("auth")->name("post.approve.SJ");
 
 
 
@@ -202,3 +204,9 @@ Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->m
 *--------------------------------------------------------------------------
 */
 Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");
+
+
+
+
+Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');

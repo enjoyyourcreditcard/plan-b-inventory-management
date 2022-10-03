@@ -30,6 +30,7 @@ class WarehouseController extends Controller
         return redirect('/warehouse');
     }
     
+   
     public function inActive($id){
         $this->warehouseService->inActive($id);
         return redirect('/warehouse');

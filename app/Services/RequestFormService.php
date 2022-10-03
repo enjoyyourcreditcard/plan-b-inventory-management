@@ -83,7 +83,7 @@ class RequestFormService
         $validatedData['grf_id'] = $this->grf->find($id)->id;
         $this->requestForm->create($validatedData);
 
-        // return ('Data has been stored');
+        return ('Data has been stored');
     }
 
     // Request Form STORE 
