@@ -22,6 +22,15 @@ class StockSeeder extends Seeder
             'stock_status' => 'in',
             'status' => 'active',
         ]);
+        
+        Stock::create([
+            'part_id' => 1,
+            'warehouse_id' => 1,
+            'condition' => 'GOOD NEW',
+            'expired_date' => '2022-10-01',
+            'stock_status' => 'in',
+            'status' => 'active',
+        ]);
 
         Stock::create([
             'part_id' => 1,

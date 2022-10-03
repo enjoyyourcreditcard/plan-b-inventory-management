@@ -16,8 +16,6 @@ class PartSeeder extends Seeder
      */
     public function run()
     {
-
-
         $csvFile = fopen(base_path("public/seeder_data/part.csv"), "r");
         $no = 0;
         $faker = Faker::create('id_ID');

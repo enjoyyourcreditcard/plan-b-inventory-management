@@ -31,4 +31,9 @@ class Grf extends Model
     {
         return $this->hasMany(Stock::class);
     }
+
+    public function timelines ()
+    {
+        return $this->hasMany(Timeline::class);
+    }
 }

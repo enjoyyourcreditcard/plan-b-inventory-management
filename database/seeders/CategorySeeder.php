@@ -16,50 +16,22 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-    
+        Category::create([
+            'name' => 'ASSESORIES',
+            'description' => 'lorem ipsum dolor amogus',
+            'uom' => 'meter, set, unit, each',
+        ]);
 
-        $csvFile = fopen(base_path("public/seeder_data/part.csv"), "r");
-        $no = 0;
-        $faker = Faker::create('id_ID');
+        Category::create([
+            'name' => 'CPE',
+            'description' => 'lorem ipsum dolor amogus',
+            'uom' => 'each, unit',
+        ]);
 
-        while (!feof($csvFile)) {
-            $data = explode(';', fgetcsv($csvFile)[0]);
-            if ($no != 0 && $no <= 116) {
-                try {
-                    Category::create([
-                        'name' => $data[23],
-                        'description' => 'none',
-                        'uom' => 'set, unit, each'
-                       
-                    ]);
-                } catch (Throwable $e) {
-                    report($e);
-                    // dd($e);
-                }
-            }
-
-            $no++;
-
-        }
-        fclose($csvFile);
+        Category::create([
+            'name' => 'MATERIAL',
+            'description' => 'lorem ipsum dolor amogus',
+            'uom' => 'ball, batang, each, kaleng, kg, kubic, lembar, liter, meter, pack, roll, sak, set, unit, zak',
+        ]);
     }
-
-
-
-        
-        // Category::create([
-        //     'name' => 'MATERIAL',
-        //     'description' => 'none',
-        //     'uom' => 'set, unit, each'
-        // ]);
-        // Category::create([
-        //     'name' => 'CPE',
-        //     'description' => 'none',
-        //     'uom' => 'set, unit, each'
-        // ]);
-        // Category::create([
-        //     'name' => 'ASSESORIES',
-        //     'description' => 'none',
-        //     'uom' => 'set, unit, each'
-        // ]);
 }

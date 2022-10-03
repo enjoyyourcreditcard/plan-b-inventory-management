@@ -17,43 +17,29 @@ class RequestFormSeeder extends Seeder
         RequestForm::create([
             'grf_id' => 1,
             'part_id' => 1,
-            'quantity' => 10,
+            'quantity' => 2,
             'remarks' => 'Lorem ipsum dolor amogus moment',
         ]);
 
         RequestForm::create([
             'grf_id' => 1,
             'part_id' => 2,
-            'quantity' => 40,
+            'quantity' => 4,
             'remarks' => 'This is a note!',
         ]);
 
         RequestForm::create([
             'grf_id' => 2,
             'part_id' => 4,
-            'quantity' => 200,
+            'quantity' => 2,
             'remarks' => 'This is a remark',
         ]);
 
         RequestForm::create([
             'grf_id' => 2,
             'part_id' => 5,
-            'quantity' => 500,
+            'quantity' => 5,
             'remarks' => 'Lorem ipsum bruh',
-        ]);
-
-        RequestForm::create([
-            'grf_id' => 3,
-            'part_id' => 7,
-            'quantity' => 70,
-            'remarks' => 'Lorem ipsum bruh',
-        ]);
-
-        RequestForm::create([
-            'grf_id' => 4,
-            'part_id' => 10,
-            'quantity' => 120,
-            'remarks' => 'Lorem ipsum gemink',
         ]);
     }
 }
