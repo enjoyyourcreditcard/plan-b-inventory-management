@@ -26,4 +26,9 @@ class Grf extends Model
     {
         return $this->hasMany(RequestForm::class);
     }
+
+    public function stocks ()
+    {
+        return $this->hasMany(Stock::class);
+    }
 }

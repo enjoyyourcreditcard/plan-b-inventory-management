@@ -21,7 +21,6 @@ class CreateGrvesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            // $table->boolean('warehouse_check')->default(false);
             $table->enum('status', ['draft', 'submited',"ic_approved",'wh_approved','delivery_approved','user_pickup','return','closed'])->default('draft'); //untuk sistem 
             $table->timestamp('ic_approved_date')->nullable();
             $table->timestamp('wh_approved_date')->nullable();

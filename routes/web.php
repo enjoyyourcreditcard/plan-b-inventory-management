@@ -210,3 +210,10 @@ Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("au
 
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
 Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
+/*
+*--------------------------------------------------------------------------
+* Return Stock
+*--------------------------------------------------------------------------
+*/
+Route::get('/return/{code}', [UserTransactionController::class, 'showReturnStock'])->middleware("auth")->name("get.show.return.stock");
+Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");

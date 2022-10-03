@@ -11,8 +11,6 @@ use App\Http\Controllers\PartController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
-use App\Http\Controllers\SegmentController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
@@ -134,8 +132,8 @@ Route::group(['prefix' => 'grf'], function () {
 
 
 // Route::prefix('detail')->group(function () {
-//     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
-//     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+//     Route::get('/part', [HistorypriceController::class, 'getAllHistoryprice']);
+//     Route::post('/part', [HistorypriceController::class, 'postStoreHistoryprice']);
 // });
 
 
@@ -146,7 +144,7 @@ Route::group(['prefix' => 'grf'], function () {
 //     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
 // });
 // Route::prefix('detail')->group(function () {
-//     Route::get('/part', [HistoryPriceController::class, 'getAllHistoryPrice']);
-//     Route::post('/part', [HistoryPriceController::class, 'postStoreHistoryPrice']);
+//     Route::get('/part', [HistorypriceController::class, 'getAllHistoryprice']);
+//     Route::post('/part', [HistorypriceController::class, 'postStoreHistoryprice']);
 // });
 

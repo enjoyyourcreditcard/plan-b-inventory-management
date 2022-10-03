@@ -19,7 +19,7 @@ class NotificationService
 
     public function handleAllNotification()
     {
-        $notification = $this->notification->where('user_id',1)->latest()->get();
+        $notification = $this->notification->where('user_id',Auth::user()->id)->latest()->get();
         return($notification);
 
     }

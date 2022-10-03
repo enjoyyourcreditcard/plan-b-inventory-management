@@ -253,7 +253,7 @@
     </div>
     <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
       <div class="modal-header">
-        <h5 class="modal-title">Create Category</h5>
+        <h5 class="modal-title">Create Segment</h5>
         <button type="button" class="btn-close" onclick="bye()"></button>
       </div>
       <div class="modal-body">

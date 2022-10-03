@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Inventory Management - MVN</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
@@ -28,6 +29,9 @@
     <link href="{{asset('assets/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/demo.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" />
+    {{-- Trix --}}
+    <link rel="stylesheet" type="text/css" href="/assets/libs/trix/trix.css">
+    <script type="text/javascript" src="/assets/libs/trix/trix.js"></script>
     {{-- mapbox --}}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
@@ -51,11 +55,15 @@
         .select2-selection.select2-selection--single {
             height: 36px;
             border: 1px solid gainsboro;
-        }
+    }
 
-        .modal:nth-of-type(even) {
-            z-index: 1052 !important;
-        }
+    trix-toolbar [data-trix-button-group="file-tools"] {
+        display: none;
+    }
+
+    trix-editor {
+		height: 200px !important;
+	}
 
         .modal-backdrop.show:nth-of-type(even) {
             z-index: 1051 !important;
@@ -424,7 +432,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            <b>Outbound</b>
+                            <b>My Stock</b>
                         </span>
                     </a>
                 </li> --}}
@@ -565,6 +573,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js" integrity="sha512-lteuRD+aUENrZPTXWFRPTBcDDxIGWe5uu0apPEn+3ZKYDwDaEErIK9rvR0QzUGmUQ55KFE2RqGTVoZsKctGMVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{asset('assets/js/tabler.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>

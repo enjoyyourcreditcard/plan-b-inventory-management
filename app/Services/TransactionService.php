@@ -86,5 +86,16 @@ class TransactionService
         }
 
         return ($grf_code);
+
+    }
+    
+    public function handleTimer ()
+    {
+        $deliveryApprovedDates = $this->grf->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]])->get();
+        $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
+            $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->delivery_approved_date)->addDay()->toDateTimeString();
+        });
+
+        return $deliveryApprovedDates;
     }
 }

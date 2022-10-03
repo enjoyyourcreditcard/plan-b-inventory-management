@@ -28,6 +28,8 @@ require('./view/admin/user');
 require('./view/warehouse');
 require('./view/transaction/stock');
 
+require('./view/mini_stock');
+
 
 
 require('./view/category/detail');
