@@ -73,6 +73,7 @@ class UserTransactionController extends Controller
         // Services
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
+        $timeline = $this->requestFormService->handleTimelineGrf($grf);
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
@@ -136,10 +137,13 @@ class UserTransactionController extends Controller
     | Update Submit Return Stock
     |--------------------------------------------------------------------------
     */
-    public function updateReturnStock (Request $request, $code)
+    public function updateReturnStock (Request $request, $id)
     {
         // Services
-        $this->miniStockService->handleUpdateReturnStock($request, $code);
+        $this->miniStockService->handleUpdateReturnStock($request, $id);
+
+        // Return View
+        return redirect('/request-form');
     }
 
     /*

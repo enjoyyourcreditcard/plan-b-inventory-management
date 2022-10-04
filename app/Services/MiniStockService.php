@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Grf;
 use App\Models\Stock;
+use App\Models\Timeline;
 use App\Models\RequestStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,11 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class MiniStockService
 {
-    public function __construct (Stock $stock, Grf $grf, RequestStock $requestStock)
+    public function __construct (Stock $stock, Grf $grf, RequestStock $requestStock, Timeline $timeline)
     {
         $this->stock = $stock;
         $this->requestStock = $requestStock;
         $this->grf = $grf;
+        $this->timeline = $timeline;
     }
 
     /*
@@ -26,9 +28,14 @@ class MiniStockService
     public function handleShowMiniStock ($code)
     {
         $grf_code = str_replace('~', '/', strtoupper($code));
-        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) use ($grf_code) {
+        
+        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm', 'part.segment.category')->whereHas('grf', function ($query) use ($grf_code) {
             $query->where('grf_code', $grf_code);
         })->get();
+
+        $miniStocks->map(function ($miniStock) {
+            $miniStock['category'] = $miniStock->part->segment->category->name;
+        });
 
         return $miniStocks;
     }
@@ -52,31 +59,27 @@ class MiniStockService
     | Submit Return Stock
     |--------------------------------------------------------------------------
     */
-    public function handleUpdateReturnStock ($request, $code)
+    public function handleUpdateReturnStock ($request, $id)
     {
-        $grf_code = str_replace('~', '/', strtoupper($code));
-        $miniStocks = $this->stock->with('grf')->whereHas('grf', function ($query) use ($grf_code) {
-            $query->where('grf_code', $grf_code);
-        })->get();
-
-        dd($request);
-
-        foreach ($request->old_sn_code as $key => $old_sn_code) {
-            $miniStock = $miniStocks->where('sn_code', $old_sn_code)->first();
-
-            if ($request->condition[$key] != null) {
-                $data = $miniStock->update([
-                    'condition' => $request->condition[$key],
-                ]);
-            }
-
-            // if ($request->note[$key] != null) {
-            //     $miniStock->update([
-            //       'note'
-            //     ]);
-            // }
+        $miniStocks = $this->requestStock->where('grf_id', $id)->get();
+        
+        foreach ($request->old_sn_code as $key => $sn_code) {
+            $miniStocks->where('sn', $sn_code)->first()->update([
+                'condition' => $request['condition'][$key],
+                'sn_return' => $request['sn_code'][$key],
+                'remarks' => $request['remarks'][$key],
+            ]);
         }
 
-        dd('');
+        $this->grf->find($id)->update([
+            'status' => 'return'
+        ]);
+
+        $this->timeline->create([
+            'grf_id' => $id,
+            'status' => 'return'
+        ]);
+
+        return('Data stored!');
     }
 }

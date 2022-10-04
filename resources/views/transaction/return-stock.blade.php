@@ -1,4 +1,4 @@
-{{-- @dd($miniStocks) --}}
+{{-- @dd($miniStocks->groupBy('category')) --}}
 @extends('layouts.main') @section('content')
 <div class="container-fluid">
     <div class="row " style="margin: 0px">
@@ -62,72 +62,83 @@
             </div>
         </div>
         <div class="col-md-8">
+            <div class="card">
+                <ul class="nav nav-tabs nav-tabs-alt" data-bs-toggle="tabs" role="tablist">
+                    @foreach ($miniStocks->groupBy('category') as $key => $categories)
+                    <li class="nav-item" role="presentation">
+                        <a href="#tabs-{{ $key }}" class="nav-link {{ $loop->first ? 'active' : '' }}"
+                            data-bs-toggle="tab" aria-selected="true" role="tab">
+                            {{ $key }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+                <div id="inputReturnStockParent" class="card-body">
+                    <div class="tab-content">
+                        <form action="/return/{{ $grf->id }}" method="POST" id="return-stock-form">@csrf @method('PUT')</form>
+                        @foreach ($miniStocks->groupBy('category') as $key => $categories)
 
-            <div class="card" id="inputReturnStockParent">
-                <div class="card-header">
-                    <h3 class="card-title">Stock List</h3>
-                </div>
-                <div class="card-body">
-                    <form action="/return/{{ str_replace('/', '~', strtolower($grf->grf_code)) }}" method="post" id="return-stock-form">@csrf @method('put')</form>
-                    <div id="table-default" class="table-responsive mb-3" style="height: 445px;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-3">MATERIAL DESCRIPTION</th>
-                                    <th class="col-2">SN CODE</th>
-                                    <th class="col-2">MATERIAL BRAND</th>
-                                    <th class="col-1">UOM</th>
-                                    <th class="col-2">Status Condition</th>
-                                    <th class="col-2">Note Pemakaian</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-tbody">
-                                @foreach ($miniStocks as $miniStock)
-                                <tr id="{{ $loop->iteration }}" class="request-form-row">
-                                    <td style="font-size: 12px ">
-                                        {{ $miniStock->part->name }}
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <strong>{{ $miniStock->sn }}</strong>
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        #
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        {{ $miniStock->part->uom }}
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <input type="hidden" name="old_sn_code[]" value="{{ $miniStock->sn_code }}" form="return-stock-form">
-                                        <select class="form-control inputReturnStockSelect2" form="return-stock-form" name="condition[]">
-                                            <option></option>
-                                            <option value="good">Good</option>
-                                            <option value="not good">Not Good</option>
-                                            <option value="replace">Replace</option>
-                                            <option value="used">Used</option>
-                                        </select>
-                                        <br>
-                                        <div class="return-stock-sncode-parent">
-                                        </div>                              
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <input class="form-control" type="text" name="note[]" placeholder="note.." form="return-stock-form">
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        {{-- *
+                        *|--------------------------------------------------------------------------
+                        *| Tab category
+                        *|--------------------------------------------------------------------------
+                        *--}}
+
+                        <div class="tab-pane {{ $loop->first ? 'active show' : '' }}" id="tabs-{{ $key }}"
+                            role="tabpanel">
+                            <div id="table-default" class="table-responsive mb-3" style="height: 445px;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-3">MATERIAL DESCRIPTION</th>
+                                            <th class="col-2">SN CODE</th>
+                                            <th class="col-2">MATERIAL BRAND</th>
+                                            <th class="col-1">UOM</th>
+                                            <th class="col-2">Status Condition</th>
+                                            <th class="col-2">Note Pemakaian</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-tbody">
+                                        @foreach ($categories as $miniStock)
+                                        <tr id="{{ $loop->iteration }}" class="request-form-row">
+                                            <td style="font-size: 12px ">{{ $miniStock->part->name }}</td>
+                                            <td style="font-size: 12px "><strong>{{ $miniStock->sn }}</strong></td>
+                                            <td style="font-size: 12px ">#</td>
+                                            <td style="font-size: 12px ">{{ $miniStock->part->uom }}</td>
+                                            <td style="font-size: 12px ">
+                                                <input type="hidden" name="old_sn_code[]" value="{{ $miniStock->sn }}" form="return-stock-form">
+                                                <select class="form-control inputReturnStockSelect2"
+                                                    form="return-stock-form" name="condition[]" required>
+                                                    <option></option>
+                                                    <option value="good">Good</option>
+                                                    <option value="not good">Not Good</option>
+                                                    <option value="replace">Replace</option>
+                                                    <option value="used">Used</option>
+                                                </select>
+                                                <br>
+                                                <div class="return-stock-sncode-parent">
+                                                    <input type="hidden" name="sn_code[]" value="" form="return-stock-form">
+                                                </div>
+                                            </td>
+                                            <td style="font-size: 12px" class="return-stock-remarks-parent">
+                                                <input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="submit" class="btn btn-outline-primary outline-button" form="return-stock-form">
-                            submit
-                        </button>
+                        <button type="submit" class="btn btn-outline-primary outline-button" form="return-stock-form">submit</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection

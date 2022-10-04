@@ -22,11 +22,12 @@ class PartSeeder extends Seeder
 
         while (!feof($csvFile)) {
             $data = explode(';', fgetcsv($csvFile)[0]);
+
             if ($no != 0) {
                 try {
                     Part::create([
-                        'segment_id' => 2,
-                        'brand_id' => 1,
+                        'segment_id' => $data[1],
+                        'brand_id' => $data[6],
                         'im_code' => $data[2],
                         'inventory_code' => $data[3],
                         'orafin_code' => $data[4],

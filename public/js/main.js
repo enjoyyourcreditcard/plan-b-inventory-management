@@ -192,12 +192,32 @@ $('.inputReturnStockSelect2').select2({
 $('.inputReturnStockSelect2').on('select2:select', function (e) {
     var data = e.params.data;
     var select = $(e.target);
-    
-    if (data.id == 'replace') {
-        select.siblings('.return-stock-sncode-parent').append('<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form">');
-    }else{
-        select.siblings('.return-stock-sncode-parent').children().remove();
-    };
+
+    switch (data.id) {
+        case 'replace':
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form" required>');
+            
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            break;
+            
+        case 'good':
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" name="sn_code[]" form="return-stock-form">');
+
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" value="-" form="return-stock-form" readonly>');
+            break;
+            
+        default:
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" name="sn_code[]" form="return-stock-form">');
+
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            break;
+    }
 })
 
 $('#editCategoryModal').on('show.bs.modal', function (event) {

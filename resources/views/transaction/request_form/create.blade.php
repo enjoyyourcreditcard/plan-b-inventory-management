@@ -1,4 +1,3 @@
-{{-- @dd($grf->status == 'zz' ? '' : 'style="transform: scale(.50);"') --}}
 @extends('layouts.main') @section('content')
 <div class="container-fluid">
   <div class="row " style="margin: 0px">
@@ -92,17 +91,19 @@
               Time Line :
             </div>
             <ul class="list list-timeline ">
+              
+              @if (!$grf->timelines->contains('status', 'return'))
               {{-- /*
               *|--------------------------------------------------------------------------
-              *| Closed
+              *| Static Closed
               *|--------------------------------------------------------------------------
               */ --}}
               <li>
-                <div class="list-timeline-icon" style="{{ $grf->status != 'return' ? 'transform: scale(.50);' : null  }}"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+                <div class="list-timeline-icon" style="background: rgb(200, 200, 200);transform: scale(.50);"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
                   <!-- SVG icon code -->
                 </div>
                 <div class="list-timeline-content">
-                  <div class="list-timeline-time">{{ $grf->return_date == null ? null : \Carbon\Carbon::parse($grf->return_date)->diffForHumans() }}</div>
+                  <div class="list-timeline-time">{{ $grf->delivery_approved_date == null ? null : \Carbon\Carbon::parse($grf->delivery_approved_date)->diffForHumans() }}</div>
                   <p class="list-timeline-title">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
                       <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
@@ -112,18 +113,16 @@
                   </p>
                 </div>
               </li>
+              @endif
 
+              @if (!$grf->timelines->contains('status', 'delivery_approved'))
               {{-- /*
               *|--------------------------------------------------------------------------
-              *| Delivered
+              *| Static Delivered
               *|--------------------------------------------------------------------------
               */ --}}
               <li>
-                @if ($grf->status == 'user_pickup' or $grf->status == 'delivery_approved')
-                <div class="list-timeline-icon"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                @else
-                <div class="list-timeline-icon" style="transform: scale(.50);"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                @endIf
+                <div class="list-timeline-icon" style="background: rgb(200, 200, 200);transform: scale(.50);"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
                   <!-- SVG icon code -->
                 </div>
                 <div class="list-timeline-content">
@@ -132,22 +131,20 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
                       <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                     </svg>&nbsp;
-                    Delivered
+                    Deliver
                   </p>
                 </div>
               </li>
+              @endif
 
+              @if (!$grf->timelines->contains('status', 'ic_approved'))
               {{-- /*
               *|--------------------------------------------------------------------------
-              *| On Progress
+              *| Static On Progress
               *|--------------------------------------------------------------------------
               */ --}}
               <li>
-                @if ($grf->status == 'ic_approved' or $grf->status == 'wh_approved')
-                <div class="list-timeline-icon"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                @else
-                <div class="list-timeline-icon" style="transform: scale(.50);"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                @endIf
+                <div class="list-timeline-icon" style="background: rgb(200, 200, 200);transform: scale(.50);"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
                   <!-- SVG icon code -->
                 </div>
                 <div class="list-timeline-content">
@@ -161,39 +158,78 @@
                   </p>
                 </div>
               </li>
+              @endif
+
 
               {{-- /*
               *|--------------------------------------------------------------------------
-              *| New
+              *| Dynamic Timeline
               *|--------------------------------------------------------------------------
               */ --}}
+
+              @foreach ($grf->timelines->sortDesc() as $timeline)
+
+              @if ($timeline->status == 'wh_approved' or $timeline->status == 'user_pickup')
+                @continue
+              @elseif ($timeline->status == 'closed')
+                @break
+              @endif
+
               <li>
-                <div class="list-timeline-icon" style="{{ $grf->status != 'submited' ? 'transform: scale(.50);' : null  }}"><!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
+                <div class="list-timeline-icon bg-primary" style="{{ $loop->first == true ? '' : 'transform: scale(.50);' }}">
                   <!-- SVG icon code -->
                 </div>
                 <div class="list-timeline-content">
-                  <div class="list-timeline-time">{{ $grf->created_at->diffForHumans() }}</div>
+                  <div class="list-timeline-time">{{ \Carbon\Carbon::parse($timeline->created_at)->diffForHumans() }}</div>
                   <p class="list-timeline-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                    </svg>&nbsp;
-                    New
+                    @switch($timeline->status)
+                        @case('submited')
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>&nbsp;
+                            New
+                            @break
+                        @case('ic_approved')
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                              <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                            </svg>&nbsp;
+                            On Progress Out!
+                              @break
+                        @case('delivery_approved')
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                              <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                            </svg>&nbsp;
+                            Deliver
+                              @break
+                        @case('return')
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+                            </svg>&nbsp;
+                            Closed
+                              @break
+                        @default
+                            
+                    @endswitch
                   </p>
                 </div>
               </li>
+
+              @endForeach
             </ul>
             @endIf
           </div>
         </div>
       </div>
       <div class="col-md-8">
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Request List</h3>
-        </div>
-        <div class="card-body">
-          @if(count($requestForms) > 0)
+        
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Request List</h3>
+          </div>
+          <div class="card-body">
+            @if(count($requestForms) > 0)
           <div id="table-default" class="table-responsive mb-3" style="height: 445px;">
             <table class="table">
               <thead>
@@ -206,7 +242,7 @@
                   <th class="col-1">UOM</th>
                   <th class="col-2">REMARKS</th>
                   @if ($grf->status == 'draft')
-                    <th></th>
+                  <th></th>
                   @endif
                 </tr>
               </thead>
@@ -312,6 +348,7 @@
             @if ($grf->status == 'draft')
             <button class="btn btn-primary" {{ count($requestForms) > 0 ? null : 'disabled' }}>
               <input type="hidden" name="status" value="submited">
+              <input type="hidden" name="grf_id" value="{{ $grf->id }}">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path>

@@ -17,8 +17,7 @@ class CreateTimelinesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('grf_id');
             $table->foreign('grf_id')->references('id')->on('db_grfs');
-            $table->enum('status', ['draft', 'submited',"ic_approved",'wh_approved','delivery_approved','user_pickup','return','closed'])->default('draft'); //untuk sistem 
-            $table->timestamp('status_date')->nullable();
+            $table->enum('status', ['draft', 'submited',"ic_approved",'wh_approved','delivery_approved','user_pickup','return', 'return_ic_approved', 'return_wh_approved','closed'])->default('draft'); //untuk sistem 
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Part;
+use App\Models\Timeline;
 use App\Models\RequestForm;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Auth;
 class RequestFormService
 {
 
-    public function __construct(RequestForm $requestForm, Grf $grf)
+    public function __construct(RequestForm $requestForm, Grf $grf, Timeline $timeline)
     {
         $this->requestForm = $requestForm;
         $this->grf = $grf;
+        $this->timeline = $timeline;
     }
 
     // Request Form SHOW
@@ -58,7 +60,7 @@ class RequestFormService
     // Request Form Current GRF
     public function handleGetCurrentGrf($code)
     {
-        $grf = $this->grf->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
+        $grf = $this->grf->with('timelines')->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
         return ($grf);
     }
 
@@ -108,9 +110,11 @@ class RequestFormService
     public function handleUpdateRequestForm($request, $id)
     {
         $validatedData = $request->validate([
-            'status' => 'required'
+            'status' => 'required',
+            'grf_id' => 'required'
         ]);
         $this->grf->find($id)->update($validatedData);
+        $this->timeline->create($validatedData);
         return ('Data has been updated');
     }
 
@@ -119,6 +123,12 @@ class RequestFormService
     {
         $requestForm = $this->requestForm->find($id)->delete();
         return ResponseJSON($requestForm, 200);
+    }
+
+    // Timeline for GRF
+    public function handleTimelineGrf($grf)
+    {
+        //
     }
 
     // Request Form Generate GRF CODE
