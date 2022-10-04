@@ -55,28 +55,34 @@ class MiniStockService
     public function handleUpdateReturnStock ($request, $code)
     {
         $grf_code = str_replace('~', '/', strtoupper($code));
-        $miniStocks = $this->stock->with('grf')->whereHas('grf', function ($query) use ($grf_code) {
-            $query->where('grf_code', $grf_code);
-        })->get();
+        $grf = $this->grf->where('grf_code',$grf_code)->first();
+        $grf->status = 'return';
+        $grf->save();
+        return "oke";
+        // return redirect('request-form');
+        // dd($grf);
+        // $miniStocks = $this->stock->with('grf')->whereHas('grf', function ($query) use ($grf_code) {
+        //     $query->where('grf_code', $grf_code);
+        // })->get();
 
-        dd($request);
+        // dd($request);
 
-        foreach ($request->old_sn_code as $key => $old_sn_code) {
-            $miniStock = $miniStocks->where('sn_code', $old_sn_code)->first();
+        // foreach ($request->old_sn_code as $key => $old_sn_code) {
+        //     $miniStock = $miniStocks->where('sn_code', $old_sn_code)->first();
 
-            if ($request->condition[$key] != null) {
-                $data = $miniStock->update([
-                    'condition' => $request->condition[$key],
-                ]);
-            }
+        //     if ($request->condition[$key] != null) {
+        //         $data = $miniStock->update([
+        //             'condition' => $request->condition[$key],
+        //         ]);
+        //     }
 
-            // if ($request->note[$key] != null) {
-            //     $miniStock->update([
-            //       'note'
-            //     ]);
-            // }
-        }
+        //     // if ($request->note[$key] != null) {
+        //     //     $miniStock->update([
+        //     //       'note'
+        //     //     ]);
+        //     // }
+        // }
 
-        dd('');
+        // dd('');
     }
 }

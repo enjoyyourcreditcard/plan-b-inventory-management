@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\PartService;
 use App\Services\BrandService;
@@ -26,9 +27,9 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Index Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Index Request Form
+    *|--------------------------------------------------------------------------
     */
     public function index ()
     {
@@ -46,30 +47,36 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Show Return Stock
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Show Return Stock
+    *|--------------------------------------------------------------------------
     */
     public function showReturnStock ($code)
     {
         // Services
         $miniStocks = $this->miniStockService->handleShowMiniStock($code);
-        // dd($miniStocks);
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
+        $category = collect();
+        for ($i=0; $i < count($requestForms) ; $i++) { 
+            $category->push($requestForms[$i]->part->segment->category);
+        }
+        // dd($category);
+        // dd();
 
         // Return View
         return view ('transaction.return-stock', [
             'miniStocks' => $miniStocks,
             'requestForms' => $requestForms,
             'grf' => $grf,
+            'category' => $category->unique('id')
         ]);
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Create Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Create Request Form
+    *|--------------------------------------------------------------------------
     */
     public function create ($code)
     {
@@ -93,9 +100,9 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Store Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Store Request Form
+    *|--------------------------------------------------------------------------
     */
     public function store (Request $request, $id)
     {
@@ -108,9 +115,9 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Store GRF Draft Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Store GRF Draft Request Form
+    *|--------------------------------------------------------------------------
     */
     public function storeGrf (Request $request)
     {
@@ -122,9 +129,9 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Update Status Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Update Status Request Form
+    *|--------------------------------------------------------------------------
     */
     public function update (Request $request, $id)
     {
@@ -136,20 +143,22 @@ class UserTransactionController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Update Submit Return Stock
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Update Submit Return Stock
+    *|--------------------------------------------------------------------------
     */
     public function updateReturnStock (Request $request, $code)
     {
         // Services
         $this->miniStockService->handleUpdateReturnStock($request, $code);
+        return redirect()->route('get.requester.home');
+
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Delete Request Form
-    |--------------------------------------------------------------------------
+    *|--------------------------------------------------------------------------
+    *| Delete Request Form
+    *|--------------------------------------------------------------------------
     */
     public function destroy ($id)
     {

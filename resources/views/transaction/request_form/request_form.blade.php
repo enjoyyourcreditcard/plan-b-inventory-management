@@ -79,6 +79,10 @@
                   
                   <span class="h1 text-uppercase">Delivered </span>
                   @break
+                  @case("return")
+                  
+                  <span class="h1 text-uppercase">Close </span>
+                  @break
     
                   @default
                   <span class="h1 text-uppercase">New</span>

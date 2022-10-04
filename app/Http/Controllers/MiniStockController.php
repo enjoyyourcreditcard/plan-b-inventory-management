@@ -21,12 +21,13 @@ class MiniStockController extends Controller
     */
     public function index()
     {
-        $stocks = $this->miniStockService->handleMiniStockByUser();
+        // Services
+        $miniStocks = $this->miniStockService->handleMiniStockByUser();
         $timers = $this->transactionService->handleTimer();
-        // dd($timers);
-
+        
+        // Return View
         return view('transaction.miniStock.miniStock', [
-            'stocks' => $stocks,
+            'miniStocks' => $miniStocks,
             'timers' => $timers
         ]);
     }

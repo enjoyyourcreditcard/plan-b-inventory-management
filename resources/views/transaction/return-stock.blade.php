@@ -68,54 +68,97 @@
                     <h3 class="card-title">Stock List</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/return/{{ str_replace('/', '~', strtolower($grf->grf_code)) }}" method="post" id="return-stock-form">@csrf @method('put')</form>
-                    <div id="table-default" class="table-responsive mb-3" style="height: 445px;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col-3">MATERIAL DESCRIPTION</th>
-                                    <th class="col-2">SN CODE</th>
-                                    <th class="col-2">MATERIAL BRAND</th>
-                                    <th class="col-1">UOM</th>
-                                    <th class="col-2">Status Condition</th>
-                                    <th class="col-2">Note Pemakaian</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-tbody">
-                                @foreach ($miniStocks as $miniStock)
-                                <tr id="{{ $loop->iteration }}" class="request-form-row">
-                                    <td style="font-size: 12px ">
-                                        {{ $miniStock->part->name }}
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <strong>{{ $miniStock->sn_code }}</strong>
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        #
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        {{ $miniStock->part->uom }}
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <input type="hidden" name="old_sn_code[]" value="{{ $miniStock->sn_code }}" form="return-stock-form">
-                                        <select class="form-control inputReturnStockSelect2" form="return-stock-form" name="condition[]">
-                                            <option></option>
-                                            <option value="good">Good</option>
-                                            <option value="not good">Not Good</option>
-                                            <option value="replace">Replace</option>
-                                            <option value="used">Used</option>
-                                        </select>
-                                        <br>
-                                        <div class="return-stock-sncode-parent">
-                                        </div>                              
-                                    </td>
-                                    <td style="font-size: 12px ">
-                                        <input class="form-control" type="text" name="note[]" placeholder="note.." form="return-stock-form">
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+
+
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        @foreach ($category as $item)
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-{{$item->name}}-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-{{$item->name}}" type="button" role="tab" aria-controls="pills-{{$item->name}}"
+                                aria-selected="false">{{$item->name}}</button>
+                        </li>
+                        @endforeach 
+
+                        {{-- @foreach ($category as $item)
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="{{$item->name}}-tab" data-bs-toggle="pill"
+                                data-bs-target="#{{$item->name}}" type="button" role="tab"
+                                aria-controls="{{$item->name}}" aria-selected="true">{{$item->name}}</button>
+                        </li>
+
+                        {{-- <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">Profile</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                                aria-selected="false">Contact</button>
+                        </li> --}}
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        {{-- <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab">
+                            <form action="/return/{{ str_replace('/', '~', strtolower($grf->grf_code)) }}" method="post"
+                                id="return-stock-form">@csrf @method('put')</form>
+                            <div id="table-default" class="table-responsive mb-3" style="height: 445px;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-3">MATERIAL DESCRIPTION</th>
+                                            <th class="col-2">SN CODE</th>
+                                            <th class="col-2">MATERIAL BRAND</th>
+                                            <th class="col-1">UOM</th>
+                                            <th class="col-2">Status Condition</th>
+                                            <th class="col-2">Note Pemakaian</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-tbody">
+                                        @foreach ($miniStocks as $miniStock)
+                                        <tr id="{{ $loop->iteration }}" class="request-form-row">
+                                            <td style="font-size: 12px ">
+                                                {{ $miniStock->part->name }}
+                                            </td>
+                                            <td style="font-size: 12px ">
+                                                <strong>{{ $miniStock->sn }}</strong>
+                                            </td>
+                                            <td style="font-size: 12px ">
+                                                #
+                                            </td>
+                                            <td style="font-size: 12px ">
+                                                {{ $miniStock->part->uom }}
+                                            </td>
+                                            <td style="font-size: 12px ">
+                                                <input type="hidden" name="old_sn_code[]"
+                                                    value="{{ $miniStock->sn_code }}" form="return-stock-form">
+                                                <select class="form-control inputReturnStockSelect2"
+                                                    form="return-stock-form" name="condition[]">
+                                                    <option></option>
+                                                    <option value="good">Good</option>
+                                                    <option value="not good">Not Good</option>
+                                                    <option value="replace">Replace</option>
+                                                    <option value="used">Used</option>
+                                                </select>
+                                                <br>
+                                                <div class="return-stock-sncode-parent">
+                                                </div>
+                                            </td>
+                                            <td style="font-size: 12px ">
+                                                <input class="form-control" type="text" name="note[]"
+                                                    placeholder="note.." form="return-stock-form">
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> --}}
+                        @foreach ($category as $item)
+                        <div class="tab-pane fade " id="pills-{{$item->name}}" role="tabpanel"
+                            aria-labelledby="pills-{{$item->name}}-tab">...</div>
+                        @endforeach 
+
                     </div>
                 </div>
                 <div class="card-footer">
@@ -127,7 +170,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
