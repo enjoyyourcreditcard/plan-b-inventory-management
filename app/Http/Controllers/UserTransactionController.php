@@ -65,6 +65,20 @@ class UserTransactionController extends Controller
 
     /*
     |--------------------------------------------------------------------------
+    | Show Return Stock
+    |--------------------------------------------------------------------------
+    */
+    public function ajaxReturnStock ($code)
+    {
+        // Services
+        $miniStocks = $this->miniStockService->handleShowMiniStock ($code);
+
+        // Return View
+        return response()->JSON($miniStocks->where('condition', '!=', null)->groupby('category'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Create Request Form
     |--------------------------------------------------------------------------
     */

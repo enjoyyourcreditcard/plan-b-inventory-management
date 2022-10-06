@@ -69,16 +69,25 @@ class MiniStockService
                 'sn_return' => $request['sn_code'][$key],
                 'remarks' => $request['remarks'][$key],
             ]);
+
+            if ($request->isAjax != 'yep') {
+                $this->stock->where('sn_code', $sn_code)->first()->update([
+                    'condition' => $request['condition'][$key],
+                ]);
+            }
         }
 
-        $this->grf->find($id)->update([
-            'status' => 'return'
-        ]);
+        if ($request->isAjax != 'yep') {
+            $this->grf->find($id)->update([
+                'status' => 'return'
+            ]);
+    
+            $this->timeline->create([
+                'grf_id' => $id,
+                'status' => 'return'
+            ]);
+        }
 
-        $this->timeline->create([
-            'grf_id' => $id,
-            'status' => 'return'
-        ]);
 
         return('Data stored!');
     }

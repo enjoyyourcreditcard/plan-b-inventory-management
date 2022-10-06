@@ -199,23 +199,23 @@ $('.inputReturnStockSelect2').on('select2:select', function (e) {
             select.siblings('.return-stock-sncode-parent').append('<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form" required>');
             
             select.parent().siblings('.return-stock-remarks-parent').children().remove();
-            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
             break;
             
         case 'good':
             select.siblings('.return-stock-sncode-parent').children().remove();
-            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" name="sn_code[]" form="return-stock-form">');
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" class="return-stock-sncode" name="sn_code[]" form="return-stock-form">');
 
             select.parent().siblings('.return-stock-remarks-parent').children().remove();
-            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" value="-" form="return-stock-form" readonly>');
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" value="-" form="return-stock-form" readonly>');
             break;
             
         default:
             select.siblings('.return-stock-sncode-parent').children().remove();
-            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" name="sn_code[]" form="return-stock-form">');
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" class="return-stock-sncode" name="sn_code[]" form="return-stock-form">');
 
             select.parent().siblings('.return-stock-remarks-parent').children().remove();
-            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
             break;
     }
 })
@@ -465,6 +465,60 @@ $(document).ready(function () {
 
             $('#partCategory').append('<option class="partCategoryOption" value="' + segment['id'] + '" data-uom="' + segment['category']['uom'] + '" data-brandname="' + brandString['name'] + '" data-brandid="' + brandString['id'] + '">' + segment['name'] + '</option>')
         }
+    });
+
+    $(document).on('change', '.return-stock-sncode, .inputReturnStockSelect2, .return-stock-remarks', function (event) {
+        event.preventDefault();
+
+        grfId = $('.grf-id').val();
+        grfCode = $('.grf-code').val();
+        oldSnCodes = $('.return-stock-oldsncode');
+        conditions = $('.inputReturnStockSelect2');
+        snCodes = $('.return-stock-sncode');
+        remarks = $('.return-stock-remarks');
+        request = [];
+        oldSnCodesArray = []; 
+        conditionsArray = []; 
+        snCodesArray = []; 
+        remarksArray = []; 
+
+        for (i = 0; i < oldSnCodes.length; i++) {
+            oldSnCodesArray[i] = $(oldSnCodes[i]).val()
+            conditionsArray[i] = $(conditions[i]).val()
+            snCodesArray[i] = $(snCodes[i]).val()
+            remarksArray[i] = $(remarks[i]).val()
+        }
+
+        request['old_sn_code'] = oldSnCodesArray; 
+        request['condition'] = conditionsArray; 
+        request['sn_code'] = snCodesArray; 
+        request['remarks'] = remarksArray; 
+
+        $.ajaxSetup({
+            url: '/return/' + grfId,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: 'post',
+            data: {
+                old_sn_code: oldSnCodesArray,
+                condition: conditionsArray,
+                sn_code: snCodesArray,
+                remarks: remarksArray,
+                isAjax: 'yep'
+            },
+            success: function () {
+                $.get('/ajax/return/' + grfCode, function (data) {
+                    $.each(data, function (key) {
+                        const tab = $('.return-stock-' + key + '-requirement');
+                        tab.html(data[key].length);
+                    })
+                });
+            }
+        });
     });
 
     $('#submitStoreCategory').click(function (e) {

@@ -199,4 +199,5 @@ Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("au
 *--------------------------------------------------------------------------
 */
 Route::get('/return/{code}', [UserTransactionController::class, 'showReturnStock'])->middleware("auth")->name("get.show.return.stock");
-Route::put('/return/{id}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
+Route::get('/ajax/return/{code}', [UserTransactionController::class, 'ajaxReturnStock'])->middleware("auth");
+Route::post('/return/{id}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
