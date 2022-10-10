@@ -6266,7 +6266,7 @@ function Table(props) {
                   "class": "w-1"
                 }, column.getHeaderProps(column.getSortByToggleProps())), {}, {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("b", {
-                    children: column.render('Header')
+                    children: column.render("Header")
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", {
                     xmlns: "http://www.w3.org/2000/svg",
                     "class": "icon icon-sm text-dark icon-thick",
@@ -6291,13 +6291,23 @@ function Table(props) {
             }));
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", _objectSpread(_objectSpread({}, props.getTableBodyProps()), {}, {
-          children: props.page.map(function (row, i) {
+          children: props.page == "" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                colspan: "100%",
+                style: {
+                  textAlign: "center"
+                },
+                children: "No records found"
+              })
+            })
+          }) : props.page.map(function (row, i) {
             props.prepareRow(row);
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", _objectSpread(_objectSpread({}, row.getRowProps()), {}, {
               children: row.cells.map(function (cell) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", _objectSpread(_objectSpread({}, cell.getCellProps()), {}, {
                   className: "align-middle",
-                  children: cell.render('Cell')
+                  children: cell.render("Cell")
                 }));
               })
             }));
@@ -6897,8 +6907,8 @@ var Api = /*#__PURE__*/_createClass(function Api() {
     });
   });
 
-  _defineProperty(this, "getMinistock", function () {
-    return _this.init().get("mini-stock")["catch"](function (error) {// this.addError(error.message);
+  _defineProperty(this, "getStock", function () {
+    return _this.init().get("stock")["catch"](function (error) {// this.addError(error.message);
     });
   });
 
@@ -10120,7 +10130,7 @@ function Stock() {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                api.getMiniStock().then(function (response) {
+                api.getStock().then(function (response) {
                   setRawData(response.data.data);
                   setData(response.data.data);
                   setLoadingData(false);

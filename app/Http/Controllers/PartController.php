@@ -147,6 +147,18 @@ class PartController extends Controller
 
     /* 
     *|--------------------------------------------------------------------------
+    *| Api Get All Part  
+    *|--------------------------------------------------------------------------
+    */
+    public function getAllPartBySegment($id)
+    {
+        return ResponseJSON($this->partService->handleGetAllPartsBySegment($id), 200);
+    }
+
+    
+
+    /* 
+    *|--------------------------------------------------------------------------
     *| Api Get All Deactive Part  
     *|--------------------------------------------------------------------------
     */

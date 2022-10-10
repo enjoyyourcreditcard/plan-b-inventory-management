@@ -7,14 +7,14 @@
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h3 class="card-title" style="font-size: 25px">Detail WareHouse Check</h3>
+                            <h1 class="card-title" >Detail WareHouse Check</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-9">
-                                    <div class="card-title">
+                                    {{-- <div class="card-title">
                                         <h3>REQUEST INFO</h3>
-                                    </div>
+                                    </div> --}}
                                     <div class="mb-2 d-flex gap-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box"
                                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -59,7 +59,7 @@
                                             <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
                                         </svg>
                                         <p style="font-size: 15px">
-                                            WareHouse Location : <br> <strong>{{ $whapprov->warehouse->wh_name }}</strong>
+                                            WareHouse Location : <br> <strong>{{ $whapprov->warehouse->name }}</strong>
                                         </p>
                                     </div>
                                 </div>

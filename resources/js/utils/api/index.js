@@ -87,9 +87,9 @@ export default class Api {
   };
 
 
-  getMinistock = () => {
+  getStock = () => {
     return this.init()
-      .get(`mini-stock`)
+      .get(`stock`)
       .catch((error) => {
         // this.addError(error.message);
       });

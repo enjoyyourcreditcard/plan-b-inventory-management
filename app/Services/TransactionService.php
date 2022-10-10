@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Grf;
+use App\Models\Part;
 use App\Models\RequestForm;
 use App\Models\Warehouse;
 use Carbon\Carbon;
@@ -11,10 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class TransactionService
 {
 
-    public function __construct(Grf $grf, RequestForm $requestForm, Warehouse $warehouse)
+    public function __construct(Grf $grf,Part $part, RequestForm $requestForm, Warehouse $warehouse)
     {
         $this->warehouse = $warehouse;
         $this->grf = $grf;
+        $this->part = $part;
         $this->requestForm = $requestForm;
     }
 
@@ -26,11 +28,20 @@ class TransactionService
         $grf->ic_approved_date = Carbon::now();
         $grf->save();
 
-        for ($i = 0; $i < count($req->segment_id); $i++) {
-            $requestForm = $this->requestForm->where('grf_id', $req->id)->where('segment_id', $req->segment_id[$i])->whereNull('part_id')->first();
+        for ($i = 0; $i < count($req->part); $i++) {
+            $segment_id = $this->part->find($req->part[$i])->segment_id;
+            $requestForm = $this->requestForm->where('grf_id', $req->id)->where('segment_id', $segment_id)->whereNull('part_id')->first();
             if ($requestForm !== null) {
+                    $requestForm->part_id = $req->part[$i];
+                    $requestForm->quantity = $req->quantity[$i];
+                    $requestForm->save();
+            }else{
+                $requestForm = new RequestForm();
+                $requestForm->grf_id = $req->id;
+                $requestForm->segment_id = $segment_id;
                 $requestForm->part_id = $req->part[$i];
                 $requestForm->quantity = $req->quantity[$i];
+                $requestForm->remarks = "asdasd";
                 $requestForm->save();
             }
         }
@@ -38,7 +49,7 @@ class TransactionService
         return "success";
     }
 
-      public function handlePostApproveSJ($req)
+    public function handlePostApproveSJ($req)
     {
         $grf = $this->grf->find($req->id);
         $grf->status = "delivery_approved";
@@ -49,7 +60,7 @@ class TransactionService
         return "success";
     }
 
-    
+
 
     // Request Form Generate GRF CODE
     public function handleGenerateSuratJalan($whId)
@@ -86,10 +97,9 @@ class TransactionService
         }
 
         return ($grf_code);
-
     }
-    
-    public function handleTimer ()
+
+    public function handleTimer()
     {
         $deliveryApprovedDates = $this->grf->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]])->get();
         $deliveryApprovedDates->map(function ($deliveryApprovedDate) {

@@ -1,3 +1,4 @@
+@section('title', 'Request Barang')
 @extends('layouts.main') @section('content')
 <div class="container-fluid">
   <div class="row " style="margin: 0px">

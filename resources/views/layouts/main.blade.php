@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Inventory Management - MVN</title>
+    <title>@yield('title',"Home") - Inventory Management</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -379,8 +379,8 @@
                         {{-- <span class="badge badge-sm bg-red">2</span> --}}
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('inbound*') ? 'active' : '' }}">
-                    <a class="nav-link" href="/inbound">
+                <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{Route('view.IC.transaction')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -397,8 +397,8 @@
                         {{-- <span class="badge badge-sm bg-red">2</span> --}}
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('request*') ? 'active' : '' }}">
-                    <a class="nav-link" href="/request">
+                <li class="nav-item {{ Request::is('request-form*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{Route('get.requester.home')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24"
