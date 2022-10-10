@@ -24,7 +24,7 @@
 
                         {{-- *
                         *|--------------------------------------------------------------------------
-                        *| Tab Part
+                        *| Tab Rekondisi
                         *|--------------------------------------------------------------------------
                         *--}}
                         <div class="tab-pane active show" id="tabs-rekondisi" role="tabpanel">
@@ -57,8 +57,8 @@
                                                     </path>
                                                 </svg></button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><button
-                                                    class="dropdown-item" href="#"><input type="checkbox">&nbsp; No
-                                                    Stock</button></div>
+                                                    class="dropdown-item" href="#"><input type="checkbox">&nbsp; SN number
+                                                    </button></div>
                                         </div>
                                         <div class="px-1"></div>
                                         <div class="btn-group h-25 "><button type="button"
@@ -112,6 +112,15 @@
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
+                                                    style="cursor: pointer;"><b>SN Number</b><svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="icon icon-sm text-dark icon-thick" width="24" height="24"
+                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <polyline points="6 15 12 9 18 15"></polyline>
+                                                    </svg></th>
+                                                <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
                                                     style="cursor: pointer;"><b>STATUS</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
@@ -130,14 +139,7 @@
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>Action</b><svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        class="icon icon-sm text-dark icon-thick" width="24" height="24"
-                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                        <polyline points="6 15 12 9 18 15"></polyline>
-                                                    </svg></th>
+                                                    style="cursor: pointer;"><b>Action</b></th>
                                             </tr>
                                         </thead>
                                         <tbody role="rowgroup">
@@ -157,6 +159,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <td>TEST</td>
                                                 <td role="cell">Rekondisi</td>
                                                 <td role="cell">09-09-2022
                                                 </td>
@@ -173,6 +176,8 @@
 
 
                                             </tr>
+                                            @foreach ($rekondisis as $row => $item)
+                                                
                                             <tr role="row">
                                                 <td role="cell">
                                                     <div id="thumbwrap">
@@ -180,6 +185,40 @@
                                                             <div class="pr-1" style="min-width: 40px;"><a
                                                                     data-tip="COUPLER ADAPTOR E2000 APC"
                                                                     currentitem="false"><img
+                                                                    src="{{$item->requestStock->condition}}" alt="" width="30"
+                                                                        height="25"
+                                                                        style="border: 1px solid rgb(204, 204, 238);"></a>
+                                                                    </div><a href="/part/1419"
+                                                                    class="text-primary text-decoration-none ">{{$item->requestStock->name}}
+                                                                </a>
+                                                            </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{$item->requestStock->sn_return == null ? $item->requestStock->sn : $item->requestStock->sn_return }}</td>
+                                                <td role="cell"></td></td>
+                                                <td role="cell">{{$item->created_at}}
+                                                </td>
+                                                <td role="cell"><a href="#" class="btn btn-success" style="background-color: #31DE4A"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modal-confirmation-repair">
+                                                    Repair
+                                                </a>
+                                                <a href="#" class="btn btn-danger" style="background-color:#D70015" data-bs-toggle="modal"
+                                                data-bs-target="#modal-confirmation-reject">
+                                                Reject
+                                                    </a>
+                                                </td>
+
+                                                
+                                            </tr>
+                                            @endforeach
+                                            {{-- <tr role="row">
+                                                <td role="cell">
+                                                    <div id="thumbwrap">
+                                                        <div class="d-flex">
+                                                            <div class="pr-1" style="min-width: 40px;"><a
+                                                                data-tip="COUPLER ADAPTOR E2000 APC"
+                                                                currentitem="false"><img
                                                                         src="/images/part/default.jpg" alt="" width="30"
                                                                         height="25"
                                                                         style="border: 1px solid rgb(204, 204, 238);"></a>
@@ -268,39 +307,7 @@
                                                 </td>
 
 
-                                            </tr>
-                                            <tr role="row">
-                                                <td role="cell">
-                                                    <div id="thumbwrap">
-                                                        <div class="d-flex">
-                                                            <div class="pr-1" style="min-width: 40px;"><a
-                                                                    data-tip="COUPLER ADAPTOR E2000 APC"
-                                                                    currentitem="false"><img
-                                                                        src="/images/part/default.jpg" alt="" width="30"
-                                                                        height="25"
-                                                                        style="border: 1px solid rgb(204, 204, 238);"></a>
-                                                            </div><a href="/part/1419"
-                                                                class="text-primary text-decoration-none "> COUPLER
-                                                                ADAPTOR E2000 APC</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td role="cell">Rekondisi</td>
-                                                <td role="cell">09-09-2022
-                                                </td>
-                                                <td role="cell"><a href="#" class="btn btn-success" style="background-color: #31DE4A"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-confirmation-repair">
-                                                        Repair
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger" style="background-color:#D70015" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-confirmation-reject">
-                                                        Reject
-                                                    </a>
-                                                </td>
-
-
-                                            </tr>
+                                            </tr> --}}
 
 
                                         </tbody>

@@ -10,19 +10,20 @@ use Illuminate\Support\Facades\Request;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MiniStockController;
+use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\RequestController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseTransactionController;
 
 /*
@@ -45,9 +46,7 @@ Route::get('/', function () {
 // Route::get('/transaction', function () {
 // });
 
-// Route::get('/rekondisi', function () {
-//     return view("rekondisi.rekondisi");
-// });
+Route::get('/rekondisi', [RekondisiController::class, 'index'])->name('get.rekondisi')->middleware("auth");;
 
 
 // Route::get('/transaction', [::class, 'index']);
@@ -197,7 +196,7 @@ Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->m
 
 
 
-// Route::resource('/warehouse' , WarehouseController::class)->middleware("auth");
+// Route::resource('/warehouse' , WarehouseController::class)-> ("auth");
 /*
 *--------------------------------------------------------------------------
 * MINI STOCK 
