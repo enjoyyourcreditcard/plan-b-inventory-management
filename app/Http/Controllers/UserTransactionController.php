@@ -54,24 +54,18 @@ class UserTransactionController extends Controller
     public function showReturnStock ($code)
     {
         // Services
-        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $miniStocks = $this->miniStockService->handleShowMiniStock ($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm ($code);
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $category = collect();
-        for ($i=0; $i < count($requestForms) ; $i++) { 
-            $category->push($requestForms[$i]->part->segment->category);
-        }
-        // dd($category);
-        // dd();
 
         // Return View
         return view ('transaction.return-stock', [
             'miniStocks' => $miniStocks,
             'requestForms' => $requestForms,
             'grf' => $grf,
-            'category' => $category->unique('id')
         ]);
     }
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -83,12 +77,13 @@ class UserTransactionController extends Controller
         // Services
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
         $brands = $this->brandService->handleGetAllBrand();
         $segment = $this->segmentService->handleAllSegment();
         $warehouses = $this->warehouseService->handleAllWareHouse();
+        // dd($requestForms);
 
-        // Return View
+
         return view('transaction.request_form.create', [
             'notifications' => $notifications,            
             'requestForms' => $requestForms,
@@ -166,6 +161,16 @@ class UserTransactionController extends Controller
         $this->requestFormService->handleDeleteRequestForm($id);
 
         // Return View
+        return redirect()->back();
+    }
+    /*
+    *|--------------------------------------------------------------------------
+    *| User Approve Pickup
+    *|--------------------------------------------------------------------------
+    */
+    public function getApprovePickup($id)
+    {
+        $this->requestFormService->handlePostApprovePickup($id);
         return redirect()->back();
     }
 }

@@ -21,7 +21,7 @@ function Stock() {
 
     useEffect(() => {
         async function getData() {
-            api.getMiniStock().then((response) => {
+            api.getStock().then((response) => {
                 setRawData(response.data.data)
                 setData(response.data.data);
 

@@ -51,6 +51,7 @@ Route::get('/tes123', function (Request $req) {
 
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
+    Route::get('/segment/{id}', [PartController::class, 'getAllPartBySegment']);
     Route::get('/delete/{id}', [PartController::class, 'getDeactivePart']);
 });
 

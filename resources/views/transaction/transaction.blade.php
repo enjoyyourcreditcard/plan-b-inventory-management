@@ -1,5 +1,6 @@
-@extends('layouts.main') @section('content')
 
+@section('title', 'Transaksi IC')
+@extends('layouts.main') @section('content')
 
 <div class="row">
 
@@ -34,6 +35,12 @@
             </tr>
           </thead>
           <tbody>
+            {{-- {{ ? "null": "sss"}} --}}
+            @if (count($requestForms) === 0)
+            <tr>
+              <td colspan="100%" style="text-align: center">Tidak ada data</td>
+            </tr>
+            @else
             @foreach ($requestForms as $item)
             <tr>
               <td class="w-1">
@@ -70,24 +77,21 @@
               <td class="td-truncate">
                 <div class=" text-uppercase text-truncate">
                   @if ($item->status == "wh_approved")
-                  <!-- Button trigger modal -->
                   <button type="button" class="btn btn-link  " style="padding-left:0px " data-toggle="modal"
                     data-target="#generate_sj" data-id={{$item->id}}>
                     {{$item->grf_code}}
                   </button>
-
-
                   @else
                   <a
                     href="{{ Route('get.detail.grf',str_replace('/', '~', strtolower($item->grf_code)))}}">{{$item->grf_code}}</a>
                   @endif
-
                 </div>
               </td>
               <td class="text-nowrap text-muted">28 Nov 2019</td>
             </tr>
-
             @endforeach
+            @endif
+
 
           </tbody>
         </table>
@@ -705,8 +709,7 @@
           <div class="pb-3 px-3">
             <div class="row">
               <div class="col-md-6">
-                <button type="button" class="btn btn-secondary w-100"
-                  data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">Close</button>
               </div>
 
               <div class="col-md-6">
@@ -715,10 +718,7 @@
                   <input type="hidden" name="id" id="grf_id">
                   <button type="submit" class="btn btn-success w-100">Generate SJ</button>
                 </form>
-
-                </div>
-            
-
+              </div>
             </div>
           </div>
         </div>

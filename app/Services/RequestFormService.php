@@ -159,5 +159,18 @@ class RequestFormService
         return ($grf_code);
     }
 
+
+    public function handlePostApprovePickup($id)
+    {
+        $grf = $this->grf->find($id);
+        $grf->status = "user_pickup";
+        // $grf->surat_jalan = $this->handleGenerateSuratJalan($grf->warehouse_id);
+        // $grf->delivery_approved_date = Carbon::now();
+        $grf->save();
+
+        return "success";
+    }
+
+
     
 }

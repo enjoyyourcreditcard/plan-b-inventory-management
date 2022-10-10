@@ -69,7 +69,7 @@ class TransactionController extends Controller
 
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
         $stock = collect();
         $parts_segment = collect();
 
@@ -149,11 +149,12 @@ class TransactionController extends Controller
 
     public function getAllStockListByGRF($code)
     {
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
         $stock = collect();
         foreach ($requestForms as $item) {
             $stock = $stock->merge($this->partService->handleGetAllPartsBySegment($item->segment_id));
         };
         return ResponseJSON($stock);
     }
+
 }

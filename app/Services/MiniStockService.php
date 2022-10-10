@@ -26,9 +26,14 @@ class MiniStockService
     public function handleShowMiniStock ($code)
     {
         $grf_code = str_replace('~', '/', strtoupper($code));
-        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) use ($grf_code) {
+        
+        $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm', 'part.segment.category')->whereHas('grf', function ($query) use ($grf_code) {
             $query->where('grf_code', $grf_code);
         })->get();
+
+        $miniStocks->map(function ($miniStock) {
+            $miniStock['category'] = $miniStock->part->segment->category->name;
+        });
 
         return $miniStocks;
     }
@@ -54,8 +59,9 @@ class MiniStockService
     */
     public function handleUpdateReturnStock ($request, $code)
     {
-        $grf_code = str_replace('~', '/', strtoupper($code));
-        $grf = $this->grf->where('grf_code',$grf_code)->first();
+        // $grf_code = str_replace('~', '/', strtoupper($code));
+        $grf = $this->grf->find($code);
+        // dd($grf);
         $grf->status = 'return';
         $grf->save();
         return "oke";

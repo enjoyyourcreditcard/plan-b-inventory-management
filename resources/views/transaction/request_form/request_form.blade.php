@@ -1,3 +1,5 @@
+@section('title', 'Home User')
+
 @extends('layouts.main') @section('content')
 <div class="container-fluid">
   <div class="row" style="margin: 0px">
@@ -71,17 +73,24 @@
     
                   @case("wh_approved")
                   
-                  <span class="h1 text-uppercase">Delivered </span>
+                  <span class="h1 text-uppercase">On progres</span>
                   @break
 
 
                   @case("delivery_approved")
                   
-                  <span class="h1 text-uppercase">Delivered </span>
+                  <span class="h1 text-uppercase">Ready Pickup </span>
                   @break
+
+
                   @case("return")
                   
                   <span class="h1 text-uppercase">Close </span>
+                  @break
+
+                  @case("user_pickup")
+                  
+                  <span class="h1 text-uppercase">Delivered </span>
                   @break
     
                   @default
@@ -91,15 +100,17 @@
                  
                   <div class="text-center mt-4">
                     
-                    
-                    @if ($requestForm->status == 'wh_approved')
-                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100 mb-2">Download Surat jalan</a>
-                    @endif
                     <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100 float-left">Show</a>
                  
-                    @if ($requestForm->status == 'delivery_approved' || $requestForm->status == 'user_pickup')
-                    <a href="{!! Route("get.show.return.stock", ['code' => str_replace('/', '~', strtolower($requestForm->grf_code))]) !!}" class="btn w-100">Return</a>
+                     @if ($requestForm->status == 'user_pickup' || $requestForm->status == 'user_pickup')
+                    <a href="{!! Route("get.show.return.stock", ['code' => str_replace('/', '~', strtolower($requestForm->grf_code))]) !!}" class="btn w-100 mt-2">Return</a>
                     @endIf
+                    
+                    @if ($requestForm->status == 'delivery_approved')
+                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}" class="btn w-100 mt-2">Download Surat jalan</a>
+                    <a href="{{Route('post.approve.pickup',$requestForm->id)}}" class="btn w-100 mt-2">Pickup </a>
+                    @endif
+                   
                  
                   </div>
                 </div>
