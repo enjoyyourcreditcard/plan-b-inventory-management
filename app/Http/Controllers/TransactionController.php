@@ -157,4 +157,10 @@ class TransactionController extends Controller
         return ResponseJSON($stock);
     }
 
+    public function getAllSegmentByGRF($code)
+    {
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        return ResponseJSON($requestForms);
+    }
+
 }

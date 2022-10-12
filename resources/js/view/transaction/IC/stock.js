@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useTable, usePagination, useSortBy,useGlobalFilter } from 'react-table'
 import ReactTooltip from 'react-tooltip';
-import TabelFooter from '../../components/tabel_footer';
-import Table from '../../components/Table';
-import TabelHiddenColumn from '../../components/table_hidden_column';
-import TableLoading from '../../components/table_loding';
-import TableSearch from '../../components/table_search';
-import Api from '../../utils/api';
-import Filter from '../../utils/filter';
+import TabelFooter from '../../../components/tabel_footer';
+import Table from '../../../components/Table';
+import TabelHiddenColumn from '../../../components/table_hidden_column';
+import TableLoading from '../../../components/table_loding';
+import TableSearch from '../../../components/table_search';
+import Api from '../../../utils/api';
+import Filter from '../../../utils/filter';
 
 function Stock(props) {
     const api = new Api;

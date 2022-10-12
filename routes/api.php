@@ -124,6 +124,9 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'grf'], function () {
     Route::get('/warehouse', [WarehouseTransactionController::class, 'getAllWarehouseApproval']);
     Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
+    Route::get('/request/list/{code}', [TransactionController::class, 'getAllSegmentByGRF']);
+    
+    // Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
     
 });
 
