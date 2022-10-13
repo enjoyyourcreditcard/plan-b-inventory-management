@@ -50,7 +50,7 @@ width: 300px !important;
                             </thead>
                             <tbody class="table-tbody">
                                 @foreach ($requestForms as $requestForm)
-                    <input type="hidden" name="segment_id[]" value="{{$requestForm->segment_id}}">
+                    <input type="hidden" name="segment_id[]" value="{{$requestForm->segment_id}}" required`>
 
                                 <tr id="{{ $loop->iteration }}" class="request-form-row">
                                     <td style="font-size: 12px ">

@@ -14,17 +14,21 @@ use Maatwebsite\Excel\Facades\Excel;
 class WarehouseTransactionController extends Controller
 {
 
-    public function __construct( RequestStockService $requestStockService, WarehouseTransactionService $warehouseTransactionService,TransactionService $transactionService)
+    public function __construct( RequestStockService $RequestStockService, WarehouseTransactionService $warehouseTransactionService,TransactionService $transactionService)
     {
         $this->warehouseTransactionService = $warehouseTransactionService;
         $this->transactionService = $transactionService;
-        $this->requestStockService = $requestStockService;
+        $this->RequestStockService = $RequestStockService;
     }
 
     public function index() {
+        // *: Get data untuk warehouse approv
         $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
+        // *: Get data untuk warehouse return
+        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
         return view('warehouse.home', [
             'whapproval' => $whapproval,
+            'whreturn' => $whreturn
         ]);
     }
 
@@ -33,12 +37,22 @@ class WarehouseTransactionController extends Controller
         return ResponseJSON($this->warehouseTransactionService->handleAllWhApproval(), 200);
     }
 
+    // *: Untuk show data approv
     public function show($id) {
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
-        $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
+        $requestForm = $this->RequestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
         // dd($whapprov);
         
         return view('warehouse.check_whapproval', compact('whapprov','requestForm'));
+    }
+
+    // *: Untuk show data return
+    public function showReturn($id) {
+        $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
+        $requestForm = $this->RequestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
+        // dd($requestForm);
+        
+        return view('warehouse.warehouse_return', compact('whreturn','requestForm'));
     }
 
     public function store(Request $request){

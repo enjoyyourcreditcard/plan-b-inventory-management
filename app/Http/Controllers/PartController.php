@@ -9,23 +9,23 @@ use App\Services\BrandService;
 use App\Services\StockService;
 use App\Services\SegmentService;
 use App\Services\CategoryService;
-use App\Services\WareHouseService;
+use App\Services\WarehouseService;
 use App\Services\AttachmentService;
 use Illuminate\Support\Facades\Auth;
-use App\Services\HistoryPriceService;
+use App\Services\HistorypriceService;
 use App\Services\NotificationService;
 
 class PartController extends Controller
 {
 
-    public function __construct(stockService $stockService, HistoryPriceService $historypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService, WareHouseService $warehouseService, SegmentService $segmentService)
+    public function __construct(stockService $stockService, HistorypriceService $HistorypriceService, AttachmentService $attachmentService, PartService $partService, CategoryService $categoryService, BrandService $brandService, NotificationService $notificationService, WarehouseService $WarehouseService, SegmentService $segmentService)
     {
-        $this->historypriceService = $historypriceService;
+        $this->HistorypriceService = $HistorypriceService;
         $this->attachmentService = $attachmentService;
         $this->partService = $partService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
-        $this->warehouseService = $warehouseService;
+        $this->WarehouseService = $WarehouseService;
         $this->stockService = $stockService;
         $this->notificationService = $notificationService;
         $this->segmentService = $segmentService;
@@ -85,11 +85,11 @@ class PartController extends Controller
     */
     public function show($id)
     {
-        $history_prices = $this->historypriceService->handleGetHistoryPriceByPartId($id);
+        $history_prices = $this->HistorypriceService->handleGetHistorypriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
         $part = $this->partService->handleShowPart($id);
         $stocks = $this->stockService->handleGetStockByPartId($id);
-        $warehouse = $this->warehouseService->handleAllWareHouse();
+        $warehouse = $this->WarehouseService->handleAllWareHouse();
         $categories = $this->categoryService->handleGetAllCategory();
         $brands = $this->brandService->handleGetAllBrand();
         $is_sn = $part->sn_status == "sn";
@@ -99,7 +99,7 @@ class PartController extends Controller
 
         return view('part.detail', [
             'notifications' => $notifications,
-            'historyprices' => $history_prices,
+            'Historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
             'stocks' => $stocks,

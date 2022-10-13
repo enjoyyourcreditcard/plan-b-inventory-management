@@ -7,7 +7,7 @@ use App\Services\NotificationService;
 use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\TransactionService;
-use App\Services\WareHouseService;
+use App\Services\WarehouseService;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -17,14 +17,14 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(TransactionService $transactionService, NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WareHouseService $warehouseService)
+    public function __construct(TransactionService $transactionService, NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $WarehouseService)
     {
         $this->notificationService = $notificationService;
         $this->transactionService = $transactionService;
         $this->requestFormService = $requestFormService;
         $this->partService = $partService;
         $this->brandService = $brandService;
-        $this->warehouseService = $warehouseService;
+        $this->WarehouseService = $WarehouseService;
     }
 
     public function index()
@@ -83,7 +83,7 @@ class TransactionController extends Controller
         
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
-        $warehouses = $this->warehouseService->handleAllWareHouse();
+        $warehouses = $this->WarehouseService->handleAllWareHouse();
 
         return view('transaction.IC.detail_transaction', [
             'notifications' => $notifications,

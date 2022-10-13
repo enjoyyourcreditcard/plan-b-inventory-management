@@ -23,6 +23,7 @@ use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseReturnController;
 use App\Http\Controllers\WarehouseTransactionController;
 
 /*
@@ -155,6 +156,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/warehouse', [WarehouseTransactionController::class, 'index'])->name('get.warehouse.home');
 Route::get('/warehouse/action/grf/{id}', [WarehouseTransactionController::class, 'show'])->name("get.warehouse.show.action.grf");
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::class, 'showReturn'])->name('get.whreturn.show.action.grf');
 
 
 
@@ -180,6 +182,7 @@ Route::get('/delete/request-form/{code}', [UserTransactionController::class, 'de
 *--------------------------------------------------------------------------
 */
 Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
+Route::post('/transaction/approve/return/WH', [WarehouseReturnController::class, 'postApproveReturnWH'])->middleware("auth")->name("post.approve.return.WH");
 Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->middleware("auth")->name("post.approve.IC");
 Route::post('/transaction/approve/SJ', [TransactionController::class, 'postApproveSJ'])->middleware("auth")->name("post.approve.SJ");
 
@@ -209,7 +212,10 @@ Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("au
 
 
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
 Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
+Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+// Route::post('/change-status/{id}', [WarehouseReturnController::class, 'changeStatus'])->name('changeStatus');
 /*
 *--------------------------------------------------------------------------
 * Return Stock

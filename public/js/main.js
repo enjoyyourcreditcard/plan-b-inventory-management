@@ -210,7 +210,7 @@ $('#editCategoryModal').on('show.bs.modal', function (event) {
 
     uomArray = uom.split(', ');
     for(i = 0; i > uomArray.length; i++){
-        console.log(uomArray[i]);
+        // console.log(uomArray[i]);
     }
     
     modal.find('.modal-body #categoryId').val(id)
@@ -242,11 +242,11 @@ $('#modalEditBuild').on('show.bs.modal', function(event) {
     var partid = button.data('partid')
     var modal = $(this)
     if (jQuery.type(partid) == 'number') {
-        console.log(partid);
+        // console.log(partid);
         modal.find('.modal-body #buildPartId').val(partid).change();
     }else{
         partidArray = partid.split(', ');
-        console.log(partidArray);
+        // console.log(partidArray);
         modal.find('.modal-body #buildPartId').val(partidArray).change();
     };
 
@@ -494,7 +494,7 @@ $(document).ready(function () {
 $(function () {
     var userId = $('.user-id').data('user');
 
-    console.log(userId);
+    // console.log(userId);
 });
 
 $('[data-countdown]').each(function() {
@@ -608,11 +608,17 @@ $('#modal-confirmation-deactive').on('show.bs.modal', function (event) {
 $('#generate_sj').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('id')
-    console.log(id);
+    // console.log(id);
     var modal = $(this)
     modal.find('#grf_id').val(id)
 })
 
+
+/*
+*|--------------------------------------------------------------------------
+*| Input Pieces Javascript
+*|--------------------------------------------------------------------------
+*/
 
 $('.upload-sn').on('click', function (event) {
     // Sets Variables
@@ -634,8 +640,8 @@ $('.upload-sn').on('click', function (event) {
     inputBulkRequestFormId.val(requestFormsid);
     inputBulkPartName.html(partName);
 
-    console.log(inputBulkRequestFormId);
-    console.log(inputPiecesRequestFormId);
+    // console.log(inputBulkRequestFormId);
+    // console.log(inputPiecesRequestFormId);
 
     // Peices Print HTML
     inputPieces.children().remove();
@@ -648,5 +654,37 @@ $('.upload-sn').on('click', function (event) {
             '<label class="input-pieces-part-name form-label">' + partName + '</label>'+
             '<input type="text" class="form-control mb-3" name="sn_code[]" required="required">'
         );
+    }
+})
+
+/*
+*|--------------------------------------------------------------------------
+*| Input Pieces Return Warehouse Javascript
+*|--------------------------------------------------------------------------
+*/
+
+$('.upload-return').on('click', function (event) {
+    const button = $(event.target);
+    const partIdReturn = button.data('partid');
+    const partNameReturn = button.data('partname');
+    const grfId = button.data('grfid');
+    const icQuantityReturn = button.data('icquantity');
+    const inputBulkPartId = $('#input-bulk-part-id');
+    const inputBulkGrfId = $('#input-bulk-grf-id');
+    const inputPiecesRequestFormId = $('.input-pieces-request-form-id');
+    const inputPiecesReturn = $('#input-pieces-return');
+
+    inputBulkPartId.val(partIdReturn);
+    inputBulkGrfId.val(grfId);
+
+    inputPiecesReturn.children().remove();
+
+    for (i = 0; i < icQuantityReturn; i++) {
+        $('#input-pieces-return').append(
+            '<input class="input-pieces-part-id" type="hidden" name="part_id" value="' + partIdReturn + '">'+
+            '<label class="input-pieces-part-name form-label">' + partNameReturn + '</label>'+
+            '<input class="input-pieces-form-id" type="hidden" name="request_form_id" value="' + grfId + '">'+
+            '<input type="text" class="form-control mb-3" name="sn_code[]" required="required">'
+        )
     }
 })

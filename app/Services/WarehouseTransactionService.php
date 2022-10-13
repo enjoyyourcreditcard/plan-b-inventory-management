@@ -19,10 +19,16 @@ class WarehouseTransactionService{
         $this->requestStock = $requestStock;
     }
 
-    // *: Untuk mengambil semua data dan tampil di views
+    // *: Get data untuk warehouse approv
     public function handleAllWhApproval()
     {
         $grfs = $this->grf->with('user')->where('status','ic_approved')->get();
+        return ($grfs);
+    }
+    // *: Get data untuk warehouse return
+    public function handleAllWhReturn()
+    {
+        $grfs = $this->grf->with('user')->where('status','return_ic_approved')->get();
         return ($grfs);
     }
 
@@ -37,6 +43,18 @@ class WarehouseTransactionService{
         }
         return($whapproval);
     }
+
+     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode return
+     public function handleShowWhReturn($id)
+     {
+         $wherewh = str_replace('~', '/',$id);
+         $whreturn = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first(); 
+         $whreturn['quantity'] = 0;
+         foreach ($whreturn->requestForms as $requestForm) {
+             $whreturn['quantity'] += $requestForm->quantity;
+         }
+         return($whreturn);
+     }
 
     // *: Untuk menggrouping banyak data menjadi 1 row
     public function handleGroubWhApproval()
