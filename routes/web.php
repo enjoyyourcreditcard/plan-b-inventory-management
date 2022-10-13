@@ -41,6 +41,12 @@ Route::get('/', function () {
 
 });
 
+Route::get('/suratjalan/{grf}', [TransactionController::class, 'ViewSuratJalanPDF'])->name('view.surat.jalan');
+
+
+// suratjalan/1
+
+
 
 // Route::get('/transaction', function () {
 // });

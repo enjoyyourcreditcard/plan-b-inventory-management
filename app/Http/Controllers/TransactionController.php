@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grf;
+use App\Models\RequestForm;
 use App\Services\BrandService;
 use App\Services\NotificationService;
 use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\TransactionService;
 use App\Services\WareHouseService;
+// use Barryvdh\DomPDF\Facade\Pdf;
+use PDF;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -161,6 +165,17 @@ class TransactionController extends Controller
     {
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
         return ResponseJSON($requestForms);
+    }
+
+    public function ViewSuratJalanPDF($grf_id)
+    {
+
+        $grf = Grf::find($grf_id);
+        $request_form = RequestForm::where("grf_id",$grf_id)->get();
+        // dd($);
+
+        $pdf = PDF::loadView('generate.suratjalan',['grf'=>$grf,'request_form'=>$request_form]);
+        return $pdf->stream('laporan-pdf.pdf');
     }
 
 }

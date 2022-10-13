@@ -95,13 +95,13 @@
                       class="btn w-100 float-left">Show</a>
 
                     @if ($requestForm->status == 'user_pickup' || $requestForm->status == 'user_pickup')
-                    <a href="{!! Route(" get.show.return.stock", ['code'=> str_replace('/', '~',
+                    <a href="{!! Route("get.show.return.stock", ['code'=> str_replace('/', '~',
                       strtolower($requestForm->grf_code))]) !!}" class="btn w-100 mt-2">Return</a>
                     @endIf
 
                     @if ($requestForm->status == 'delivery_approved')
-                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}"
-                      class="btn w-100 mt-2">Download Surat jalan</a>
+                    <a href="{{Route('view.surat.jalan',$requestForm->id)}}"
+                      class="btn w-100 mt-2" target="_blank">Download Surat jalan</a>
                     <a href="#" class="btn w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modal-small">
                       Pickup
                     </a>
@@ -153,13 +153,12 @@
       <div class="modal-body">
         <div class="modal-title">Pickup</div>
         <div>
-              
-              Anda dapat mendownload Surat jalan <a href="">disinih</a>
+              Anda dapat mendownload Surat jalan <a href="{{Route('view.surat.jalan',$requestForm->id)}}" target="_blank">disinih</a>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ya, Sudah melihat Surat Jalan</button>
+        <a href="{{Route('post.approve.pickup',$requestForm->id)}}" class="btn btn-danger" >Ya, Sudah melihat Sursat Jalan</a>
       </div>
     </div>
   </div>
