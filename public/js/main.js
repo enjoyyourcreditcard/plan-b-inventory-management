@@ -565,6 +565,49 @@ $(document).ready(function () {
     });
 });
 
+$('.btn-input-sn').click(function(event){
+    var thisButton = event.currentTarget;
+    var transferFormsId = $(thisButton).data('transferformsid');
+    var grfId = $(thisButton).data('grfid');
+    var partId = $(thisButton).data('partid');
+    var partName = $(thisButton).data('partname');
+    var quantity = $(thisButton).data('quantity');
+
+    $('#piecesSnModal').on('show.bs.modal', function () {
+        $('#piecesSnModal .modal-body').children().remove();
+        
+        $('#piecesSnModal .modal-title').html(partName);
+
+        $('#piecesSnModal .modal-body').append(
+            '<input type="hidden" name="transfer_form_id" value="' + transferFormsId + '">' +
+            '<input type="hidden" name="grf_id" value="' + grfId + '">' +
+            '<input type="hidden" name="part_id" value="' + partId + '">' +
+            '<span class="card-title">SN Code</span>'
+        );
+
+        for (i = 0; i < quantity; i++) {
+            $('#piecesSnModal .modal-body').append(
+                '<div class="form-group row">' +
+                '<label for="staticEmail" class="col-sm-1 col-form-label">' + (i + 1) + '. </label>' +
+                '<div class="col-sm-11">' +
+                '<input type="text" class="form-control mb-3" name="sn_code[]" required>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+    });
+
+    $('#bulkSnModal').on('show.bs.modal', function () {
+        $('#bulkSnModal .bulk-hidden').children().remove();
+
+        $('#bulkSnModal .bulk-hidden').append(
+            '<input type="hidden" name="transfer_form_id" value="' + transferFormsId + '">' +
+            '<input type="hidden" name="grf_id" value="' + grfId + '">' +
+            '<input type="hidden" name="part_id" value="' + partId + '"></input>'
+        );
+    });
+});
+
 $(function () {
     var userId = $('.user-id').data('user');
 });

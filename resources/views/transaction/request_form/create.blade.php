@@ -36,19 +36,22 @@
                   </svg>&nbsp;
                   Warehouse :
                 </label>
-                  <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ $grf->status != 'draft' ? 'disabled' : null }}>
-                    <option></option>
-                    @foreach ($warehouses as $warehouse)
-                      <option value="{{ $warehouse->id }}" {{$grf->warehouse_id == $warehouse->id ? "selected" : ""}}>{{ $warehouse->name }}</option>
-                    @endforeach
-                  </select>
+                <select class="form-control inputWarehouseRequestFormSelect2" name="warehouse_id" required {{ count($grf->requestForms) > 0 ? 'disabled' : null }}>
+                  <option></option>
+                  @foreach ($warehouses as $warehouse)
+                  <option value="{{ $warehouse->id }}" {{$grf->warehouse_id == $warehouse->id ? "selected" : ""}}>{{ $warehouse->name }}</option>
+                  @endforeach
+                </select>
+                @if (count($grf->requestForms) > 0)
+                <input type="hidden" name="warehouse_id" value="{{ $grf->warehouse_id }}">
+                @endif
               </div>
               @if ($grf->status == 'draft')
               <hr class="my-1">
               <div class="row mb-2">
                 <div class="form-group ">
                   <label class="col-form-label">Material Description</label>
-                  <select class="form-control inputPartRequestFormSelect2" name="part_id">
+                  <select class="form-control inputPartRequestFormSelect2" name="part_id" required>
                     <option></option>
                     @foreach ($parts as $part)
                     <option value="{{ $part->id }}">{{ $part->name }}</option>
@@ -57,7 +60,7 @@
                 </div>
                 <div class="form-group ">
                   <label class="col-form-label">Material Brand</label>
-                  <select class="form-control inputBrandRequestFormSelect2" name="brand_id">
+                  <select class="form-control inputBrandRequestFormSelect2" name="brand_id" required>
                     <option></option>
                     @foreach ($brands as $brand)
                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -66,11 +69,11 @@
                 </div>
                 <div class="form-group ">
                   <label class="col-form-label">Quantity Request</label>
-                  <input type="number" class="form-control" name="quantity" value="1" min="1">
+                  <input type="number" class="form-control" name="quantity" value="1" min="1" required>
                 </div>
                 <div class="form-group ">
                   <label class="col-form-label">Remarks</label>
-                  <textarea class="form-control" name="remarks" rows="1" placeholder="note.."></textarea>
+                  <textarea class="form-control" name="remarks" rows="1" placeholder="note.." required></textarea>
                 </div>
                 <div class="form-group mt-3  d-flex flex-column justify-content-end">
                   <button class="btn btn-primary" type="submit">Add to list</button>
@@ -224,7 +227,7 @@
       </div>
       <div class="col-md-8">
         
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
             <h3 class="card-title">Request List</h3>
           </div>
@@ -343,7 +346,7 @@
           @method('PUT')
           <div class="d-flex justify-content-end gap-3">
             <a href="/request-form" class="btn btn-outline-primary outline-button">
-              {{ $grf->status != 'draft' ? 'back' : 'Draft' }}
+              {{ $grf->status != 'draft' ? 'Back' : 'Draft' }}
             </a>
             @if ($grf->status == 'draft')
             <button class="btn btn-primary" {{ count($requestForms) > 0 ? null : 'disabled' }}>

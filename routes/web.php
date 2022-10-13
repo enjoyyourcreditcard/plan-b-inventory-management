@@ -153,7 +153,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 Route::get('/warehouse', [WarehouseTransactionController::class, 'index']);
 Route::get('/warehouse/action/grf/{id}', [WarehouseTransactionController::class, 'show'])->name("get.warehouse.show.action.grf");
+Route::get('/warehouse-transfer', [WarehouseTransactionController::class, 'indexTransfer'])->middleware('auth')->name('get.warehouse.transfer');
+Route::post('/warehouse-transfer', [WarehouseTransactionController::class, 'storeGrfTransfer'])->middleware('auth')->name('post.warehouse.transfer');
+Route::get('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'createTransfer'])->middleware('auth')->name('get.warehouse.create');
+Route::post('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'storeTransfer'])->middleware('auth')->name('post.warehouse.create');
+Route::put('/warehouse-transfer', [WarehouseTransactionController::class, 'updateTransfer'])->middleware('auth')->name('put.warehouse.create');
+Route::delete('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'deleteTransfer'])->middleware('auth')->name('delete.warehouse.create');
 
+Route::post('/warehouse-transfer/pieces/{code}', [WarehouseTransactionController::class, 'storePiecesTransfer'])->middleware('auth')->name('post.warehouse.transfer.pieces');
+Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::class, 'storeBulkTransfer'])->middleware('auth')->name('post.warehouse.transfer.bulk');
 
 
 /*

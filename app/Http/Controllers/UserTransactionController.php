@@ -16,7 +16,7 @@ class UserTransactionController extends Controller
     public function __construct(NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $warehouseService, MiniStockService $miniStockService)
     {
         $this->notificationService = $notificationService; 
-        $this->requestFormService = $requestFormService; 
+        $this->requestFormService = $requestFormService;
         $this->partService = $partService; 
         $this->brandService = $brandService; 
         $this->warehouseService = $warehouseService;

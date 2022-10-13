@@ -48,7 +48,7 @@ class MiniStockService
     public function handleMiniStockByUser ()
     {
         $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) {
-            $query->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]]);
+            $query->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]]);
         })->get();
 
         return $miniStocks;

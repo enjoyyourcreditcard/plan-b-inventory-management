@@ -27,6 +27,11 @@ class Grf extends Model
         return $this->hasMany(RequestForm::class);
     }
 
+    public function transferForms ()
+    {
+        return $this->hasMany(TransferForm::class);
+    }
+
     public function stocks ()
     {
         return $this->hasMany(Stock::class);

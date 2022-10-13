@@ -69,7 +69,7 @@ class TransactionService
     
     public function handleTimer ()
     {
-        $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]])->get();
+        $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]])->get();
 
         $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
             $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->timelines->where('status', 'delivery_approved')->last()->created_at->addDay()->toDateTimeString());

@@ -77,14 +77,22 @@ class RequestFormService
         if ($this->grf->find($id)->warehouse_id != $request->warehouse_id) {
             $validatedWarehouse_id = $request->validate([
                 'warehouse_id' => 'required',
+                'warehouse_destination' => 'nullable',
             ]);
             $this->grf->find($id)->update($validatedWarehouse_id);
+        }
+
+        if ($this->grf->find($id)->warehouse_destination != $request->warehouse_destination) {
+            $validatedWarehouse_destination = $request->validate([
+                'warehouse_destination' => 'required',
+            ]);
+            $this->grf->find($id)->update($validatedWarehouse_destination);
         }
 
         $validatedData = $request->validate([
             'part_id' => 'required',
             'quantity' => 'required|integer',
-            'remarks' => 'required',
+            'remarks' => 'nullable',
         ]);
         $validatedData['grf_id'] = $this->grf->find($id)->id;
 
@@ -99,6 +107,7 @@ class RequestFormService
         $validatedData = $request->validate([
             'grf_code' => 'required',
             'warehouse_id' => 'nullable',
+            'type' => 'nullable',
         ]);
         $validatedData['user_id'] = Auth::user()->id;
         $this->grf->create($validatedData);
@@ -135,7 +144,8 @@ class RequestFormService
     public function handleGenerateGrfCode()
     {
         $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
-        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->get());
+        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request']])->get());
+        
         if ($grfs < 3) {
             $rawMonth = now()->format('m');
             $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
@@ -172,3 +182,5 @@ class RequestFormService
 
     
 }
+
+// pada saat surat jalan terprint itu sudah harus 
