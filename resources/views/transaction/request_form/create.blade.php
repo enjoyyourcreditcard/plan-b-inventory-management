@@ -119,7 +119,7 @@
                   <th class="col-1">QUANTITY </th>
                   <th class="col-2">REMARKS</th>
                   @if ($grf->status == 'draft')
-                  <th>Action</th>
+                  <th></th>
                   @endif
                 </tr>
               </thead>
@@ -213,14 +213,13 @@
           @method('PUT')
           <div class="d-flex justify-content-end gap-3">
             <a href="/request-form" class="btn btn-outline-primary outline-button">
-              {{ $grf->status != 'draft' ? 'back' : 'Draft' }}
+              {{ $grf->status != 'draft' ? 'Back' : 'Draft' }}
             </a>
             @if ($grf->status == 'draft')
             <button class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
               <input type="hidden" name="status" value="submited">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24"
-                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
+              <input type="hidden" name="grf_id" value="{{ $grf->id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path>
                 <path d="M14 19l2 2l4 -4"></path>

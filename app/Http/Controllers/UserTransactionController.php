@@ -18,7 +18,7 @@ class UserTransactionController extends Controller
     public function __construct(MiniStockService $miniStockService, SegmentService $segmentService, NotificationService $notificationService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, WarehouseService $warehouseService)
     {
         $this->notificationService = $notificationService; 
-        $this->requestFormService = $requestFormService; 
+        $this->requestFormService = $requestFormService;
         $this->partService = $partService; 
         $this->segmentService = $segmentService;
         $this->brandService = $brandService; 
@@ -68,16 +68,31 @@ class UserTransactionController extends Controller
 
 
     /*
-    *|--------------------------------------------------------------------------
-    *| Create Request Form
-    *|--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | Show Return Stock
+    |--------------------------------------------------------------------------
+    */
+    public function ajaxReturnStock ($code)
+    {
+        // Services
+        $miniStocks = $this->miniStockService->handleShowMiniStock ($code);
+
+        // Return View
+        return response()->JSON($miniStocks->where('condition', '!=', null)->groupby('category'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create Request Form
+    |--------------------------------------------------------------------------
     */
     public function create ($code)
     {
         // Services
         $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
+        $timeline = $this->requestFormService->handleTimelineGrf($grf);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $brands = $this->brandService->handleGetAllBrand();
         $segment = $this->segmentService->handleAllSegment();
         $warehouses = $this->warehouseService->handleAllWareHouse();
@@ -142,10 +157,10 @@ class UserTransactionController extends Controller
     *| Update Submit Return Stock
     *|--------------------------------------------------------------------------
     */
-    public function updateReturnStock (Request $request, $code)
+    public function updateReturnStock (Request $request, $id)
     {
         // Services
-        $this->miniStockService->handleUpdateReturnStock($request, $code);
+        $this->miniStockService->handleUpdateReturnStock($request, $id);
         return redirect()->route('get.requester.home');
 
     }

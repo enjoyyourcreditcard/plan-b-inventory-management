@@ -23,6 +23,7 @@ class CreateRequestStocksTable extends Migration
             $table->foreign('part_id')->references('id')->on('parts');
             $table->string('sn');
             $table->string('sn_return')->nullable();
+            $table->string('condition')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
         });

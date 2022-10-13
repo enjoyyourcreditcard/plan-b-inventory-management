@@ -68,14 +68,18 @@
                     <li class="nav-item" role="presentation">
                         <a href="#tabs-{{ $key }}" class="nav-link {{ $loop->first ? 'active' : '' }}"
                             data-bs-toggle="tab" aria-selected="true" role="tab">
-                            {{ $key }}
+                            {{ $key }} &nbsp;
+                            <span class="return-stock-{{ $key }}-requirement">{{ count($categories->where('condition', '!=', null)) }}</span>
+                            <span>{{ '/'.count($categories) }}</span>
                         </a>
                     </li>
                     @endforeach
                 </ul>
                 <div id="inputReturnStockParent" class="card-body">
                     <div class="tab-content">
-                        <form action="/return/{{ $grf->id }}" method="POST" id="return-stock-form">@csrf @method('PUT')</form>
+                        <form action="/return/{{ $grf->id }}" method="POST" id="return-stock-form">@csrf</form>
+                        <input type="hidden" class="grf-id" value="{{ $grf->id }}">
+                        <input type="hidden" class="grf-code" value="{{ str_replace('/', '~', strtolower($grf->grf_code)) }}">
                         @foreach ($miniStocks->groupBy('category') as $key => $categories)
 
                         {{-- *
@@ -106,22 +110,30 @@
                                             <td style="font-size: 12px ">#</td>
                                             <td style="font-size: 12px ">{{ $miniStock->part->uom }}</td>
                                             <td style="font-size: 12px ">
-                                                <input type="hidden" name="old_sn_code[]" value="{{ $miniStock->sn }}" form="return-stock-form">
+                                                <input type="hidden" class="return-stock-oldsncode" name="old_sn_code[]" value="{{ $miniStock->sn }}" form="return-stock-form">
                                                 <select class="form-control inputReturnStockSelect2"
                                                     form="return-stock-form" name="condition[]" required>
                                                     <option></option>
-                                                    <option value="good">Good</option>
-                                                    <option value="not good">Not Good</option>
-                                                    <option value="replace">Replace</option>
-                                                    <option value="used">Used</option>
+                                                    <option value="good" {{ $miniStock->condition == 'good' ? 'selected' : null }}>Good</option>
+                                                    <option value="not good" {{ $miniStock->condition == 'not good' ? 'selected' : null }}>Not Good</option>
+                                                    <option value="replace" {{ $miniStock->condition == 'replace' ? 'selected' : null }}>Replace</option>
+                                                    <option value="used" {{ $miniStock->condition == 'used' ? 'selected' : null }}>Used</option>
                                                 </select>
                                                 <br>
                                                 <div class="return-stock-sncode-parent">
-                                                    <input type="hidden" name="sn_code[]" value="" form="return-stock-form">
+                                                    @if ($miniStock->condition == 'replace')
+                                                    <input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" value="{{ $miniStock->sn_return }}" form="return-stock-form" required>
+                                                    @else
+                                                    <input type="hidden" class="return-stock-sncode" name="sn_code[]" value="" form="return-stock-form">
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td style="font-size: 12px" class="return-stock-remarks-parent">
-                                                <input class="form-control" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>
+                                                @if ($miniStock->condition == 'good')
+                                                <input class="form-control return-stock-remarks" type="text" name="remarks[]" value="-" form="return-stock-form" readonly>
+                                                @else
+                                                <input type="text" class="form-control return-stock-remarks" name="remarks[]" value="{{ $miniStock->remarks }}" placeholder="note.." form="return-stock-form" required>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

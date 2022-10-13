@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Brand;
+use Throwable;
+use Faker\Factory as Faker;
 
 class BrandSeeder extends Seeder
 {
@@ -14,37 +16,27 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        $brands = [
-            [
-                'name' => 'HUAWEI',
-                'status' => 'active',
-                'segment_id' => 1,
-                'created_at' => '2022-08-23 10:53:17',
-                'updated_at' => '2022-08-23 10:53:17',
-            ],
-            [
-                'name' => 'SPOTELINDO MITRA UTAMA',
-                'status' => 'active',
-                'segment_id' => 2,
-                'created_at' => '2022-08-23 10:53:17',
-                'updated_at' => '2022-08-23 10:53:17',
-            ],
-            [
-                'name' => 'ZTE',
-                'status' => 'active',
-                'segment_id' => 2,
-                'created_at' => '2022-08-23 10:53:17',
-                'updated_at' => '2022-08-23 10:53:17',
-            ],
-            [
-                'name' => 'POWER CELL',
-                'status' => 'active',
-                'segment_id' => 1,
-                'created_at' => '2022-08-23 10:53:17',
-                'updated_at' => '2022-08-23 10:53:17',
-            ]
-        ];
+        $csvFile = fopen(base_path("public/seeder_data/part.csv"), "r");
+        $no = 0;
+        $faker = Faker::create('id_ID');
 
-        Brand::insert($brands);
+        while (!feof($csvFile)) {
+            $data = explode(';', fgetcsv($csvFile)[0]);
+            if ($no != 0 && $no <= 116) {
+                try {
+                    Brand::create([
+                        'segment_id' => 1,
+                        'name' => $data[23],
+                        'status' => 'active',
+                    ]);
+                } catch (Throwable $e) {
+                    report($e);
+                }
+            }
+
+            $no++;
+        }
+
+        fclose($csvFile);
     }
 }

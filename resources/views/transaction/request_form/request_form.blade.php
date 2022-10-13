@@ -33,9 +33,8 @@
           </div>
           <div class="row row-cards mt-2">
             <div class="coba"></div>
-            @foreach ($requestForms->take(3) as $requestForm)
-            {{-- ============================================================= OCCUPIED SLOT
-            ============================================================= --}}
+            @foreach ($requestForms->where('type', 'request')->take(3) as $requestForm)
+            {{-- ============================================================= OCCUPIED SLOT ============================================================= --}}
             <div class="col-sm-6 col-lg-4">
               <div class="card card-md">
                 <div class="card-body text-center">
@@ -115,10 +114,9 @@
             </div>
             @endforeach
 
-            {{-- ============================================================= NEW SLOT
-            ============================================================= --}}
-            @if (count($requestForms->take(3)) < 3) <form action="/request-form" method="POST"
-              class="col-sm-6 col-lg-4 d-flex flex-column text-decoration-none">
+            {{-- ============================================================= NEW SLOT ============================================================= --}}
+            @if (count($requestForms->where('type', 'request')->take(3)) < 3)
+            <form action="/request-form" method="POST" class="col-sm-6 col-lg-4 d-flex flex-column text-decoration-none">
               @csrf
               <button class="card card-md bg-light" style="flex-grow: 1">
                 <input type="hidden" name="grf_code" value="{{ $grf_code }}">

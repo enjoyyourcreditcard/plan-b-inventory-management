@@ -16,12 +16,14 @@ class SegmentSeeder extends Seeder
     public function run()
     {
         Segment::create([
+            'name' => 'segment assesories',
             'category_id' => 1,
             'name' => 'INLINE CLOSURE',
         ]);
 
      
         Segment::create([
+            'name' => 'segment cpe',
             'category_id' => 2,
             'name' => 'PATCH CORD SC/APC',
         ]);

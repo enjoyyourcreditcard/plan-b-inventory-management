@@ -5,6 +5,7 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Part;
+use App\Models\Timeline;
 use App\Models\RequestForm;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Auth;
 class RequestFormService
 {
 
-    public function __construct(RequestForm $requestForm, Grf $grf)
+    public function __construct(RequestForm $requestForm, Grf $grf, Timeline $timeline)
     {
         $this->requestForm = $requestForm;
         $this->grf = $grf;
+        $this->timeline = $timeline;
     }
 
     // Request Form SHOW
@@ -59,7 +61,7 @@ class RequestFormService
     // Request Form Current GRF
     public function handleGetCurrentGrf($code)
     {
-        $grf = $this->grf->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
+        $grf = $this->grf->with('timelines')->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
         return ($grf);
     }
 
@@ -76,13 +78,22 @@ class RequestFormService
         if ($this->grf->find($id)->warehouse_id != $request->warehouse_id) {
             $validatedWarehouse_id = $request->validate([
                 'warehouse_id' => 'required',
+                'warehouse_destination' => 'nullable',
             ]);
             $this->grf->find($id)->update($validatedWarehouse_id);
         }
+
+        if ($this->grf->find($id)->warehouse_destination != $request->warehouse_destination) {
+            $validatedWarehouse_destination = $request->validate([
+                'warehouse_destination' => 'required',
+            ]);
+            $this->grf->find($id)->update($validatedWarehouse_destination);
+        }
+
         $validatedData = $request->validate([
             'segment_id' => 'required',
             'quantity' => 'required|integer',
-            'remarks' => 'required',
+            'remarks' => 'nullable',
         ]);
         $validatedData['grf_id'] = $this->grf->find($id)->id;
         $this->requestForm->create($validatedData);
@@ -96,6 +107,7 @@ class RequestFormService
         $validatedData = $request->validate([
             'grf_code' => 'required',
             'warehouse_id' => 'nullable',
+            'type' => 'nullable',
         ]);
         $validatedData['user_id'] = Auth::user()->id;
         $this->grf->create($validatedData);
@@ -107,9 +119,11 @@ class RequestFormService
     public function handleUpdateRequestForm($request, $id)
     {
         $validatedData = $request->validate([
-            'status' => 'required'
+            'status' => 'required',
+            'grf_id' => 'required'
         ]);
         $this->grf->find($id)->update($validatedData);
+        $this->timeline->create($validatedData);
         return ('Data has been updated');
     }
 
@@ -120,11 +134,18 @@ class RequestFormService
         return ResponseJSON($requestForm, 200);
     }
 
+    // Timeline for GRF
+    public function handleTimelineGrf($grf)
+    {
+        //
+    }
+
     // Request Form Generate GRF CODE
     public function handleGenerateGrfCode()
     {
         $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
-        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->get());
+        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request']])->get());
+        
         if ($grfs < 3) {
             $rawMonth = now()->format('m');
             $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
@@ -164,6 +185,13 @@ class RequestFormService
     {
         $grf = $this->grf->find($id);
         $grf->status = "user_pickup";
+        $grf->save();
+
+        $this->timeline->create([
+            'grf_id' => $id,
+            'status' => 'user_pickup'
+        ]);
+
         // $grf->surat_jalan = $this->handleGenerateSuratJalan($grf->warehouse_id);
         // $grf->delivery_approved_date = Carbon::now();
         $grf->save();
@@ -174,3 +202,5 @@ class RequestFormService
 
     
 }
+
+// pada saat surat jalan terprint itu sudah harus 
