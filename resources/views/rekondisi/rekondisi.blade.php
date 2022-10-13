@@ -103,7 +103,7 @@
                                         <thead>
                                             <tr role="row">
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>NAME</b><svg
+                                                    style="cursor: pointer;"><b>Name</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -121,7 +121,7 @@
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>STATUS</b><svg
+                                                    style="cursor: pointer;"><b>Condition</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -130,7 +130,7 @@
                                                         <polyline points="6 15 12 9 18 15"></polyline>
                                                     </svg></th>
                                                 <th class="w-1" colspan="1" role="columnheader" title="Toggle SortBy"
-                                                    style="cursor: pointer;"><b>REKONDISI DATE</b><svg
+                                                    style="cursor: pointer;"><b>Entry Date Date</b><svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-sm text-dark icon-thick" width="24" height="24"
                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -143,39 +143,7 @@
                                             </tr>
                                         </thead>
                                         <tbody role="rowgroup">
-                                            <tr role="row">
-                                                <td role="cell">
-                                                    <div id="thumbwrap">
-                                                        <div class="d-flex">
-                                                            <div class="pr-1" style="min-width: 40px;"><a
-                                                                    data-tip="COUPLER ADAPTOR E2000 APC"
-                                                                    currentitem="false"><img
-                                                                        src="/images/part/default.jpg" alt="" width="30"
-                                                                        height="25"
-                                                                        style="border: 1px solid rgb(204, 204, 238);"></a>
-                                                            </div><a href="/part/1419"
-                                                                class="text-primary text-decoration-none "> COUPLER
-                                                                ADAPTOR E2000 APC</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>TEST</td>
-                                                <td role="cell">Rekondisi</td>
-                                                <td role="cell">09-09-2022
-                                                </td>
-                                                <td role="cell"><a href="#" class="btn btn-success" style="background-color: #31DE4A"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-confirmation-repair">
-                                                        Repair
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger" style="background-color:#D70015" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-confirmation-reject">
-                                                        Reject
-                                                    </a>
-                                                </td>
-
-
-                                            </tr>
+                                            
                                             @foreach ($rekondisis as $row => $item)
                                                 
                                             <tr role="row">
@@ -185,18 +153,18 @@
                                                             <div class="pr-1" style="min-width: 40px;"><a
                                                                     data-tip="COUPLER ADAPTOR E2000 APC"
                                                                     currentitem="false"><img
-                                                                    src="{{$item->requestStock->condition}}" alt="" width="30"
+                                                                    src="{{$item->part->img}}" alt="" width="30"
                                                                         height="25"
                                                                         style="border: 1px solid rgb(204, 204, 238);"></a>
                                                                     </div><a href="/part/1419"
-                                                                    class="text-primary text-decoration-none ">{{$item->requestStock->name}}
+                                                                    class="text-primary text-decoration-none ">{{$item->part->name}}
                                                                 </a>
                                                             </div>
                                                     </div>
                                                 </td>
-                                                <td>{{$item->requestStock->sn_return == null ? $item->requestStock->sn : $item->requestStock->sn_return }}</td>
-                                                <td role="cell"></td></td>
-                                                <td role="cell">{{$item->created_at}}
+                                                <td>{{$item->sn_return == null ? $item->sn : $item->sn_return }}</td>
+                                                <td role="cell">{{ $item->condition }}</td>
+                                                <td role="cell">{{$item->created_at->format('Y-m-d')}}
                                                 </td>
                                                 <td role="cell"><a href="#" class="btn btn-success" style="background-color: #31DE4A"
                                                     data-bs-toggle="modal"
@@ -208,9 +176,8 @@
                                                 Reject
                                                     </a>
                                                 </td>
-
-                                                
                                             </tr>
+
                                             @endforeach
                                             {{-- <tr role="row">
                                                 <td role="cell">
@@ -351,11 +318,20 @@
             <div class="modal-body">
                 <div class="modal-title">Apakah Anda yakin?</div>
                 <div>Apakah anda yakin bahwa barang ini sudah diperbaiki?</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" style="background-color:#D70015" data-bs-dismiss="modal">Iya, Saya yakin</button>
-            </div>
+                <form action="/goodrekondisi" method="POST">
+                @csrf
+                    <div>
+                        <select class="input-condition" name="condition" style="width: 100%; margin-top: 1rem" required>
+                            <option value="good canibal">Cannibal</option>
+                            <option value="good rekondisi">Same Pack</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger" style="background-color:#D70015" data-bs-dismiss="modal">simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -366,6 +342,12 @@
             <div class="modal-body">
                 <div class="modal-title">Apakah Anda yakin?</div>
                 <div>Apakah anda yakin bahwa barang ini sudah tidak dapat diperbaiki?</div>
+                <div>
+                    <select class="input-condition2" name="state" style="width: 100%; margin-top: 1rem" required>
+                    <option value="physical reject">Fisik</option>
+                    <option value="function reject">Fungsi</option>
+                  </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Batal</button>

@@ -22,7 +22,7 @@ class CreateStocksTable extends Migration
             $table->bigInteger('grf_id')->unsigned()->nullable();
             $table->foreign('grf_id')->references('id')->on('db_grfs');
             $table->string('sn_code')->nullable();
-            $table->enum('condition', ['good new', 'good rekondisi', 'good potongan', 'not good ',  'karantina', 'scrap', 'dismantle', 'replace']);
+            $table->enum('condition', ['good new', 'good rekondisi', 'good potongan', 'not good ',  'karantina', 'scrap', 'dismantle', 'replace', 'good canibal', 'function reject', 'physical reject']);
             $table->date('expired_date');
             $table->string('stock_status')->default('in');
             $table->string('status');

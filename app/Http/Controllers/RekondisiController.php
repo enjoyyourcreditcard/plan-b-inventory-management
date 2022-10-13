@@ -14,11 +14,17 @@ class RekondisiController extends Controller
 
     public function index()
     {
-        $rekondisis = $this->rekondisiService->handleGetConditionStock();
+        $rekondisis = $this->rekondisiService->handleGetConditionRequestStock();
 
-        dd($rekondisis);
         return view("rekondisi.rekondisi", [
             'rekondisis' => $rekondisis,
         ]);
+    }
+
+    public function GoodConditionStock(Request $request)
+    {
+        $this->rekondisiService->handlePostNewCodition($request);
+
+        return redirect('get.rekondisi');
     }
 }

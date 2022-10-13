@@ -46,7 +46,6 @@ Route::get('/', function () {
 // Route::get('/transaction', function () {
 // });
 
-Route::get('/rekondisi', [RekondisiController::class, 'index'])->name('get.rekondisi')->middleware("auth");;
 
 
 // Route::get('/transaction', [::class, 'index']);
@@ -205,9 +204,6 @@ Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->m
 */
 Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");
 
-
-
-
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
 Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
 /*
@@ -217,3 +213,12 @@ Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'
 */
 Route::get('/return/{code}', [UserTransactionController::class, 'showReturnStock'])->middleware("auth")->name("get.show.return.stock");
 Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
+
+/*
+*--------------------------------------------------------------------------
+* Rekondisi
+*--------------------------------------------------------------------------
+*/
+
+Route::get('/rekondisi', [RekondisiController::class, 'index'])->name('get.rekondisi')->middleware("auth");
+Route::post('/rekondisigood', [RekondisiController::class, 'GoodConditionStock'])->name('post.rekondisi.good')->middleware("auth");

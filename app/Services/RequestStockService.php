@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Rekondisi;
 use Illuminate\Http\Request;
 use App\Models\RequestForm as Requester;
 use App\Models\RequestStock;
@@ -15,8 +16,7 @@ class RequestStockService
     public function __construct(Requester $requester, RequestStock $requestStock)
     {
         $this->requester = $requester;
-        $this->requestStock = $requestStock;
-    
+        $this->requestStock = $requestStock;    
     }
     
     public function handleRequestStockByRequestForms($requestForms)

@@ -30,9 +30,4 @@ class RequestStock extends Model
     public function stock() {
         return $this->belongsTo(Stock::class);
     }
-
-    public function rekondisi()
-    {
-        return $this->hasMany(Rekondisi::class);
-    }
 }

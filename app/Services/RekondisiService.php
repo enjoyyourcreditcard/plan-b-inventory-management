@@ -13,14 +13,26 @@ use Illuminate\Http\Request;
 class RekondisiService
 {
 
-    public function __construct(Part $part, RequestStock $requestStock, Rekondisi $rekondisi)
+    public function __construct(Part $part, RequestStock $requestStock, Stock $stock)
     {
-        $this->rekondisi = $rekondisi;
+        $this->requestStock = $requestStock;
+        $this->stock = $stock;
     }
 
-    public function handleGetConditionStock()
+    public function handleGetConditionRequestStock()
     {
-        $rekondisis = $this->rekondisi->with('requestStock')->where('condition' == 'good new')->orWhere('condition' == 'replace');
+        $rekondisis = $this->requestStock->with('part')->where('condition', 'not good')->orWhere('condition', 'replace')->get();
         return($rekondisis);
+    }
+
+    public function handlePostNewCodition(Request $request)
+    {
+        $validatedData = $request->validate([
+            'condition' => 'required'
+        ]);
+        $data = $this->stock->create($validatedData);
+
+
+        return ($data);
     }
 }
