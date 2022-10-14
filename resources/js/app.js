@@ -26,13 +26,15 @@ require('./view/part/build');
 require('./view/part/segment');
 require('./view/admin/user');
 require('./view/warehouse');
-require('./view/transaction/stock');
+require('./view/transaction/IC/stock');
 
 require('./view/mini_stock');
 
 
 
 require('./view/category/detail');
+require('./view/transaction/IC/form');
+
 
 
 

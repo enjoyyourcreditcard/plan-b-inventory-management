@@ -123,6 +123,12 @@ export default class Api {
       });
   };
 
+  getRequestFormByGRF = (code) => {
+    return this.init()
+      .get(`grf/request/list/`+code)
+      .catch((error) => {
+      });
+  };
   // http://localhost:8000/api001~hajidalakhtar~ib~ix~2022
   getWarehouseApproved = () => {
     return this.init()
@@ -154,6 +160,8 @@ export default class Api {
       .catch((error) => {
       });
   };
+
+
 
 
 

@@ -67,9 +67,11 @@ class WarehouseTransactionService{
     public function handlePostApproveWH($req, $transactionService)
     {
         $grf = $this->grf->find($req->id);
-        $grf->status = "wh_approved";
-        $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
         $grf->wh_approved_date = Carbon::now();
+        $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
+        $grf->delivery_approved_date = Carbon::now();
+        $grf->status = "delivery_approved";
+
         $grf->save();
         return "success";
     }

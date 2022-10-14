@@ -786,27 +786,26 @@ function changeQtyIC(id, request_qty) {
         .get();
 
     var total = values.reduce(function (a, b) {
-        return parseInt(a) + parseInt(b);
+        return parseInt(a === "" ? 0 : a) + parseInt(b === "" ? 0 : b);
     });
 
-    console.log(request_qty < total);
-    console.log(request_qty);
-    console.log(total);
-    console.log(values);
+    $("#qty_input_" + id).text(total);
     if (request_qty < total) {
-        console.log("lebih1");
-
         if ($(".alert-" + id).length === 0) {
-            console.log("lebih2");
-
-            $("#quantityICApprove_" + id).append(
-                '<span class="text-danger alert-' +
+            $("#alert_" + id).append(
+                '<span class="text-danger mt-3 alert-' +
                     id +
-                    '">data tidak boleh lebih dari </span>'
+                    '">data tidak boleh lebih dari ' +
+                    request_qty +
+                    "</span>"
             );
+            $("#button_submit").attr("disabled", "disabled");
+            // button_submit
         }
     } else {
-        console.log("kurang");
+        $("#button_submit").removeAttr('disabled');
+
+        
         $(".alert-" + id).remove();
     }
 }

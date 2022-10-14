@@ -76,15 +76,9 @@
               </td>
               <td class="td-truncate">
                 <div class=" text-uppercase text-truncate">
-                  @if ($item->status == "wh_approved")
-                  <button type="button" class="btn btn-link  " style="padding-left:0px " data-toggle="modal"
-                    data-target="#generate_sj" data-id={{$item->id}}>
-                    {{$item->grf_code}}
-                  </button>
-                  @else
+               
                   <a
                     href="{{ Route('get.detail.grf',str_replace('/', '~', strtolower($item->grf_code)))}}">{{$item->grf_code}}</a>
-                  @endif
                 </div>
               </td>
               <td class="text-nowrap text-muted">28 Nov 2019</td>
