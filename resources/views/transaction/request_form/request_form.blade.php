@@ -151,13 +151,7 @@
       <div class="modal-body">
         <div class="modal-title">Pickup</div>
         <div>
-<<<<<<< HEAD
-              
-              Anda dapat mendownload Surat jalan <a href="" target="_blank">disinih</a>
-=======
               Anda dapat mendownload Surat jalan <a href="{{Route('view.surat.jalan',$requestForm->id)}}" target="_blank">disinih</a>
->>>>>>> 050f619bc5007ffd643848a5dbc7675f13980bac
-        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
