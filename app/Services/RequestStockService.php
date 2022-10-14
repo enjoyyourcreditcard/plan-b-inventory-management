@@ -21,6 +21,7 @@ class RequestStockService
     
     public function handleRequestStockByRequestForms($requestForms)
     {
+        // dd("asdasd");
 
         $requestStock = collect();
         // partid

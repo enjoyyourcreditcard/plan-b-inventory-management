@@ -2,23 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class RequestForm extends Model
+class TransferForm extends Model
 {
     use HasFactory;
 
-    protected $table = 'dbs_request_forms';
     protected $guarded = ['id'];
 
     public function part()
     {
         return $this->belongsTo(Part::class);
-    }
-    public function segment()
-    {
-        return $this->belongsTo(Segment::class);
     }
 
     public function grf ()
@@ -26,8 +21,8 @@ class RequestForm extends Model
         return $this->belongsTo(Grf::class);
     }
 
-    public function requestStocks ()
+    public function transferStocks ()
     {
-        return $this->hasMany(RequestStock::class);
+        return $this->hasMany(TransferStock::class);
     }
 }

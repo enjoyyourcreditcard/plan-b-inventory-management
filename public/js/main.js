@@ -179,27 +179,43 @@ $(".inputReturnStockSelect2").on("select2:select", function (e) {
     var data = e.params.data;
     var select = $(e.target);
 
-    if (data.id == "replace") {
-        select
-            .siblings(".return-stock-sncode-parent")
-            .append(
-                '<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form">'
-            );
-    } else {
-        select.siblings(".return-stock-sncode-parent").children().remove();
+    switch (data.id) {
+        case 'replace':
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input class="form-control return-stock-sncode mt-3" type="text" name="sn_code[]" placeholder="sn code.." form="return-stock-form" required>');
+            
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            break;
+            
+        case 'good':
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" class="return-stock-sncode" name="sn_code[]" form="return-stock-form">');
+
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" value="-" form="return-stock-form" readonly>');
+            break;
+            
+        default:
+            select.siblings('.return-stock-sncode-parent').children().remove();
+            select.siblings('.return-stock-sncode-parent').append('<input type="hidden" class="return-stock-sncode" name="sn_code[]" form="return-stock-form">');
+
+            select.parent().siblings('.return-stock-remarks-parent').children().remove();
+            select.parent().siblings('.return-stock-remarks-parent').append('<input class="form-control return-stock-remarks" type="text" name="remarks[]" placeholder="note.." form="return-stock-form" required>');
+            break;
     }
-});
+})
 
-$("#editCategoryModal").on("show.bs.modal", function (event) {
-    var button = $(event.relatedTarget);
-    var id = button.data("id");
-    var name = button.data("name");
-    var description = button.data("description");
-    var uom = button.data("uom");
-    var modal = $(this);
+$('#editCategoryModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var id = button.data('id')
+    var name = button.data('name')
+    var description = button.data('description')
+    var uom = button.data('uom')
+    var modal = $(this)
 
-    uomArray = uom.split(", ");
-    for (i = 0; i > uomArray.length; i++) {
+    uomArray = uom.split(', ');
+    for(i = 0; i > uomArray.length; i++){
         console.log(uomArray[i]);
     }
 
@@ -456,7 +472,61 @@ $(document).ready(function () {
         }
     });
 
-    $("#submitStoreCategory").click(function (e) {
+    $(document).on('change', '.return-stock-sncode, .inputReturnStockSelect2, .return-stock-remarks', function (event) {
+        event.preventDefault();
+
+        grfId = $('.grf-id').val();
+        grfCode = $('.grf-code').val();
+        oldSnCodes = $('.return-stock-oldsncode');
+        conditions = $('.inputReturnStockSelect2');
+        snCodes = $('.return-stock-sncode');
+        remarks = $('.return-stock-remarks');
+        request = [];
+        oldSnCodesArray = []; 
+        conditionsArray = []; 
+        snCodesArray = []; 
+        remarksArray = []; 
+
+        for (i = 0; i < oldSnCodes.length; i++) {
+            oldSnCodesArray[i] = $(oldSnCodes[i]).val()
+            conditionsArray[i] = $(conditions[i]).val()
+            snCodesArray[i] = $(snCodes[i]).val()
+            remarksArray[i] = $(remarks[i]).val()
+        }
+
+        request['old_sn_code'] = oldSnCodesArray; 
+        request['condition'] = conditionsArray; 
+        request['sn_code'] = snCodesArray; 
+        request['remarks'] = remarksArray; 
+
+        $.ajaxSetup({
+            url: '/return/' + grfId,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: 'post',
+            data: {
+                old_sn_code: oldSnCodesArray,
+                condition: conditionsArray,
+                sn_code: snCodesArray,
+                remarks: remarksArray,
+                isAjax: 'yep'
+            },
+            success: function () {
+                $.get('/ajax/return/' + grfCode, function (data) {
+                    $.each(data, function (key) {
+                        const tab = $('.return-stock-' + key + '-requirement');
+                        tab.html(data[key].length);
+                    })
+                });
+            }
+        });
+    });
+
+    $('#submitStoreCategory').click(function (e) {
         e.preventDefault();
         $.ajaxSetup({
             url: "/segment",
@@ -516,10 +586,51 @@ $(document).ready(function () {
     });
 });
 
-$(function () {
-    var userId = $(".user-id").data("user");
+$('.btn-input-sn').click(function(event){
+    var thisButton = event.currentTarget;
+    var transferFormsId = $(thisButton).data('transferformsid');
+    var grfId = $(thisButton).data('grfid');
+    var partId = $(thisButton).data('partid');
+    var partName = $(thisButton).data('partname');
+    var quantity = $(thisButton).data('quantity');
 
-    console.log(userId);
+    $('#piecesSnModal').on('show.bs.modal', function () {
+        $('#piecesSnModal .modal-body').children().remove();
+        
+        $('#piecesSnModal .modal-title').html(partName);
+
+        $('#piecesSnModal .modal-body').append(
+            '<input type="hidden" name="transfer_form_id" value="' + transferFormsId + '">' +
+            '<input type="hidden" name="grf_id" value="' + grfId + '">' +
+            '<input type="hidden" name="part_id" value="' + partId + '">' +
+            '<span class="card-title">SN Code</span>'
+        );
+
+        for (i = 0; i < quantity; i++) {
+            $('#piecesSnModal .modal-body').append(
+                '<div class="form-group row">' +
+                '<label for="staticEmail" class="col-sm-1 col-form-label">' + (i + 1) + '. </label>' +
+                '<div class="col-sm-11">' +
+                '<input type="text" class="form-control mb-3" name="sn_code[]" required>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+    });
+
+    $('#bulkSnModal').on('show.bs.modal', function () {
+        $('#bulkSnModal .bulk-hidden').children().remove();
+
+        $('#bulkSnModal .bulk-hidden').append(
+            '<input type="hidden" name="transfer_form_id" value="' + transferFormsId + '">' +
+            '<input type="hidden" name="grf_id" value="' + grfId + '">' +
+            '<input type="hidden" name="part_id" value="' + partId + '"></input>'
+        );
+    });
+});
+
+$(function () {
+    var userId = $('.user-id').data('user');
 });
 
 $("[data-countdown]").each(function () {
@@ -804,8 +915,6 @@ function changeQtyIC(id, request_qty) {
         }
     } else {
         $("#button_submit").removeAttr('disabled');
-
-        
         $(".alert-" + id).remove();
     }
 }

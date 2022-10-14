@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Grf;
 use App\Models\Part;
 use App\Models\RequestForm;
+use App\Models\Timeline;
 use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class TransactionService
 {
 
-    public function __construct(Grf $grf,Part $part, RequestForm $requestForm, Warehouse $warehouse)
+    public function __construct(Timeline $timeline, Grf $grf, Part $part, RequestForm $requestForm, Warehouse $warehouse)
     {
         $this->warehouse = $warehouse;
+        $this->timeline = $timeline;
         $this->grf = $grf;
         $this->part = $part;
         $this->requestForm = $requestForm;
@@ -25,17 +27,22 @@ class TransactionService
     {
         $grf = $this->grf->find($req->id);
         $grf->status = "ic_approved";
-        $grf->ic_approved_date = Carbon::now();
+        // $grf->ic_approved_date = Carbon::now();
         $grf->save();
+
+        $timeline = $this->timeline::create(['grf_id' => $req->id, 'status' => 'ic_approved']);
+        // dd($timeline);
+        // $timeline->status = 'ic_approved';
+        // $timeline->save();
 
         for ($i = 0; $i < count($req->part); $i++) {
             $segment_id = $this->part->find($req->part[$i])->segment_id;
             $requestForm = $this->requestForm->where('grf_id', $req->id)->where('segment_id', $segment_id)->whereNull('part_id')->first();
             if ($requestForm !== null) {
-                    $requestForm->part_id = $req->part[$i];
-                    $requestForm->quantity = $req->quantity[$i];
-                    $requestForm->save();
-            }else{
+                $requestForm->part_id = $req->part[$i];
+                $requestForm->quantity = $req->quantity[$i];
+                $requestForm->save();
+            } else {
                 $requestForm = new RequestForm();
                 $requestForm->grf_id = $req->id;
                 $requestForm->segment_id = $segment_id;
@@ -101,9 +108,10 @@ class TransactionService
 
     public function handleTimer()
     {
-        $deliveryApprovedDates = $this->grf->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['surat_jalan', '!=', null]])->get();
+        $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]])->get();
+
         $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
-            $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->delivery_approved_date)->addDay()->toDateTimeString();
+            $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->timelines->where('status', 'delivery_approved')->last()->created_at->addDay()->toDateTimeString());
         });
 
         return $deliveryApprovedDates;

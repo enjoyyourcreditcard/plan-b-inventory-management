@@ -21,13 +21,9 @@ class CreateGrvesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            $table->enum('status', ['draft', 'submited',"ic_approved",'wh_approved','delivery_approved','user_pickup','return','closed'])->default('draft'); //untuk sistem 
-            $table->timestamp('ic_approved_date')->nullable();
-            $table->timestamp('wh_approved_date')->nullable();
-            $table->timestamp('delivery_approved_date')->nullable();
-            $table->timestamp('user_pickup_date')->nullable();
-            $table->timestamp('return_date')->nullable();
-            $table->timestamp('closed_date')->nullable();
+            $table->string('warehouse_destination')->nullable();
+            $table->enum('type', ['request', 'transfer rekondisi', 'transfer gudang lama', 'transfer gudang baru'])->default('request');
+            $table->enum('status', ['draft', 'submited',"ic_approved",'wh_approved','delivery_approved','user_pickup','return', 'return_ic_approved', 'return_wh_approved','closed'])->default('draft'); //untuk sistem 
             $table->timestamps();
         });
     }
@@ -39,6 +35,6 @@ class CreateGrvesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grves');
+        Schema::dropIfExists('db_grfs');
     }
 }
