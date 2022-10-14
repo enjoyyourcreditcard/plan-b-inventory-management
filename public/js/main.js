@@ -809,3 +809,19 @@ function changeQtyIC(id, request_qty) {
         $(".alert-" + id).remove();
     }
 }
+
+$('.btn-repair').click(function (event) {
+    var thisButton = event.currentTarget;
+    var snCode = $(thisButton).data('sncode');
+
+    // console.log(snCode)
+
+    $('.form-repair').attr('action', '/rekondisigood/'+snCode);
+});
+
+$('.btn-reject').click(function (event) {
+    var thisButton = event.currentTarget;
+    var snCode = $(thisButton).data('sncode');
+
+    $('.form-reject').attr('action', '/rekondisigood/'+snCode);
+});

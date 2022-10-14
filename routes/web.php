@@ -220,5 +220,5 @@ Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnSto
 *--------------------------------------------------------------------------
 */
 
-Route::get('/rekondisi', [RekondisiController::class, 'index'])->name('get.rekondisi')->middleware("auth");
-Route::post('/rekondisigood', [RekondisiController::class, 'GoodConditionStock'])->name('post.rekondisi.good')->middleware("auth");
+Route::get('/rekondisi', [RekondisiController::class, 'show'])->name('get.rekondisi')->middleware("auth");
+Route::put('/rekondisigood/{id}', [RekondisiController::class, 'update'])->name('post.rekondisi.good')->middleware("auth");

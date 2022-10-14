@@ -95,7 +95,7 @@
                       class="btn w-100 float-left">Show</a>
 
                     @if ($requestForm->status == 'user_pickup' || $requestForm->status == 'user_pickup')
-                    <a href="{!! Route(" get.show.return.stock", ['code'=> str_replace('/', '~',
+                    <a href="{!! Route("get.show.return.stock", ['code'=> str_replace('/', '~',
                       strtolower($requestForm->grf_code))]) !!}" class="btn w-100 mt-2">Return</a>
                     @endIf
 
@@ -154,7 +154,7 @@
         <div class="modal-title">Pickup</div>
         <div>
               
-              Anda dapat mendownload Surat jalan <a href="">disinih</a>
+              Anda dapat mendownload Surat jalan <a href="" target="_blank">disinih</a>
         </div>
       </div>
       <div class="modal-footer">

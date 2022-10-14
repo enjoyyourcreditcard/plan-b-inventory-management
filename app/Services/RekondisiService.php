@@ -21,18 +21,27 @@ class RekondisiService
 
     public function handleGetConditionRequestStock()
     {
-        $rekondisis = $this->requestStock->with('part')->where('condition', 'not good')->orWhere('condition', 'replace')->get();
+        $rekondisis = $this->requestStock->with('part')->where('condition', 'not good')->orWhere('condition', 'replace')->orderBy('created_at','desc')->get();
+
         return($rekondisis);
     }
 
-    public function handlePostNewCodition(Request $request)
+    public function handlePostStockNewCodition($request, $id)
     {
-        $validatedData = $request->validate([
-            'condition' => 'required'
+
+        $stock = $this->stock->where('sn_code', $id)->first()->update([
+            'condition' => $request->condition,
+                    
         ]);
-        $data = $this->stock->create($validatedData);
+        if ($stock = true) {
+            $deactive = $this->requestStock->where('sn', $id)->create([
+                'status' => $request->session()->flash('done'),
+            ]);
+        } else {
+            $deactive = null;
+        }
+        dd($deactive);
+        return ResponseJSON($stock, 200);
 
-
-        return ($data);
     }
 }

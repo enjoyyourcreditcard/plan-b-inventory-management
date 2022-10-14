@@ -25,6 +25,7 @@ class CreateRequestStocksTable extends Migration
             $table->string('sn_return')->nullable();
             $table->string('condition')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('status')->default('undone');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class RekondisiController extends Controller
         $this->rekondisiService = $rekondisiService;
     }
 
-    public function index()
+    public function show()
     {
         $rekondisis = $this->rekondisiService->handleGetConditionRequestStock();
 
@@ -21,10 +21,10 @@ class RekondisiController extends Controller
         ]);
     }
 
-    public function GoodConditionStock(Request $request)
+    public function update(Request $request, $id)
     {
-        $this->rekondisiService->handlePostNewCodition($request);
+        $this->rekondisiService->handlePostStockNewCodition($request, $id);
 
-        return redirect('get.rekondisi');
+        return back();
     }
 }
