@@ -8,7 +8,7 @@
           <h3 class="card-title">Good Request Form</h3>
         </div>
         <div class="card-body">
-          <form action="/request-form/{{ $grf->id }}" method="POST">
+          <form action="{{Route('requester.post.add.item',$grf->id)}}" method="POST">
             @csrf
             <div class="form-group ">
               <label class="col-md-1 col-form-label text-nowrap">
@@ -144,7 +144,7 @@
                   @if ($grf->status == 'draft')
                   <td class="text-center">
                   
-                    <a href="/delete/request-form/{{ $requestForm->id }}" class="btn request-form-delete">
+                    <a href="{{ Route('requester.get.delete.item',$requestForm->id) }}" class="btn request-form-delete">
                       <svg xmlns="http://www.w3.org/2000/svg"
                           class="icon icon-tabler icon-tabler-trash mx-auto" width="24"
                           height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -208,7 +208,7 @@
           </div>
           @endif
         </div>
-        <form action="/request-form/{{ $grf->id }}" class="card-footer" method="POST">
+        <form action="{{Route('requester.put.update.status',$grf->id)}}" class="card-footer" method="POST">
           @csrf
           @method('PUT')
           <div class="d-flex justify-content-end gap-3">

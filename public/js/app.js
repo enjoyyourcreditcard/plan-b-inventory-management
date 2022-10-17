@@ -13253,7 +13253,7 @@ function WarehouseApproved() {
       Cell: function Cell(tableProps) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
-            href: "/warehouse/action/grf/" + tableProps.row.original.grf_code.replaceAll("/", "~"),
+            href: "/warehouse/show/" + tableProps.row.original.grf_code.replaceAll("/", "~"),
             className: "text-primary text-decoration-none ",
             children: [" \xA0", tableProps.row.original.grf_code]
           })

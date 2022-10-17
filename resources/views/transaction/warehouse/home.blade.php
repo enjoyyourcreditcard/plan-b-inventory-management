@@ -38,7 +38,7 @@
                                                 <td>{{ $data->grf_code }}</td>
                                                 <td>{{ $data->user->name }}</td>
 
-                                                <td><a href="{{Route('get.warehouse.show.action.grf', str_replace('/', '~', $data->grf_code) )}}"
+                                                <td><a href="{{Route('warehouse.get.detail', str_replace('/', '~', $data->grf_code) )}}"
                                                         class="btn btn-primary col-12"><b>CHECKLIST</b></a></td>
                                             </tr>
                                             @endforeach

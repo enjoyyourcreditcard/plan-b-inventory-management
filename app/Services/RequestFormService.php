@@ -32,13 +32,13 @@ class RequestFormService
     // Request Form SHOW
     public function handleAllRequestFormInbound()
     {
-        $requestForms = $this->grf->where('status','=','submited')->orWhere('status','=','ic_approved')->orWhere('status','=','wh_approved')->orWhere('status','=','delivery_approved')->orWhere('status','=','user_pickup')->get();
+        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->get();
         return ($requestForms);
     }
 
     public function handleAllRequestFormOutbound()
     {
-        $requestForms = $this->grf->where('status','=','return')->get();
+        $requestForms = $this->grf->where('status', '=', 'return')->get();
         return ($requestForms);
     }
 
@@ -111,7 +111,6 @@ class RequestFormService
         ]);
         $validatedData['user_id'] = Auth::user()->id;
         $this->grf->create($validatedData);
-
         return ('Data has been stored');
     }
 
@@ -145,7 +144,7 @@ class RequestFormService
     {
         $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
         $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request']])->get());
-        
+
         if ($grfs < 3) {
             $rawMonth = now()->format('m');
             $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
@@ -198,9 +197,6 @@ class RequestFormService
 
         return "success";
     }
-
-
-    
 }
 
 // pada saat surat jalan terprint itu sudah harus 

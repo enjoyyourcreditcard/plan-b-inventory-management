@@ -30,10 +30,15 @@ class WarehouseTransactionController extends Controller
     }
 
     public function index() {
+        // *: Get data untuk warehouse approv
         $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
+        // *: Get data untuk warehouse return
+        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
         return view('warehouse.home', [
             'whapproval' => $whapproval,
+            'whreturn' => $whreturn
         ]);
+
     }
 
     public function getAllWarehouseApproval()
@@ -41,13 +46,18 @@ class WarehouseTransactionController extends Controller
         return ResponseJSON($this->warehouseTransactionService->handleAllWhApproval(), 200);
     }
 
+    // *: Untuk show data approv
     public function show($id) {
-        // dd($id);
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
-
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
-        
         return view('warehouse.check_whapproval', compact('whapprov','requestForm'));
+    }
+
+    // *: Untuk show data return
+    public function showReturn($id) {
+        $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
+        $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
+        return view('warehouse.warehouse_return', compact('whreturn','requestForm'));
     }
 
     public function store(Request $request){
@@ -59,7 +69,7 @@ class WarehouseTransactionController extends Controller
     {
         $transactionService = $this->transactionService; 
         $this->warehouseTransactionService->handlePostApproveWH($request,$transactionService); 
-        return redirect()->route('get.warehouse.home');
+        return redirect()->route('warehouse.get.home');
     }
     public function updateImport(Request $request){
         // ! ! //

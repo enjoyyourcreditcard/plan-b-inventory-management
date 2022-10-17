@@ -55,15 +55,15 @@
         .select2-selection.select2-selection--single {
             height: 36px;
             border: 1px solid gainsboro;
-    }
+        }
 
-    trix-toolbar [data-trix-button-group="file-tools"] {
-        display: none;
-    }
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
 
-    trix-editor {
-		height: 200px !important;
-	}
+        trix-editor {
+            height: 200px !important;
+        }
 
         .modal-backdrop.show:nth-of-type(even) {
             z-index: 1051 !important;
@@ -398,7 +398,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('request-form*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{Route('get.requester.home')}}">
+                    <a class="nav-link" href="{{Route('requester.get.home')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24"
@@ -511,6 +511,15 @@
     <div class="page-wrapper">
 
         <div class="page-body" style="margin-left:20px;margin-right:20px ">
+            @if (Session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
+                {{-- <button type="button" class="close btn btn-danger" data-dismiss="alert" aria-label="Close"> --}}
+                    {{-- <span aria-hidden="true">&times;</span> --}}
+                    {{-- </button> --}}
+            </div>
+            {{-- <p class="text-danger"></p> --}}
+            @endif
             @yield("content")
         </div>
         <footer class="footer footer-transparent d-print-none">
@@ -573,7 +582,9 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js" integrity="sha512-lteuRD+aUENrZPTXWFRPTBcDDxIGWe5uu0apPEn+3ZKYDwDaEErIK9rvR0QzUGmUQ55KFE2RqGTVoZsKctGMVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"
+        integrity="sha512-lteuRD+aUENrZPTXWFRPTBcDDxIGWe5uu0apPEn+3ZKYDwDaEErIK9rvR0QzUGmUQ55KFE2RqGTVoZsKctGMVw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{asset('assets/js/tabler.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>

@@ -2,32 +2,32 @@
 
 namespace App\Services;
 
-use App\Models\HistoryPrice;
+use App\Models\Historyprice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class HistoryPriceService
+class HistorypriceService
 {
 
-    public function __construct(HistoryPrice $historyprice)
+    public function __construct(Historyprice $Historyprice)
     {
-        $this->historyprice = $historyprice;
+        $this->Historyprice = $Historyprice;
     }
 
-    public function handleAllHistoryPrice()
+    public function handleAllHistoryprice()
     {
-        $history_prices = $this->historyprice->latest()->paginate(5);
+        $history_prices = $this->Historyprice->latest()->paginate(5);
         return ($history_prices);
     }
 
 
-    public function handleGetHistoryPriceByPartId($part_id)
+    public function handleGetHistorypriceByPartId($part_id)
     {
-        $history_prices = $this->historyprice->where('part_id',$part_id)->paginate(5);
+        $history_prices = $this->Historyprice->where('part_id',$part_id)->paginate(5);
         return ($history_prices);
     }
     
-    public function handleStoreHistoryPrice(Request $request)
+    public function handleStoreHistoryprice(Request $request)
     {
         $validatedData = $request->validate([
             'part_id' => 'required',
@@ -35,7 +35,7 @@ class HistoryPriceService
 
         ]);
 
-        $history_price = $this->historyprice->create($validatedData);
+        $history_price = $this->Historyprice->create($validatedData);
         return ($history_price);
     }
 }

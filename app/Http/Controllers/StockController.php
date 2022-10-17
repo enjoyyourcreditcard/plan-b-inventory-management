@@ -6,13 +6,13 @@ use App\Services\NotificationService;
 use App\Services\PartService;
 use Illuminate\Http\Request;
 use App\Services\StockService;
-use App\Services\WareHouseService;
+use App\Services\WarehouseService;
 
 class StockController extends Controller
 {
-    public function __construct(StockService $stockService, WareHouseService $wareHouseService, PartService $partService, NotificationService $notificationService) {
+    public function __construct(StockService $stockService, WarehouseService $WarehouseService, PartService $partService, NotificationService $notificationService) {
         $this->stockService = $stockService;
-        $this->wareHouseService = $wareHouseService;
+        $this->WarehouseService = $WarehouseService;
         $this->partService = $partService;
         $this->notificationService = $notificationService;
         
@@ -21,7 +21,7 @@ class StockController extends Controller
 
     public function index() {
         $stocks = $this->stockService->handleAllStock();
-        $warehouse = $this->wareHouseService->handleAllWareHouse();
+        $warehouse = $this->WarehouseService->handleAllWareHouse();
         $parts = $this->partService->handleAllPart();
         $notifications =  $this->notificationService->handleAllNotification();
 

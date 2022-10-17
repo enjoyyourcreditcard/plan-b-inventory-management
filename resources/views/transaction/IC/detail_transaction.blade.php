@@ -31,7 +31,8 @@
                     @csrf
                     <div class="card-body">
 
-                        {{-- <div id="transaction-ic-form"  data-grfcode="{{str_replace('/', '~', strtolower($grf->grf_code))}}"></div> --}}
+                        {{-- <div id="transaction-ic-form"
+                            data-grfcode="{{str_replace('/', '~', strtolower($grf->grf_code))}}"></div> --}}
 
                         <p class="mb-0"><b> No. Grf: {{$grf->grf_code}}</b></p>
                         <p class=""><b>Created: {{$grf->created_at}}</b></p>
@@ -106,7 +107,7 @@
                                             </div>
                                         </td style="font-size: 12px ">
                                         <td class="text-center">
-                                            <a href="/delete/request-form/{{ $requestForm->id }}"
+                                            <a href="{{ Route('requester.get.delete.item',$requestForm->id) }}"
                                                 class="btn request-form-delete">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="icon icon-tabler icon-tabler-trash mx-auto" width="24"
@@ -173,7 +174,8 @@
                     </div>
 
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="submit" id="button_submit" class="btn btn-primary" {{ count($requestForms)> 0 ? null : 'disabled' }}>
+                        <button type="submit" id="button_submit" class="btn btn-primary" {{ count($requestForms)> 0 ?
+                            null : 'disabled' }}>
                             <input type="hidden" name="id" value="{{$grf->id}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"

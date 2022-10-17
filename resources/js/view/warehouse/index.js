@@ -57,7 +57,7 @@ function WarehouseApproved() {
                 style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: tableProps => (
                     <>
-                        <a href={"/warehouse/action/grf/" + tableProps.row.original.grf_code.replaceAll("/", "~")} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.grf_code}</a>
+                        <a href={"/warehouse/show/" + tableProps.row.original.grf_code.replaceAll("/", "~")} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.grf_code}</a>
                     </>
                 )
             }, {

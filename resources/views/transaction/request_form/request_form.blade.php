@@ -1,9 +1,7 @@
 @section('title', 'Home User')
 
 @extends('layouts.main') @section('content')
-<div class="container-fluid">
   <div class="row" style="margin: 0px">
-    <div class="container">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Good Request Form</h3>
@@ -14,6 +12,14 @@
               <div class="card-body">
                 <div class="row align-items-center justify-content-between gap-3">
                   <div class="col-auto">
+                    {{-- @if($errors->any())
+                    <h4>{{$errors->first()}}</h4>
+                    @endif --}}
+                    {{-- {{dd($errors)}} --}}
+                    {{-- {{ dd($errors->all()) }} --}}
+               
+
+
                     <h2 class="h3">Requestor memiliki maksimal 3 slot request sampai status request ditutup.</h2>
                     <p class="m-0 text-muted">Requestor dapat menekan tombol <b>Emergency Request</b>.</p>
                   </div>
@@ -34,7 +40,8 @@
           <div class="row row-cards mt-2">
             <div class="coba"></div>
             @foreach ($requestForms->where('type', 'request')->take(3) as $requestForm)
-            {{-- ============================================================= OCCUPIED SLOT ============================================================= --}}
+            {{-- ============================================================= OCCUPIED SLOT
+            ============================================================= --}}
             <div class="col-sm-6 col-lg-4">
               <div class="card card-md">
                 <div class="card-body text-center">
@@ -90,17 +97,17 @@
 
                   <div class="text-center mt-4">
 
-                    <a href="/request-form/{{ str_replace('/', '~', strtolower($requestForm->grf_code)) }}"
+                    <a href="{{ Route('requester.get.detail',str_replace('/', '~', strtolower($requestForm->grf_code))) }}"
                       class="btn w-100 float-left">Show</a>
 
                     @if ($requestForm->status == 'user_pickup' || $requestForm->status == 'user_pickup')
-                    <a href="{!! Route("get.show.return.stock", ['code'=> str_replace('/', '~',
+                    <a href="{!! Route(" get.show.return.stock", ['code'=> str_replace('/', '~',
                       strtolower($requestForm->grf_code))]) !!}" class="btn w-100 mt-2">Return</a>
                     @endIf
 
                     @if ($requestForm->status == 'delivery_approved')
-                    <a href="{{Route('view.surat.jalan',$requestForm->id)}}"
-                      class="btn w-100 mt-2" target="_blank">Download Surat jalan</a>
+                    <a href="{{Route('view.surat.jalan',$requestForm->id)}}" class="btn w-100 mt-2"
+                      target="_blank">Download Surat jalan</a>
                     <a href="#" class="btn w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modal-small">
                       Pickup
                     </a>
@@ -114,9 +121,11 @@
             </div>
             @endforeach
 
-            {{-- ============================================================= NEW SLOT ============================================================= --}}
-            @if (count($requestForms->where('type', 'request')->take(3)) < 3)
-            <form action="/request-form" method="POST" class="col-sm-6 col-lg-4 d-flex flex-column text-decoration-none">
+            {{-- ============================================================= NEW SLOT
+            ============================================================= --}}
+            @if (count($requestForms->where('type', 'request')->take(3)) < 3) <form
+              action="{{Route('requester.post.store.create.grf')}}" method="POST"
+              class="col-sm-6 col-lg-4 d-flex flex-column text-decoration-none">
               @csrf
               <button class="card card-md bg-light" style="flex-grow: 1">
                 <input type="hidden" name="grf_code" value="{{ $grf_code }}">
@@ -140,7 +149,6 @@
         </div>
       </div>
     </div>
-  </div>
 </div>
 
 
@@ -151,14 +159,15 @@
       <div class="modal-body">
         <div class="modal-title">Pickup</div>
         <div>
-              Anda dapat mendownload Surat jalan <a href="{{Route('view.surat.jalan',$requestForm->id)}}" target="_blank">disinih</a>
+          Anda dapat mendownload Surat jalan <a href="{{Route('view.surat.jalan',$requestForm->id)}}"
+            target="_blank">disinih</a>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-        <a href="{{Route('post.approve.pickup',$requestForm->id)}}" class="btn btn-danger" >Ya, Sudah melihat Sursat Jalan</a>
+        <a href="{{Route('post.approve.pickup',$requestForm->id)}}" class="btn btn-danger">Ya, Sudah melihat Sursat
+          Jalan</a>
       </div>
     </div>
   </div>
-</div>
 @endsection
