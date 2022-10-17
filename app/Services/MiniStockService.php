@@ -39,7 +39,7 @@ class MiniStockService
 
         return $miniStocks;
     }
-
+    
     /*
     |--------------------------------------------------------------------------
     | Mini Stock per User
@@ -50,7 +50,7 @@ class MiniStockService
         $miniStocks = $this->requestStock->with('grf', 'part', 'requestForm')->whereHas('grf', function ($query) {
             $query->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]]);
         })->get();
-
+        
         return $miniStocks;
     }
 

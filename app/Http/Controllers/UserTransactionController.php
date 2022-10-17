@@ -48,7 +48,7 @@ class UserTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Show Return Stock
+    *| Show Return Stockresources/views/transaction/return-stock.blade.php
     *|--------------------------------------------------------------------------
     */
     public function showReturnStock($code)
@@ -59,7 +59,9 @@ class UserTransactionController extends Controller
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
 
         // Return View
-        return view('transaction.return-stock', [
+        // return view('transaction.return-stock', [
+        //   View
+        return view ('transaction.return-stock', [
             'miniStocks' => $miniStocks,
             'requestForms' => $requestForms,
             'grf' => $grf,

@@ -919,34 +919,18 @@ function changeQtyIC(id, request_qty) {
     }
 }
 
-/*
-*|--------------------------------------------------------------------------
-*| Input Pieces Return Warehouse Javascript
-*|--------------------------------------------------------------------------
-*/
+$('.btn-repair').click(function (event) {
+    var thisButton = event.currentTarget;
+    var snCode = $(thisButton).data('sncode');
 
-$('.upload-return').on('click', function (event) {
-    const button = $(event.target);
-    const partIdReturn = button.data('partid');
-    const partNameReturn = button.data('partname');
-    const grfId = button.data('grfid');
-    const icQuantityReturn = button.data('icquantity');
-    const inputBulkPartId = $('#input-bulk-part-id');
-    const inputBulkGrfId = $('#input-bulk-grf-id');
-    const inputPiecesRequestFormId = $('.input-pieces-request-form-id');
-    const inputPiecesReturn = $('#input-pieces-return');
+    // console.log(snCode)
 
-    inputBulkPartId.val(partIdReturn);
-    inputBulkGrfId.val(grfId);
+    $('.form-repair').attr('action', '/rekondisigood/'+snCode);
+});
 
-    inputPiecesReturn.children().remove();
+$('.btn-reject').click(function (event) {
+    var thisButton = event.currentTarget;
+    var snCode = $(thisButton).data('sncode');
 
-    for (i = 0; i < icQuantityReturn; i++) {
-        $('#input-pieces-return').append(
-            '<input class="input-pieces-part-id" type="hidden" name="part_id" value="' + partIdReturn + '">'+
-            '<label class="input-pieces-part-name form-label">' + partNameReturn + '</label>'+
-            '<input class="input-pieces-form-id" type="hidden" name="request_form_id" value="' + grfId + '">'+
-            '<input type="text" class="form-control mb-3" name="sn_code[]" required="required">'
-        )
-    }
-})
+    $('.form-reject').attr('action', '/rekondisigood/'+snCode);
+});
