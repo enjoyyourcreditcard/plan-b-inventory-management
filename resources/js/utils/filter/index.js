@@ -2,6 +2,8 @@
 export default class Filter {
 
     search = (search, column, rawData) => {
+        // console.log(column);
+
         if (column === "brand" || column === "brand_name") {
             if (search === "All") {
                 return rawData;

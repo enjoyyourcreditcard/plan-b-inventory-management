@@ -1,23 +1,23 @@
 function Table(props) {
     return (
         <>
-            <div className="table-responsive mb-3">
+            <div className="">
                 <table
                     {...props.getTableProps()}
-                    className="table table-borderless"
+                    className="table table-report -mt-2"
                 >
                     <thead>
                         {props.headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column) => (
                                     <th
-                                        class="w-1"
+                                        class="whitespace-nowrap uppercase"
                                         {...column.getHeaderProps(
                                             column.getSortByToggleProps()
                                         )}
                                     >
-                                        <b>{column.render("Header")}</b>
-                                        <svg
+                                        {column.render("Header")}
+                                        {/* <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-sm text-dark icon-thick"
                                             width="24"
@@ -35,7 +35,7 @@ function Table(props) {
                                                 fill="none"
                                             ></path>
                                             <polyline points="6 15 12 9 18 15"></polyline>
-                                        </svg>
+                                        </svg> */}
                                     </th>
                                 ))}
                             </tr>
@@ -45,14 +45,23 @@ function Table(props) {
                         {props.page == "" ? (
                             <>
                                 <tr>
-                                    <td colspan="100%" style={{textAlign: "center"}}>No records found</td>
+                                    <td
+                                        colspan="100%"
+                                        style={{ textAlign: "center" }}
+                                    >
+                                        No records found
+                                    </td>
                                 </tr>
                             </>
                         ) : (
                             props.page.map((row, i) => {
                                 props.prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
+                                    // <tr class="intro-x">
+                                      
+                                    // </tr>
+                                    
+                                    <tr {...row.getRowProps()} class="intro-x">
                                         {row.cells.map((cell) => {
                                             return (
                                                 <td

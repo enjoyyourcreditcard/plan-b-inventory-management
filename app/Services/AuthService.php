@@ -36,7 +36,7 @@ class AuthService
         })->toArray();
         $request->session()->regenerate();
         $request->session()->get('token', $user->createToken('token-auth', $permission_user)->plainTextToken);
-        
+        // dd($request->session())
         return ResponseJSON([
             'user' => $user,
             // 'access_token' => $tokenResult,

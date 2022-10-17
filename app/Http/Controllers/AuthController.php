@@ -23,7 +23,9 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $this->authService->handleLogin($request);
-        return redirect()->back();
+        // dd(Auth::user());
+        return redirect('/part');
+
     }
 
 

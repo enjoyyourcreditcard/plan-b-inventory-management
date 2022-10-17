@@ -4,7 +4,7 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -12,28 +12,31 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
-require('./components/LatestPart');
-require('./view/part');
-require('./view/stock');
-require('./view/stock/warehouse');
+// require('./components/Example');
+// require('./components/LatestPart');
+// require('./view/part');
+// require('./view/stock');
+// require('./view/stock/warehouse');
 
 
-require('./view/part/detail');
-require('./view/part/category');
-require('./view/part/brand');
-require('./view/part/build');
-require('./view/part/segment');
-require('./view/admin/user');
-require('./view/warehouse');
-require('./view/transaction/IC/stock');
-
-require('./view/mini_stock');
+import './view/master/part';
 
 
+// require('./view/part/detail');
+// require('./view/part/category');
+// require('./view/part/brand');
+// require('./view/part/build');
+// require('./view/part/segment');
+// require('./view/admin/user');
+// require('./view/warehouse');
+// require('./view/transaction/IC/stock');
 
-require('./view/category/detail');
-require('./view/transaction/IC/form');
+// require('./view/mini_stock');
+
+
+
+// require('./view/category/detail');
+// require('./view/transaction/IC/form');
 
 
 

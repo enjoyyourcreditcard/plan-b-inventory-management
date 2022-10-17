@@ -43,7 +43,7 @@ class PartController extends Controller
         $segments = $this->segmentService->handleAllSegment();
         $part = $this->partService->handleAllPart();
         $notifications =  $this->notificationService->handleAllNotification();
-        return view('part.part', [
+        return view('master.part', [
             'notifications' => $notifications,
             'categories' => $categories,
             'brands' => $brands,

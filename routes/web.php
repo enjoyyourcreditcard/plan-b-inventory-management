@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Warehouse;
 
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 
-use App\Http\Controllers\HomeController;
+// use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
 // use App\Http\Controllers\WarehouseTransactionController;
@@ -37,6 +39,9 @@ use App\Http\Controllers\UserTransactionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Jangan di rubah
+Route::post('/api/login', [AuthController::class, 'login']);
 
 Route::get('/', function () {
     return view('layout.app');
@@ -265,3 +270,7 @@ Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnSto
 // // Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
 // Route::get('/ajax/return/{code}', [UserTransactionController::class, 'ajaxReturnStock'])->middleware("auth");
 // Route::post('/return/{id}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
+
+Auth::routes();
+
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
