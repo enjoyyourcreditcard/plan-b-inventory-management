@@ -39,6 +39,16 @@ use App\Http\Controllers\UserTransactionController;
 */
 
 Route::get('/', function () {
+    return view('layout.app');
+});
+
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
+
+Route::get('/', function () {
     return redirect()->to("/home");
 });
 
@@ -161,7 +171,6 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'excluded_middlewar
     Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-
 });
 
 
