@@ -13,7 +13,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <meta charset="utf-8">
-    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <link href="{{ Asset( "dist/images/logo.svg" ) }}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
         content="Tinker admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
@@ -38,7 +38,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @viteReactRefresh
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="{{ Asset( "dist/css/app.css" ) }}" />
     {{-- <link href="" rel="stylesheet"> --}}
 
 
@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="mobile-menu md:hidden">
         <div class="mobile-menu-bar">
             <a href="" class="flex mr-auto">
-                <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                <img alt="Midone - HTML Admin Template" class="w-6" src="{{ Asset( "dist/images/logo.svg" ) }}">
             </a>
             <a href="javascript:;" id="mobile-menu-toggler"> <i data-lucide="bar-chart-2"
                     class="w-8 h-8 text-white transform -rotate-90"></i> </a>
@@ -608,13 +608,13 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN: Side Menu -->
         <nav class="side-nav">
             <a href="" class="intro-x flex items-center pl-5 pt-4 mt-3">
-                <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                <img alt="Midone - HTML Admin Template" class="w-6" src="{{ Asset( "dist/images/logo.svg" ) }}">
                 <span class="hidden xl:block text-white text-lg ml-3"> Tinker </span>
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
                 <li>
-                    <a href="side-menu-light-inbox.html" class="side-menu side-menu--active">
+                    <a href="side-menu-light-inbox.html" class="side-menu">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                             <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
@@ -624,19 +624,19 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
             
                 <li>
-                    <a href="javascript:;" class="side-menu">
+                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : "" ) }}">
                         <div class="side-menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
                             <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                           </svg></div>
                         <div class="side-menu__title">
                             Transaksi
-                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ Route::currentRouteName() == "request.get.home" ? "transform rotate-180" : ( Route::currentRouteName() == "request.get.detail" ? "transform rotate-180" : "" ) }}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <polyline points="6 9 12 15 18 9"></polyline>
                              </svg> </div>
                         </div>
                     </a>
-                    <ul class="">
+                    <ul class="{{ Route::currentRouteName() == "request.get.home" ? "side-menu__sub-open" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu__sub-open" : "" ) }}">
                         <li>
                             <a href="index.html" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
@@ -644,7 +644,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             </a>
                         </li>
                         <li>
-                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ route('request.get.home') }}" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : "" ) }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
@@ -677,21 +677,21 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
               
                   <li>
-                    <a href="javascript:;" class="side-menu">
+                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == "part.get.home" ? "side-menu--active" : "" }}">
                         <div class="side-menu__icon">  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
                             <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"/>
                           </svg></div>
                         <div class="side-menu__title">
                             Master
-                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ Route::currentRouteName() == "part.get.home" ? "transform rotate-180" : "" }}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <polyline points="6 9 12 15 18 9"></polyline>
                              </svg> </div>
                         </div>
                     </a>
-                    <ul class="">
+                    <ul class="{{ Route::currentRouteName() == "part.get.home" ? "side-menu__sub-open" : "" }}">
                         <li>
-                            <a href="index.html" class="side-menu">
+                            <a href="{{ Route('part.get.home') }}" class="side-menu {{ Route::currentRouteName() == "part.get.home" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Part </div>
                             </a>
@@ -1085,7 +1085,7 @@ License: You must have a valid license purchased only from themeforest(the above
         src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
-    <script src="dist/js/app.js"></script>
+    <script src="{{ Asset( "dist/js/app.js" ) }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

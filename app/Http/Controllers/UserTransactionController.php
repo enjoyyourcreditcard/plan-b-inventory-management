@@ -14,6 +14,7 @@ use App\Services\NotificationService;
 use App\Services\SegmentService;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
 
 class UserTransactionController extends Controller
 {
@@ -28,23 +29,31 @@ class UserTransactionController extends Controller
         $this->miniStockService = $miniStockService;
     }
 
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| Index Request Form
+    *| Shows user's request main page
     *|--------------------------------------------------------------------------
     */
     public function index()
     {
-        $notifications =  $this->notificationService->handleAllNotification();
-        $requestForms = $this->requestFormService->handleGetByUserRequestForm();
-        $grf_code = $this->requestFormService->handleGenerateGrfCode();
-
-        return view('transaction.request_form.request_form', [
-            'notifications' => $notifications,
-            'requestForms' => $requestForms,
-            'grf_code' => $grf_code
-        ]);
+        try {
+            $notifications =  $this->notificationService->handleAllNotification();
+            $grf_code = $this->requestFormService->handleGenerateGrfCode();
+            $grfs = $this->requestFormService->handleGetAllGrfByUser();
+            
+            return view('request.request', [
+                'notifications' => $notifications,
+                'grf_code' => $grf_code,
+                'grfs' => $grfs
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
+
+    
 
     /*
     *|--------------------------------------------------------------------------
@@ -59,8 +68,6 @@ class UserTransactionController extends Controller
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
 
         // Return View
-        // return view('transaction.return-stock', [
-        //   View
         return view ('transaction.return-stock', [
             'miniStocks' => $miniStocks,
             'requestForms' => $requestForms,
@@ -85,65 +92,93 @@ class UserTransactionController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Create Request Form
+    | Shows a request form and item list
     |--------------------------------------------------------------------------
     */
     public function create($code)
     {
-        // Services
-        $notifications =  $this->notificationService->handleAllNotification();
-        $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $timeline = $this->requestFormService->handleTimelineGrf($grf);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
-        $brands = $this->brandService->handleGetAllBrand();
-        $segment = $this->segmentService->handleAllSegment();
-        $warehouses = $this->warehouseService->handleAllWareHouse();
-        // dd($requestForms);
+        try {
+            $notifications =  $this->notificationService->handleAllNotification();
+            $grf = $this->requestFormService->handleGetCurrentGrf($code);
+            $warehouses = $this->warehouseService->handleAllWareHouse();
+            $brands = $this->brandService->handleGetAllBrand();
+            $segments = $this->segmentService->handleAllSegment();
+            $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
+            return view( "request.show", [
+                'notifications' => $notifications,
+                'grf' => $grf,
+                'warehouses' => $warehouses,
+                'brands' => $brands,
+                'segments' => $segments,
+                'requestForms' => $requestForms,
+            ] );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
 
-        return view('transaction.request_form.create', [
-            'notifications' => $notifications,
-            'requestForms' => $requestForms,
-            'segment' => $segment,
-            'brands' => $brands,
-            'warehouses' => $warehouses,
-            'grf' => $grf
-        ]);
+        // $timeline = $this->requestFormService->handleTimelineGrf($grf);
     }
+
+
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store Request Form
+    *| Adding requested item into the list
     *|--------------------------------------------------------------------------
     */
     public function storeAddItem(Request $request, $id)
     {
-        // Services
-        $this->requestFormService->handleStore($request, $id);
-
-        // Return View
-        return redirect()->back();
-    }
-
-    /*
-    *|--------------------------------------------------------------------------
-    *| Store GRF Draft Request Form
-    *|--------------------------------------------------------------------------
-    */
-    public function storeCreateGrf(Request $request)
-    {
-        // Services
         try {
-            $this->requestFormService->handleStoreGrf($request);
-            return redirect()->route('requester.get.detail', str_replace('/', '~', strtolower($request->grf_code)));
+            $this->requestFormService->handleStore($request, $id);
+
+            return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
 
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| Update Status Request Form
+    *| Create a new grf for new request
+    *|--------------------------------------------------------------------------
+    */
+    public function storeCreateGrf(Request $request)
+    {
+        try {
+            $this->requestFormService->handleStoreGrf($request);
+            return redirect()->route( 'request.get.detail', str_replace( '/', '~', strtolower( $request->grf_code ) ) );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change warehouse location
+    *|--------------------------------------------------------------------------
+    */
+    public function changeWarehouse(Request $request, $id)
+    {
+        try {
+            $this->requestFormService->handleChangeWarehouseLocation($request, $id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Submit the request
     *|--------------------------------------------------------------------------
     */
     public function changeStatusToSubmit(Request $request, $id)
@@ -154,7 +189,6 @@ class UserTransactionController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
-       
     }
 
     /*
@@ -169,18 +203,22 @@ class UserTransactionController extends Controller
         return redirect()->route('requester.get.home');
     }
 
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| Delete Request Form
+    *| Delete selected item on the list
     *|--------------------------------------------------------------------------
     */
     public function destroy($id)
     {
-        // Services
-        $this->requestFormService->handleDeleteRequestForm($id);
+        try {
+            $this->requestFormService->handleDeleteRequestForm($id);
 
-        // Return View
-        return redirect()->back();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
     /*
     *|--------------------------------------------------------------------------

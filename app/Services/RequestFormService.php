@@ -42,27 +42,40 @@ class RequestFormService
         return ($requestForms);
     }
 
-    // public function handleAllRequestFormExceptStatus($status)
-    // {
-    //     $requestForms = $this->grf->where('status','!=',$status)->get();
-    //     return ($requestForms);
-    // }
 
-    // Request Form By User
-    public function handleGetByUserRequestForm()
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get all grf data by it's user
+    *|--------------------------------------------------------------------------
+    */
+    public function handleGetAllGrfByUser()
     {
-        $requestForms = $this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed']])->with('requestForms')->get();
-        $requestForms->map(function ($requestForm) {
-            $requestForm['ended'] = ($requestForm->delivery_approved_date == null ? null : Carbon::create($requestForm->delivery_approved_date)->addDay()->toDateTimeString());
+        $grfs = $this->grf->where([ ['user_id', Auth::user()->id], ['type', 'request'] ])->with('requestForms')->get();
+
+        $grfs->map(function ($grf) {
+            $grf['ended'] = ($grf->delivery_approved_date == null ? null : Carbon::create($grf->delivery_approved_date)->addDay()->toDateTimeString());
+
+            $grf['total_quantity'] = 0;
+
+            $grf->requestForms->map( function ($requestForm) use ($grf) {
+                $grf['total_quantity'] += $requestForm->quantity;
+            });
         });
-        return ($requestForms);
+
+        return ($grfs);
     }
 
-    // Request Form Current GRF
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get the current user's GRF
+    *|--------------------------------------------------------------------------
+    */
     public function handleGetCurrentGrf($code)
     {
-        $grf = $this->grf->with('timelines')->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
-        return ($grf);
+        $grf = $this->grf->with( 'timelines', 'user' )->where( 'grf_code', '=', str_replace( '~', '/', strtoupper( $code ) ) )->first();
+
+        return ( $grf );
     }
 
     // Request Form Has GRF_Code
@@ -72,33 +85,55 @@ class RequestFormService
         return ($exist);
     }
 
-    // Request Form STORE 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store a requested item into the list 
+    *|--------------------------------------------------------------------------
+    */
     public function handleStore($request, $id)
     {
-        if ($this->grf->find($id)->warehouse_id != $request->warehouse_id) {
+        if ( isset( $request->warehouse_id ) ) {
             $validatedWarehouse_id = $request->validate([
                 'warehouse_id' => 'required',
-                'warehouse_destination' => 'nullable',
             ]);
-            $this->grf->find($id)->update($validatedWarehouse_id);
-        }
 
-        if ($this->grf->find($id)->warehouse_destination != $request->warehouse_destination) {
-            $validatedWarehouse_destination = $request->validate([
-                'warehouse_destination' => 'required',
-            ]);
-            $this->grf->find($id)->update($validatedWarehouse_destination);
+            $this->grf->find( $id )->update( $validatedWarehouse_id );
         }
-
+         
         $validatedData = $request->validate([
+            'brand_id' => 'required',
             'segment_id' => 'required',
             'quantity' => 'required|integer',
             'remarks' => 'nullable',
         ]);
-        $validatedData['grf_id'] = $this->grf->find($id)->id;
-        $this->requestForm->create($validatedData);
 
-        return ('Data has been stored');
+        $validatedData['grf_id'] = $this->grf->find( $id )->id;
+
+        $data = $this->requestForm->create( $validatedData );
+
+        return ( $data );
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change the warehouse id in GRF table
+    *|--------------------------------------------------------------------------
+    */
+    public function handleChangeWarehouseLocation($request, $id)
+    {
+        $validatedData = $request->validate( [ "warehouse_id" => "required" ] );
+        
+        $this->requestForm->where( "grf_id", $id )->get()->map( function ($itemList) {
+            $itemList->delete();
+        } );
+
+        $this->grf->find( $id )->update( $validatedData );
+
+        return ( $data );
     }
 
     // Request Form STORE 
@@ -114,15 +149,24 @@ class RequestFormService
         return ('Data has been stored');
     }
 
-    // Request Form UPDATE 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change the GRF status to submited
+    *|--------------------------------------------------------------------------
+    */
     public function handleUpdateRequestForm($request, $id)
     {
-        $validatedData = $request->validate([
-            'status' => 'required',
-            'grf_id' => 'required'
-        ]);
-        $this->grf->find($id)->update($validatedData);
-        $this->timeline->create($validatedData);
+        $data = [
+            "grf_id" => $id,
+            "status" => "submited",
+        ];
+
+        $this->grf->find($id)->update($data);
+        
+        $this->timeline->create($data);
+        
         return ('Data has been updated');
     }
 
