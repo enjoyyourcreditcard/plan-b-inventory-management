@@ -42,11 +42,13 @@ class UserTransactionController extends Controller
             $notifications =  $this->notificationService->handleAllNotification();
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
+            $chartDatas = $this->requestFormService->handleChartDatas();
             
             return view('request.request', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
-                'grfs' => $grfs
+                'grfs' => $grfs,
+                "chartDatas" => $chartDatas
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());

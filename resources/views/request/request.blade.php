@@ -169,7 +169,7 @@
                                     
                             @endswitch
                         </div>
-                        <div class="text-3xl font-medium leading-8 mt-6"> {{ $grf->total_quantity }} <span class="text-xl">Items</span></div>
+                        <div class="text-3xl font-medium leading-8 mt-6"> {{ $grf->total_quantity }} <span class="text-xl">Item</span></div>
                         <div class="flex justify-between items-center">
                             <div class="text-base text-slate-500 mt-1"> {{ $grf->grf_code }} </div>
                             <div class="dropdown">
@@ -419,22 +419,27 @@
             <a href="" class="ml-auto text-primary truncate">Show More</a>
         </div>
         <div class="intro-y h-full box p-5 mt-5">
-            <canvas class="mt-3" id="report-pie-chart" height="300"></canvas>
+            <canvas class="mt-3" id="report-used-item" height="300"></canvas>
             <div class="mt-8">
                 <div class="flex items-center">
                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                     <span class="truncate">Good condition</span>
-                    <span class="font-medium xl:ml-auto">62%</span>
+                    <span class="font-medium xl:ml-auto condition-percentage" data-precentage="{{ $chartDatas[ "good" ] }}">{{ $chartDatas[ "requestStocks" ]->where( "condition", "good" )->count() }} Item</span>
                 </div>
                 <div class="flex items-center mt-4">
                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
                     <span class="truncate">Not good</span>
-                    <span class="font-medium xl:ml-auto">33%</span>
+                    <span class="font-medium xl:ml-auto condition-percentage" data-precentage="{{ $chartDatas[ "not_good" ] }}">{{ $chartDatas[ "requestStocks" ]->where( "condition", "not good" )->count() }} Item</span>
                 </div>
                 <div class="flex items-center mt-4">
                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
                     <span class="truncate">Used</span>
-                    <span class="font-medium xl:ml-auto">10%</span>
+                    <span class="font-medium xl:ml-auto condition-percentage" data-precentage="{{ $chartDatas[ "used" ] }}">{{ $chartDatas[ "requestStocks" ]->where( "condition", "used" )->count() }} Item</span>
+                </div>
+                <div class="flex items-center mt-4">
+                    <div class="w-2 h-2 bg-slate-300 rounded-full mr-3"></div>
+                    <span class="truncate">Replace</span>
+                    <span class="font-medium xl:ml-auto condition-percentage" data-precentage="{{ $chartDatas[ "replace" ] }}">{{ $chartDatas[ "requestStocks" ]->where( "condition", "replace" )->count() }} Item</span>
                 </div>
             </div>
         </div>

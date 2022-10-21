@@ -8,15 +8,18 @@ use App\Models\Part;
 use App\Models\Timeline;
 use App\Models\RequestForm;
 use Illuminate\Support\Arr;
+use App\Models\RequestStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class RequestFormService
 {
 
-    public function __construct(RequestForm $requestForm, Grf $grf, Timeline $timeline)
+    public function __construct(RequestForm $requestForm, RequestStock $requestStock, Grf $grf, Timeline $timeline)
     {
         $this->requestForm = $requestForm;
+        $this->requestStock = $requestStock;
         $this->grf = $grf;
         $this->timeline = $timeline;
     }
@@ -66,6 +69,8 @@ class RequestFormService
         return ($grfs);
     }
 
+
+    
     /*
     *|--------------------------------------------------------------------------
     *| Get the current user's GRF
@@ -184,6 +189,35 @@ class RequestFormService
         $this->timeline->create($data);
         
         return ('Data has been updated');
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get request chart data by user
+    *|--------------------------------------------------------------------------
+    */
+    public function handleChartDatas()
+    {
+        $requestStocks = $this->requestStock->with( "grf" )->whereHas( "grf", function ( Builder $query ) {
+            $query->where( "user_id", Auth::user()->id );
+        } )->get();
+
+        function chart ( $condition, $requestStocks ) {
+            $calc = count( $condition ) / count( $requestStocks );
+            return ( $calc * 100 );
+        }
+
+        $chartDatas = [
+            "good" => chart( $requestStocks->where( "condition", "good"), $requestStocks ),
+            "not_good" => chart( $requestStocks->where( "condition", "not good"), $requestStocks ),
+            "used" => chart( $requestStocks->where( "condition", "used"), $requestStocks ),
+            "replace" => chart( $requestStocks->where( "condition", "replace"), $requestStocks ),
+            "requestStocks" => $requestStocks
+        ];
+
+        return ( $chartDatas );
     }
 
     // Request Form DELETE 
