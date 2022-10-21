@@ -136,7 +136,13 @@ class RequestFormService
         return ( $data );
     }
 
-    // Request Form STORE 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store a new GRF to GRF table
+    *|--------------------------------------------------------------------------
+    */
     public function handleStoreGrf($request)
     {
         $validatedData = $request->validate([
@@ -144,8 +150,18 @@ class RequestFormService
             'warehouse_id' => 'nullable',
             'type' => 'nullable',
         ]);
+
         $validatedData['user_id'] = Auth::user()->id;
-        $this->grf->create($validatedData);
+
+        $createdData = $this->grf->create($validatedData);
+
+        $timeLine = [
+            "status" => "draft",
+            "grf_id" => $createdData->id,
+        ];
+        
+        $this->timeline->create($timeLine);
+        
         return ('Data has been stored');
     }
 

@@ -116,8 +116,6 @@ class UserTransactionController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
-
-        // $timeline = $this->requestFormService->handleTimelineGrf($grf);
     }
 
 

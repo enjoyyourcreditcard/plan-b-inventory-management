@@ -355,76 +355,249 @@
                 <h2 class="text-lg font-medium truncate mr-5">Timeline</h2>
             </div>
             <div class="mt-5 relative before:block before:absolute before:w-px before:h-[85%] before:bg-slate-200 before:dark:bg-darkmode-400 before:ml-5 before:mt-5">
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static return
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "return" ) )
                 <div class="intro-x relative flex items-center mb-3">
                     <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
-                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                            <img alt="Midone - HTML Admin Template" src="http://tinker.left4code.com/dist/images/profile-5.jpg">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right w-4 h-4" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                            </svg>
                         </div>
                     </div>
                     <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                         <div class="flex items-center">
-                            <div class="font-medium">Al Pacino</div>
-                            <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                            <div class="font-medium text-slate-400">Return</div>
                         </div>
-                        <div class="text-slate-500 mt-1">Has joined the team</div>
                     </div>
                 </div>
+                @endIf
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static picked up
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "user_pickup" ) )
                 <div class="intro-x relative flex items-center mb-3">
                     <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
-                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                            <img alt="Midone - HTML Admin Template" src="http://tinker.left4code.com/dist/images/profile-5.jpg">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2 w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z"/>
+                            </svg>
                         </div>
                     </div>
                     <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                         <div class="flex items-center">
-                            <div class="font-medium">Kevin Spacey</div>
-                            <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
-                        </div>
-                        <div class="text-slate-500">
-                            <div class="mt-1">Added 3 new photos</div>
-                            <div class="flex mt-2">
-                                <div class="tooltip w-8 h-8 image-fit mr-1 zoom-in">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-md border border-white" src="http://tinker.left4code.com/dist/images/preview-3.jpg">
-                                </div>
-                                <div class="tooltip w-8 h-8 image-fit mr-1 zoom-in">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-md border border-white" src="http://tinker.left4code.com/dist/images/preview-8.jpg">
-                                </div>
-                                <div class="tooltip w-8 h-8 image-fit mr-1 zoom-in">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-md border border-white" src="http://tinker.left4code.com/dist/images/preview-15.jpg">
-                                </div>
-                            </div>
+                            <div class="font-medium text-slate-400">Picked up</div>
                         </div>
                     </div>
                 </div>
-                <div class="intro-x text-slate-500 text-xs text-center my-4">12 November</div>
+                @endIf
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static deliver
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "delivery_approved" ) )
                 <div class="intro-x relative flex items-center mb-3">
                     <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
-                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                            <img alt="Midone - HTML Admin Template" src="http://tinker.left4code.com/dist/images/profile-1.jpg">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                            </svg>
                         </div>
                     </div>
                     <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                         <div class="flex items-center">
-                            <div class="font-medium">Tom Cruise</div>
-                            <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                            <div class="font-medium text-slate-400">Deliver</div>
                         </div>
-                        <div class="text-slate-500 mt-1">Has changed <a class="text-primary" href="">Sony Master Series A9G</a> price and description</div>
                     </div>
                 </div>
+                @endIf
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static on prgress out
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "ic_approved" ) )
                 <div class="intro-x relative flex items-center mb-3">
                     <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
-                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                            <img alt="Midone - HTML Admin Template" src="http://tinker.left4code.com/dist/images/profile-5.jpg">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                            </svg>
                         </div>
                     </div>
                     <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
                         <div class="flex items-center">
-                            <div class="font-medium">Al Pacino</div>
-                            <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                            <div class="font-medium text-slate-400">On progress out</div>
                         </div>
-                        <div class="text-slate-500 mt-1">Has changed <a class="text-primary" href="">Apple MacBook Pro 13</a> description</div>
                     </div>
                 </div>
+                @endIf
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static Submited
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "submited" ) )
+                <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-check w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                        <div class="flex items-center">
+                            <div class="font-medium text-slate-400">Submited</div>
+                        </div>
+                    </div>
+                </div>
+                @endIf
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Static new
+                |--------------------------------------------------------------------------
+                / * --}}
+                @if ( !$grf->timelines->contains( "status", "draft" ) )
+                <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border bg-white text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                        <div class="flex items-center">
+                            <div class="font-medium text-slate-400">New</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @foreach ($grf->timelines->where( "status", "!=", "wh_approved" )->where( "status", "!=", "return_ic_approved" )->where( "status", "!=", "return_wh_approved" )->sortDesc() as $timeline)
+
+
+
+                {{-- * / 
+                |--------------------------------------------------------------------------
+                |  Dynamic timeline
+                |--------------------------------------------------------------------------
+                / * --}}
+                <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border {{ $loop->first == true ? "text-slate-50 bg-emerald-700" : "bg-slate-50 text-emerald-700" }}">
+
+                            @switch($timeline->status)
+
+                                @case('draft')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil w-4 h-4" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                    @break
+
+                                @case('submited')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-check w-4 h-4" viewBox="0 0 16 16">
+                                        <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                                        <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+                                    </svg>
+                                    @break
+
+                                @case('ic_approved')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist w-4 h-4" viewBox="0 0 16 16">
+                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                    @break
+                                    
+                                @case('delivery_approved')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck w-4 h-4" viewBox="0 0 16 16">
+                                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                    </svg>
+                                    @break
+                                    
+                                @case('user_pickup')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2 w-4 h-4" viewBox="0 0 16 16">
+                                        <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z"/>
+                                    </svg>
+                                    @break
+
+                                @case('return')
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right w-4 h-4" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                                    </svg>
+                                    
+                                @default
+
+                            @endswitch
+                                    
+                        </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                        <div class="flex items-center">
+
+                            @switch($timeline->status)
+
+                                @case('draft')
+                                    <div class="font-medium">New</div>
+                                    @break
+
+                                @case('submited')
+                                    <div class="font-medium">Submited</div>
+                                    @break
+
+                                @case('ic_approved')
+                                    <div class="font-medium">On progress out</div>
+                                    @break
+                                    
+                                @case('delivery_approved')
+                                    <div class="font-medium">Deliver</div>
+                                    @break
+                                    
+                                @case('user_pickup')
+                                    <div class="font-medium">Picked up</div>
+                                    @break
+
+                                @case('return')
+                                    <div class="font-medium">Return</div>
+                                    @break
+
+                                @default
+                                    
+                            @endswitch
+
+                            <div class="text-xs text-slate-500 ml-auto">{{ $timeline->created_at->format( "g:i A" ) }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endForeach
+
             </div>
         </div>
         @endif
@@ -467,7 +640,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center capitalize">{{ 'brand..' }}</td>
+                            <td class="text-center capitalize">{{ $requestForm->brand->name }}</td>
                             <td class="text-center">{{ $requestForm->quantity }} Items</td>
                             <td>{{ $requestForm->remarks !== null ? $requestForm->remarks : '-' }}</td>
 
