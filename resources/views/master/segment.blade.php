@@ -9,10 +9,15 @@
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10">Stock</h2>
+<h2 class="intro-y text-lg font-medium mt-10">Master Segment</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
-    <div id="page-stock" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+
+
+    <div id="master-segment" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+
+
+
 
 
     <!-- END: Data List -->

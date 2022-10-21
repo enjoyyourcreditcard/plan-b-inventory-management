@@ -27,7 +27,7 @@ use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-// use App\Http\Controllers\WarehouseTransactionController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,7 @@ Route::get('/', function () {
 Route::get('/welcome', function () {
     return view('welcome');
 });
+Auth::routes();
 
 
 Route::get('/', function () {
@@ -61,6 +62,7 @@ Route::get('/suratjalan/{grf}', [TransactionController::class, 'ViewSuratJalanPD
 
 
 // suratjalan/1
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -89,32 +91,48 @@ Route::get('/suratjalan/{grf}', [TransactionController::class, 'ViewSuratJalanPD
 
 /* 
 *|--------------------------------------------------------------------------
-*|  Part Routes 
+*|  Master Routes 
 *|--------------------------------------------------------------------------
 */
-Route::resource('/part', PartController::class)->middleware("auth");
 
-Route::get('/ajax/part', [PartController::class, 'ajaxIndex'])->middleware("auth");
+
+// * Part 
+Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth']], function () {
+    Route::get('/', [PartController::class, 'index'])->name("view.home");
+    Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
+    Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
+    Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
+    Route::post('/', [PartController::class, 'store'])->name("store");
+});
+
+
+// * Brand 
+Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth']], function () {
+    Route::get('/', [BrandController::class, 'index'])->name('get.view')->middleware("auth");
+    Route::post('/', [BrandController::class, 'store'])->name('post');
+    Route::post('/update', [CategoryController::class, 'update'])->name('post.update');
+});
+
+
+
 Route::post('/historyprice', [HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
 Route::post('/brand', [BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
-Route::get('/stock', [StockController::class, 'index'])->middleware("auth");
-Route::post('/stock', [StockController::class, 'store'])->name('post.store.stock')->middleware("auth");
-Route::put('/stock/{id}', [StockController::class, 'put'])->name('put.update.stock')->middleware("auth");
-Route::delete('/stock/{id}', [StockController::class, 'destroy'])->name('delete.destroy.stock')->middleware("auth");
-
-Route::post('/brand/update', [CategoryController::class, 'update'])->name('post.update.brand')->middleware("auth");
-Route::get('/part/deactive/{id}', [PartController::class, 'deactive'])->name('post.deactive.part')->middleware("auth");
-
-
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
-Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category')->middleware("auth");
-Route::get('/category/{id}', [CategoryController::class, 'show'])->middleware("auth");
-Route::post('/category/update', [CategoryController::class, 'update'])->name('post.update.category')->middleware("auth");
+
+//* Category 
+Route::group(['prefix' => 'category', 'as' => 'category.', 'middleware' => ['auth']], function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('get.view');
+    Route::get('/{id}', [CategoryController::class, 'show'])->name('get.detail');
+    Route::post('/', [CategoryController::class, 'store'])->name('post');
+    Route::post('/update', [CategoryController::class, 'update'])->name('post.update');
+});
 
 
+// * Segment 
 Route::resource('/segment', SegmentController::class)->middleWare('auth');
 
 
+// * Notifikasi 
 Route::get('/notification/delete/{id}', [NotificationController::class, 'destroy'])->name('post.delete.notif')->middleware("auth");
 Route::get('/notification', [NotificationController::class, 'index'])->name('get.index.notif')->middleware("auth");
 
@@ -137,10 +155,12 @@ Route::get('/transaction', [TransactionController::class, 'index'])->middleware(
 *|--------------------------------------------------------------------------
 */
 
-Route::get('/build', [BuildController::class, 'index']);
-Route::post('/build', [BuildController::class, 'store']);
-Route::put('/build/{id}', [BuildController::class, 'update']);
-Route::delete('/build/{id}', [BuildController::class, 'delete']);
+Route::group(['prefix' => 'build', 'as' => 'build.', 'middleware' => ['auth']], function () {
+    Route::get('/', [BuildController::class, 'index'])->name('get.home');
+    Route::post('/', [BuildController::class, 'store'])->name('post');
+    Route::put('/{id}', [BuildController::class, 'update'])->name('put');
+    Route::delete('/{id}', [BuildController::class, 'delete'])->name('delete');
+});
 
 
 
@@ -151,9 +171,12 @@ Route::delete('/build/{id}', [BuildController::class, 'delete']);
 * Stock Routes
 *--------------------------------------------------------------------------
 */
-Auth::routes();
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], function () {
+    Route::get('/', [StockController::class, 'index'])->name('get.home');
+    Route::post('/', [StockController::class, 'store'])->name('post.store');
+    Route::put('/{id}', [StockController::class, 'put'])->name('put.detail');
+    Route::delete('/{id}', [StockController::class, 'destroy'])->name('delete.detail');
+});
 
 
 
@@ -173,6 +196,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 
 Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'excluded_middleware' => ['web']], function () {
+    Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
     Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
@@ -198,7 +222,7 @@ Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::
 *--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'request-form', 'as' => 'requester.', 'excluded_middleware' => ['web']], function () {
+Route::group(['prefix' => 'request-form', 'as' => 'requester.', 'middleware' => ['auth']], function () {
     Route::get('/', [UserTransactionController::class, 'index'])->name('get.home');
     Route::get('/show/{grf_code}', [UserTransactionController::class, 'create'])->name('get.detail');
     Route::get('/delete/{code}', [UserTransactionController::class, 'destroy'])->name("get.delete.item");

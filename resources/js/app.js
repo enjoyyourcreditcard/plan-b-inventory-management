@@ -3,7 +3,7 @@
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
-
+//  import '../css/app.css'; 
 // require('./bootstrap');
 
 /**
@@ -20,6 +20,11 @@
 
 
 import './view/master/part';
+import './view/master/segment';
+import './view/master/category';
+import './view/master/brand';
+import './view/master/warehouse';
+import './view/stock/stock';
 
 
 // require('./view/part/detail');

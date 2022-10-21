@@ -1,6 +1,6 @@
 @section('title', 'Request Approve IC')
 
-@extends('layouts.main')
+@extends('layouts.app')
 @section('style')
 <style>
     /* .select2-selection--single {

@@ -1,4 +1,4 @@
-@extends('layouts.main') @section('content')
+@extends('layouts.app') @section('content')
 
 <div class="">
     <div class="row" style="margin: 0px">

@@ -16,10 +16,12 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "sass": "^1.32.11",
-        "tailwindcss": "^3.1.8",
+        "tailwindcss": "3.0.15",
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "momen": "^0.0.1-security",
+        "moment": "^2.29.4",
         "react-table": "^7.8.0",
         "react-tooltip": "^4.4.0"
     }

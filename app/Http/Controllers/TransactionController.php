@@ -34,6 +34,7 @@ class TransactionController extends Controller
     public function index()
     {
         $requestForms = $this->requestFormService->handleAllRequestFormInbound();
+        // dd($requestForms);
         return view("transaction.transaction", [
             'requestForms' => $requestForms
         ]);

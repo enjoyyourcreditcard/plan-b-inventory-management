@@ -70,13 +70,6 @@ function Stock(props) {
         []
     )
 
-    // const initialState = {
-    //     hiddenColumns: [
-    //         "color",
-    //         "im_code",
-    //         "orafin_code",
-    //         "sn_status"]
-    // };
     const {
         getTableProps,
         getTableBodyProps,
@@ -165,12 +158,9 @@ function Stock(props) {
 }
 
 export default Stock;
+
 if (document.getElementById('transaction-stock-sidebar')) {
-
-const propsContainer = document.getElementById("transaction-stock-sidebar");
-const props = Object.assign({}, propsContainer.dataset);
-ReactDOM.render(<Stock  {...props} />, document.getElementById('transaction-stock-sidebar'));
-
-
-//     ReactDOM.render(<Stock />, document.getElementById('transaction-stock-sidebar'));
+    const propsContainer = document.getElementById("transaction-stock-sidebar");
+    const props = Object.assign({}, propsContainer.dataset);
+    ReactDOM.render(<Stock  {...props} />, document.getElementById('transaction-stock-sidebar'));
 }

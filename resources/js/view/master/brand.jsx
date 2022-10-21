@@ -10,7 +10,7 @@ import TableSearch from "../../components/table_search";
 import Api from "../../utils/api";
 import Filter from "../../utils/filter";
 
-function Parts() {
+function Brands() {
     const api = new Api();
     const filter = new Filter();
 
@@ -21,7 +21,7 @@ function Parts() {
 
     useEffect(() => {
         async function getData() {
-            api.getPart().then((response) => {
+            api.getBrand().then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
 
@@ -50,163 +50,56 @@ function Parts() {
     }
 
     const columns = React.useMemo(
+
         () => [
-            {
-                Header: "Name",
-                accessor: "name",
-                // style: { maxWidth: 10 },
 
-                Cell: (tableProps) => (
+            {
+
+                //Add this line to the column definition
+                Header: 'Name',
+                accessor: 'name',
+                style: { 'maxWidth': 10 },//Add this line to the column definition
+                Cell: tableProps => (
                     <>
-                        {/* <ReactTooltip place="right" effect="solid" backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
-                            <img src={"/" + tableProps.row.original.img} />} /> */}
-
-                        {/* <div id="thumbwrap" >
-                            <div className='d-flex'>
-                                <div style={{ minWidth: 40 }} className="pr-1">
-                                    <a data-tip={tableProps.row.original.name}>
-                                        <img src={"/" + tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
-                                    </a>
-                                </div>
-                                </div> */}
-
-                        <div class="flex" style={{ minWidth: 200 }}>
-                            <div class="flex-none pr-5">
-                                <img
-                                    src={"/dist/" + tableProps.row.original.img}
-                                    alt=""
-                                    width={30}
-                                    data-action="zoom"
-                                    height={25}
-                                    // style={{ border: "1px solid #CCCCEE" }}
-                                />
-                            </div>
-                            <div class="flex-1 ">
-                                <a
-                                    href={"/part/" + tableProps.row.original.id}
-                                    className="text-primary text-decoration-none align-middle"
-                                    // style={{fontSize:"12px"}}
-                                >
-                                    {" "}
-                                    {tableProps.row.original.name}
-                                </a>
-                            </div>
-                        </div>
-                        {/* <img src={"/dist/" + tableProps.row.original.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
-
-                        <a
-                            href={"/part/" + tableProps.row.original.id}
-                            className="text-primary text-decoration-none "
-                        >
-                            {" "}
-                            {tableProps.row.original.name}
-                        </a> */}
-
-                        {/* </div> */}
-                        {/* </div> */}
+                            <a href={"/category/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                     </>
-                ),
-            },
+                )
+            }, 
             {
-                Header: "Description",
-                accessor: "description",
-
-                Cell: (tableProps) => (
+                Header: 'Segment',
+                accessor: 'segment',
+                Cell: tableProps => (
                     <>
-                        <p style={{ minWidth: 300, padding: 0, margin: 0 }}>
-                            {tableProps.row.original.description}
-                        </p>
-                    </>
-                ),
-            },
-            {
-                Header: "Category",
-                accessor: "category",
-                Cell: (tableProps) => (
-                    <>
-                        <div style={{ minWidth: 100 }}>
-                            <a
-                                href={
-                                    "/category/" +
-                                    tableProps.row.original.segment.category.id
-                                }
-                                className="text-primary"
-                            >
-                                {tableProps.row.original.segment.category.name}
-                            </a>
-                        </div>
-                    </>
-                ),
-            },
-            {
-                Header: "Segment",
-                accessor: "segment",
-                Cell: (tableProps) => (
-                    <>
-                        <div style={{ minWidth: 100 }}>
-                            <a
-                                href={
-                                    "/segment/" +
-                                    tableProps.row.original.segment.id
-                                }
-                                className="text-primary"
-                            >
-                                {tableProps.row.original.segment.name}
-                            </a>
-                        </div>
-                    </>
-                ),
-            },
-            {
-                Header: "Brand",
-                accessor: "brand",
-                Cell: (tableProps) => (
-                    <>
-                        <a href="#" className="text-primary">
-                            {tableProps.row.original.brand.name}
-                        </a>
-                    </>
-                ),
-            },
-            {
-                Header: "Stock",
-                accessor: "stocks_count",
-                Cell: (tableProps) => (
-                    <>
-                        <a href="#" className="text-primary ">
-                            {tableProps.row.original.stocks_count}
-                        </a>
 
-                        {/* {tableProps.row.original.stocks_count < 1 ?
-
-                            <svg xmlns="http://www.w3.org/2000/svg" class="text-danger icon icon-tabler icon-tabler-alert-triangle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 9v2m0 4v.01"></path>
-                                <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
-                            </svg>
-
-                            : <></>} */}
+                        <a href='#' className='text-primary '>{tableProps.row.original.segment.name}</a>
                     </>
-                ),
-            },
-            ,
-            {
-                Header: "SN Status",
-                accessor: "sn_status",
-            },
-            ,
-            {
-                Header: "Color",
-                accessor: "color",
+
+                )
+
             },
             {
-                Header: "IM Code",
-                accessor: "im_code",
+                Header: 'Category',
+                accessor: 'category',
+                Cell: tableProps => (
+                    <>
+
+                        <a href='#' className='text-primary '>{tableProps.row.original.segment.category.name}</a>
+                    </>
+
+                )
+
             },
-            ,
             {
-                Header: "Orafin Code",
-                accessor: "orafin_code",
+                Header: 'Total Part',
+                accessor: 'total_part',
+                Cell: tableProps => (
+                    <>
+
+                        <a href='#' className='text-primary text-center'>{tableProps.row.original.parts_count}</a>
+                    </>
+
+                )
+
             },
             {
                 // Header: `Location `,
@@ -293,13 +186,11 @@ function Parts() {
                     </>
                 ),
             },
+
         ],
         []
-    );
-
-    const initialState = {
-        hiddenColumns: ["color", "im_code", "orafin_code", "sn_status"],
-    };
+    )
+  
     const {
         getTableProps,
         getTableBodyProps,
@@ -318,9 +209,7 @@ function Parts() {
     } = useTable(
         {
             columns,
-            data,
-            initialState,
-        },
+            data        },
         useSortBy,
         usePagination
     );
@@ -356,7 +245,7 @@ function Parts() {
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>&nbsp;Create Part&nbsp;</span>
+                    <span>&nbsp;Create Brand&nbsp;</span>
                 </a>
 
                 <div class="hidden md:block mx-auto text-slate-500">
@@ -597,8 +486,8 @@ function Parts() {
     );
 }
 
-export default Parts;
+export default Brands;
 
-if (document.getElementById("master-parts")) {
-    ReactDOM.render(<Parts />, document.getElementById("master-parts"));
+if (document.getElementById("master-brand")) {
+    ReactDOM.render(<Brands />, document.getElementById("master-brand"));
 }

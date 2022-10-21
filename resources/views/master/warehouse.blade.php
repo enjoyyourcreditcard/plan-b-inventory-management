@@ -4,15 +4,20 @@
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Master</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Segment</li>
+        <li class="breadcrumb-item active" aria-current="page">Warehouse</li>
     </ol>
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10">Stock</h2>
+<h2 class="intro-y text-lg font-medium mt-10">Master Warehouse</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
-    <div id="page-stock" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+
+
+    <div id="master-warehouse" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+
+
+
 
 
     <!-- END: Data List -->

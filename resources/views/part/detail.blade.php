@@ -83,7 +83,7 @@
 
                                     Edit
                                 </a>
-                                <a class="dropdown-item" href="{{Route('post.deactive.part',$part->id)}}">
+                                <a class="dropdown-item" href="{{Route('part.post.deactive',$part->id)}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                         stroke="currentColor" fill="none" stroke-linecap="round"
@@ -995,7 +995,7 @@
 <div class="modal modal-blur fade" id="createStockModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ Route('post.store.stock') }}" method="POST">
+            <form action="{{ Route('stock.post.store') }}" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Stock</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
