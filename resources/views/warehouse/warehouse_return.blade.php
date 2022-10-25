@@ -178,44 +178,6 @@
                         </center>
                     </div>
                     {{-- !end modal option redesign --}}
-                    {{-- ! modal excel --}}
-                    <div class="modal modal-blur fade" id="" data-bs-backdrop="static" data-bs-keyboard="false"
-                        @if ($errors->any()) <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div> @endif
-                        <div tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <form action="" method="POST" id="" enctype="multipart/form-data">
-                                    @csrf
-
-                                    {{-- <input type="hidden" name="grf_id" value="{{ $whreturn->id }}"> --}}
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Select File</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input id="input-bulk-part-id-return" type="hidden" name="part_id"
-                                            value="">
-                                        <label id="input-bulk-part-name-return" class="form-label"></label>
-                                        <input type="file" class="form-control mb-3" name="file"
-                                            required="required">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Import</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- ! end modal excel --}}
                     {{-- todo modal redesign excel --}}
                     <div id="importExcelReturn" class="modal" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
@@ -278,45 +240,6 @@
                         </div>
                     </div>
                     {{-- todo end modal input sn satuan --}}
-
-
-                    {{-- * modal input sn --}}
-                    <div class="modal modal-blur fade" id="" data-bs-backdrop="static"
-                        data-bs-keyboard="false">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <div tabindex="-1" role="dialog" aria-labelledby="inputSnReturn" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form method="POST" id="">
-                                        @csrf
-                                        {{-- <input class="input-pieces-request-form-id" type="hidden" name="request_form_id" value="">
-                                            <input type="hidden" name="grf_id" value="{{ $whreturn->id }}"> --}}
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Input SN Code</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div id="" class="modal-body">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- * end modal input sn --}}
                 </div>
             </div>
         </div>
