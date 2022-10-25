@@ -24,4 +24,8 @@ class Brand extends Model
     public function parts() {
         return $this->hasMany(Part::class);
     }
+
+    public function requestForms() {
+        return $this->hasMany(RequestForm::class);
+    }
 }

@@ -21,6 +21,11 @@ class RequestForm extends Model
         return $this->belongsTo(Segment::class);
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
     public function grf ()
     {
         return $this->belongsTo(Grf::class);

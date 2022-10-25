@@ -12,8 +12,14 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import './view/master/part';
+import './view/request';
+
 // require('./components/Example');
 // require('./components/LatestPart');
+// require('./view/admin/user');
+// require('./view/category/detail');
+// require('./view/mini_stock');
 // require('./view/part');
 // require('./view/stock');
 // require('./view/stock/warehouse');
@@ -26,22 +32,22 @@ import './view/master/brand';
 import './view/master/warehouse';
 import './view/stock/stock';
 
+import './view/transaction/form_ic';
+import './view/transaction/IC/stock';
+
 
 // require('./view/part/detail');
 // require('./view/part/category');
 // require('./view/part/brand');
 // require('./view/part/build');
+// require('./view/part/category');
+// require('./view/part/detail');
 // require('./view/part/segment');
-// require('./view/admin/user');
-// require('./view/warehouse');
-// require('./view/transaction/IC/stock');
-
-// require('./view/mini_stock');
-
-
-
-// require('./view/category/detail');
+// require('./view/stock');
+// require('./view/stock/warehouse');
 // require('./view/transaction/IC/form');
+// require('./view/transaction/IC/stock');
+// require('./view/warehouse');
 
 
 

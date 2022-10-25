@@ -142,9 +142,10 @@ class TransactionController extends Controller
 
     public function postApproveIC(Request $request)
     {
-    $this->transactionService->handlePostApproveIC($request);
-        return redirect()->route('view.IC.transaction');
-    }
+        $this->transactionService->handlePostApproveIC($request);
+    //     return redirect()->route('view.IC.transaction');
+        // return $request->part[0];
+}
 
     public function postApproveSJ(Request $request)
     {

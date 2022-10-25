@@ -1,14 +1,15 @@
+import { useTable, usePagination, useSortBy } from "react-table";
+import Api from "../../utils/api";
+import Filter from "../../utils/filter";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useTable, usePagination, useSortBy } from "react-table";
 import ReactTooltip from "react-tooltip";
 import TabelFooter from "../../components/tabel_footer";
 import Table from "../../components/table.jsx";
 import TabelHiddenColumn from "../../components/table_hidden_column";
+// import Table from "../../components/Table";
 import TableLoading from "../../components/table_loding";
 import TableSearch from "../../components/table_search";
-import Api from "../../utils/api";
-import Filter from "../../utils/filter";
 
 function Parts() {
     const api = new Api();

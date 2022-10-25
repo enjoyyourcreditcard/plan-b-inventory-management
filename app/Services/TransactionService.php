@@ -25,29 +25,29 @@ class TransactionService
 
     public function handlePostApproveIC($req)
     {
+        // dd();
+        $parts = explode(',',$req->part);
+        $quantity = explode(',',$req->quantity);
         $grf = $this->grf->find($req->id);
         $grf->status = "ic_approved";
-        // $grf->ic_approved_date = Carbon::now();
         $grf->save();
-
         $timeline = $this->timeline::create(['grf_id' => $req->id, 'status' => 'ic_approved']);
-        // dd($timeline);
-        // $timeline->status = 'ic_approved';
-        // $timeline->save();
 
-        for ($i = 0; $i < count($req->part); $i++) {
-            $segment_id = $this->part->find($req->part[$i])->segment_id;
+        for ($i = 0; $i < count($parts); $i++) {
+            $segment_id = $this->part->find($parts[$i])->segment_id;
+            $brand_id = $this->part->find($parts[$i])->brand_id;
             $requestForm = $this->requestForm->where('grf_id', $req->id)->where('segment_id', $segment_id)->whereNull('part_id')->first();
             if ($requestForm !== null) {
-                $requestForm->part_id = $req->part[$i];
-                $requestForm->quantity = $req->quantity[$i];
+                $requestForm->part_id = $parts[$i];
+                $requestForm->quantity = $quantity[$i];
                 $requestForm->save();
             } else {
                 $requestForm = new RequestForm();
                 $requestForm->grf_id = $req->id;
                 $requestForm->segment_id = $segment_id;
-                $requestForm->part_id = $req->part[$i];
-                $requestForm->quantity = $req->quantity[$i];
+                $requestForm->brand_id = $brand_id;
+                $requestForm->part_id = $parts[$i];
+                $requestForm->quantity = $quantity[$i];
                 $requestForm->remarks = "asdasd";
                 $requestForm->save();
             }

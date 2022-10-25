@@ -105,7 +105,7 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth']], fu
     Route::post('/', [PartController::class, 'store'])->name("store");
 });
 
-
+// part.post.deactive
 // * Brand 
 Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth']], function () {
     Route::get('/', [BrandController::class, 'index'])->name('get.view')->middleware("auth");
@@ -222,12 +222,13 @@ Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::
 *--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'request-form', 'as' => 'requester.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['auth']], function () {
     Route::get('/', [UserTransactionController::class, 'index'])->name('get.home');
     Route::get('/show/{grf_code}', [UserTransactionController::class, 'create'])->name('get.detail');
     Route::get('/delete/{code}', [UserTransactionController::class, 'destroy'])->name("get.delete.item");
     Route::post('/', [UserTransactionController::class, 'storeCreateGrf'])->name("post.store.create.grf");
     Route::post('/add/item/{id}', [UserTransactionController::class, 'storeAddItem'])->name("post.add.item");
+    Route::put('/warehouse/{id}', [UserTransactionController::class, 'changeWarehouse'])->name('put.update.warehouse');
     Route::put('/{id}', [UserTransactionController::class, 'changeStatusToSubmit'])->name('put.update.status');
 });
 
@@ -243,7 +244,7 @@ Route::group(['prefix' => 'request-form', 'as' => 'requester.', 'middleware' => 
 */
 Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
 Route::post('/transaction/approve/return/WH', [WarehouseReturnController::class, 'postApproveReturnWH'])->middleware("auth")->name("post.approve.return.WH");
-Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->middleware("auth")->name("post.approve.IC");
+Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->name("post.approve.IC");
 Route::post('/transaction/approve/SJ', [TransactionController::class, 'postApproveSJ'])->middleware("auth")->name("post.approve.SJ");
 Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class, 'getApprovePickup'])->middleware("auth")->name("post.approve.pickup");
 
@@ -298,3 +299,4 @@ Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnSto
 Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
+
