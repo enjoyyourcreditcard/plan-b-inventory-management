@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useTable, usePagination, useSortBy } from "react-table";
 import ReactTooltip from "react-tooltip";
 import TabelFooter from "../../components/tabel_footer";
-import Table from "../../components/Table";
+import Table from "../../components/table/index";
 import TabelHiddenColumn from "../../components/table_hidden_column";
 import TableLoading from "../../components/table_loding";
 import TableSearch from "../../components/table_search";

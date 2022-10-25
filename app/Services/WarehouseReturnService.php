@@ -37,6 +37,7 @@ class WarehouseReturnService {
     }
 
     public function hanldeImportWarehouseReturn($request) {
+        dd($request);
         $reqStok = $this->requestStock->where([['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
 
         $excel = Excel::toCollection(new WarehouseReturn, $request->file);

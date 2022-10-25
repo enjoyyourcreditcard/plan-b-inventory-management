@@ -1,6 +1,6 @@
 
 @section('title', 'Transaksi IC')
-@extends('layouts.main') @section('content')
+@extends('layouts.app') @section('content')
 
 <div class="row">
 

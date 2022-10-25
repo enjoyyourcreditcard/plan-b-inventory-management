@@ -27,7 +27,8 @@ use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-// use App\Http\Controllers\WarehouseTransactionController;
+use App\Http\Controllers\WarehouseTransactionController;
+use App\Http\Controllers\WarehouseReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,10 +171,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 *--------------------------------------------------------------------------
 * Auth Warehouse Home
 *--------------------------------------------------------------------------
-*/
+*/          
 
-Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'excluded_middleware' => ['web']], function () {
-    Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
+Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['auth']], function () {
+    Route::get('/home', [WarehouseTransactionController::class, 'index'])->name('get.home');
+    Route::get('/return', [WarehouseTransactionController::class, 'indexReturn'])->name('get.return');
+    Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
 });

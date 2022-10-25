@@ -298,10 +298,10 @@
 
     <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm"
-                style="background-image: url(https://avatars.dicebear.com/api/initials/{{Auth::user()->name}}.svg)"></span>
+            {{-- <span class="avatar avatar-sm"
+                style="background-image: url(https://avatars.dicebear.com/api/initials/{{Auth::user()->name}}.svg)"></span> --}}
             <div class="d-none d-xl-block ps-2">
-                <div>{{Auth::user()->name}}</div>
+                {{-- <div>{{Auth::user()->name}}</div> --}}
                 <div class="mt-1 small text-muted">Inventory Control</div>
             </div>
         </a>
@@ -590,7 +590,7 @@
     <!-- Tabler Core -->
     {{-- CDN input --}}
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('dist/js/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -9,7 +9,7 @@ use App\Services\NotificationService;
 use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\TransactionService;
-use App\Services\WareHouseService;
+use App\Services\WarehouseService;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use PDF;
 use Illuminate\Http\Request;
