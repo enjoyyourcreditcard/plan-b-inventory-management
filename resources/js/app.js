@@ -13,7 +13,9 @@
  */
 
 import './view/master/part';
-import './view/request';
+import './view/request/request';
+import './view/request/return';
+import './view/request/show';
 
 // require('./components/Example');
 // require('./components/LatestPart');

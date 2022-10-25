@@ -285,7 +285,6 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth'] ], function () {
     Route::get('/{code}', [UserTransactionController::class, 'showReturnStock'])->name("get.detail");
-    Route::get('/ajax/{code}', [UserTransactionController::class, 'ajaxReturnStock'])->name("get.ajax");
     Route::put('/{code}', [UserTransactionController::class, 'updateReturnStock'])->name("put.detail");
 });
 

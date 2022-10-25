@@ -13,6 +13,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
         <li class="breadcrumb-item"><a href="{{ Route( "request.get.home" ) }}">Outbound</a></li>
+        <li class="breadcrumb-item">Detail</li>
         <li class="breadcrumb-item active" aria-current="page">{{ $grf->grf_code }}</li>
     </ol>
 </nav>
@@ -246,12 +247,11 @@
                         </a>
                     </li>
 
-                    @if( $grf->warehouse_id && count( $requestForms ) )
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
                         <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation"
                             class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white transition duration-300 ease-in-out hover:bg-emerald-700"
                             data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
-                            aria-controls="layout-1-annual-fees" aria-selected="false">
+                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-send w-4 h-4" viewBox="0 0 16 16">
                                 <path
@@ -259,7 +259,6 @@
                             </svg> Submit request
                         </button>
                     </li>
-                    @endif
 
                 </ul>
             </div>

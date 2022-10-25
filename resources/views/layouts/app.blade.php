@@ -624,19 +624,19 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
             
                 <li>
-                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : "" ) }}">
+                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : ( Route::currentRouteName() == "return.get.detail" ? "side-menu--active" : "" ) ) }}">
                         <div class="side-menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
                             <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                           </svg></div>
                         <div class="side-menu__title">
                             Transaksi
-                            <div class="side-menu__sub-icon {{ Route::currentRouteName() == "request.get.home" ? "transform rotate-180" : ( Route::currentRouteName() == "request.get.detail" ? "transform rotate-180" : "" ) }}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ Route::currentRouteName() == "request.get.home" ? "transform rotate-180" : ( Route::currentRouteName() == "request.get.detail" ? "transform rotate-180" : ( Route::currentRouteName() == "return.get.detail" ? "transform rotate-180" : "" ) ) }}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <polyline points="6 9 12 15 18 9"></polyline>
                              </svg> </div>
                         </div>
                     </a>
-                    <ul class="{{ Route::currentRouteName() == "request.get.home" ? "side-menu__sub-open" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu__sub-open" : "" ) }}">
+                    <ul class="{{ Route::currentRouteName() == "request.get.home" ? "side-menu__sub-open" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu__sub-open" : ( Route::currentRouteName() == "return.get.detail" ? "side-menu__sub-open" : "" ) ) }}">
                         <li>
                             <a href="index.html" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
@@ -644,7 +644,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('request.get.home') }}" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : "" ) }}">
+                            <a href="{{ route('request.get.home') }}" class="side-menu {{ Route::currentRouteName() == "request.get.home" ? "side-menu--active" : ( Route::currentRouteName() == "request.get.detail" ? "side-menu--active" : ( Route::currentRouteName() == "return.get.detail" ? "side-menu--active" : "" ) ) }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
@@ -1081,14 +1081,15 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END: Dark Mode Switcher-->
 
     <!-- BEGIN: JS Assets-->
-    <script
-        src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{{ Asset( "dist/js/app.js" ) }}"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ Asset( "js/app.js" ) }}" defer></script>
+    <script src="{{ Asset( "js/main.js" ) }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    @yield( "javascript" )
     
     {{-- {{ asset('js/main.js') }} --}}
 

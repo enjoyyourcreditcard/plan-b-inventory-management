@@ -65,16 +65,16 @@ class UserTransactionController extends Controller
     public function showReturnStock($code)
     {
         // Services
-        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View
-        return view ('transaction.return-stock', [
-            'miniStocks' => $miniStocks,
-            'requestForms' => $requestForms,
-            'grf' => $grf,
-        ]);
+        return view( "request.return", [
+            "grf" => $grf,
+            "requestForms" => $requestForms,
+            "miniStocks" => $miniStocks,
+        ] );
     }
 
 
@@ -185,22 +185,33 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleUpdateRequestForm($request, $id);
+         
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
 
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| Update Submit Return Stock
+    *| Save || Change the return Status
     *|--------------------------------------------------------------------------
     */
     public function updateReturnStock(Request $request, $id)
     {
-        // Services
-        $this->miniStockService->handleUpdateReturnStock($request, $id);
-        return redirect()->route('requester.get.home');
+        try {
+            $isReturn = $this->miniStockService->handleUpdateReturnStock($request, $id);
+
+            if ( $isReturn == true ) {
+                return redirect()->route('request.get.home');
+            } else {
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
 
@@ -220,14 +231,22 @@ class UserTransactionController extends Controller
             return Redirect::back()->withError($e->getMessage());
         }
     }
+
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| User Approve Pickup
+    *| Change the GRF status t user pickup
     *|--------------------------------------------------------------------------
     */
     public function getApprovePickup($id)
     {
-        $this->requestFormService->handlePostApprovePickup($id);
-        return redirect()->back();
+        try {
+            $this->requestFormService->handlePostApprovePickup($id);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 }
