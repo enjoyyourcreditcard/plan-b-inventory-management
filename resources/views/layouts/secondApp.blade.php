@@ -979,10 +979,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="{{ asset('js/whtransaction.js') }}"></script>
-    <script src="{{ asset('js/warehousereturn.js') }}"></script>
     <script src="{{ asset("dist/js/app.js") }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    @yield ( "javaScript" )
     
     {{-- {{ asset('js/main.js') }} --}}
 

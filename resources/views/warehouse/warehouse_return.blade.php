@@ -77,6 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
                         @foreach ($requestForm as $key => $item)
                             <tr class="intro-x relative mr-3 sm:mr-6">
                                 <td>
@@ -92,7 +93,8 @@
                                     <div class="flex justify-center items-center">
                                         <button type="button"
                                             class="upload-return bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2"
-                                            data-tw-toggle="modal" data-tw-target="#upload-return"
+                                            data-tw-toggle="modal" 
+                                            data-tw-target="#upload-return"
                                             data-partidreturn="{{ $item['part_id'] }}"
                                             data-partnamereturn="{{ $item['name'] }}"
                                             data-grfidreturn="{{ $whreturn->id }}"
@@ -225,25 +227,12 @@
                                     <form action="{{ route('importexcelreturn') }}" method="POST" id="formBulkReturn"
                                         class="dropzone-" enctype="multipart/form-data">
                                         @csrf
-                                        <input id="input-bulk-grf-id-return" type="hidden" name="grf_id"
-                                            value="">
-                                        {{-- <input type="hidden" name="grf_id" value="{{ $whreturn->id }}"> --}}
-                                        <div class="fallback">
-                                            <input id="input-bulk-part-id-return" type="hidden" name="part_id"
-                                                value="">
+                                        <input id="input-bulk-grf-id-return" type="hidden" name="grf_id" value="">
+                                        <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
+                                            <div class="fallback">
+                                            <input id="input-bulk-part-id-return" type="hidden" name="part_id" value="">
                                             <label id="input-bulk-part-name-return" class="form-label"></label>
-                                            <input type="file" name="file"
-                                                class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                required>
-                                        </div>
-                                        <div class="dz-message" data-dz-message>
-                                            <div class="text-lg font-medium">Drop your excel here, or click to open file!
-                                            </div>
-                                            <div class="text-slate-500">
-                                                <span id="input-bulk-part-name">
-
-                                                </span>
-                                            </div>
+                                            <input type="file" name="file" class="" required>
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -333,3 +322,7 @@
         </div>
     </div>
 @endsection
+
+@section( "javaScript" )
+<script src="{{ asset('js/warehousereturn.js') }}"></script>
+@endSection

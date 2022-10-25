@@ -37,7 +37,6 @@ class WarehouseReturnService {
     }
 
     public function hanldeImportWarehouseReturn($request) {
-        dd($request);
         $reqStok = $this->requestStock->where([['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
 
         $excel = Excel::toCollection(new WarehouseReturn, $request->file);
@@ -56,7 +55,6 @@ class WarehouseReturnService {
         $grf = $this->grf->find($req->id);
         $grf->status = "closed";
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
-        $grf->wh_approved_date = Carbon::now();
         $grf->save();
         return "success";
     }

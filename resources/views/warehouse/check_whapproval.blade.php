@@ -242,3 +242,7 @@
 
     </div>
 @endsection
+
+@section( "javaScript" )
+<script src="{{ asset('js/whtransaction.js') }}"></script>
+@endSection
