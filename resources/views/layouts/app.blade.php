@@ -737,6 +737,12 @@
                                 <div class="side-menu__title"> Warehouse </div>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{Route('user.get.view')}}" class="side-menu {{(request()->is('user/master')) ? " side-menu--active" : "" }}">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> User </div>
+                            </a>
+                        </li>
 
 
                     </ul>
@@ -1135,6 +1141,8 @@
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="{{ asset('js/master.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    @yield( "js" )
 
     {{-- {{ asset('js/main.js') }} --}}
 

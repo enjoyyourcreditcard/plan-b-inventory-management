@@ -30,12 +30,14 @@ class User extends Authenticatable
         return $user_permission !== null;
     }
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'status',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    //     'status',
+    // ];
+
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -63,5 +65,10 @@ class User extends Authenticatable
     public function requester()
     {
         return $this->hasMany(Request::class);
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 }

@@ -41,7 +41,7 @@ class CreateWarehouseTable extends Migration
             $table->date('end_at');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
-            $table->string('status')->default("active");
+            $table->enum('status', ['active', 'inactive'])->default("active");
             $table->timestamps();
         });
     }

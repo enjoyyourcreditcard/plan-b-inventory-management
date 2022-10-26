@@ -22,7 +22,7 @@ class AuthService
     {
 
         $credentials = request(['email', 'password']);
-        $credentials = Arr::add($credentials, 'status', 'aktif');
+        $credentials = Arr::add($credentials, 'status', 'active');
         if (!Auth::attempt($credentials)) {
             return ResponseJSON("Email Atau Password Anda salah",  401);
         }

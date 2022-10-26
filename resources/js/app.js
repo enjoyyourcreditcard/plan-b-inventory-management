@@ -20,6 +20,7 @@
 
 
 import './view/master/part';
+import './view/master/user';
 import './view/master/segment';
 import './view/master/category';
 import './view/master/brand';
