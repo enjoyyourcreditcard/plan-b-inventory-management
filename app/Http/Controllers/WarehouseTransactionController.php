@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\WarehouseImport;
 use App\Models\RequestStock;
 use App\Models\WhApproval;
 use Illuminate\Http\Request;
@@ -13,7 +12,10 @@ use App\Services\RequestFormService;
 use App\Services\RequestStockService;
 use App\Services\TransactionService;
 use App\Services\WarehouseTransactionService;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\WarehouseImport;
+use Illuminate\Support\Facades\Auth;
+// use Excel;
 
 class WarehouseTransactionController extends Controller
 {
@@ -29,16 +31,59 @@ class WarehouseTransactionController extends Controller
         $this->brandService = $brandService; 
     }
 
+        /*
+        *|--------------------------------------------------------------------------
+        *| Index Warehouse Approv Dan Return
+        *|--------------------------------------------------------------------------
+        */
     public function index() {
-        // *: Get data untuk warehouse approv
+        /*
+        *|--------------------------------------------------------------------------
+        *| Get Data Untuk Warehouse Approv
+        *|--------------------------------------------------------------------------
+        */
         $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
-        // *: Get data untuk warehouse return
-        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
         return view('warehouse.home', [
-            'whapproval' => $whapproval,
+            'whapproval' => $whapproval
+        ]);
+    }
+
+    public function indexReturn(){
+        /*
+        *|--------------------------------------------------------------------------
+        *| Get Data Untuk Warehouse Return
+        *|--------------------------------------------------------------------------
+        */
+        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
+        // dd($whreturn);
+        return view('warehouse.homeReturn', [
             'whreturn' => $whreturn
         ]);
+    }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| Function untuk get data di dashboard
+    *|--------------------------------------------------------------------------
+    */
+    public function dashboard(){
+        /*
+        *|--------------------------------------------------------------------------
+        *| Get Data Untuk Warehouse Approv
+        *|--------------------------------------------------------------------------
+        */
+        $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
+        /*
+        *|--------------------------------------------------------------------------
+        *| Get Data Untuk Warehouse Return
+        *|--------------------------------------------------------------------------
+        */
+        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
+        // dd($whreturn);
+        return view('warehouse.dashboardWh', [
+            'whreturn' => $whreturn,
+            'whapproval' => $whapproval,
+        ]);
     }
 
     public function getAllWarehouseApproval()
@@ -46,14 +91,22 @@ class WarehouseTransactionController extends Controller
         return ResponseJSON($this->warehouseTransactionService->handleAllWhApproval(), 200);
     }
 
-    // *: Untuk show data approv
+    /*
+    *|--------------------------------------------------------------------------
+    *| Show Data Warehouse Approv
+    *|--------------------------------------------------------------------------
+    */
     public function show($id) {
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
         return view('warehouse.check_whapproval', compact('whapprov','requestForm'));
     }
 
-    // *: Untuk show data return
+    /*
+    *|--------------------------------------------------------------------------
+    *| Show Data Return Warehouse
+    *|--------------------------------------------------------------------------
+    */
     public function showReturn($id) {
         $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
@@ -71,37 +124,30 @@ class WarehouseTransactionController extends Controller
         $this->warehouseTransactionService->handlePostApproveWH($request,$transactionService); 
         return redirect()->route('warehouse.get.home');
     }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Import Bulk Warehouse Approv
+    *|--------------------------------------------------------------------------
+    */
     public function updateImport(Request $request){
-        // ! ! //
         $excel = [];
 
-        foreach (request()->file('file') as $key => $file) {
-            $excel = Excel::toArray(new WarehouseImport, $file);
-            
-            foreach ($excel[0] as $row) {
-                RequestStock::create([
-                    'request_form_id' => $request->request_form_id,
-                    'grf_id' => $request->grf_id,
-                    'part_id' => $request->part_id,
-                    'sn' => $row[0],
-                    'sn_return' => null,
-                    'remarks' => null,
-                ]);
-            }
-            return redirect()->back();
+        $file = $request->file;
+
+        $excel = Excel::toArray(new WarehouseImport, $file);
+        // dd($excel);
+        foreach ($excel[0] as $row) {
+            RequestStock::create([
+                'request_form_id' => $request->request_form_id,
+                'grf_id' => $request->grf_id,
+                'part_id' => $request->part_id,
+                'sn' => $row[0],
+                'sn_return' => null,
+                'remarks' => null,
+            ]);
         }
-        // ! ! //
-        
-
-        // TODO: Validasi
-        // if () {
-        //     $this->validate($request, [
-        //         'file' => 'required|mimes:csv,xls,xlsx,ods'
-        //     ]);
-        // }
-
-        // TODO: Notif validasi
-        // Session::flash('sukses','Data Siswa Berhasil Diimport!');
+        return redirect()->back();
         }
 
     /*

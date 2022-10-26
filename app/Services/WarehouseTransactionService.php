@@ -13,12 +13,13 @@ use App\Models\TransferStock;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\WarehouseTransferImport;
+use App\Models\RequestStock;
 use App\Models\Timeline;
 
 class WarehouseTransactionService
 {
 
-    public function __construct(Timeline $timeline, RequestForm $requestForm, Grf $grf, TransferForm $transferForm, TransferStock $transferStock, Stock $stock, Warehouse $warehouse)
+    public function __construct(Timeline $timeline, RequestForm $requestForm, Grf $grf, TransferForm $transferForm, TransferStock $transferStock, Stock $stock, Warehouse $warehouse, RequestStock $requestStock)
     {
         $this->requestForm = $requestForm;
         $this->grf = $grf;
@@ -27,6 +28,7 @@ class WarehouseTransactionService
         $this->stock = $stock;
         $this->transferForm = $transferForm;
         $this->transferStock = $transferStock;
+        $this->requestStock = $requestStock;
     }
 
     // *: Get data untuk warehouse approv
@@ -48,6 +50,7 @@ class WarehouseTransactionService
         $wherewh = str_replace('~', '/', $id);
         $whapproval = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
         $whapproval['quantity'] = 0;
+        
         foreach ($whapproval->requestForms as $requestForm) {
             $whapproval['quantity'] += $requestForm->quantity;
         }

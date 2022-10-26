@@ -35,7 +35,7 @@
       @foreach ($requestForms as $item)
 
       <div class="intro-y">
-        <a href="{{Route('get.detail.grf', str_replace('/', '~', $item->grf_code))}}">
+        <a href="{{Route('transaction.ic.get.detail.grf', str_replace('/', '~', $item->grf_code))}}">
           <div class="box pr-4  mb-3 flex items-center zoom-in">
             <div class="bg-emerald-800	w-3 h-20 rounded-tl-md  rounded-bl-md 	">
 

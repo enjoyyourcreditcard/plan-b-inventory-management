@@ -1,4 +1,4 @@
-@extends('layouts.main') @section('content')
+@extends('layouts.app') @section('content')
 <div class="container-fluid">
   <div class="row " style="margin: 0px">
       <div class="col-md-4">

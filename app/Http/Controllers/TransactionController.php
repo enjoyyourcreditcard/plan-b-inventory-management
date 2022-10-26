@@ -9,7 +9,7 @@ use App\Services\NotificationService;
 use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\TransactionService;
-use App\Services\WareHouseService;
+use App\Services\WarehouseService;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use PDF;
 use Illuminate\Http\Request;
@@ -142,9 +142,10 @@ class TransactionController extends Controller
 
     public function postApproveIC(Request $request)
     {
-    $this->transactionService->handlePostApproveIC($request);
-        return redirect()->route('view.IC.transaction');
-    }
+        $this->transactionService->handlePostApproveIC($request);
+    //     return redirect()->route('view.IC.transaction');
+        // return $request->part[0];
+}
 
     public function postApproveSJ(Request $request)
     {
