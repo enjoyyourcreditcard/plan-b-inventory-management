@@ -55,7 +55,6 @@ class WarehouseReturnService {
         $grf = $this->grf->find($req->id);
         $grf->status = "closed";
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
-        $grf->wh_approved_date = Carbon::now();
         $grf->save();
         return "success";
     }
