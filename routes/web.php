@@ -140,8 +140,6 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('get
 
 
 
-Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
-Route::get('/transaction', [TransactionController::class, 'index'])->middleware("auth")->name("view.IC.transaction");
 
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 // Route::resource('/brand', BrandController::class);
@@ -183,9 +181,24 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 
 /*
 *--------------------------------------------------------------------------
-* Transactions
+* Auth IC Transaksi
 *--------------------------------------------------------------------------
 */
+
+Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
+    Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
+    Route::get('/inbound', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
+    
+    Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
+
+    // Route::get('/', [StockController::class, 'index'])->name('get.home');
+    // Route::post('/', [StockController::class, 'store'])->name('post.store');
+    // Route::put('/{id}', [StockController::class, 'put'])->name('put.detail');
+    // Route::delete('/{id}', [StockController::class, 'destroy'])->name('delete.detail');
+});
+
+
+
 
 
 

@@ -95,8 +95,7 @@ function TransactionForm(props) {
 
         api.postTransactionApprovedIC(props.grf_id, margeParts, margeQty).then(
             (response) => {
-                window.location.replace('http://localhost:8000/transaction');
-
+                window.location.replace("http://localhost:8000/transaction");
             }
         );
         // const el = document.querySelector("#loading-modal");
@@ -106,13 +105,199 @@ function TransactionForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Pkeee");
-
-        
     };
 
     return (
         <>
-            <div class="intro-y box p-5">
+            <div className="intro-y box p-5">
+            <form onSubmit={handleClickSubmit}>
+
+                <div className="border-solid">
+
+
+                    <table class="table border ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th class="col-1">SEGMENT</th>
+                                <th class="col-2">PART </th>
+                                <th class="col-2">QTY</th>
+                                <th class="col-10">APPROVE QTY</th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((item, index) => {
+                                return (
+                                    <tr>
+                                        <td class="!pr-2">{index + 1}.</td>
+                                        <td class="" style={{fontSize:12}}>
+                                            {item.segment.name}
+                                        </td>
+                                        <td class="!px-2" style={{width:250}}>
+                                             {[
+                                                ...Array(selectQty[index]),
+                                            ].map((x, i) => (
+                                                <Select
+                                                    onChange={(e) =>
+                                                        changePart(
+                                                            e,
+                                                            index,
+                                                            i
+                                                        )
+                                                    }
+                                                    className="part_id mt-2"
+                                                    options={item.segment.parts.map(
+                                                        (d) => ({
+                                                            value: d.id,
+                                                            label: d.name,
+                                                        })
+                                                    )}
+                                                    key={i}
+                                                />
+                                            ))}
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    addSelect(index)
+                                                }
+                                            >
+                                                Tambah +
+                                            </button>
+                                        </td>
+                                        <td class="!px-2">
+                                           <p>{item.quantity}</p>
+                                        </td>
+                                        <td class="!px-2">
+                                        {[
+                                                ...Array(selectQty[index]),
+                                            ].map((x, i) => (
+                                                <input
+                                                    onChange={(e) =>
+                                                        changeQuantity(
+                                                            e,
+                                                            index,
+                                                            i,
+                                                            item.quantity
+                                                        )
+                                                    }
+                                                    name="quantity"
+                                                    id="crud-form-1"
+                                                    type="number"
+                                                    class="form-control w-full quantity_part mt-2"
+                                                />
+                                            ))}
+
+                                            <p>Total : {totalQty[index]}</p>
+                                            {error[index] ? (
+                                                <p className="text-danger">
+                                                    Data tidak boleh lebih
+                                                    dari {item.quantity}
+                                                </p>
+                                            ) : (
+                                                ""
+                                            )}
+                                        </td>
+                                       
+                                    </tr>
+                                    // <tr key={index}>
+                                    //     <td>{index + 1}</td>
+                                    //     <td>
+                                    //         {item.segment.name}{" "}
+                                    //         {item.select_qty}
+                                    //     </td>
+                                    //     <td>
+                                    //         {[
+                                    //             ...Array(selectQty[index]),
+                                    //         ].map((x, i) => (
+                                    //             <Select
+                                    //                 onChange={(e) =>
+                                    //                     changePart(
+                                    //                         e,
+                                    //                         index,
+                                    //                         i
+                                    //                     )
+                                    //                 }
+                                    //                 name="part_id[]"
+                                    //                 className="part_id"
+                                    //                 options={item.segment.parts.map(
+                                    //                     (d) => ({
+                                    //                         value: d.id,
+                                    //                         label: d.name,
+                                    //                     })
+                                    //                 )}
+                                    //                 key={i}
+                                    //             />
+                                    //         ))}
+
+                                    //         <button
+                                    //             type="button"
+                                    //             onClick={() =>
+                                    //                 addSelect(index)
+                                    //             }
+                                    //         >
+                                    //             Tambah +
+                                    //         </button>
+                                    //     </td>
+                                    //     <td>{item.quantity}</td>
+
+                                    //     <td>
+                                    //         {[
+                                    //             ...Array(selectQty[index]),
+                                    //         ].map((x, i) => (
+                                    //             <input
+                                    //                 onChange={(e) =>
+                                    //                     changeQuantity(
+                                    //                         e,
+                                    //                         index,
+                                    //                         i,
+                                    //                         item.quantity
+                                    //                     )
+                                    //                 }
+                                    //                 name="quantity"
+                                    //                 id="crud-form-1"
+                                    //                 type="number"
+                                    //                 class="form-control w-full quantity_part"
+                                    //                 placeholder="Input text"
+                                    //             />
+                                    //         ))}
+
+                                    //         <p>Total : {totalQty[index]}</p>
+                                    //         {error[index] ? (
+                                    //             <p className="text-danger">
+                                    //                 Data tidak boleh lebih
+                                    //                 dari {item.quantity}
+                                    //             </p>
+                                    //         ) : (
+                                    //             ""
+                                    //         )}
+                                    //     </td>
+                                    // </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right mt-5">
+                        <button
+                            type="button"
+                            onClick={() => console.log("OKEY")}
+                            class="btn btn-outline-secondary w-24 mr-1"
+                        >
+                            Cancel
+                        </button>
+         
+                        <button type="submit" class="btn btn-primary w-24">
+                            Save
+                        </button>
+                                    
+                    </div>
+                </form>
+
+            </div>
+
+            {/* <div class="intro-y box p-5">
                 <form onSubmit={handleClickSubmit}>
                     <div class="overflow-x-auto">
                         <table class="table table-bordered">
@@ -214,15 +399,14 @@ function TransactionForm(props) {
                         >
                             Cancel
                         </button>
-                        {/* <button >alert</button> */}
-
+         
                         <button type="submit" class="btn btn-primary w-24">
                             Save
                         </button>
                                     
                     </div>
                 </form>
-            </div>
+            </div> */}
 
             {/* <div
                 id="loading-modal"

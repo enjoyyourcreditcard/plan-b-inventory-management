@@ -606,7 +606,7 @@
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
-                <li>
+                {{-- <li>
                     <a href="side-menu-light-inbox.html" class="side-menu">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
                                 fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
@@ -615,8 +615,61 @@
                                 <path fill-rule="evenodd"
                                     d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                             </svg> </div>
-                        <div class="side-menu__title"> Dashboard</div>
+                        <div class="side-menu__title"> </div>
                     </a>
+                </li> --}}
+                <li>
+                    <a href="javascript:;" class="side-menu">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                            fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                            <path fill-rule="evenodd"
+                                d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                        </svg> </div>
+                        <div class="side-menu__title">
+                            Dashboard
+                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg> </div>
+                        </div>
+                    </a>
+                    <ul class="">
+                        <li>
+                            <a href="index.html" class="side-menu">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Stock </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Inbound </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Outbound </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Build </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Warehouse </div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
@@ -1116,11 +1169,11 @@
         <!-- END: Content -->
     </div>
     <!-- BEGIN: Dark Mode Switcher-->
-    <div data-url="side-menu-dark-dashboard-overview-1.html"
+    {{-- <div data-url="side-menu-dark-dashboard-overview-1.html"
         class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box dark:bg-dark-2 border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
         <div class="mr-4 text-gray-700 dark:text-gray-300">Dark Mode</div>
         <div class="dark-mode-switcher__toggle border"></div>
-    </div>
+    </div> --}}
     <!-- END: Dark Mode Switcher-->
 
     <!-- BEGIN: JS Assets-->
