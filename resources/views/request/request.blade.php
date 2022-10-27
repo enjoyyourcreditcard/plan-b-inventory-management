@@ -35,13 +35,46 @@
                         <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
                     </svg>
                     <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">A GRF code will be generate for you. <br>This process cannot
-                        be undone.</div>
+                    <div class="text-slate-500 mt-2">A GRF code will be generate for you. <br><span class="font-bold">process cannot
+                        be undone.</span></div>
                 </div>
                 <form action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
-                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
                     <button name="grf_code" value="{{ $grf_code }}" class="btn text-white bg-emerald-700 impor w-24">Sure</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- /* 
+|--------------------------------------------------------------------------
+|  Modal New Request Emergency Confirmation
+|--------------------------------------------------------------------------
+*/ --}}
+
+<div id="emergency-warning-modal" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="p-5 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper text-slate-600 mx-auto mt-3" viewBox="0 0 16 16">
+                        <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
+                    </svg>
+                    <div class="text-2xl mt-5">Are you sure?</div>
+                    <div class="text-slate-500 mt-2">An Emergency GRF code will be generate for you. <br><span class="font-bold">process cannot
+                        be undone.</span></div>
+                </div>
+                <form action="{{Route ( "request.post.store.create.emergency.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
+                    @csrf
+                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
+                    <button class="btn bg-emerald-700 w-24">
+                        <input type="hidden" name="grf_code" value="{{ $grf_code }}">
+                        <div class="col-auto text-white">
+                            Sure
+                        </div>
+                    </button>
                 </form>
             </div>
         </div>
@@ -61,12 +94,17 @@
 
     {{-- /* 
     |--------------------------------------------------------------------------
-    |  Good Request Form Slots
+    |  Good Request Form SLots
     |--------------------------------------------------------------------------
     */ --}}
     <div class="col-span-12 mt-8">
         <div class="intro-y flex items-center h-10">
             <h2 class="text-lg font-medium truncate mr-5">Good Request Forms</h2>
+            <div class="ml-auto">
+                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#emergency-warning-modal" class="btn bg-red-600 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill mr-1" viewBox="0 0 16 16"> <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>&nbsp;Emergency Request
+                </a>
+            </div>
         </div>
         <div id="#" class="grid grid-cols-12 gap-6 mt-5">
 
@@ -77,7 +115,7 @@
             |  Request Cards
             |--------------------------------------------------------------------------
             / * --}}
-            @foreach( $grfs->where( "status", "!=", "closed" ) as $grf )
+            @foreach( $grfs->where( 'is_emergency', 0 )->where( 'type', 'request' ) as $grf )
             <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y">
                 <div class="report-box zoom-in">
                     <div class="box p-5">
@@ -211,7 +249,7 @@
                                         / * --}}
                                         @if( $grf->status != "draft" && $grf->status != "submited" && $grf->status != "ic_approved" && $grf->status != "wh_approved" )
                                         <li>
-                                            <a href="{{ Route( 'view.surat.jalan',$grf->id ) }}" class="dropdown-item">
+                                            <a href="" class="dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-file-pdf w-4 h-4 mr-2"
                                                     viewBox="0 0 16 16">
@@ -233,7 +271,7 @@
                                         / * --}}
                                         @if( $grf->status == "delivery_approved" )
                                         <li>
-                                            <a href="{{ Route( "transaction.approve.post.pickup", $grf->id ) }}" class="dropdown-item">
+                                            <a href="" class="dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam w-4 h-4 mr-2" viewBox="0 0 16 16">
                                                     <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
                                                 </svg>
@@ -251,7 +289,7 @@
                                         / * --}}
                                         @if( $grf->status == "user_pickup" )
                                         <li>
-                                            <a href="{{  Route( "return.get.detail", str_replace( '/', '~', strtolower( $grf->grf_code ) ) )  }}" class="dropdown-item">
+                                            <a href="" class="dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-arrow-left-right w-4 h-4 mr-2"
                                                     viewBox="0 0 16 16">
@@ -279,7 +317,7 @@
             |  New Request
             |--------------------------------------------------------------------------
             / * --}}
-            @if( count( $grfs->where( "status", "!=", "closed" ) ) < 3 )
+            @if( count( $grfs->where( "status", "!=", "closed" )->where('is_emergency', 0) ) < 3 )
             <button data-tw-toggle="modal" data-tw-target="#modal-new-request"
                 class="flex flex-col justify-center items-center py-8 gap-4 col-span-12 sm:col-span-4 xl:col-span-4 intro-y rounded border border-gray-300 border-dashed transition duration-300 ease-in-out hover:bg-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-lg"
@@ -446,4 +484,6 @@
     </div>
 
 </div>
+
+
 @endsection

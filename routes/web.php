@@ -239,6 +239,10 @@ Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['
     Route::post('/add/item/{id}', [UserTransactionController::class, 'storeAddItem'])->name("post.add.item");
     Route::put('/warehouse/{id}', [UserTransactionController::class, 'changeWarehouse'])->name('put.update.warehouse');
     Route::put('/{id}', [UserTransactionController::class, 'changeStatusToSubmit'])->name('put.update.status');
+    Route::get('/emergency/{grf_code}', [UserTransactionController::class, 'create'])->name('get.emergency.detail');
+    Route::post('/emergency', [UserTransactionController::class, 'storeEmergencyGrf'])->name('post.store.create.emergency.grf');
+    Route::put('/file/{id}', [UserTransactionController::class, 'putDocumentEmergencyGRF'])->name('put.update.file.emergency.request');
+    Route::put('/delete/doc/{id}', [UserTransactionController::class, 'destroyDocument'])->name("get.delete.doc");
 });
 
 

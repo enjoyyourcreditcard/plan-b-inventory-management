@@ -157,6 +157,41 @@ class UserTransactionController extends Controller
 
 
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store GRF Draft Request Form Emergency
+    *|--------------------------------------------------------------------------
+    */
+    public function storeEmergencyGrf (Request $request)
+    {
+        try {
+            $this->requestFormService->handleStoreGrfEmergency($request);
+
+            return redirect::route( "request.get.emergency.detail", str_replace( "/", "~", strtolower( $request->grf_code ) ) );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store Emergency GRF Document
+    *|--------------------------------------------------------------------------
+    */
+    public function putDocumentEmergencyGRF(Request $request, $id)
+    {
+        try {
+            $this->requestFormService->handleDocumentEmergencyGRF($request, $id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -244,6 +279,24 @@ class UserTransactionController extends Controller
         try {
             $this->requestFormService->handlePostApprovePickup($id);
 
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Delete selected item on the list
+    *|--------------------------------------------------------------------------
+    */
+    public function destroyDocument($id)
+    {
+        try {
+            $this->requestFormService->handleDeleteRequestDocument($id);
+    
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
