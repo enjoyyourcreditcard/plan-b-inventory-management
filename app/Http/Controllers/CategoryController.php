@@ -13,6 +13,12 @@ class CategoryController extends Controller
         $this->categoryService = $categoryService;
         $this->partService = $partService;
     }
+    public function index()
+    {
+    //    $category = $this->categoryService->handleGetAllCategory();
+       return view('master.category');
+        
+    }
 
     public function show($id)
     {

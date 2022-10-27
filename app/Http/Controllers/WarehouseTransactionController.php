@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Imports\WarehouseImport;
 use App\Models\RequestStock;
 use App\Models\WhApproval;
-use Illuminate\Http\Request;
-use App\Services\PartService;
 use App\Services\BrandService;
-use App\Services\WarehouseService;
+use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\RequestStockService;
 use App\Services\TransactionService;
+use App\Services\WarehouseService;
 use App\Services\WarehouseTransactionService;
 use Excel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class WarehouseTransactionController extends Controller
 {
@@ -110,16 +111,20 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function indexTransfer () {
-        // Services
-        $requestForms = $this->requestFormService->handleGetByUserRequestForm();
-        $grf_code = $this->warehouseTransactionService->handleGenerateGrfCode();
-        
-        // Return View
-        return view('warehouse.transfer', [
-            'requestForms' => $requestForms,
-            'grf_code' => $grf_code
-        ]);
+        try {
+            $grf_code = $this->warehouseTransactionService->handleGenerateGrfCode();
+            $grfs = $this->requestFormService->handleGetAllWarehouseTransferGrfByUser();
+    
+            return view( "warehouse.transfer", [
+                'grf_code' => $grf_code,
+                'grfs' => $grfs,
+            ] );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
+
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -127,24 +132,30 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function storeGrfTransfer (Request $request) {
-        // Services
-        $this->requestFormService->handleStoreGrf($request);
-        
-        // Return View
-        return redirect('/warehouse-transfer/' . str_replace('/', '~', strtolower($request->grf_code)));
+        try {
+            $this->requestFormService->handleStoreGrf($request);
+    
+            return Redirect::route( "warehouse.transfer.get.detail", str_replace( '/', '~', strtolower( $request->grf_code ) ) );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
+
+    
     /*
     *|--------------------------------------------------------------------------
     *| Store Item Transfer
     *|--------------------------------------------------------------------------
     */
     public function storeTransfer (Request $request, $id) {
-        // Services
-        $this->warehouseTransactionService->handleStoreWarehouseForm($request, $id);
-
-        // Return View
-        return redirect()->back();
+        try {
+            $this->warehouseTransactionService->handleStoreWarehouseForm($request, $id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     /*
@@ -153,47 +164,57 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function updateTransfer (Request $request) {
-        // Services
-        $this->warehouseTransactionService->handleUpdateWarehouseTransfer($request);
-
-        // Return View
-        return redirect()->back();
+        try {
+            $this->warehouseTransactionService->handleUpdateWarehouseTransfer($request);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
+
+    
     /*
     *|--------------------------------------------------------------------------
     *| Displaying Warehouse Transfer
     *|--------------------------------------------------------------------------
     */
     public function createTransfer ($code) {
-        // Services
-        $warehouses = $this->warehouseService->handleAllWareHouse();
-        $parts = $this->partService->handleAllPart();
-        $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $transferForms = $this->warehouseTransactionService->handleTransferFormPerGrf($code);
-        $brands = $this->brandService->handleGetAllBrand();
-
-        // Return View
-        return view('warehouse.create', [
-            'warehouses' => $warehouses,
-            'parts' => $parts,
-            'grf' => $grf,
-            'transferForms' => $transferForms,
-            'brands' => $brands,
-        ]);
+        try {
+            $grf = $this->requestFormService->handleGetCurrentGrf($code);
+            $warehouses = $this->warehouseService->handleAllWareHouse();
+            $parts = $this->partService->handleAllPart();
+            $transferForms = $this->warehouseTransactionService->handleTransferFormPerGrf($code);
+            $brands = $this->brandService->handleGetAllBrand();
+    
+            return view('warehouse.create', [
+                'grf' => $grf,
+                'warehouses' => $warehouses,
+                'parts' => $parts,
+                'transferForms' => $transferForms,
+                'brands' => $brands,
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
+
+
 
     /*
     *|--------------------------------------------------------------------------
-    *| Delete Item Transfer
+    *| Remove Item Transfer from list
     *|--------------------------------------------------------------------------
     */
     public function deleteTransfer ($id) {
-        // Services
-        $this->warehouseTransactionService->handleDeleteTransferForm($id);
-
-        // Return View
-        return redirect()->back();
+        try {
+            $this->warehouseTransactionService->handleDeleteTransferForm($id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     /*
@@ -203,11 +224,16 @@ class WarehouseTransactionController extends Controller
     */
     public function storePiecesTransfer (Request $request, $id) {
         // Services
-        $this->warehouseTransactionService->handleStorePiecesTransfer($request, $id);
-
-        // Return View
-        return redirect()->back();
+        try {
+            $this->warehouseTransactionService->handleStorePiecesTransfer($request, $id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
+
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -215,10 +241,46 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function storeBulkTransfer (Request $request, $id) {
-        // Services
-        $this->warehouseTransactionService->handleStoreBulkTransfer($request, $id);
+        try {
+            $this->warehouseTransactionService->handleStoreBulkTransfer($request, $id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
 
-        // Return View
-        return redirect()->back();
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change current warehouse on transfer
+    *|--------------------------------------------------------------------------
+    */
+    public function updateCurrentWarehouseTransfer ( Request $request, $id ) {
+        try {
+            $this->warehouseTransactionService->handleChangeCurrentWarehouseTransfer($request, $id);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change warehouse destination on transfer
+    *|--------------------------------------------------------------------------
+    */
+    public function updateWarehouseDestinationTransfer ( Request $request, $id ) {
+        try {
+            $this->warehouseTransactionService->handleChangeWarehouseDestinationTransfer($request, $id);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 }

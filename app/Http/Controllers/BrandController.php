@@ -17,7 +17,7 @@ class BrandController extends Controller
     public function index()
     {
         $brands = $this->brandService->handleAllBrand();
-        return view('brand.brand', [
+        return view('master.brand', [
             'brands' => $brands
         ]);
     }

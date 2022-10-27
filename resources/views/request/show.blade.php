@@ -171,7 +171,7 @@
             <h2 class="text-lg font-medium truncate mr-5">Good Request Forms</h2>
         </div>
     </div>
-    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
+    <div class="intro-y col-span-5 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
 
 
 

@@ -52,12 +52,6 @@ function Stock(props) {
     const columns = React.useMemo(
 
         () => [
-           
-            {
-                Header: 'IM CODE',
-                accessor: 'im_code'
-
-            },
             , {
                 Header: 'MATERIAL DESCRIPTION',
                 accessor: 'name'
@@ -70,13 +64,6 @@ function Stock(props) {
         []
     )
 
-    // const initialState = {
-    //     hiddenColumns: [
-    //         "color",
-    //         "im_code",
-    //         "orafin_code",
-    //         "sn_status"]
-    // };
     const {
         getTableProps,
         getTableBodyProps,
@@ -105,7 +92,7 @@ function Stock(props) {
     )
     const { pageIndex } = state
     return (
-        <div>
+        <div className='intro-y box p-5 s'>
             <div className="">
                 <div className=" mb-3">
                     <label className='mb-2'><b>Search:</b></label>
@@ -143,12 +130,7 @@ function Stock(props) {
                     </tbody>
                 </table>
             </div>
-                // <Table
-                //     getTableProps={getTableProps}
-                //     prepareRow={prepareRow}
-                //     getTableBodyProps={getTableBodyProps}
-                //     headerGroups={headerGroups}
-                //     page={page} />
+            
             )}
 
 
@@ -165,12 +147,9 @@ function Stock(props) {
 }
 
 export default Stock;
+
 if (document.getElementById('transaction-stock-sidebar')) {
-
-const propsContainer = document.getElementById("transaction-stock-sidebar");
-const props = Object.assign({}, propsContainer.dataset);
-ReactDOM.render(<Stock  {...props} />, document.getElementById('transaction-stock-sidebar'));
-
-
-//     ReactDOM.render(<Stock />, document.getElementById('transaction-stock-sidebar'));
+    const propsContainer = document.getElementById("transaction-stock-sidebar");
+    const props = Object.assign({}, propsContainer.dataset);
+    ReactDOM.render(<Stock  {...props} />, document.getElementById('transaction-stock-sidebar'));
 }

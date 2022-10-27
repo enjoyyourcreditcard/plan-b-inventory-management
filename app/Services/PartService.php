@@ -63,6 +63,8 @@ class PartService
             'img' => 'image|file|max:5120'
         ]);
 
+        // dd($validatedData);
+
         if ($request->file('img')) {
             $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');
         } else {
@@ -103,13 +105,16 @@ class PartService
     }
 
     // Part DELETE
-    public function handleDeactivePart($id)
+    public function handleDeactivePart($req)
     {
-        $part = $this->part->find($id);
+
+        $validatedData = $req->validate([
+            'id' => 'required'
+        ]);
+        $part = $this->part->find($validatedData['id']);
         $data = [];
         $data['status'] = 'inactive';
         $data['ended'] = now();
-
         $part->update($data);
 
         return ('Data has been deactivated');

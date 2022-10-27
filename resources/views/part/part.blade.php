@@ -166,7 +166,7 @@
         <h5 class="modal-title">Create Part</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="addPartForm" action="{{route('part.post')}}" method="POST" enctype="multipart/form-data">@csrf</form>
+      <form id="addPartForm" action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">@csrf</form>
       <form id="addCategoryForm">@csrf</form>
       <div class="modal-body" style="overflow-y: scroll; height: 80vh;">
         <div class="row">
@@ -504,7 +504,7 @@
     </div>
   </div>
 </div>
-
+π
 
 
 {{-- *

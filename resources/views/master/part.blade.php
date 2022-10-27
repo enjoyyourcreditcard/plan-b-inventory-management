@@ -12,628 +12,522 @@
 <h2 class="intro-y text-lg font-medium mt-10">Master Part</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
-    {{-- <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        <button class="btn btn-primary shadow-md mr-2">Add New Product</button>
-        <div class="dropdown">
-            <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                <span class="w-5 h-5 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        icon-name="plus" class="lucide lucide-plus w-4 h-4" data-lucide="plus">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                </span>
-            </button>
-            <div class="dropdown-menu w-40">
-                <ul class="dropdown-content">
-                    <li>
-                        <a href="" class="dropdown-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="printer" data-lucide="printer"
-                                class="lucide lucide-printer w-4 h-4 mr-2">
-                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
-                                <rect x="6" y="14" width="12" height="8"></rect>
-                            </svg> Print
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dropdown-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="file-text" data-lucide="file-text"
-                                class="lucide lucide-file-text w-4 h-4 mr-2">
-                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg> Export to Excel
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dropdown-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="file-text" data-lucide="file-text"
-                                class="lucide lucide-file-text w-4 h-4 mr-2">
-                                <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <line x1="10" y1="9" x2="8" y2="9"></line>
-                            </svg> Export to PDF
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
-        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-            <div class="w-56 relative text-slate-500">
-                <input type="text" class="form-control w-56 box pr-10" placeholder="Search...">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    icon-name="search" class="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
-                    data-lucide="search">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </div>
-        </div>
-    </div> --}}
-    <!-- BEGIN: Data List -->
+
+
     <div id="master-parts" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
-    {{-- <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+
+
+
+    {{--
+    <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
         <table class="table table-report -mt-2">
             <thead>
                 <tr>
-                    <th class="whitespace-nowrap">IMAGES</th>
-                    <th class="whitespace-nowrap">PRODUCT NAME</th>
-                    <th class="text-center whitespace-nowrap">STOCK</th>
+                    <th class="whitespace-nowrap">
+                        <input class="form-check-input" type="checkbox">
+                    </th>
+                    <th class="whitespace-nowrap">INVOICE</th>
+                    <th class="whitespace-nowrap">BUYER NAME</th>
                     <th class="text-center whitespace-nowrap">STATUS</th>
+                    <th class="whitespace-nowrap">PAYMENT</th>
+                    <th class="text-right whitespace-nowrap">
+                        <div class="pr-16">TOTAL TRANSACTION</div>
+                    </th>
                     <th class="text-center whitespace-nowrap">ACTIONS</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-2.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-11.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-3.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Oppo Find X2 Pro</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Smartphone &amp; Tablet</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-117807556</a>
                     </td>
-                    <td class="text-center">50</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-success">
+                        <a href="" class="font-medium whitespace-nowrap">John Travolta</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Active
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$117,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-9.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-7.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-11.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Nike Tanjun</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Sport &amp; Outdoor</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-39807556</a>
                     </td>
-                    <td class="text-center">167</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-success">
+                        <a href="" class="font-medium whitespace-nowrap">Leonardo DiCaprio</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Active
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$39,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-11.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-13.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-9.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Apple MacBook Pro 13</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">PC &amp; Laptop</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-29807556</a>
                     </td>
-                    <td class="text-center">74</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-danger">
+                        <a href="" class="font-medium whitespace-nowrap">Angelina Jolie</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">California, LA</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-pending">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Inactive
+                            </svg> Pending Payment
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Checking payments</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">30 March, 11:00</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$29,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-7.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-3.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-9.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Sony Master Series A9G</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Electronic</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-45807556</a>
                     </td>
-                    <td class="text-center">119</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-danger">
+                        <a href="" class="font-medium whitespace-nowrap">Brad Pitt</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Inactive
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$45,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-7.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-12.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-11.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Samsung Q90 QLED TV</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Electronic</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-131807556</a>
                     </td>
-                    <td class="text-center">125</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-danger">
+                        <a href="" class="font-medium whitespace-nowrap">Al Pacino</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">California, LA</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-pending">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Inactive
+                            </svg> Pending Payment
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Checking payments</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">30 March, 11:00</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$131,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-4.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-15.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-15.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Nike Air Max 270</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Sport &amp; Outdoor</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-62807556</a>
                     </td>
-                    <td class="text-center">50</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-danger">
+                        <a href="" class="font-medium whitespace-nowrap">Johnny Depp</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Inactive
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$62,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-3.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-1.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-12.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Nikon Z6</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Photography</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-46807556</a>
                     </td>
-                    <td class="text-center">78</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-success">
+                        <a href="" class="font-medium whitespace-nowrap">Kate Winslet</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Active
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$46,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-12.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-15.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-13.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Sony Master Series A9G</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Electronic</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-73807556</a>
                     </td>
-                    <td class="text-center">50</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-danger">
+                        <a href="" class="font-medium whitespace-nowrap">Johnny Depp</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Inactive
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$73,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-2.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-15.jpg">
-                            </div>
-                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="http://tinker-laravel.left4code.com/dist/images/preview-6.jpg">
-                            </div>
-                        </div>
+                    <td class="w-10">
+                        <input class="form-check-input" type="checkbox">
                     </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Sony A7 III</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Photography</div>
+                    <td class="w-40 !py-4">
+                        <a href="" class="underline decoration-dotted whitespace-nowrap">#INV-48807556</a>
                     </td>
-                    <td class="text-center">50</td>
                     <td class="w-40">
-                        <div class="flex items-center justify-center text-success">
+                        <a href="" class="font-medium whitespace-nowrap">Robert De Niro</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
+                    </td>
+                    <td class="text-center">
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                 class="lucide lucide-check-square w-4 h-4 mr-2">
                                 <polyline points="9 11 12 14 22 4"></polyline>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                            </svg> Active
+                            </svg> Completed
                         </div>
                     </td>
-                    <td class="table-report__action w-56">
+                    <td>
+                        <div class="whitespace-nowrap">Direct bank transfer</div>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                    </td>
+                    <td class="w-40 text-right">
+                        <div class="pr-16">$48,000,00</div>
+                    </td>
+                    <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
                                     class="lucide lucide-check-square w-4 h-4 mr-1">
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                </svg> Edit
+                                </svg> View Details
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal">
+                            <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;"
+                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg> Delete
+                                    stroke-linejoin="round" icon-name="arrow-left-right" data-lucide="arrow-left-right"
+                                    class="lucide lucide-arrow-left-right w-4 h-4 mr-1">
+                                    <polyline points="17 11 21 7 17 3"></polyline>
+                                    <line x1="21" y1="7" x2="9" y2="7"></line>
+                                    <polyline points="7 21 3 17 7 13"></polyline>
+                                    <line x1="15" y1="17" x2="3" y2="17"></line>
+                                </svg> Change Status
                             </a>
                         </div>
                     </td>
@@ -641,6 +535,9 @@
             </tbody>
         </table>
     </div> --}}
+
+
+
     <!-- END: Data List -->
     <!-- BEGIN: Pagination -->
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
@@ -718,7 +615,8 @@
 
 
 <!-- Main modal -->
-<div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+<div id="defaultModal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -727,151 +625,210 @@
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                     Terms of Service
                 </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-toggle="defaultModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                    With less than a month to go before the European Union enacts new consumer privacy laws for its
+                    citizens, companies around the world are updating their terms of service agreements to comply.
                 </p>
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is
+                    meant to ensure a common set of data rights in the European Union. It requires organizations to
+                    notify users as soon as possible of high-risk data breaches that could personally affect them.
                 </p>
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                <button data-modal-toggle="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                <button data-modal-toggle="defaultModal" type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I
+                    accept</button>
+                <button data-modal-toggle="defaultModal" type="button"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal" id="createPartModal">
-    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 864px">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Create Part</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Delete Confirmation
+*|--------------------------------------------------------------------------
+*--}}
+<div id="part-delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="p-5 text-center">
+                    <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                    <div class="text-3xl mt-5">Are you sure?</div>
+                    <div class="text-slate-500 mt-2">Do you really want to delete these records? <br>This process cannot
+                        be undone.</div>
+                </div>
+                <div class="px-5 pb-8 text-center">
+                    <form action="{{Route('part.post.deactive')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" id="part_id_delete">
+                        <button type="button" data-tw-dismiss="modal"
+                            class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+                        <button type="submit" class="btn btn-danger w-24">Delete</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
-        <form id="addPartForm" action="{{route('part.post')}}" method="POST" enctype="multipart/form-data">@csrf</form>
-        <form id="addCategoryForm">@csrf</form>
-        <div class="modal-body" style="overflow-y: scroll; height: 80vh;">
-          <div class="row">
-            <div class="mb-2">
-              <label for="partName" class="form-label">Part Name</label>
-              <input type="text" class="form-control" id="partName" name="name" form="addPartForm" required>
-            </div>
-            <div class="mb-2">
-              <label for="partCategory" class="form-label">Segment</label>
-              <select class="form-control inputPartSegmentSelect2" id="partCategory" name="segment_id" form="addPartForm" required>
-                <option></option>
-              </select>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partBrand" class="form-label">Brand</label>
-              <select class="form-select inputPartAllSelect2" id="partBrand" name="brand_id" form="addPartForm" required>
-              </select>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partUom" class="form-label">Uom</label>
-              <select class="form-select inputPartAllSelect2" id="partUom" name="uom" form="addPartForm" required>
-                <option value="meter">Meter</option>
-                <option value="set">Set</option>
-                <option value="each">Each</option>
-                <option value="roll">Roll</option>
-                <option value="unit">Unit</option>
-                <option value="batang">Batang</option>
-                <option value="liter">Liter</option>
-                <option value="kaleng">Kaleng</option>
-                <option value="kg">Kg</option>
-                <option value="kubic">Kubic</option>
-                <option value="pack">Pack</option>
-              </select>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partSnStatus" class="form-label">SN Status</label>
-              <select class="form-select inputPartAllSelect2" id="partSnStatus" name="sn_status" form="addPartForm" required>
-                <option value="non sn">NON SN</option>
-                <option value="sn">SN</option>
-              </select>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partColor" class="form-label">Color</label>
-              <select class="form-select inputPartAllSelect2" id="partColor" name="color" form="addPartForm" required>
-                <option value="Black">Black</option>
-                <option value="White">White</option>
-                <option value="Grey">Grey</option>
-                <option value="Green">Green</option>
-                <option value="Yellow">Yellow</option>
-                <option value="NN">NN</option>
-                <option value="Blue">Blue</option>
-                <option value="Silver">Silver</option>
-                <option value="Multi Color">Multi Color</option>
-                <option value="Red">Red</option>
-                <option value="Orange">Orange</option>
-              </select>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partSize" class="form-label">Size</label>
-              <input type="number" class="form-control" id="partSize" name="size" form="addPartForm" required>
-            </div>
-  
-            <div class="mb-2">
-              <label for="partDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="partDescription" rows="3" name="description" form="addPartForm" required></textarea>
-            </div>
-  
-            {{-- <div class="mb-2">
-              <label for="partNote" class="form-label">Note</label>
-              <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
-            </div> --}}
-  
-            <div class="mb-4">
-              <label for="partImage" class="form-label">Part Image</label>
-              <input class="form-control" type="file" id="partImage" name="img" accept="image/*" form="addPartForm">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" form="addPartForm">Save</button>
-        </div>
-      </div>
-      <div class="modal-content" id="createPartCategoryModal" style="display: none; box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.2) ,0 0 2rem rgb(0 0 0 / 0.2); position: absolute;">
-        <div class="modal-header">
-          <h5 class="modal-title">Create Segment</h5>
-          <button type="button" class="btn-close" onclick="bye()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="categoryName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="segmentName" name="name" form="addCategoryForm" required>
-          </div>
-          <div class="mb-3">
-            <label for="categoryName" class="form-label">Category</label>
-            <select name="category_id" class="form-control inputPartCategorySelect2" id="segmentCategoryId" form="addCategoryForm" required>
-              <option></option>
-              @foreach ($categories as $category)
-              <option value="{{ $category->id }}">{{ $category->name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div>
-            <button id="submitStoreCategory" type="submit" class="btn btn-primary float-end" form="addCategoryForm">Save</button>
-          </div>
-        </div>
-      </div>
-    
     </div>
-  </div> 
-  
-@endsection
+</div>
+
+
+{{-- *
+*|--------------------------------------------------------------------------
+*| Modal Add Part
+*|--------------------------------------------------------------------------
+*--}}
+<div id="superlarge-modal-size-preview" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="{{route('part.store')}}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h2 class="font-medium text-base mr-auto">Create Part</h2>
+                    <button class="btn btn-outline-secondary hidden sm:flex">
+                        <i data-lucide="file" class="w-4 h-4 mr-2"></i>
+                    </button>
+
+                    {{-- <button type="button" data-tw-dismiss="modal"
+                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button> --}}
+
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; height: 80vh;">
+                    <div class="row">
+                        <div class="mb-2">
+                            <label for="crud-form-1" class="form-label">Part Name</label>
+                            <input id="crud-form-1" name="name" type="text" class="form-control w-full">
+                        </div>
+                        <div class="mb-2">
+                            <label for="partCategory" class="form-label">Segment</label>
+                            <select class="tom-select w-full" required name="segment_id">
+                                @foreach ($segments as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="partBrand" class="form-label">Brand</label>
+                            <select class="tom-select w-full" required name="brand_id">
+                                @foreach ($brands as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+
+
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="partUom" class="form-label">Uom</label>
+                            <select class="tom-select w-full" required name="uom">
+                                <option value="meter">Meter</option>
+                                <option value="set">Set</option>
+                                <option value="each">Each</option>
+                                <option value="roll">Roll</option>
+                                <option value="unit">Unit</option>
+                                <option value="batang">Batang</option>
+                                <option value="liter">Liter</option>
+                                <option value="kaleng">Kaleng</option>
+                                <option value="kg">Kg</option>
+                                <option value="kubic">Kubic</option>
+                                <option value="pack">Pack</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="" class="form-label">SN Status</label>
+                            <select class="tom-select w-full" required name="sn_status">
+                                <option value="non sn">NON SN</option>
+                                <option value="sn">SN</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="" class="form-label">Color</label>
+                            <div>
+                                <select class="tom-select w-full" name="color" required>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Grey">Grey</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="NN">NN</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Silver">Silver</option>
+                                    <option value="Multi Color">Multi Color</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Orange">Orange</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="partSize" class="form-label">Size</label>
+                                <input type="number" class="form-control" name="size" required>
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="partDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="partDescription" rows="3" name="description"
+                                    required></textarea>
+                            </div>
+
+                            {{-- <div class="mb-2">
+                                <label for="partNote" class="form-label">Note</label>
+                                <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
+                            </div> --}}
+
+                            <div class="mb-4">
+                                {{-- <label for="partImage" class="form-label">Part Image</label>
+                                <input class="form-control" type="file" id="partImage" name="img" accept="image/*"
+                                    form="addPartForm"> --}}
+
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    for="file_input">Part Image</label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
+                                    aria-describedby="file_input_help" id="file_input" name="img" accept="image/*"
+                                    type="file">
+                                <p class="mt-1 text-sm text-gray-500 text-gray-300" id="file_input_help">SVG, PNG,
+                                    JPG or GIF (MAX. 800x400px).</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-tw-dismiss="modal"
+                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button type="submit" class="btn btn-primary w-20">Send</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+    @endsection

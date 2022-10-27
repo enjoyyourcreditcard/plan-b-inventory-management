@@ -8,7 +8,7 @@ use App\Services\SegmentService;
 
 class SegmentController extends Controller
 {
-    public function __construct (SegmentService $segmentService)
+    public function __construct(SegmentService $segmentService)
     {
         $this->segmentService = $segmentService;
     }
@@ -20,7 +20,9 @@ class SegmentController extends Controller
      */
     public function index()
     {
-        //
+        $segments = $this->segmentService->handleAllSegment();
+        // dd($segments);
+        return view('master.segment', ['segments' => $segments]);
     }
 
     /**
@@ -39,7 +41,7 @@ class SegmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
         return $this->segmentService->handleStoreSegment($request);
     }

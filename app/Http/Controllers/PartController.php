@@ -14,6 +14,7 @@ use App\Services\AttachmentService;
 use Illuminate\Support\Facades\Auth;
 use App\Services\HistorypriceService;
 use App\Services\NotificationService;
+use Illuminate\Support\Facades\Redirect;
 
 class PartController extends Controller
 {
@@ -74,8 +75,14 @@ class PartController extends Controller
     */
     public function store(Request $request)
     {
-        $this->partService->handleStorePart($request);
-        return redirect()->back();
+        try {
+            $this->partService->handleStorePart($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            return Redirect::back()->withError($e->getMessage());
+        }
+        
     }
 
     /* 
@@ -129,9 +136,9 @@ class PartController extends Controller
     *| Change Status Part  
     *|--------------------------------------------------------------------------
     */
-    public function deactive($id)
+    public function deactive(Request $req)
     {
-        $this->partService->handleDeactivePart($id);
+        $this->partService->handleDeactivePart($req);
         return redirect()->back();
     }
 

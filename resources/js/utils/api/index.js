@@ -113,8 +113,6 @@ export default class Api {
       });
   };
 
-
-
   getStockByGRF = (code) => {
     return this.init()
       .get(`/grf/stock/list/`+code)
@@ -141,6 +139,18 @@ export default class Api {
 
   
 
+  postTransactionApprovedIC = (grf_id,part_id, qty) => {
+    return axios.post('http://localhost:8000/transaction/approve/IC', {
+      id: grf_id,
+      part: part_id.toString(),
+      quantity: qty.toString()
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+  
+  
 
 /*
 *|--------------------------------------------------------------------------

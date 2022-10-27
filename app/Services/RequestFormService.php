@@ -28,7 +28,7 @@ class RequestFormService
     public function handleShowRequestForm($code)
     {
         // dd($code);
-        $requestForms = $this->grf->with('requestForms.segment')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
+        $requestForms = $this->grf->with('requestForms.segment')->with('requestForms.segment.parts')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
         return ($requestForms);
     }
 
@@ -49,19 +49,19 @@ class RequestFormService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Get all grf data by it's user
+    *| Get all grf requester data by it's user
     *|--------------------------------------------------------------------------
     */
     public function handleGetAllGrfByUser()
     {
-        $grfs = $this->grf->where([ ['user_id', Auth::user()->id], ['type', 'request'] ])->with('requestForms')->get();
+        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', 'request']])->with('requestForms')->get();
 
         $grfs->map(function ($grf) {
             $grf['ended'] = ($grf->delivery_approved_date == null ? null : Carbon::create($grf->delivery_approved_date)->addDay()->toDateTimeString());
 
             $grf['total_quantity'] = 0;
 
-            $grf->requestForms->map( function ($requestForm) use ($grf) {
+            $grf->requestForms->map(function ($requestForm) use ($grf) {
                 $grf['total_quantity'] += $requestForm->quantity;
             });
         });
@@ -70,7 +70,29 @@ class RequestFormService
     }
 
 
-    
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get all warehouse transfer grf data by it's user
+    *|--------------------------------------------------------------------------
+    */
+    public function handleGetAllWarehouseTransferGrfByUser()
+    {
+        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', "!=", 'request']])->with('transferForms', "timelines" )->get();
+
+        $grfs->map(function ($grf) {
+            $grf['total_stock'] = 0;
+
+            $grf->transferForms->map(function ($transferForm) use ($grf) {
+                $grf['total_stock'] += $transferForm->quantity;
+            });
+        });
+
+        return ($grfs);
+    }
+
+
+
     /*
     *|--------------------------------------------------------------------------
     *| Get the current user's GRF
@@ -78,9 +100,9 @@ class RequestFormService
     */
     public function handleGetCurrentGrf($code)
     {
-        $grf = $this->grf->with( 'timelines', 'user' )->where( 'grf_code', '=', str_replace( '~', '/', strtoupper( $code ) ) )->first();
+        $grf = $this->grf->with('timelines', 'user')->where('grf_code', '=', str_replace('~', '/', strtoupper($code)))->first();
 
-        return ( $grf );
+        return ($grf);
     }
 
     // Request Form Has GRF_Code
@@ -99,14 +121,14 @@ class RequestFormService
     */
     public function handleStore($request, $id)
     {
-        if ( isset( $request->warehouse_id ) ) {
+        if (isset($request->warehouse_id)) {
             $validatedWarehouse_id = $request->validate([
                 'warehouse_id' => 'required',
             ]);
 
-            $this->grf->find( $id )->update( $validatedWarehouse_id );
+            $this->grf->find($id)->update($validatedWarehouse_id);
         }
-         
+
         $validatedData = $request->validate([
             'brand_id' => 'required',
             'segment_id' => 'required',
@@ -114,11 +136,11 @@ class RequestFormService
             'remarks' => 'nullable',
         ]);
 
-        $validatedData['grf_id'] = $this->grf->find( $id )->id;
+        $validatedData['grf_id'] = $this->grf->find($id)->id;
 
-        $data = $this->requestForm->create( $validatedData );
+        $data = $this->requestForm->create($validatedData);
 
-        return ( $data );
+        return ($data);
     }
 
 
@@ -130,15 +152,14 @@ class RequestFormService
     */
     public function handleChangeWarehouseLocation($request, $id)
     {
-        $validatedData = $request->validate( [ "warehouse_id" => "required" ] );
-        
-        $this->requestForm->where( "grf_id", $id )->get()->map( function ($itemList) {
+        $validatedData = $request->validate(["warehouse_id" => "required"]);
+        $this->requestForm->where("grf_id", $id)->get()->map(function ($itemList) {
             $itemList->delete();
-        } );
+        });
 
-        $this->grf->find( $id )->update( $validatedData );
+        $this->grf->find($id)->update($validatedData);
 
-        return ( $data );
+        // return ($data);
     }
 
 
@@ -164,9 +185,9 @@ class RequestFormService
             "status" => "draft",
             "grf_id" => $createdData->id,
         ];
-        
+
         $this->timeline->create($timeLine);
-        
+
         return ('Data has been stored');
     }
 
@@ -185,9 +206,9 @@ class RequestFormService
         ];
 
         $this->grf->find($id)->update($data);
-        
+
         $this->timeline->create($data);
-        
+
         return ('Data has been updated');
     }
 
