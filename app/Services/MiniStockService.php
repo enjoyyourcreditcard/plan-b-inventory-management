@@ -20,6 +20,8 @@ class MiniStockService
         $this->timeline = $timeline;
     }
 
+
+    
     /*
     |--------------------------------------------------------------------------
     | Mini Stock per GRF
@@ -40,6 +42,8 @@ class MiniStockService
         return $miniStocks;
     }
     
+
+
     /*
     |--------------------------------------------------------------------------
     | Mini Stock per User
@@ -54,31 +58,26 @@ class MiniStockService
         return $miniStocks;
     }
 
+
+
     /*
     |--------------------------------------------------------------------------
-    | Submit Return Stock
+    | Save || change return status
     |--------------------------------------------------------------------------
     */
-    public function handleUpdateReturnStock ($request, $id)
+    public function handleUpdateReturnStock ( $request, $id )
     {
-        $miniStocks = $this->requestStock->where('grf_id', $id)->get();
-        
-        foreach ($request->old_sn_code as $key => $sn_code) {
+        $miniStocks = $this->requestStock->where( 'grf_id', $id )->get();
+
+        foreach ( $request->old_sn_code as $key => $sn_code ) {
             $miniStocks->where('sn', $sn_code)->first()->update([
                 'condition' => $request['condition'][$key],
                 'sn_return' => $request['sn_code'][$key],
                 'remarks' => $request['remarks'][$key],
             ]);
-
-            // if ($request->isAjax != 'yep') {
-            //     // dd("asdasd");
-            //     $this->stock->where('sn_code', $sn_code)->first()->update([
-            //         'condition' => $request['condition'][$key],
-            //     ]);
-            // }
         }
 
-        if ($request->isAjax != 'yep') {
+        if ( $request->isReturn == "true" ) {
             $this->grf->find($id)->update([
                 'status' => 'return'
             ]);
@@ -87,9 +86,10 @@ class MiniStockService
                 'grf_id' => $id,
                 'status' => 'return'
             ]);
+
+            return ( true );
         }
 
-
-        return('Data stored!');
+        return ( false );
     }
 }

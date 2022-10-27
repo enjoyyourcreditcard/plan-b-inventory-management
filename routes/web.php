@@ -188,7 +188,7 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
-    Route::get('/inbound', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
+    Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("get.home");
     
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 
@@ -288,8 +288,13 @@ Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->m
 * MINI STOCK 
 *--------------------------------------------------------------------------
 */
-Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");
+// Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");
+Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth'] ], function () {
+    Route::get('/{code}', [UserTransactionController::class, 'showReturnStock'])->name("get.detail");
+    Route::put('/{code}', [UserTransactionController::class, 'updateReturnStock'])->name("put.detail");
+});
 
+// return.get.detail
 
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
 Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
@@ -301,8 +306,8 @@ Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'
 * Return Stock
 *--------------------------------------------------------------------------
 */
-Route::get('/return/{code}', [UserTransactionController::class, 'showReturnStock'])->middleware("auth")->name("get.show.return.stock");
-Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
+// Route::get('/return/{code}', [UserTransactionController::class, 'showReturnStock'])->middleware("auth")->name("get.show.return.stock");
+// Route::put('/return/{code}', [UserTransactionController::class, 'updateReturnStock'])->middleware("auth")->name("put.show.return.stock");
 
 // /*
 // *--------------------------------------------------------------------------

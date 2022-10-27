@@ -63,57 +63,7 @@
     </div>
 
     <div class="mt-5">
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-12.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Russell Crowe</div>
-            <div class="text-slate-500 text-xs mt-0.5">17 December 2021</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-12.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Al Pacino</div>
-            <div class="text-slate-500 text-xs mt-0.5">23 August 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template" src="http://tinker-laravel.left4code.com/dist/images/profile-7.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Russell Crowe</div>
-            <div class="text-slate-500 text-xs mt-0.5">5 August 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-14.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Arnold Schwarzenegger</div>
-            <div class="text-slate-500 text-xs mt-0.5">28 June 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
+    
       <a href=""
         class="intro-y w-full block text-center rounded-md py-4 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
         More</a>
@@ -125,57 +75,7 @@
     </div>
 
     <div class="mt-5">
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-12.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Russell Crowe</div>
-            <div class="text-slate-500 text-xs mt-0.5">17 December 2021</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-12.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Al Pacino</div>
-            <div class="text-slate-500 text-xs mt-0.5">23 August 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template" src="http://tinker-laravel.left4code.com/dist/images/profile-7.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Russell Crowe</div>
-            <div class="text-slate-500 text-xs mt-0.5">5 August 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
-      <div class="intro-y">
-        <div class="box px-4 py-4 mb-3 flex items-center zoom-in">
-          <div class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden">
-            <img alt="Midone - HTML Admin Template"
-              src="http://tinker-laravel.left4code.com/dist/images/profile-14.jpg">
-          </div>
-          <div class="ml-4 mr-auto">
-            <div class="font-medium">Arnold Schwarzenegger</div>
-            <div class="text-slate-500 text-xs mt-0.5">28 June 2022</div>
-          </div>
-          <div class="py-1 px-2 rounded-full text-xs bg-success text-white cursor-pointer font-medium">137 Sales</div>
-        </div>
-      </div>
+    
       <a href=""
         class="intro-y w-full block text-center rounded-md py-4 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
         More</a>

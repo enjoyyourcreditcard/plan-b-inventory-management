@@ -1,4 +1,28 @@
-@extends('layouts.main') @section('content')
+@extends('layouts.main') 
+
+@section('breadcrumb')
+
+
+
+{{-- /* 
+|--------------------------------------------------------------------------
+|  Breadcrumb
+|--------------------------------------------------------------------------
+*/ --}}
+<nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+        <li class="breadcrumb-item" aria-current="page">Outbound</li>
+        <li class="breadcrumb-item" aria-current="page">Detail</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ $grf->grf_code }}</li>
+    </ol>
+</nav>
+@endsection
+
+@section('content')
+
+
+
 {{-- *
 *|--------------------------------------------------------------------------
 *| Modal Pieces or Bulk

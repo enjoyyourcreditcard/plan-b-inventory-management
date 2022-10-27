@@ -85,7 +85,7 @@ class TransactionController extends Controller
             $parts_segment->push($part);
         };
         // dd($parts_segment);
-        
+
         $brands = $this->brandService->handleGetAllBrand();
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->WarehouseService->handleAllWareHouse();
@@ -93,9 +93,9 @@ class TransactionController extends Controller
         return view('transaction.IC.detail_transaction', [
             'notifications' => $notifications,
             'requestForms' => $requestForms,
-            'stock'=>$stock,
+            'stock' => $stock,
             'parts' => $parts,
-            'parts_segment'=>$parts_segment,
+            'parts_segment' => $parts_segment,
             'brands' => $brands,
             'warehouses' => $warehouses,
             'grf' => $grf
@@ -143,13 +143,13 @@ class TransactionController extends Controller
     public function postApproveIC(Request $request)
     {
         $this->transactionService->handlePostApproveIC($request);
-    //     return redirect()->route('view.IC.transaction');
+        //     return redirect()->route('view.IC.transaction');
         // return $request->part[0];
-}
+    }
 
     public function postApproveSJ(Request $request)
     {
-    $this->transactionService->handlePostApproveSJ($request);
+        $this->transactionService->handlePostApproveSJ($request);
         return redirect()->route('view.IC.transaction');
     }
 
@@ -173,11 +173,28 @@ class TransactionController extends Controller
     {
 
         $grf = Grf::find($grf_id);
-        $request_form = RequestForm::where("grf_id",$grf_id)->get();
+        $request_form = RequestForm::where("grf_id", $grf_id)->get();
         // dd($);
 
-        $pdf = PDF::loadView('generate.suratjalan',['grf'=>$grf,'request_form'=>$request_form]);
+        $pdf = PDF::loadView('generate.suratjalan', ['grf' => $grf, 'request_form' => $request_form]);
         return $pdf->stream('laporan-pdf.pdf');
     }
 
+
+    public function getAllGRFOutbound()
+    {
+
+        try {
+            $requestForms = $this->requestFormService->handleAllRequestFormInbound();
+            return  ResponseJSON($requestForms);
+        } catch (\Exception $e) {
+            return  ResponseJSON($e->getMessage(), 500);
+        }
+
+        # code...
+    }
+    public function viewOutbound()
+    {
+        return view('transaction.IC.outbound');
+    }
 }

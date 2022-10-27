@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Timeline;
+use App\Models\RequestStock;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class TimelineSeeder extends Seeder
+class RequestStockSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +15,5 @@ class TimelineSeeder extends Seeder
      */
     public function run()
     {
-        Timeline::create([
-            "grf_id" => 1,
-            "status" => "draft",
-            "created_at" => now()
-        ]);
-
-
-      
     }
 }

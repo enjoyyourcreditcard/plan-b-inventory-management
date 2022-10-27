@@ -121,6 +121,18 @@ export default class Api {
       });
   };
 
+
+  getOutboundGRF = () => {
+    return this.init()
+      .get(`grf/all/outbound`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+
+
   getRequestFormByGRF = (code) => {
     return this.init()
       .get(`grf/request/list/`+code)

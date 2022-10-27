@@ -35,7 +35,7 @@ class RequestFormService
     // Request Form SHOW
     public function handleAllRequestFormInbound()
     {
-        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->get();
+        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->with('user')->with('warehouse')->get();
         return ($requestForms);
     }
 
@@ -203,6 +203,14 @@ class RequestFormService
             $query->where("user_id", Auth::user()->id);
         })->get();
 
+        function chart ( $condition, $requestStocks ) {
+            if ( count( $condition ) > 0 && count( $requestStocks ) > 0 ) {
+                $calc = count( $condition ) / count( $requestStocks );
+                return ( $calc * 100 );
+            } else {
+                return 0;
+            }
+        }
 
         $chartDatas = [
             "good" => 1,
@@ -269,6 +277,12 @@ class RequestFormService
     }
 
 
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change the grf status to pickup
+    *|--------------------------------------------------------------------------
+    */
     public function handlePostApprovePickup($id)
     {
         $grf = $this->grf->find($id);
@@ -277,12 +291,12 @@ class RequestFormService
 
         $this->timeline->create([
             'grf_id' => $id,
-            'status' => 'user_pickup'
+            'status' => 'user_pickup',
+            'created_at' => now(),
         ]);
 
         // $grf->surat_jalan = $this->handleGenerateSuratJalan($grf->warehouse_id);
-        // $grf->delivery_approved_date = Carbon::now();
-        $grf->save();
+        // $grf->save();
 
         return "success";
     }
