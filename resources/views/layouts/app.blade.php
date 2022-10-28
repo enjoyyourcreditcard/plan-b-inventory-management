@@ -651,7 +651,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{route('transaction.ic.view.outbound')}}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
@@ -697,7 +697,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{route('transaction.ic.view.outbound')}}" class="side-menu {{ Route::currentRouteName() == "transaction.ic.view.outbound" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
