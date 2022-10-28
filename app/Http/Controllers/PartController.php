@@ -128,7 +128,7 @@ class PartController extends Controller
     public function update(Request $request, $id)
     {
         $this->partService->handleUpdatePart($request, $id);
-        return redirect()->back();
+        return redirect()->route("part.get.detail", $id);
     }
 
     /* 
@@ -172,5 +172,21 @@ class PartController extends Controller
     public function getDeactivePart($id)
     {
         return ResponseJSON($this->partService->handleDeactivePart($id), 200);
+    }
+
+    public function tampilan($id){
+        $parts = $this->partService->handleTampilanPart(($id), 200);
+        $segment = $this->segmentService->handleAllSegment(($id), 200);
+        $brand = $this->brandService->handleGetAllBrand(($id), 200);
+        $uom = $this->partService->handleShowUomGroupByCategory(($id), 200);
+        $status = $this->partService->handleSnPart(($id), 200);
+        return view( "part.edit", 
+        [
+            "parts" => $parts,
+            "segment" => $segment,
+            "brand" => $brand,
+            "uom" => $uom,
+            "status" => $status
+        ] );
     }
 };

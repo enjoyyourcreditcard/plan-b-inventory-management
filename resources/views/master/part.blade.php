@@ -702,7 +702,7 @@
 <div id="superlarge-modal-size-preview" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{route('part.store')}}" method="POST">
+            <form action="{{route('part.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">Create Part</h2>

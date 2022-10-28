@@ -23,7 +23,7 @@ use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\HistorypriceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
@@ -103,6 +103,8 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth']], fu
     Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
     Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
     Route::post('/', [PartController::class, 'store'])->name("store");
+    Route::get('/tampilan/{id}',[PartController::class, 'tampilan'])->name("tampilan");
+    Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });
 
 // part.post.deactive
@@ -115,7 +117,7 @@ Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth']], 
 
 
 
-Route::post('/historyprice', [HistoryPriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
+Route::post('/historyprice', [HistorypriceController::class, 'store'])->name('post.store.historyprice')->middleware("auth");
 Route::post('/brand', [BrandController::class, 'store'])->name('post.store.brand')->middleware("auth");
 Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.store.attachment')->middleware("auth");
 

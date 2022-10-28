@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HistoryPrice;
-use App\Services\HistoryPriceService;
+use App\Services\HistorypriceService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class HistoryPriceController extends Controller
 { 
-    public function __construct(HistoryPriceService $historypriceService)
+    public function __construct(HistorypriceService $historypriceService)
     {
         $this->historypriceService = $historypriceService;
     }

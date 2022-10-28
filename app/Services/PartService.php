@@ -60,7 +60,7 @@ class PartService
             'size' => 'required',
             'description' => 'required|max:255',
             'note' => 'max:255',
-            'img' => 'image|file|max:5120'
+            'img' => 'file|max:5120'
         ]);
 
         // dd($validatedData);
@@ -74,6 +74,14 @@ class PartService
         Part::create($validatedData);
 
         return ('Data has been stored');
+    }
+
+    // Show Data Part For Edit Page
+    public function handleTampilanPart($id)
+    {
+        $parts = $this->part->with("category", "brand", "requestForms")->find($id);
+        return($parts);
+        
     }
 
     // Part UPDATE 
@@ -91,7 +99,7 @@ class PartService
 
         $this->part->find($id)->update([
             'name' => $request->name,
-            'category_id' => $request->category_id,
+            'segment_id' => $request->segment_id,
             'brand_id' => $request->brand_id,
             'uom' => $request->uom,
             'sn_status' => $request->sn_status,
@@ -182,4 +190,6 @@ class PartService
         $parts = $this->part->with('requestForms')->get(['id', 'name as text', 'im_code', 'uom']);
         return ($parts);
     }
+
+    
 }
