@@ -703,7 +703,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ Route( "warehouse.transfer.get.home" ) }}" class="side-menu {{ Route::currentRouteName() == "warehouse.transfer.get.home" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse Transfer </div>
                             </a>
@@ -1188,6 +1188,8 @@
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="{{ asset('js/master.js') }}" defer></script>
     <script src="{{ asset('js/transaction.js') }}" defer></script>
+
+    @yield( "javaScript" )
     
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 

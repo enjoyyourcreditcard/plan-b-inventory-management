@@ -730,9 +730,15 @@
   dependencies:
     "is-arrayish" "^0.2.1"
 
+<<<<<<< HEAD
 "esbuild-darwin-arm64@0.15.11":
   "integrity" "sha512-OMzhxSbS0lwwrW40HHjRCeVIJTURdXFA8c3GU30MlHKuPCcvWNUIKVucVBtNpJySXmbkQMDJdJNrXzNDyvoqvQ=="
   "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.15.11.tgz"
+=======
+"esbuild-windows-64@0.15.11":
+  "integrity" "sha512-x977Q4HhNjnHx00b4XLAnTtj5vfbdEvkxaQwC1Zh5AN8g5EX+izgZ6e5QgqJgpzyRNJqh4hkgIJF1pyy1be0mQ=="
+  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.15.11.tgz"
+>>>>>>> origin/transfer_emergency
   "version" "0.15.11"
 
 "esbuild@^0.15.9":

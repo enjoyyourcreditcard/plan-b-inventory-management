@@ -241,6 +241,13 @@
 </div>
 @endsection
 
-@section( "javascript" )
+
+
+{{-- * / 
+|--------------------------------------------------------------------------
+|  Script
+|--------------------------------------------------------------------------
+/ * --}}
+@section( "javaScript" )
 <script src="{{ Asset( "js/views/request/return.js" ) }}"></script>
 @endSection
