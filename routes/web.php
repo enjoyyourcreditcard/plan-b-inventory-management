@@ -100,7 +100,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 // * Part 
-Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth','InventoryControl']], function () {
     Route::get('/', [PartController::class, 'index'])->name("view.home");
     Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
     Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
@@ -109,8 +109,19 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth']], fu
 });
 
 // part.post.deactive
+// * User 
+Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth','InventoryControl']], function () {
+    Route::get('/', [UserController::class, 'index'])->name("get.view");
+    Route::post('/', [UserController::class, 'store'])->name("store");
+    Route::put('/update', [UserController::class, 'update'])->name('user.update');
+    Route::post('/status', [UserController::class, 'postStatus'])->name('post.status');
+    // Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
+    // Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
+});
+
+
 // * Brand 
-Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth','InventoryControl']], function () {
     Route::get('/', [BrandController::class, 'index'])->name('get.view')->middleware("auth");
     Route::post('/', [BrandController::class, 'store'])->name('post');
     Route::post('/update', [CategoryController::class, 'update'])->name('post.update');
@@ -149,6 +160,7 @@ Route::get('/transaction', [TransactionController::class, 'index'])->middleware(
 // Route::post('/category', [CategoryController::class, 'store'])->name('post.store.category');
 // Route::resource('/brand', BrandController::class);
 // Route::post('/brand/deactive/{id}', [BrandController::class, 'postDeactive']);
+
 
 
 

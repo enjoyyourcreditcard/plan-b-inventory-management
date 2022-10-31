@@ -20,23 +20,25 @@ class AuthService
 
     public function handleLogin($request)
     {
-
         $credentials = request(['email', 'password']);
-        $credentials = Arr::add($credentials, 'status', 'aktif');
+        $credentials = Arr::add($credentials, 'status', 'active');
         if (!Auth::attempt($credentials)) {
             return ResponseJSON("Email Atau Password Anda salah",  401);
         }
+
         $user = User::where('email', $request->email)->first();
         if (!Hash::check($request->password, $user->password, [])) {
             throw new \Exception('Error in Login');
         }
+
         $permission_user = UserPermission::where('user_id',$user->id)->with('permission')->get()->map(function ($item)
         {
             return $item->permission->name;
         })->toArray();
+        
         $request->session()->regenerate();
         $request->session()->get('token', $user->createToken('token-auth', $permission_user)->plainTextToken);
-        // dd($request->session())
+       
         return ResponseJSON([
             'user' => $user,
             // 'access_token' => $tokenResult,

@@ -1,5 +1,5 @@
 
-@extends('layouts.secondApp')
+@extends('layouts.app')
 @section('breadcrumb')
 
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">

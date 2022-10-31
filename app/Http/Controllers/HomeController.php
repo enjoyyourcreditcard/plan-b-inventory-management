@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct(NotificationService $notificationService)
     {
-        $this->notificationService = $notificationService; 
+        $this->notificationService = $notificationService;
         $this->middleware('auth');
     }
 
@@ -26,6 +27,14 @@ class HomeController extends Controller
     public function index()
     {
         $notifications =  $this->notificationService->handleAllNotification();
-        return view('home', ['notifications'=>$notifications]);
+        if (Auth::user()->role == 'requester') {
+            return redirect()->route('request.get.home');
+        }
+
+        if (Auth::user()->role == 'warehouse') {
+            return redirect()->route('warehouse.get.dashboard');
+        }
+
+        return view('home', ['notifications' => $notifications]);
     }
 }

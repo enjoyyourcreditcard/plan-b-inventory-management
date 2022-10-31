@@ -7,7 +7,7 @@
             <!-- BEGIN: General Report -->
             <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-5">
                 <div class="intro-y block sm:flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
+                    <h2 class="text-lg font-medium truncate mr-5">General Report </h2>
                     <select class="sm:ml-auto mt-3 sm:mt-0 sm:w-auto form-select box">
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>

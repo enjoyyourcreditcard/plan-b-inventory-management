@@ -3,104 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
+use App\Services\WareHouseService;
 use Illuminate\Http\Request;
 use Throwable;
 
 class UserController extends Controller
 {
-
-
-
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, WareHouseService $warehouseService)
     {
+        $this->warehouseService = $warehouseService;
         $this->userService = $userService;
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return view('master_user');
+        $warehouse = $this->warehouseService->handleAllWareHouse();
+        return view('master.user', [
+            'warehouse' => $warehouse,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $this->userService->handleStoreUser($request);
+        return redirect()->back();
+        // return ('tes');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->userService->handleUpdateUser($request);
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function postDeactive(Request $req)
+    public function postStatus(Request $request)
     {
-        try {
-            $this->userService->handleDeactive($req->id);
-            return redirect()->back();
-        } catch (Throwable $e) {
-            report($e);
-            return false;
-        }
-
-
+        $this->userService->handleStatus($request->id);
+        return redirect()->back();
     }
 
- /* 
+    /* 
     *|--------------------------------------------------------------------------
     *| Api Get All User  
     *|--------------------------------------------------------------------------
