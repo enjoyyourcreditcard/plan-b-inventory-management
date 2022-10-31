@@ -115,7 +115,7 @@
             |  Request Cards
             |--------------------------------------------------------------------------
             / * --}}
-            @foreach( $grfs->where( 'is_emergency', 0 )->where( 'type', 'request' ) as $grf )
+            @foreach( $grfsAvailable->where( 'is_emergency', 0 )->where( 'type', 'request' ) as $grf )
             <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y">
                 <div class="report-box zoom-in">
                     <div class="box p-5">
@@ -317,7 +317,7 @@
             |  New Request
             |--------------------------------------------------------------------------
             / * --}}
-            @if( count( $grfs->where( "status", "!=", "closed" )->where('is_emergency', 0) ) < 3 )
+            @if( count( $grfsAvailable->where('is_emergency', 0) ) < 3 )
             <button data-tw-toggle="modal" data-tw-target="#modal-new-request"
                 class="flex flex-col justify-center items-center py-8 gap-4 col-span-12 sm:col-span-4 xl:col-span-4 intro-y rounded border border-gray-300 border-dashed transition duration-300 ease-in-out hover:bg-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-lg"
@@ -342,7 +342,7 @@
         <div class="intro-y flex items-center h-10">
             <h2 class="text-lg font-medium truncate mr-5">History Good Request Form</h2>
         </div>
-        @if( count( $grfs->where( "status", "closed" ) ) )
+        @if( count( $grfsClosed ) )
         <div class="grid grid-cols-12 gap-6 mt-5">
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
                 <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
@@ -365,7 +365,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $grfs->where( "status", "closed" ) as $grf)
+                        @foreach ( $grfsClosed as $grf)
                         <tr class="intro-x">
                             <td>
                                 <a href="" class="font-medium whitespace-nowrap">{{ $grf->grf_code }}</a>
@@ -457,6 +457,11 @@
             <a href="" class="ml-auto text-primary truncate">Show More</a>
         </div>
         <div class="intro-y h-full box p-5 mt-5">
+            @if ($chartDatas == false)
+            <div class="h-72 w-72 flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
+                <div class="text-sm">No data yet</div>
+            </div>
+            @else
             <canvas class="mt-3" id="report-used-item" height="300"></canvas>
             <div class="mt-8">
                 <div class="flex items-center">
@@ -480,6 +485,7 @@
                     <span class="font-medium xl:ml-auto condition-percentage" data-precentage="{{ $chartDatas[ "replace" ] }}">{{ $chartDatas[ "requestStocks" ]->where( "condition", "replace" )->count() }} Item</span>
                 </div>
             </div>
+            @endIf
         </div>
     </div>
 

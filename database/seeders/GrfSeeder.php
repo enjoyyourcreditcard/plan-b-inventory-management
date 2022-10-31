@@ -19,6 +19,5 @@ class GrfSeeder extends Seeder
             'user_id' => 1,
             'warehouse_id' => 1,
         ]);
-      
     }
 }

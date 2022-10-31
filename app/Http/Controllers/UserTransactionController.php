@@ -43,11 +43,13 @@ class UserTransactionController extends Controller
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
+            $this->requestFormService->handleCloseThreeDay($grfs);
             
             return view('request.request', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
-                'grfs' => $grfs,
+                'grfsClosed' => $grfs->where('status', 'closed'),
+                'grfsAvailable' => $grfs->where('status', '!=', 'closed'),
                 "chartDatas" => $chartDatas
             ]);
         } catch (\Exception $e) {

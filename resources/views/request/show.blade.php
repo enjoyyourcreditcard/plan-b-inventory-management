@@ -244,7 +244,6 @@
             </div>
             @endIf
 
-            @if( $grf->status === "draft" )
             <div class="border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
                 <ul class="pricing-tabs nav nav-pills box rounded-full mx-auto overflow-hidden" role="tablist">
                     <li id="layout-1-monthly-fees-tab" class="nav-item flex-1" role="presentation">
@@ -256,16 +255,15 @@
                                 class="bi bi-arrow-left-short w-4 h-4" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
-                            </svg> Draft
+                            </svg> {{ $grf->status === "draft" ? "Draft" : ($grf->status !== "draft" ? "Back" : "") }}
                         </a>
                     </li>
-
-                    @if( count( $requestForms ) && $grf->is_emergency == 1 ? $grf->file : $grf->warehouse_id )
+                    @if($grf->status === "draft")
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
                         <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation"
-                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white transition duration-300 ease-in-out hover:bg-emerald-700"
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
                             data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
-                            aria-controls="layout-1-annual-fees" aria-selected="false">
+                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-send w-4 h-4" viewBox="0 0 16 16">
                                 <path
@@ -273,12 +271,38 @@
                             </svg> Submit request
                         </button>
                     </li>
-                    @endif
-
+                    @endIf
+                    @if($grf->status === "delivery_approved")
+                    <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
+                        <a href="{{ Route('post.approve.pickup', $grf->id) }}"
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
+                            data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
+                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam w-4 h-4" viewBox="0 0 16 16">
+                                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                            </svg>
+                            Pickup Item
+                        </a>
+                    </li>
+                    @endIf
+                    @if($grf->status === "user_pickup")
+                    <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
+                        <a href="{{  Route( "return.get.detail", str_replace( '/', '~', strtolower( $grf->grf_code ) ) )  }}"
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
+                            data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
+                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-arrow-left-right w-4 h-4"
+                                viewBox="0 0 16 16">
+                                <path fillRule="evenodd"
+                                    d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                            </svg>
+                            Return Item
+                        </a>
+                    </li>
+                    @endIf
                 </ul>
             </div>
-            @endIf
-
         </div>
 
 
