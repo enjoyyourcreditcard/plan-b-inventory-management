@@ -16,7 +16,7 @@ class RekondisiController extends Controller
     {
         $rekondisis = $this->rekondisiService->handleGetConditionRequestStock();
 
-        return view("rekondisi.rekondisi", [
+        return view("rekondisi.index", [
             'rekondisis' => $rekondisis,
         ]);
     }

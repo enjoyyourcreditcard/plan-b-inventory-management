@@ -22,7 +22,7 @@ class SegmentController extends Controller
     {
         $segments = $this->segmentService->handleAllSegment();
         // dd($segments);
-        return view('master.segment', ['segments' => $segments]);
+        return view('master.segment.index', ['segments' => $segments]);
     }
 
     /**

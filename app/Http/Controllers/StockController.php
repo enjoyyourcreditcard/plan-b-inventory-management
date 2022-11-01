@@ -27,7 +27,7 @@ class StockController extends Controller
 
         // $is_sn = $part->sn_status == "sn";
 
-        return view('stock.stock', [
+        return view('stock.index', [
             'stocks' => $stocks,
             'parts' => $parts,
             'warehouse' => $warehouse,

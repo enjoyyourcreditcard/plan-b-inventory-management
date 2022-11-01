@@ -1,20 +1,19 @@
 @extends('layouts.app')
 @section('breadcrumb')
-
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Master</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Part</li>
+        <li class="breadcrumb-item active" aria-current="page">Category</li>
     </ol>
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10">Master Part</h2>
+<h2 class="intro-y text-lg font-medium mt-10">Master Category</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
 
 
-    <div id="master-parts" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+    <div id="master-category" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
 
 
 
@@ -538,6 +537,78 @@
 
 
 
+    <!-- END: Data List -->
+    <!-- BEGIN: Pagination -->
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+        <nav class="w-full sm:w-auto sm:mr-auto">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="chevrons-left" class="lucide lucide-chevrons-left w-4 h-4"
+                            data-lucide="chevrons-left">
+                            <polyline points="11 17 6 12 11 7"></polyline>
+                            <polyline points="18 17 13 12 18 7"></polyline>
+                        </svg>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="chevron-left" class="lucide lucide-chevron-left w-4 h-4"
+                            data-lucide="chevron-left">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="chevron-right" class="lucide lucide-chevron-right w-4 h-4"
+                            data-lucide="chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="chevrons-right" class="lucide lucide-chevrons-right w-4 h-4"
+                            data-lucide="chevrons-right">
+                            <polyline points="13 17 18 12 13 7"></polyline>
+                            <polyline points="6 17 11 12 6 7"></polyline>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <select class="w-20 form-select box mt-3 sm:mt-0">
+            <option>10</option>
+            <option>25</option>
+            <option>35</option>
+            <option>50</option>
+        </select>
+    </div>
+    <!-- END: Pagination -->
 </div>
 
 
@@ -620,143 +691,6 @@
         </div>
     </div>
 </div>
-
-
-{{-- *
-*|--------------------------------------------------------------------------
-*| Modal Add Part
-*|--------------------------------------------------------------------------
-*--}}
-<div id="superlarge-modal-size-preview" class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="{{route('part.store')}}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <h2 class="font-medium text-base mr-auto">Create Part</h2>
-                    <button class="btn btn-outline-secondary hidden sm:flex">
-                        <i data-lucide="file" class="w-4 h-4 mr-2"></i>
-                    </button>
-
-                    {{-- <button type="button" data-tw-dismiss="modal"
-                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button> --}}
-
-                </div>
-                <div class="modal-body" style="overflow-y: scroll; height: 80vh;">
-                    <div class="row">
-                        <div class="mb-2">
-                            <label for="crud-form-1" class="form-label">Part Name</label>
-                            <input id="crud-form-1" name="name" type="text" class="form-control w-full">
-                        </div>
-                        <div class="mb-2">
-                            <label for="partCategory" class="form-label">Segment</label>
-                            <select class="tom-select w-full" required name="segment_id">
-                                @foreach ($segments as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="partBrand" class="form-label">Brand</label>
-                            <select class="tom-select w-full" required name="brand_id">
-                                @foreach ($brands as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-
-
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="partUom" class="form-label">Uom</label>
-                            <select class="tom-select w-full" required name="uom">
-                                <option value="meter">Meter</option>
-                                <option value="set">Set</option>
-                                <option value="each">Each</option>
-                                <option value="roll">Roll</option>
-                                <option value="unit">Unit</option>
-                                <option value="batang">Batang</option>
-                                <option value="liter">Liter</option>
-                                <option value="kaleng">Kaleng</option>
-                                <option value="kg">Kg</option>
-                                <option value="kubic">Kubic</option>
-                                <option value="pack">Pack</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="" class="form-label">SN Status</label>
-                            <select class="tom-select w-full" required name="sn_status">
-                                <option value="non sn">NON SN</option>
-                                <option value="sn">SN</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="" class="form-label">Color</label>
-                            <div>
-                                <select class="tom-select w-full" name="color" required>
-                                    <option value="Black">Black</option>
-                                    <option value="White">White</option>
-                                    <option value="Grey">Grey</option>
-                                    <option value="Green">Green</option>
-                                    <option value="Yellow">Yellow</option>
-                                    <option value="NN">NN</option>
-                                    <option value="Blue">Blue</option>
-                                    <option value="Silver">Silver</option>
-                                    <option value="Multi Color">Multi Color</option>
-                                    <option value="Red">Red</option>
-                                    <option value="Orange">Orange</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="partSize" class="form-label">Size</label>
-                                <input type="number" class="form-control" name="size" required>
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="partDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="partDescription" rows="3" name="description"
-                                    required></textarea>
-                            </div>
-
-                            {{-- <div class="mb-2">
-                                <label for="partNote" class="form-label">Note</label>
-                                <textarea class="form-control" id="partNote" rows="2" name="note"></textarea>
-                            </div> --}}
-
-                            <div class="mb-4">
-                                {{-- <label for="partImage" class="form-label">Part Image</label>
-                                <input class="form-control" type="file" id="partImage" name="img" accept="image/*"
-                                    form="addPartForm"> --}}
-
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                    for="file_input">Part Image</label>
-                                <input
-                                    class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
-                                    aria-describedby="file_input_help" id="file_input" name="img" accept="image/*"
-                                    type="file">
-                                <p class="mt-1 text-sm text-gray-500 text-gray-300" id="file_input_help">SVG, PNG,
-                                    JPG or GIF (MAX. 800x400px).</p>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-tw-dismiss="modal"
-                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
-                    <button type="submit" class="btn btn-primary w-20">Send</button>
-                </div>
-            </form>
-
-
-        </div>
-    </div>
 
 
     @endsection

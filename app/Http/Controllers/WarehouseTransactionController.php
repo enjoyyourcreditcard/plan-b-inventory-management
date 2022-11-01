@@ -43,6 +43,7 @@ class WarehouseTransactionController extends Controller
         *|--------------------------------------------------------------------------
         */
         $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
+        dd('asdasd');
         return view('warehouse.home', [
             'whapproval' => $whapproval
         ]);
@@ -80,7 +81,7 @@ class WarehouseTransactionController extends Controller
         */
         $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
         // dd($whreturn);
-        return view('warehouse.dashboardWh', [
+        return view('home.warehouse.index', [
             'whreturn' => $whreturn,
             'whapproval' => $whapproval,
         ]);

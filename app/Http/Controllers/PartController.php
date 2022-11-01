@@ -44,7 +44,7 @@ class PartController extends Controller
         $segments = $this->segmentService->handleAllSegment();
         $part = $this->partService->handleAllPart();
         $notifications =  $this->notificationService->handleAllNotification();
-        return view('master.part', [
+        return view('master.part.index', [
             'notifications' => $notifications,
             'categories' => $categories,
             'brands' => $brands,
@@ -82,7 +82,6 @@ class PartController extends Controller
             // dd($e->getMessage());
             return Redirect::back()->withError($e->getMessage());
         }
-        
     }
 
     /* 
@@ -92,9 +91,13 @@ class PartController extends Controller
     */
     public function show($id)
     {
+        $part = $this->partService->handleShowPart($id);
+        if ($part === null) {
+            return abort(404);
+        }
+
         $history_prices = $this->HistorypriceService->handleGetHistorypriceByPartId($id);
         $attachment = $this->attachmentService->handleAllAttachment($id);
-        $part = $this->partService->handleShowPart($id);
         $stocks = $this->stockService->handleGetStockByPartId($id);
         $warehouse = $this->WarehouseService->handleAllWareHouse();
         $categories = $this->categoryService->handleGetAllCategory();
@@ -104,9 +107,9 @@ class PartController extends Controller
         $brandByCategory = $this->partService->handleShowBrandGroupByCategory($id); //todo nama variabel diganti jadi $brandByCategory
         $notifications =  $this->notificationService->handleAllNotification();
 
-        return view('part.detail', [
+        return view('master.part.detail', [
             'notifications' => $notifications,
-            'historyprices' => $history_prices,
+            'Historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
             'stocks' => $stocks,
@@ -128,7 +131,7 @@ class PartController extends Controller
     public function update(Request $request, $id)
     {
         $this->partService->handleUpdatePart($request, $id);
-        return redirect()->back();
+        return redirect()->route("part.get.detail", $id);
     }
 
     /* 
@@ -162,7 +165,7 @@ class PartController extends Controller
         return ResponseJSON($this->partService->handleGetAllPartsBySegment($id), 200);
     }
 
-    
+
 
     /* 
     *|--------------------------------------------------------------------------
@@ -172,5 +175,24 @@ class PartController extends Controller
     public function getDeactivePart($id)
     {
         return ResponseJSON($this->partService->handleDeactivePart($id), 200);
+    }
+
+    public function tampilan($id)
+    {
+        $parts = $this->partService->handleTampilanPart(($id), 200);
+        $segment = $this->segmentService->handleAllSegment(($id), 200);
+        $brand = $this->brandService->handleGetAllBrand(($id), 200);
+        $uom = $this->partService->handleShowUomGroupByCategory(($id), 200);
+        $status = $this->partService->handleSnPart(($id), 200);
+        return view(
+            "master.part.edit",
+            [
+                "parts" => $parts,
+                "segment" => $segment,
+                "brand" => $brand,
+                "uom" => $uom,
+                "status" => $status
+            ]
+        );
     }
 };

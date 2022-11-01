@@ -16,7 +16,7 @@ class WarehouseController extends Controller
 
     public function index(){
         $warehouse = $this->warehouseService->handleAllWareHouse();
-        return view('master.warehouse', compact('warehouse'));
+        return view('master.warehouse.index', compact('warehouse'));
     }
     
     public function getAllWarehouse()
