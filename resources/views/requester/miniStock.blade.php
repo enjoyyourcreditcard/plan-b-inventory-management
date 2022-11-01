@@ -45,7 +45,7 @@
             <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
                 <div class="font-medium text-base truncate">Countdown</div>
             </div>
-            @foreach($timers as $timer)
+            @forelse($timers as $timer)
             <div class="flex items-center mb-4">
                 <span class="underline decoration-dotted ml-1">{{ $timer->grf_code }}</span>
                 <div class="flex items-center ml-auto text-slate-500">
@@ -59,7 +59,11 @@
                     <div class="{{ $timer->ended == "Melewati batas waktu" ? "text-red-500" : "" }}">{{ $timer->ended }}</div>
                 </div>
             </div>
-            @endForeach
+            @empty
+            <div class="text-center mb-4">
+                No data
+            </div>
+            @endForelse
             <div class="border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
                 <ul class="pricing-tabs nav nav-pills box rounded-full mx-auto overflow-hidden" role="tablist">
                     <li id="layout-1-monthly-fees-tab" class="nav-item flex-1" role="presentation">
@@ -95,7 +99,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach ($miniStocks as $miniStock)
+                    @forelse ($miniStocks as $miniStock)
                     <tr class="intro-x">
                         <td class="!py-3.5">
                             <div class="flex items-center">
@@ -109,7 +113,11 @@
                         <td class="text-center">{{ $miniStock->grf->warehouse->name }}</td>
                         <td>{{ $miniStock->grf->created_at->format("F j, Y, g:i a") }}</td>
                     </tr>
-                    @endForeach
+                    @empty
+                    <tr>
+                        <td class="text-center" colspan="5">No data</td>
+                    </tr>
+                    @endForelse
 
                 </tbody>
             </table>
