@@ -45,7 +45,7 @@ class UserTransactionController extends Controller
             $chartDatas = $this->requestFormService->handleChartDatas();
             $this->requestFormService->handleCloseThreeDay($grfs);
             
-            return view('request.request', [
+            return view('requester.home', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
                 'grfsClosed' => $grfs->where('status', 'closed'),
@@ -72,7 +72,7 @@ class UserTransactionController extends Controller
         $miniStocks = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View
-        return view( "request.return", [
+        return view( "requester.return", [
             "grf" => $grf,
             "requestForms" => $requestForms,
             "miniStocks" => $miniStocks,
@@ -109,7 +109,7 @@ class UserTransactionController extends Controller
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
-            return view( "request.show", [
+            return view( "requester.detail", [
                 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,

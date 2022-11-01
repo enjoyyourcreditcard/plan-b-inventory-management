@@ -249,5 +249,5 @@
 |--------------------------------------------------------------------------
 / * --}}
 @section( "javaScript" )
-<script src="{{ Asset( "js/views/request/return.js" ) }}"></script>
+<script src="{{ Asset( "js/views/requester/return.js" ) }}"></script>
 @endSection

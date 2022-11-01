@@ -112,6 +112,11 @@ class TransactionService
 
         $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
             $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->timelines->where('status', 'delivery_approved')->last()->created_at->addDay()->toDateTimeString());
+            if (now() > $deliveryApprovedDate['ended']) {
+                $deliveryApprovedDate['ended'] = 'Melewati batas waktu';
+            } else {
+                $deliveryApprovedDate['ended'] = $deliveryApprovedDate['ended']->diffforhumans(); 
+            }
         });
 
         return $deliveryApprovedDates;

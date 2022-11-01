@@ -26,7 +26,7 @@ class MiniStockController extends Controller
         $timers = $this->transactionService->handleTimer();
         
         // Return View
-        return view('transaction.miniStock.miniStock', [
+        return view('requester.miniStock', [
             'miniStocks' => $miniStocks,
             'timers' => $timers
         ]);

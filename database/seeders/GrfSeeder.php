@@ -19,5 +19,13 @@ class GrfSeeder extends Seeder
             'user_id' => 1,
             'warehouse_id' => 1,
         ]);
+
+        Grf::create([
+            'grf_code' => '001/ACTOR-NUMBER-ONE/IB/XI/2022',
+            'user_id' => 2,
+            'warehouse_id' => 1,
+            'surat_jalan' => "not null",
+            'status' => "delivery_approved",
+        ]);
     }
 }

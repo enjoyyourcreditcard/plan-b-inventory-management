@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useTable, usePagination, useSortBy } from "react-table";
@@ -253,7 +254,7 @@ function Outbound() {
                             className="text-primary text-decoration-none "
                         >
                             {" "}
-                            &nbsp;{tableProps.row.original.created_at}
+                            &nbsp;{moment(tableProps.row.original.created_at).format('DD-MM-Y')}
                         </a>
                     </>
                 ),
@@ -403,7 +404,7 @@ function Outbound() {
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>&nbsp;Download Excel&nbsp;</span>
+                    <span>&nbsp;Export Excel&nbsp;</span>
                 </a>
 
                 <div class="hidden md:block mx-auto text-slate-500">
