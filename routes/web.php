@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Warehouse;
-
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 // use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
@@ -16,19 +16,20 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\InboundController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-use App\Http\Controllers\WarehouseTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -235,6 +236,25 @@ Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::
 Route::post('/warehouse-transfer/pieces/{code}', [WarehouseTransactionController::class, 'storePiecesTransfer'])->middleware('auth')->name('post.warehouse.transfer.pieces');
 Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::class, 'storeBulkTransfer'])->middleware('auth')->name('post.warehouse.transfer.bulk');
 
+
+/*
+*--------------------------------------------------------------------------
+* PO Inbond 
+*--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth']], function(){
+
+    Route::get('/', [InboundController::class, 'index'])->name('get.home');
+    Route::post('/', [InboundController::class, 'store'])->name('post.inbound');
+    Route::put('/', [InboundController::class, 'update'])->name('put.inbound');
+    Route::get('/up/{id}', [InboundController::class, 'up'])->name('get.up.inbound');
+    Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");    
+    //Xcel
+    Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
+    Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
+    Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
+});
 
 /*
 *--------------------------------------------------------------------------

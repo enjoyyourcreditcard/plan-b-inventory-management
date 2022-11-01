@@ -611,8 +611,7 @@
     |  Item table
     |--------------------------------------------------------------------------
     / * --}}
-    <div
-        class="intro-y col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 flex flex-wrap xl:flex-nowrap items-start">
+    <div class="intro-y col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 flex flex-wrap xl:flex-nowrap items-start">
         <div class="grid grid-cols-12 gap-6 w-full">
 
             <!-- BEGIN: Data List -->

@@ -14,6 +14,7 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RequestFormSeeder;
 use Database\Seeders\HistoryPriceSeeder;
+use Database\Seeders\InboundSeeder;
 
 
 
@@ -41,5 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BuildSeeder::class);
         $this->call(GrfSeeder::class);
         $this->call(RequestFormSeeder::class);
+        $this->call(InboundSeeder::class);
     }
 }

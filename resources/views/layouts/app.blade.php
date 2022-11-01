@@ -645,7 +645,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{(request()->is('inbound')) ? 'side-menu--active' : ''}}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
@@ -691,7 +691,7 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="index.html" class="side-menu">
+                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{(request()->is('inbound')) ? 'side-menu--active' : ''}}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
