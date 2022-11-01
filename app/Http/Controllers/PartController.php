@@ -106,7 +106,7 @@ class PartController extends Controller
 
         return view('part.detail', [
             'notifications' => $notifications,
-            'Historyprices' => $history_prices,
+            'historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,
             'stocks' => $stocks,
