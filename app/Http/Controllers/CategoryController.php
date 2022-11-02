@@ -32,16 +32,28 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('part.create-category');
+    }
+
     public function store(Request $request)
     {
         $status = $this->categoryService->handleStoreCategory($request);
         return ($status);
     }
 
-    public function update(Request $request)
+    public function edit($id)
     {
-        $this->categoryService->handleUpdateCategory($request);
-        return redirectTab("tabs-category");
+        $category = $this->categoryService->handleEditCategory($id);
+        // dd($category);
+        return view('part.edit-category', ['category' => $category]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->categoryService->handleUpdateCategory($request, $id  );
+        return redirect('category');
     }
 
     public function delete($id)

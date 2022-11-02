@@ -5,19 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Segment;
 use Illuminate\Http\Request;
 use App\Services\SegmentService;
+use App\Services\CategoryService;
 
 class SegmentController extends Controller
 {
-    public function __construct(SegmentService $segmentService)
+    public function __construct(SegmentService $segmentService, CategoryService $categoryService)
     {
         $this->segmentService = $segmentService;
+        $this->categoryService = $categoryService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $segments = $this->segmentService->handleAllSegment();
@@ -25,78 +22,41 @@ class SegmentController extends Controller
         return view('master.segment', ['segments' => $segments]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $categories = $this->categoryService->handleGetAllCategory();
+        return view('part.create-segment', ['categories' => $categories]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        // dd($request);
         return $this->segmentService->handleStoreSegment($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
     public function show(Segment $segment)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Segment $segment)
+    public function edit($id)
     {
-        //
+        $categories = $this->categoryService->handleGetAllCategory();
+        $segment = $this->segmentService->handleEditSegment($id);
+        return view('part.edit-segment', ['segment' => $segment, 'categories' => $categories]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Segment $segment)
+    public function update(Request $request, $id)
     {
-        //
+        $this->segmentService->handleUpdateSegment($request, $id);
+        return redirect('segment');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Segment $segment)
     {
         //
     }
 
-    /**
-     * Show JSON from storage.
-     *
-     * @param  \App\Models\Segment  $segment
-     * @return \Illuminate\Http\Response
-     */
     public function getAllSegment(Request $req)
     {
         return ResponseJSON($this->segmentService->handleAllSegmentApi($req), 200);

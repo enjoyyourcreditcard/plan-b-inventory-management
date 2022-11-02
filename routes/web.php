@@ -134,14 +134,24 @@ Route::post('/attachment', [AttachmentController::class, 'store'])->name('post.s
 //* Category 
 Route::group(['prefix' => 'category', 'as' => 'category.', 'middleware' => ['auth']], function () {
     Route::get('/', [CategoryController::class, 'index'])->name('get.view');
+    Route::get('/create', [CategoryController::class, 'create'])->name('create');
     Route::get('/{id}', [CategoryController::class, 'show'])->name('get.detail');
     Route::post('/', [CategoryController::class, 'store'])->name('post');
-    Route::post('/update', [CategoryController::class, 'update'])->name('post.update');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [CategoryController::class, 'update'])->name('post.update');
 });
 
 
 // * Segment 
-Route::resource('/segment', SegmentController::class)->middleWare('auth');
+Route::group(['prefix' => 'segment', 'as' => 'segment.', 'middleware' => ['auth']], function () {
+    Route::get('/', [SegmentController::class, 'index'])->name('index');
+    Route::get('/create', [SegmentController::class, 'create'])->name('create');
+    Route::post('/', [SegmentController::class, 'store'])->name('post');
+    Route::get('/edit/{id}', [SegmentController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [SegmentController::class, 'update'])->name('post.update');
+});
+// Route::resource('/segment', SegmentController::class)->middleWare('auth');
+
 
 
 // * Notifikasi 
