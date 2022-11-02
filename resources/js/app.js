@@ -41,6 +41,8 @@ import './view/transaction/IC/outbound';
 
 
 import './view/transaction/warehouse/request';
+import './view/transaction/warehouse/return';
+
 
 
 

@@ -692,5 +692,45 @@
     </div>
 </div>
 
-
-    @endsection
+<div class="modal modal-blur fade" id="createCategoryModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/category" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="categoryDescription" rows="3" name="description"
+                            required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryUom" class="form-label">Uom</label>
+                        <select class="tom-select" name="uom[]" required multiple="multiple">
+                            <option value="meter">Meter</option>
+                            <option value="set">Set</option>
+                            <option value="each">Each</option>
+                            <option value="roll">Roll</option>
+                            <option value="unit">Unit</option>
+                            <option value="batang">Batang</option>
+                            <option value="liter">Liter</option>
+                            <option value="kaleng">Kaleng</option>
+                            <option value="kg">Kg</option>
+                            <option value="kubic">Kubic</option>
+                            <option value="pack">Pack</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn float-end mt-5">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

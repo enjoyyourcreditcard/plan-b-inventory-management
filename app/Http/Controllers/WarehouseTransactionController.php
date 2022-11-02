@@ -54,6 +54,13 @@ class WarehouseTransactionController extends Controller
         return ResponseJSON($whapproval, 200);
     }
 
+    public function apiReturn()
+    {
+        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
+        return ResponseJSON($whreturn, 200);
+        
+    }
+
     public function indexReturn()
     {
         /*
@@ -61,11 +68,9 @@ class WarehouseTransactionController extends Controller
         *| Get Data Untuk Warehouse Return
         *|--------------------------------------------------------------------------
         */
-        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
+        // $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
         // dd($whreturn);
-        return view('transaction.warehouse.homeReturn', [
-            'whreturn' => $whreturn
-        ]);
+        return view('transaction.warehouse.return');
     }
 
     /*

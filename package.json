@@ -23,7 +23,7 @@
         "@headlessui/react": "^1.7.3",
         "momen": "^0.0.1-security",
         "moment": "^2.29.4",
-        "react-select": "^5.5.4",
+        "react-select": "^5.5.8",
         "react-table": "^7.8.0",
         "react-tooltip": "^4.4.0"
     }

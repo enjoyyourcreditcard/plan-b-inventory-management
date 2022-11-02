@@ -124,6 +124,16 @@ export default class Api {
       });
   };
 
+  getWarehouseReturn = () => {
+    return this.init()
+      .get(`warehouse/all/return`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+  
   
 
   getStockByGRF = (code) => {

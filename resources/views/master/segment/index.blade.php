@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('breadcrumb')
-
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Master</a></li>
+        <li class="breadcrumb-item"><a href="/segment">Master</a></li>
         <li class="breadcrumb-item active" aria-current="page">Segment</li>
     </ol>
 </nav>
@@ -15,9 +14,6 @@
 
 
     <div id="master-segment" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
-
-
-
 
 
     <!-- END: Data List -->
@@ -174,13 +170,4 @@
         </div>
     </div>
 </div>
-
-
-{{-- *
-*|--------------------------------------------------------------------------
-*| Modal Add Part
-*|--------------------------------------------------------------------------
-*--}}
-
-
-    @endsection
+@endsection

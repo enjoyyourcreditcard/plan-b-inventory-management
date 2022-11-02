@@ -21,6 +21,7 @@ class CategoryService
             'description' => 'required|max:255',
         ]);
 
+        $validatedData['name'] = strtoupper($request->name);
         $validatedData['uom'] = implode(', ', $request->uom);
         $validatedData['started'] = now();
         $validatedData['status'] = 'active';
@@ -28,7 +29,8 @@ class CategoryService
         if ($request->isAjax == 'yep') {
             return ResponseJSON($data, 200);
         }else{
-            return redirectTab("tabs-category");
+            // return redirectTab("tabs-category");
+            return redirect("/category");
         }
     }
 
@@ -62,15 +64,25 @@ class CategoryService
         return $count;
     }
 
-    // Category UPDATE 
-    public function handleUpdateCategory($request)
+    // Category EDIT
+    public function handleEditCategory($id)
     {
-        $this->category->find($request->id)->update([
-            'name' => $request->name,
+        $data = $this->category->find($id);
+        $data['uom'] = explode(', ', $data->uom);
+        // dd($data->uom);
+        return $data;
+    }
+
+    // Category UPDATE 
+    public function handleUpdateCategory($request, $id)
+    {
+        $data = $this->category->find($id)->update([
+            'name' => strtoupper($request->name),
             'description' => $request->description,
             'uom' => implode(', ', $request->uom),
         ]);
-        return('Data has been updated');
+        // return('Data has been updated');
+        return $data;
     }
 
     // category DELETE
