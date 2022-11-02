@@ -9,6 +9,7 @@ use App\Services\TransactionService;
 use App\Services\WarehouseReturnService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Redirect;
 
 class WarehouseReturnController extends Controller
 {
@@ -20,9 +21,12 @@ class WarehouseReturnController extends Controller
     }
 
     public function store(Request $request, $id){
-        // dd($request);
-        $this->warehouseReturnService->handleStoreWhReturn($request, $id);
-        return redirect()->back();
+        try {
+            $this->warehouseReturnService->handleStoreWhReturn($request, $id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function updateImport(Request $request){

@@ -289,7 +289,7 @@
                                         / * --}}
                                         @if( $grf->status == "user_pickup" )
                                         <li>
-                                            <a href="" class="dropdown-item">
+                                            <a href="{{ route("return.get.detail", str_replace( '/', '~', strtolower( $grf->grf_code ) )) }}" class="dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-arrow-left-right w-4 h-4 mr-2"
                                                     viewBox="0 0 16 16">

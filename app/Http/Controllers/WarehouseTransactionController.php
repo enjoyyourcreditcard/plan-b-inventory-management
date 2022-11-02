@@ -13,7 +13,7 @@ use App\Services\WarehouseService;
 use App\Services\WarehouseTransactionService;
 use App\Imports\WarehouseImport;
 use Illuminate\Support\Facades\Auth;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -110,12 +110,17 @@ class WarehouseTransactionController extends Controller
     public function showReturn($id) {
         $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
+
         return view('warehouse.warehouse_return', compact('whreturn','requestForm'));
     }
 
     public function store(Request $request){
-        $this->warehouseTransactionService->handleStoreWhApproval($request);
-        return redirect()->back();
+        try {
+            $this->warehouseTransactionService->handleStoreWhApproval($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function postApproveWH(Request $request)
@@ -131,23 +136,36 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function updateImport(Request $request){
-        $excel = [];
 
-        $file = $request->file;
-
-        $excel = Excel::toArray(new WarehouseImport, $file);
-        // dd($excel);
-        foreach ($excel[0] as $row) {
-            RequestStock::create([
-                'request_form_id' => $request->request_form_id,
-                'grf_id' => $request->grf_id,
-                'part_id' => $request->part_id,
-                'sn' => $row[0],
-                'sn_return' => null,
-                'remarks' => null,
+        try {
+            $validateData = $request->validate([
+                'request_form_id' => 'required',
+                'grf_id' => 'required',
+                'part_id' => 'required',
+                'sn_code.*' => 'distinct|exists:request_stock,sn', 
+                'sn_code' => ['required', 'array'],
             ]);
+    
+            $excel = [];
+    
+            $file = $request->file;
+    
+            $excel = Excel::toArray(new WarehouseImport, $file);
+            // dd($excel);
+            foreach ($excel[0] as $row) {
+                RequestStock::create([
+                    'request_form_id' => $request->request_form_id,
+                    'grf_id' => $request->grf_id,
+                    'part_id' => $request->part_id,
+                    'sn' => $row[0],
+                    'sn_return' => null,
+                    'remarks' => null,
+                ]);
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
         }
-        return redirect()->back();
         }
 
     /*

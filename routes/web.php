@@ -234,7 +234,7 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['a
 // Route::post('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'storeTransfer'])->middleware('auth')->name('post.warehouse.create');
 // Route::put('/warehouse-transfer', [WarehouseTransactionController::class, 'updateTransfer'])->middleware('auth')->name('put.warehouse.create');
 // Route::delete('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'deleteTransfer'])->middleware('auth')->name('delete.warehouse.create');
-// Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::class, 'showReturn'])->name('get.whreturn.show.action.grf');
+Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::class, 'showReturn'])->name('get.whreturn.show.action.grf');
 
 // Route::post('/warehouse-transfer/pieces/{code}', [WarehouseTransactionController::class, 'storePiecesTransfer'])->middleware('auth')->name('post.warehouse.transfer.pieces');
 // Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::class, 'storeBulkTransfer'])->middleware('auth')->name('post.warehouse.transfer.bulk');
@@ -312,7 +312,6 @@ Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class
 
 
 
-
 /*
 *--------------------------------------------------------------------------
 * Master 
@@ -341,11 +340,12 @@ Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth'] 
 });
 
 // return.get.detail
-
-Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
-Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
-Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+Route::group(['middleware' => ['auth'] ], function () {
+    Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+    Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
+    Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
+    Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+});
 // Route::post('/change-status/{id}', [WarehouseReturnController::class, 'changeStatus'])->name('changeStatus');
 /*
 *--------------------------------------------------------------------------

@@ -20,6 +20,7 @@ class CreateStocksTable extends Migration
             $table->bigInteger('warehouse_id')->unsigned();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->string('sn_code')->nullable();
+            // $table->string('');
             $table->enum('condition', ['good new', 'good rekondisi', 'good potongan', 'not good ',  'karantina', 'scrap', 'dismantle', 'replace', 'good canibal', 'function reject', 'physical reject']);
             $table->enum('recondition', ['good', 'not good', 'reject'])->nullable();
             $table->date('expired_date');

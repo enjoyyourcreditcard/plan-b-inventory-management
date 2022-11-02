@@ -32,20 +32,33 @@ class WarehouseTransactionService
         $this->requestStock = $requestStock;
     }
 
-    // *: Get data untuk warehouse approv
+    /*
+    *--------------------------------------------------------------------------
+    * Get data warehouse approval
+    *--------------------------------------------------------------------------
+    */
     public function handleAllWhApproval()
     {
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->get();
         return ($grfs);
     }
-    // *: Get data untuk warehouse return
+    
+    /*
+    *--------------------------------------------------------------------------
+    * Get data warehouse return
+    *--------------------------------------------------------------------------
+    */
     public function handleAllWhReturn()
     {
         $grfs = $this->grf->with('user')->where('status','return')->get();
         return ($grfs);
     }
 
-    // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode
+    /*
+    *--------------------------------------------------------------------------
+    * Show data warehouse approv sesuai grf
+    *--------------------------------------------------------------------------
+    */
     public function handleShowWhApproval($id)
     {
         $wherewh = str_replace('~', '/', $id);
@@ -58,7 +71,11 @@ class WarehouseTransactionService
         return ($whapproval);
     }
 
-     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode return
+     /*
+    *--------------------------------------------------------------------------
+    * Show data warehouse return sesuai grf
+    *--------------------------------------------------------------------------
+    */
      public function handleShowWhReturn($id)
      {
          $wherewh = str_replace('~', '/',$id);
@@ -77,9 +94,21 @@ class WarehouseTransactionService
         return ($whapproval);
     }
 
-    // *: untuk input sn_code satuan
+    /*
+    *--------------------------------------------------------------------------
+    * Input sn Satuan
+    *--------------------------------------------------------------------------
+    */
     public function handleStoreWhApproval($request)
     {
+        $validatedData = $request->validate([
+            'request_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'sn_code.*' => 'distinct|exists:request_stock,sn', 
+            'sn_code' => ['required', 'array'],
+        ]);
+
         foreach ($request->sn_code as $sn_code) {
             $this->requestStock->create([
                 'request_form_id' => $request->request_form_id,
@@ -119,7 +148,11 @@ class WarehouseTransactionService
         return "success";
     }
 
-    // Warehouse Trasnfer Generate GRF CODE
+    /*
+    *--------------------------------------------------------------------------
+    * Warehouse transfer generate grf code
+    *--------------------------------------------------------------------------
+    */
     public function handleGenerateGrfCode()
     {
         $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
