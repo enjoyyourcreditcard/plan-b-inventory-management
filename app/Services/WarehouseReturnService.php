@@ -30,7 +30,7 @@ class WarehouseReturnService {
     public function handleStoreWhReturn($request, $id) {
 
         $validateData = $request->validate([
-            'sn_code.*' => 'distinct|exist:request_stocks,sn_return',
+            'sn_code.*' => 'distinct|exists:request_stocks,sn_return',
             'sn_code' => ['required', 'array']
         ]);
 
@@ -46,16 +46,25 @@ class WarehouseReturnService {
     }
 
     public function hanldeImportWarehouseReturn($request) {
+        $file = $request->file;
 
-        try {
-            $validateData = $request->validate([
-                'sn_code.*' => 'distinct|exists:request_stock,sn_return', 
-                'sn_code' => ['required', 'array'],
-            ]);
-    
-            $reqStok = $this->requestStock->where([['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
-    
-            $excel = Excel::toCollection(new WarehouseReturn, $request->file);
+        $excel = Excel::toCollection(new WarehouseReturn, $file);
+
+        $sn_code = [];
+
+        foreach ($excel->first() as $row) {
+            $sn_code[] = $row->first();
+        }
+
+        $request['sn_return'] = $sn_code;
+        
+        $validateData = $request->validate([
+            'sn_return.*' => 'distinct', 
+            'sn_return' => ['required', 'array'],
+        ]);
+        
+        
+        $reqStok = $this->requestStock->where([['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
     
             foreach ($reqStok as $key => $reqStoks) {
                 $reqStoks->update([
@@ -64,9 +73,6 @@ class WarehouseReturnService {
             }
     
             return('data Stored!!');
-        } catch (\Exception $e) {
-            return Redirect::back()->withError($e->getMessage());
-        }
     }
 
     public function handlePostApproveReturnWH($req, $transactionService)

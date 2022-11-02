@@ -30,8 +30,12 @@ class WarehouseReturnController extends Controller
     }
 
     public function updateImport(Request $request){
-        $this->warehouseReturnService->hanldeImportWarehouseReturn($request);
-        return redirect()->back();
+        try {
+            $this->warehouseReturnService->hanldeImportWarehouseReturn($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function postApproveReturnWH(Request $request)

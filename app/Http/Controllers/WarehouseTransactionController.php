@@ -138,20 +138,27 @@ class WarehouseTransactionController extends Controller
     public function updateImport(Request $request){
 
         try {
+            $file = $request->file;
+
+            $excel = Excel::toCollection(new WarehouseImport, $file);
+
+            $sn_code = [];
+
+            foreach ($excel->first() as $row) {
+                $sn_code[] = $row->first();
+            }
+
+            $request['sn_code'] = $sn_code;
+
             $validateData = $request->validate([
                 'request_form_id' => 'required',
                 'grf_id' => 'required',
                 'part_id' => 'required',
-                'sn_code.*' => 'distinct|exists:request_stock,sn', 
+                'sn_code.*' => 'distinct', 
                 'sn_code' => ['required', 'array'],
             ]);
     
-            $excel = [];
     
-            $file = $request->file;
-    
-            $excel = Excel::toArray(new WarehouseImport, $file);
-            // dd($excel);
             foreach ($excel[0] as $row) {
                 RequestStock::create([
                     'request_form_id' => $request->request_form_id,
