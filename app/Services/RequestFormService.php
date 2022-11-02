@@ -2,32 +2,33 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Grf;
+use App\Models\Notification;
 use App\Models\Part;
-use App\Models\Timeline;
 use App\Models\RequestForm;
-use Illuminate\Support\Arr;
 use App\Models\RequestStock;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Timeline;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class RequestFormService
 {
 
-    public function __construct(RequestForm $requestForm, RequestStock $requestStock, Grf $grf, Timeline $timeline)
+    public function __construct(RequestForm $requestForm, RequestStock $requestStock, Grf $grf, Timeline $timeline, Notification $notification)
     {
+        $this->grf = $grf;
         $this->requestForm = $requestForm;
         $this->requestStock = $requestStock;
-        $this->grf = $grf;
         $this->timeline = $timeline;
+        $this->notification = $notification;
     }
 
     // Request Form SHOW
     public function handleShowRequestForm($code)
     {
-        // dd($code);
         $requestForms = $this->grf->with('requestForms.segment')->with('requestForms.segment.parts')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
         return ($requestForms);
     }
@@ -54,7 +55,7 @@ class RequestFormService
     */
     public function handleGetAllGrfByUser()
     {
-        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', 'request']])->with('requestForms')->get();
+        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', 'request']])->with('requestForms', 'timelines')->get();
 
         $grfs->map(function ($grf) {
             $grf['ended'] = ($grf->delivery_approved_date == null ? null : Carbon::create($grf->delivery_approved_date)->addDay()->toDateTimeString());
@@ -263,14 +264,18 @@ class RequestFormService
         }
 
         $chartDatas = [
-            "good" => 1,
-            "not_good" => 1,
-            "used" => 1,
-            "replace" => 1,
+            "good" => chart( $requestStocks->where( "condition", "good"), $requestStocks ),
+            "not_good" => chart( $requestStocks->where( "condition", "not good"), $requestStocks ),
+            "used" => chart( $requestStocks->where( "condition", "used"), $requestStocks ),
+            "replace" => chart( $requestStocks->where( "condition", "replace"), $requestStocks ),
             "requestStocks" => $requestStocks
         ];
 
-        return ($chartDatas);
+        if ($chartDatas['good'] == 0 && $chartDatas['not_good'] == 0 && $chartDatas['used'] == 0 && $chartDatas['replace'] == 0) {
+            return (false);
+        } else {
+            return ($chartDatas);
+        }
     }
 
     // Request Form DELETE 
@@ -354,6 +359,40 @@ class RequestFormService
             $grf_code = null;
         }
         return ($grf_code);
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Close the GRF if it more than three day
+    *|--------------------------------------------------------------------------
+    */
+    public function handleCloseThreeDay($grfs)
+    {
+        $grfsDelivery = $grfs->where('status', 'delivery_approved');
+        
+        $grfsDelivery->map(function ($grfDelivery) {
+            if (now() > $grfDelivery->timelines->where('status', 'delivery_approved')->first()->created_at->addDays(1)) {
+                $this->notification->create([
+                    'user_id' => Auth::id(),
+                    'title' => 'Pick up your item!',
+                    'content' => 'We inform you to pickup your item',
+                    'status' => 'unread',
+                    'created_at' => now(),
+                ]);
+            }
+            if (now() > $grfDelivery->timelines->where('status', 'delivery_approved')->first()->created_at->addDays(2)) {
+                $this->grf->find($grfDelivery->id)->update([
+                    'status' => 'closed'
+                ]);
+                $this->timeline->create([
+                    'grf_id' => $grfDelivery->id,
+                    'status' => 'closed',
+                    'created_at' => now(),
+                ]);
+            }
+        });
     }
 
 

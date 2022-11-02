@@ -1,14 +1,14 @@
 <?php
-
+// Models
 use App\Models\User;
 use App\Models\Warehouse;
 
+// Facades
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
-// use App\Http\Controllers\HomeController;
 // Controllers
 // use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AttachmentController;
@@ -63,8 +63,6 @@ Route::get('/', function () {
 
 Route::get('/suratjalan/{grf}', [TransactionController::class, 'ViewSuratJalanPDF'])->name('view.surat.jalan');
 
-
-// suratjalan/1
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
@@ -121,6 +119,8 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth','Inve
     // Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
 });
 
+Route::get('/master/user', [UserController::class, 'index'])->middleware("auth");
+// Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->middleware("auth")->name("post.deactive.user");
 
 // * Brand 
 Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth','InventoryControl']], function () {
@@ -341,8 +341,6 @@ Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class
 * Master 
 *--------------------------------------------------------------------------
 */
-Route::get('/master/user', [UserController::class, 'index'])->middleware("auth");
-Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->middleware("auth")->name("post.deactive.user");
 
 
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
@@ -357,7 +355,10 @@ Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'
 * MINI STOCK 
 *--------------------------------------------------------------------------
 */
-// Route::get('/mini-stock', [MiniStockController::class, 'index'])->middleware("auth")->name("get.mini.stock");
+Route::group(['prefix' => 'mini-stock', 'as' => 'mini.stock.', 'middleware' => ['auth'] ], function () {
+    Route::get('/', [MiniStockController::class, 'index'])->name("get");
+});
+
 Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth'] ], function () {
     Route::get('/{code}', [UserTransactionController::class, 'showReturnStock'])->name("get.detail");
     Route::put('/{code}', [UserTransactionController::class, 'updateReturnStock'])->name("put.detail");

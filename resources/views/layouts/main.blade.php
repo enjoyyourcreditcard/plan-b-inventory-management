@@ -380,7 +380,7 @@
                         {{-- <span class="badge badge-sm bg-red">2</span> --}}
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{Route('view.IC.transaction')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt"
@@ -395,11 +395,10 @@
                         <span class="nav-link-title">
                             <b>Transaksi</b>
                         </span>
-                        {{-- <span class="badge badge-sm bg-red">2</span> --}}
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item {{ Request::is('request-form*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{Route('requester.get.home')}}">
+                    <a class="nav-link" href="{{Route('request.get.home')}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24"

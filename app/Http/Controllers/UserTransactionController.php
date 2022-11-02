@@ -47,7 +47,8 @@ class UserTransactionController extends Controller
             return view('home.requester.index', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
-                'grfs' => $grfs,
+                'grfsClosed' => $grfs->where('status', 'closed'),
+                'grfsAvailable' => $grfs->where('status', '!=', 'closed'),
                 "chartDatas" => $chartDatas
             ]);
         } catch (\Exception $e) {
@@ -70,7 +71,7 @@ class UserTransactionController extends Controller
         $miniStocks = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View
-        return view( "transaction.requester.return", [
+        return view("transaction.requester.return", [
             "grf" => $grf,
             "requestForms" => $requestForms,
             "miniStocks" => $miniStocks,
@@ -107,7 +108,7 @@ class UserTransactionController extends Controller
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
-            return view( "transaction.requester.show", [
+            return view("transaction.requester.show", [
                 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,

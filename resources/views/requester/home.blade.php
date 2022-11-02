@@ -115,7 +115,11 @@
             |  Request Cards
             |--------------------------------------------------------------------------
             / * --}}
+<<<<<<<< HEAD:resources/views/home/requester/index.blade.php
+            @foreach( $grfs->where( 'is_emergency', 0 )->where( 'type', 'request' )->where('status','!=','closed') as $grf )
+========
             @foreach( $grfsAvailable->where( 'is_emergency', 0 )->where( 'type', 'request' ) as $grf )
+>>>>>>>> origin/redesign_ministock:resources/views/requester/home.blade.php
             <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y">
                 <div class="report-box zoom-in">
                     <div class="box p-5">

@@ -95,7 +95,7 @@ function TransactionForm(props) {
 
         api.postTransactionApprovedIC(props.grf_id, margeParts, margeQty).then(
             (response) => {
-                window.location.replace("http://localhost:8000/transaction");
+                window.location.replace("http://localhost:8000/transaction/outbound");
             }
         );
         // const el = document.querySelector("#loading-modal");
