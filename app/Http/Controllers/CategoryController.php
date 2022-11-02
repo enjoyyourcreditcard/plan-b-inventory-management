@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
     //    $category = $this->categoryService->handleGetAllCategory();
-       return view('master.category');
+       return view('master.category.index');
         
     }
 

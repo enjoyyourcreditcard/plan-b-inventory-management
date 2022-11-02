@@ -92,6 +92,9 @@ Route::get('/', [StockController::class, 'getAllStock']);
 
 Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
+    Route::get('/all/request', [WarehouseTransactionController::class, 'apiRequest']);
+
+    
     
 
 });
@@ -125,9 +128,11 @@ Route::group(['prefix' => 'user'], function () {
 
 
 Route::group(['prefix' => 'grf'], function () {
-    Route::get('/warehouse', [WarehouseTransactionController::class, 'getAllWarehouseApproval']);
+    // Route::get('/warehouse', [WarehouseTransactionController::class, 'getAllWarehouseApproval']);
     Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
     Route::get('/request/list/{code}', [TransactionController::class, 'getAllSegmentByGRF']);
+    Route::get('/all/outbound', [TransactionController::class, 'getAllGRFOutbound']);
+    
     
     // Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
     

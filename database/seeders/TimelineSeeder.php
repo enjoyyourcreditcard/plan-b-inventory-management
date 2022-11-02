@@ -16,8 +16,12 @@ class TimelineSeeder extends Seeder
     public function run()
     {
         Timeline::create([
-            "grf_id" => 2,
+            "grf_id" => 1,
             "status" => "draft",
+            "created_at" => now()
         ]);
+
+
+      
     }
 }

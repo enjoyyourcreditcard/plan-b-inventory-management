@@ -2,6 +2,7 @@
 
 use App\Models\Audit;
 use App\Models\PersonalAccessTokens;
+use App\Models\UserPermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
@@ -43,14 +44,23 @@ function ResponseJSON($data, $code = 200)
 {
 
     $user_id = Auth::user()->id;
-    $permission_row = PersonalAccessTokens::where("tokenable_id",$user_id)->orderBy('created_at', 'desc')->first();
-   
-    if($permission_row === null){
-        // dd("adasd");
-        return redirect('/login');
-    }; //todo: belom kelar
-    $permission_array = json_decode($permission_row->abilities);
-    $array_search = array_search($permission,$permission_array);
+    // $permission_row = PersonalAccessTokens::where("tokenable_id",$user_id)->orderBy('created_at', 'desc')->first();
+    // if($permission_row === null){
+    //     // dd("adasd");
+    //     return redirect('/login');
+    // }; //todo: belom kelar
+        
+
+    
+    $permission_row = UserPermission::where('user_id',$user_id)->with('permission')->get()->map(function ($item)
+    {
+        return $item->permission->name;
+    })->toArray();
+    // dd($permission_row);
+    
+
+    // $permission_array = json_decode($permission_row->abilities);
+    $array_search = array_search($permission,$permission_row);
     return gettype($array_search) == "integer" ? true : false;
 }
 

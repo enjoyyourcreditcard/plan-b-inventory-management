@@ -34,7 +34,7 @@ class AttachmentController extends Controller
     
         $this->attachmentService->hendleDeleteAttachment($id);
 
-        return view('part.detail');
+        return view('master.part.detail');
 
     }
     

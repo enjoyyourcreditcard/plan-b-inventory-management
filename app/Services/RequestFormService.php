@@ -35,7 +35,7 @@ class RequestFormService
     // Request Form SHOW
     public function handleAllRequestFormInbound()
     {
-        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->get();
+        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->with('user')->with('warehouse')->get();
         return ($requestForms);
     }
 
@@ -49,7 +49,7 @@ class RequestFormService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Get all grf data by it's user
+    *| Get all grf requester data by it's user
     *|--------------------------------------------------------------------------
     */
     public function handleGetAllGrfByUser()
@@ -63,6 +63,28 @@ class RequestFormService
 
             $grf->requestForms->map(function ($requestForm) use ($grf) {
                 $grf['total_quantity'] += $requestForm->quantity;
+            });
+        });
+
+        return ($grfs);
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get all warehouse transfer grf data by it's user
+    *|--------------------------------------------------------------------------
+    */
+    public function handleGetAllWarehouseTransferGrfByUser()
+    {
+        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', "!=", 'request']])->with('transferForms', "timelines" )->get();
+
+        $grfs->map(function ($grf) {
+            $grf['total_stock'] = 0;
+
+            $grf->transferForms->map(function ($transferForm) use ($grf) {
+                $grf['total_stock'] += $transferForm->quantity;
             });
         });
 
@@ -173,6 +195,34 @@ class RequestFormService
 
     /*
     *|--------------------------------------------------------------------------
+    *| Store a new emergency GRF to GRF table
+    *|--------------------------------------------------------------------------
+    */
+    public function handleStoreGrfEmergency($request)
+    {
+        $validatedData = $request->validate([
+            'grf_code' => 'required',
+            'warehouse_id' => 'nullable',
+            'type' => 'nullable',
+        ]);
+        $validatedData['user_id'] = Auth::user()->id;
+        $validatedData['is_emergency'] = 1 ;
+        $createdData = $this->grf->create($validatedData);
+
+        $timeline =[
+            'status' => 'draft',
+            'grf_id' => $createdData->id,
+        ];
+
+        $this->timeline->create($timeline);
+
+        return ('Data has been stored');
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
     *| Change the GRF status to submited
     *|--------------------------------------------------------------------------
     */
@@ -203,6 +253,14 @@ class RequestFormService
             $query->where("user_id", Auth::user()->id);
         })->get();
 
+        function chart ( $condition, $requestStocks ) {
+            if ( count( $condition ) > 0 && count( $requestStocks ) > 0 ) {
+                $calc = count( $condition ) / count( $requestStocks );
+                return ( $calc * 100 );
+            } else {
+                return 0;
+            }
+        }
 
         $chartDatas = [
             "good" => 1,
@@ -232,7 +290,8 @@ class RequestFormService
     public function handleGenerateGrfCode()
     {
         $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
-        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request']])->get());
+        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request'], ['is_emergency', 0]])->get());
+        $emergency = $this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'request'], ['is_emergency', 1]])->get();
 
         if ($grfs < 3) {
             $rawMonth = now()->format('m');
@@ -262,13 +321,73 @@ class RequestFormService
             } else {
                 $grf_code = '001' . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
             }
-        } else {
+        } else if ($emergency) {
+            $rawMonth = now()->format('m');
+            $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+            $returnValue = '';
+            while ($rawMonth > 0) {
+                foreach ($map as $roman => $int) {
+                    if ($rawMonth >= $int) {
+                        $rawMonth -= $int;
+                        $returnValue .= $roman;
+                        break;
+                    }
+                }
+            }
+
+            $attempt = $allGrfs + 1;
+            $name = str_replace(' ', '-', strtoupper(Auth::user()->name));
+            $month = $returnValue;
+            $year = now()->format('Y');
+
+            if ($allGrfs > 0) {
+                if ($allGrfs >= 9) {
+                    $grf_code = '0' . $attempt . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
+                } else {
+                    $grf_code = '00' . $attempt . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
+                }
+            } else {
+                $grf_code = '001' . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
+            }
+        }
+         else {
             $grf_code = null;
         }
         return ($grf_code);
     }
 
 
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Post Emergency GRF Document
+    *|--------------------------------------------------------------------------
+    */
+    public function handleDocumentEmergencyGRF($request, $id)
+    {
+        $validatedData = $request->validate([
+            'file' => 'required|max:5000'
+        ]);
+
+        if ($request->file('file')) {
+            $validatedData['file'] = $request->file('file')->getClientOriginalName();
+        } else {
+            $validatedData['img'] = null;
+        }
+
+        $this->grf->where('id', $id)->update($validatedData);
+
+        return('Data has been stored');
+
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change the grf status to pickup
+    *|--------------------------------------------------------------------------
+    */
     public function handlePostApprovePickup($id)
     {
         $grf = $this->grf->find($id);
@@ -277,14 +396,30 @@ class RequestFormService
 
         $this->timeline->create([
             'grf_id' => $id,
-            'status' => 'user_pickup'
+            'status' => 'user_pickup',
+            'created_at' => now(),
         ]);
 
         // $grf->surat_jalan = $this->handleGenerateSuratJalan($grf->warehouse_id);
-        // $grf->delivery_approved_date = Carbon::now();
-        $grf->save();
+        // $grf->save();
 
         return "success";
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Delete emergency request file
+    *|--------------------------------------------------------------------------
+    */
+    public function handleDeleteRequestDocument($id)
+    {
+        $this->grf->find($id)->update([
+            "file" => null
+        ]);
+
+        return('File has benn deleted');
     }
 }
 

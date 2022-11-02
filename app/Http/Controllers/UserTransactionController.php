@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Services\PartService;
 use App\Services\BrandService;
 use App\Services\MiniStockService;
-use App\Services\WarehouseService;
-use App\Services\RequestFormService;
-use App\Services\TransactionService;
 use App\Services\NotificationService;
+use App\Services\PartService;
+use App\Services\RequestFormService;
 use App\Services\SegmentService;
+use App\Services\TransactionService;
+use App\Services\WarehouseService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 class UserTransactionController extends Controller
 {
@@ -43,8 +43,8 @@ class UserTransactionController extends Controller
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
-            
-            return view('request.request', [
+            // dd($grfs);
+            return view('home.requester.index', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
                 'grfs' => $grfs,
@@ -65,16 +65,16 @@ class UserTransactionController extends Controller
     public function showReturnStock($code)
     {
         // Services
-        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
+        $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View
-        return view ('transaction.return-stock', [
-            'miniStocks' => $miniStocks,
-            'requestForms' => $requestForms,
-            'grf' => $grf,
-        ]);
+        return view( "transaction.requester.return", [
+            "grf" => $grf,
+            "requestForms" => $requestForms,
+            "miniStocks" => $miniStocks,
+        ] );
     }
 
 
@@ -107,7 +107,7 @@ class UserTransactionController extends Controller
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
-            return view( "request.show", [
+            return view( "transaction.requester.show", [
                 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,
@@ -157,6 +157,41 @@ class UserTransactionController extends Controller
 
 
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store GRF Draft Request Form Emergency
+    *|--------------------------------------------------------------------------
+    */
+    public function storeEmergencyGrf (Request $request)
+    {
+        try {
+            $this->requestFormService->handleStoreGrfEmergency($request);
+
+            return redirect::route( "request.get.emergency.detail", str_replace( "/", "~", strtolower( $request->grf_code ) ) );
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store Emergency GRF Document
+    *|--------------------------------------------------------------------------
+    */
+    public function putDocumentEmergencyGRF(Request $request, $id)
+    {
+        try {
+            $this->requestFormService->handleDocumentEmergencyGRF($request, $id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -185,22 +220,33 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleUpdateRequestForm($request, $id);
+         
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
 
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| Update Submit Return Stock
+    *| Save || Change the return Status
     *|--------------------------------------------------------------------------
     */
     public function updateReturnStock(Request $request, $id)
     {
-        // Services
-        $this->miniStockService->handleUpdateReturnStock($request, $id);
-        return redirect()->route('requester.get.home');
+        try {
+            $isReturn = $this->miniStockService->handleUpdateReturnStock($request, $id);
+
+            if ( $isReturn == true ) {
+                return redirect()->route('request.get.home');
+            } else {
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
 
@@ -220,14 +266,40 @@ class UserTransactionController extends Controller
             return Redirect::back()->withError($e->getMessage());
         }
     }
+
+
+
     /*
     *|--------------------------------------------------------------------------
-    *| User Approve Pickup
+    *| Change the GRF status t user pickup
     *|--------------------------------------------------------------------------
     */
     public function getApprovePickup($id)
     {
-        $this->requestFormService->handlePostApprovePickup($id);
-        return redirect()->back();
+        try {
+            $this->requestFormService->handlePostApprovePickup($id);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Delete selected item on the list
+    *|--------------------------------------------------------------------------
+    */
+    public function destroyDocument($id)
+    {
+        try {
+            $this->requestFormService->handleDeleteRequestDocument($id);
+    
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 }

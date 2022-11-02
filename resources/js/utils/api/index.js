@@ -113,6 +113,19 @@ export default class Api {
       });
   };
 
+
+
+
+  getWarehouseRequest = () => {
+    return this.init()
+      .get(`warehouse/all/request`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+  
+
   getStockByGRF = (code) => {
     return this.init()
       .get(`/grf/stock/list/`+code)
@@ -120,6 +133,18 @@ export default class Api {
         // this.addError(error.message);
       });
   };
+
+
+  getOutboundGRF = () => {
+    return this.init()
+      .get(`grf/all/outbound`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+
+
 
   getRequestFormByGRF = (code) => {
     return this.init()

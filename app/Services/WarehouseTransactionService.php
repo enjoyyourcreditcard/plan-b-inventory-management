@@ -5,16 +5,17 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Stock;
+use App\Models\Timeline;
 use App\Models\Warehouse;
 use App\Models\RequestForm;
 use App\Models\TransferForm;
 use Illuminate\Http\Request;
 use App\Models\TransferStock;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\WarehouseTransferImport;
 use App\Models\RequestStock;
-use App\Models\Timeline;
 
 class WarehouseTransactionService
 {
@@ -161,6 +162,13 @@ class WarehouseTransactionService
         return $transferForms;
     }
 
+
+
+    /*
+    *--------------------------------------------------------------------------
+    * Store stock that will be transfer to the list
+    *--------------------------------------------------------------------------
+    */
     public function handleStoreWarehouseForm($request, $id)
     {
         if ($request->warehouse_id != null && $request->warehouse_destination != null) {
@@ -193,6 +201,13 @@ class WarehouseTransactionService
         return ('Data has been updated');
     }
 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Submit the warehouse transfer list
+    *|--------------------------------------------------------------------------
+    */
     public function handleUpdateWarehouseTransfer($request)
     {
         $transferForms = $this->transferForm->with('transferStocks')->where('grf_id', $request->grf_id)->get();
@@ -204,7 +219,7 @@ class WarehouseTransactionService
                 if ($this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first()) {
                     $stocks[] = $this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first();
                 } else {
-                    return redirect()->back();
+                    return redirect()->back()->with('error', 'SN Codes does not match, please recheck your SN Codes');
                 }
             }
         }
@@ -219,9 +234,22 @@ class WarehouseTransactionService
             'status' => 'submited',
         ]);
 
+        $this->timeline->create( [
+            'grf_id' => $request->grf_id,
+            'status' => "submited",
+            'created_at' => now(),
+        ] );
+
         return ResponseJSON(null, 200);
     }
 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Remove Item Transfer from list
+    *|--------------------------------------------------------------------------
+    */
     public function handleDeleteTransferForm($id)
     {
         $this->transferStock->where('transfer_form_id', $id)->get()->map(function ($transferStock) {
@@ -233,11 +261,69 @@ class WarehouseTransactionService
         return ResponseJSON($transferForm, 200);
     }
 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change current warehouse on transfer
+    *|--------------------------------------------------------------------------
+    */
+    public function handleChangeCurrentWarehouseTransfer($request, $id)
+    {
+        $validatedData = $request->validate(["warehouse_id" => "required"]);
+
+        $validatedData[ "warehouse_destination" ] = null;
+
+        $this->transferForm->where("grf_id", $id)->get()->map(function ($itemList) {
+            $itemList->delete();
+        });
+
+        $this->grf->find($id)->update($validatedData);
+
+        return ( null );
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Change warehouse destination on transfer
+    *|--------------------------------------------------------------------------
+    */
+    public function handleChangeWarehouseDestinationTransfer($request, $id)
+    {
+        $validatedData = $request->validate(["warehouse_destination" => "required"]);
+
+        $this->grf->find($id)->update($validatedData);
+
+        return ( null );
+    }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store pieces sn for warehouse transfer's items
+    *|--------------------------------------------------------------------------
+    */
     public function handleStorePiecesTransfer($request, $id)
     {
+        $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
+
+        $validatedData = $request->validate( [
+            'transfer_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'sn_code.*' => 'distinct|exists:stocks,sn_code',
+            'sn_code' => ['required', 'array', 'size:'.$limit, Rule::exists('stocks')->where(function ($query) use ($request) {
+                    return $query->where('part_id', $request->part_id);
+                }),
+            ],
+        ] );
+        
         $transferStocks = $this->transferStock->where([['transfer_form_id', $request->transfer_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
 
-        foreach ($request->sn_code as $key => $sn_code) {
+        foreach ($validatedData[ "sn_code" ] as $key => $sn_code) {
             $transferStocks[$key]->update([
                 'sn' => $sn_code,
             ]);
@@ -246,19 +332,48 @@ class WarehouseTransactionService
         return 'snes stored';
     }
 
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store bulk sn for warehouse transfer's items
+    *|--------------------------------------------------------------------------
+    */
     public function handleStoreBulkTransfer($request, $id)
     {
-        $transferStocks = $this->transferStock->where([['transfer_form_id', $request->transfer_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
-
         $excel = Excel::toCollection(new WarehouseTransferImport, $request->file);
-
-        foreach ($transferStocks as $key => $transferStock) {
-            $transferStock->update([
-                'sn' => $excel->first()[$key]->first(),
-            ]);
+        
+        $sn_code = [];
+        
+        foreach ($excel->first() as $row) {
+            $sn_code[] = $row->first();
         }
 
-        return ResponseJSON(null, 200);
+        $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
+        
+        $request['sn_code'] = $sn_code;
+
+        $validatedData = $request->validate([
+            'transfer_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'sn_code.*' => 'distinct|exists:stocks,sn_code',
+            'sn_code' => ['required', 'array', 'size:'.$limit, Rule::exists('stocks')->where(function ($query) use ($request) {
+                    return $query->where('part_id', $request->part_id);
+                }),
+            ],
+        ]);
+
+        
+        $transferStocks = $this->transferStock->where([['transfer_form_id', $validatedData['transfer_form_id']], ['grf_id', $validatedData['grf_id']], ['part_id', $validatedData['part_id']]])->get();
+        
+        foreach ($transferStocks as $key => $transferStock) {
+            $transferStock->update([
+                'sn' => $validatedData['sn_code'][$key],
+            ]);
+        }
+        
+        return $validatedData;
     }
 
     // *: untuk input sn_code yang ada di field 

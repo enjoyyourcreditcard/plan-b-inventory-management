@@ -3,20 +3,18 @@
 
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Master</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Segment</li>
+        <li class="breadcrumb-item"><a href="#">Transaction</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Outbound</li>
     </ol>
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10">Master Segment</h2>
+<h2 class="intro-y text-lg font-medium mt-10">Transaction Outbound</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
 
 
-    <div id="master-segment" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
-
-
+    <div id="transaction-outbound" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
 
 
 

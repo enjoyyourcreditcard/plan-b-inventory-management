@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="{{asset("dist/images/logo.svg")}}" rel="shortcut icon">
+    <link href="{{asset(" dist/images/logo.svg")}}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
         content="Tinker admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
@@ -28,10 +28,8 @@
 
 
     @viteReactRefresh
-    @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{asset("dist/css/app.css")}}" />
-    {{-- <link href="" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="{{asset('dist/css/app.css')}}" />
 
 
 </head>
@@ -42,7 +40,7 @@
     <div class="mobile-menu md:hidden">
         <div class="mobile-menu-bar">
             <a href="" class="flex mr-auto">
-                <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset("dist/images/logo.svg") }}">
+                <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
             </a>
             <a href="javascript:;" id="mobile-menu-toggler"> <i data-lucide="bar-chart-2"
                     class="w-8 h-8 text-white transform -rotate-90"></i> </a>
@@ -600,13 +598,21 @@
         <!-- BEGIN: Side Menu -->
         <nav class="side-nav">
             <a href="" class="intro-x flex items-center pl-5 pt-4 mt-3">
-                <img alt="Midone - HTML Admin Template" class="w-6" src="{{asset("dist/images/logo.svg")}}">
+                <img alt="Midone - HTML Admin Template" class="w-6" src="{{asset('dist/images/logo.svg')}}">
                 <span class="hidden xl:block text-white text-lg ml-3"> Tinker </span>
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
-                {{-- <li>
-                    <a href="side-menu-light-inbox.html" class="side-menu">
+
+
+                {{-- /*
+                *--------------------------------------------------------------------------
+                * ROLE IC & ADMIN
+                *--------------------------------------------------------------------------
+                */ --}}
+                @if (Auth::user()->role == "admin" || Auth::user()->role == "inventory_control")
+                <li>
+                    <a href="javascript:;" class="side-menu">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
                                 fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -614,18 +620,6 @@
                                 <path fill-rule="evenodd"
                                     d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                             </svg> </div>
-                        <div class="side-menu__title"> </div>
-                    </a>
-                </li> --}}
-                <li>
-                    <a href="javascript:;" class="side-menu">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                            fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                            <path fill-rule="evenodd"
-                                d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                        </svg> </div>
                         <div class="side-menu__title">
                             Dashboard
                             <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
@@ -651,7 +645,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{route('transaction.ic.view.outbound')}}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
@@ -670,7 +664,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript:;" class="side-menu">
                         <div class="side-menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
@@ -697,13 +690,16 @@
                             </a>
                         </li>
                         <li>
-                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{route('transaction.ic.view.outbound')}}"
+                                class="side-menu {{ Route::currentRouteName() == " transaction.ic.view.outbound"
+                                ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ Route( 'warehouse.transfer.get.home' ) }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.transfer.get.home'
+                                ? " side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse Transfer </div>
                             </a>
@@ -722,9 +718,9 @@
                         <div class="side-menu__title"> Recondition </div>
                     </a>
                 </li>
-
                 <li>
-                    <a href="{{Route('stock.get.home')}}" class="side-menu {{(request()->is('stock')) ? 'side-menu--active' : ''}}">
+                    <a href="{{Route('stock.get.home')}}"
+                        class="side-menu {{(request()->is('stock')) ? 'side-menu--active' : ''}}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
                                 fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
                                 <path
@@ -733,7 +729,6 @@
                         <div class="side-menu__title"> Stock </div>
                     </a>
                 </li>
-
                 <li>
                     <a href="javascript:;"
                         class="side-menu {{(request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('warehouse/master')) ? 'side-menu--active' : ''}}">
@@ -777,28 +772,118 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{Route('brand.get.view')}}"
-                                class="side-menu {{(request()->is('brand')) ? " side-menu--active" : "" }}">
+                            <a href="{{Route('brand.get.view')}}" class="side-menu {{(request()->is('brand')) ? "
+                                side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Brand </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{Route('warehouse.get.master')}}" class="side-menu {{(request()->is('warehouse/master')) ? " side-menu--active" : "" }}">
+                            <a href="{{Route('warehouse.get.master')}}"
+                                class="side-menu {{(request()->is('warehouse/master')) ? " side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{Route('user.get.view')}}" class="side-menu {{(request()->is('user/master')) ? " side-menu--active" : "" }}">
-                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                <div class="side-menu__title"> User </div>
                             </a>
                         </li>
 
 
                     </ul>
                 </li>
+                @endif
+
+                {{-- /*
+                *--------------------------------------------------------------------------
+                * ROLE WAREHOUSE
+                *--------------------------------------------------------------------------
+                */ --}}
+
+                @if (Auth::user()->role == "warehouse")
+                <li>
+                    <a href="{{ route('warehouse.get.dashboard') }}" class="side-menu {{ Route::currentRouteName() == '
+                        warehouse.get.dashboard' ? " side-menu--active" : "" }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                            </svg> </div>
+                        <div class="side-menu__title"> Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('warehouse.get.request') }}"
+                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? " side-menu--active"
+                        : "" }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3 21v-13l9 -4l9 4v13"></path>
+                                <path d="M13 13h4v8h-10v-6h6"></path>
+                                <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
+                            </svg> </div>
+                        <div class="side-menu__title"> Warehouse Approv</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('warehouse.get.return') }}"
+                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.return' ? " side-menu--active"
+                        : "" }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-transform" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 13v.875c0 3.383 2.686 6.125 6 6.125"></path>
+                                <circle cx="6" cy="6" r="3"></circle>
+                                <circle cx="18" cy="18" r="3"></circle>
+                                <path d="M16 9l2 2l2 -2"></path>
+                                <path d="M18 10v-.875c0 -3.383 -2.686 -6.125 -6 -6.125"></path>
+                                <path d="M3 15l2 -2l2 2"></path>
+                            </svg> </div>
+                        <div class="side-menu__title"> Warehouse Return</div>
+                    </a>
+                </li>
+                @endif
+
+
+                {{-- /*
+                *--------------------------------------------------------------------------
+                * ROLE WAREHOUSE
+                *--------------------------------------------------------------------------
+                */ --}}
+
+                @if (Auth::user()->role == "requester")
+                <li>
+                    <a href="{{ route('warehouse.get.dashboard') }}" class="side-menu {{ Route::currentRouteName() == '
+                            warehouse.get.dashboard' ? " side-menu--active" : "" }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                            </svg> </div>
+                        <div class="side-menu__title"> Dashboard</div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('warehouse.get.dashboard') }}" class="side-menu {{ Route::currentRouteName() == '
+                            warehouse.get.dashboard' ? " side-menu--active" : "" }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                          </svg> </div>
+                        <div class="side-menu__title"> Mini Stock</div>
+                    </a>
+                </li>
+                @endif
+
+
+
+
 
             </ul>
         </nav>
@@ -1080,7 +1165,7 @@
                     <div class="dropdown-menu w-56">
                         <ul class="dropdown-content bg-primary text-white">
                             <li class="p-2">
-                                <div class="font-medium">Arnold Schwarzenegger</div>
+                                <div class="font-medium">{{Auth::user()->name}}</div>
                                 <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">Backend Engineer</div>
                             </li>
                             <li>
@@ -1135,16 +1220,21 @@
                                 <hr class="dropdown-divider border-white/[0.08]">
                             </li>
                             <li>
-                                <a href="http://tinker-laravel.left4code.com/logout"
-                                    class="dropdown-item hover:bg-white/5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="toggle-right" data-lucide="toggle-right"
-                                        class="lucide lucide-toggle-right w-4 h-4 mr-2">
-                                        <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
-                                        <circle cx="16" cy="12" r="3"></circle>
-                                    </svg> Logout
-                                </a>
+
+                                <form method="POST" class=" hover:bg-white/5" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <button type="submit" class="dropdown-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" icon-name="toggle-right"
+                                            data-lucide="toggle-right" class="lucide lucide-toggle-right w-4 h-4 mr-2">
+                                            <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+                                            <circle cx="16" cy="12" r="3"></circle>
+                                        </svg> Logout
+                                    </button>
+                                </form>
+
                             </li>
                         </ul>
                     </div>
@@ -1189,15 +1279,17 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=[" your-google-map-api"]&libraries=places"></script>
     <script src="{{ asset('js/whtransaction.js') }}"></script>
-    <script src="{{ asset("dist/js/app.js") }}"></script>
+    <script src="{{ asset('dist/js/app.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="{{ asset('js/master.js') }}" defer></script>
     <script src="{{ asset('js/transaction.js') }}" defer></script>
-    
+
+    @yield( "javaScript" )
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    @yield( "js" )
+    @yield('javasScript')
 
     {{-- {{ asset('js/main.js') }} --}}
 

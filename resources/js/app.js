@@ -13,7 +13,9 @@
  */
 
 import './view/master/part';
-import './view/request';
+import './view/request/request';
+import './view/request/return';
+import './view/request/show';
 
 // require('./components/Example');
 // require('./components/LatestPart');
@@ -35,6 +37,13 @@ import './view/stock/stock';
 
 import './view/transaction/form_ic';
 import './view/transaction/IC/stock';
+import './view/transaction/IC/outbound';
+
+
+import './view/transaction/warehouse/request';
+
+
+
 
 
 // require('./view/part/detail');

@@ -314,6 +314,7 @@ function Parts() {
         canPreviousPage,
         pageOptions,
         nextPage,
+        setPageSize,
         allColumns,
         previousPage,
     } = useTable(
@@ -378,6 +379,18 @@ function Parts() {
                     </div>
                 </div>
             </div>
+            <div className="mt-8">
+                <TabelFooter
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    pageIndex={pageIndex}
+                    canPreviousPage={canPreviousPage}
+                    canNextPage={canNextPage}
+                    setPageSize={setPageSize}
+                    pageOptions={pageOptions}
+                />
+            </div>
 
             <Table
                 getTableProps={getTableProps}
@@ -386,6 +399,7 @@ function Parts() {
                 headerGroups={headerGroups}
                 page={page}
             />
+
             {/* <div class="flex flex-col h-screen">
                 <div class="flex-grow overflow-auto">
                     <table class="relative w-full border">
