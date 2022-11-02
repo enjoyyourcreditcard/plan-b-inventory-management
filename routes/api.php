@@ -92,6 +92,9 @@ Route::get('/', [StockController::class, 'getAllStock']);
 
 Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
+    Route::get('/all/request', [WarehouseTransactionController::class, 'apiRequest']);
+
+    
     
 
 });

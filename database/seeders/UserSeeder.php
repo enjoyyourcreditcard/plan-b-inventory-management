@@ -16,37 +16,48 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'hajidalakhtar',
+            'name' => 'Admin Test',
             'role' => 'admin',
             'regional' => 'jakarta',
             'warehouse_id' => '1',
             // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'hajidalakhtar@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
 
         User::create([
-            'name' => 'Actor Number One',
-            'role' => 'admin',
+            'name' => 'Warehouse Test',
+            'role' => 'warehouse',
             'regional' => 'surabaya',
             'warehouse_id' => '1',
-            // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'actor@gmail.com',
+            'email' => 'warehouse@gmail.com',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
 
         User::create([
-            'name' => 'Delivery Dude',
-            'role' => 'admin',
+            'name' => 'Requester Test',
+            'role' => 'requester',
             'regional' => 'jakarta',
             'warehouse_id' => '1',
             // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'delivery@gmail.com',
+            'email' => 'requester@gmail.com',
+            'password' => Hash::make('12345'),
+            // 'status' => 'active',
+        ]);
+
+        User::create([
+            'name' => 'Inventory Control Test',
+            'role' => 'inventory_control',
+            'regional' => 'jakarta',
+            'warehouse_id' => '1',
+            // 'nik' => '',
+            'no_telp' => '082993828824',
+            'email' => 'ic@gmail.com',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);

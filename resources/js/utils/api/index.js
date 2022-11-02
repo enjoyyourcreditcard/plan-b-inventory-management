@@ -113,6 +113,19 @@ export default class Api {
       });
   };
 
+
+
+
+  getWarehouseRequest = () => {
+    return this.init()
+      .get(`warehouse/all/request`)
+      .catch((error) => {
+        // this.addError(error.message);
+      });
+  };
+
+  
+
   getStockByGRF = (code) => {
     return this.init()
       .get(`/grf/stock/list/`+code)

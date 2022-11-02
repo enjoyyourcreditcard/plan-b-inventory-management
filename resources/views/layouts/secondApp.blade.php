@@ -558,7 +558,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route("warehouse.get.home") }}" class="side-menu {{ Route::currentRouteName() == "warehouse.get.home" ? "side-menu--active" : "" }}">
+                    <a href="{{ route("warehouse.get.request") }}" class="side-menu {{ Route::currentRouteName() == "warehouse.get.request" ? "side-menu--active" : "" }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M3 21v-13l9 -4l9 4v13"></path>
@@ -598,9 +598,9 @@ License: You must have a valid license purchased only from themeforest(the above
                     </a>
                 </li>
                 @endif
-                @if ( Route::currentRouteName() != "warehouse.get.home" && Route::currentRouteName() != "warehouse.get.return" && Route::currentRouteName() !=  "warehouse.get.dashboard" )
+                @if ( Route::currentRouteName() != "warehouse.get.request" && Route::currentRouteName() != "warehouse.get.return" && Route::currentRouteName() !=  "warehouse.get.dashboard" )
                 <li class="intro-x side-menu--active">
-                    <a href="{{ route('warehouse.get.home') }}" class="side-menu side-menu--active">
+                    <a href="{{ route('warehouse.get.request') }}" class="side-menu side-menu--active">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left-line" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 15v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h6v6h-6z"></path>

@@ -40,6 +40,11 @@ import './view/transaction/IC/stock';
 import './view/transaction/IC/outbound';
 
 
+import './view/transaction/warehouse/request';
+
+
+
+
 
 // require('./view/part/detail');
 // require('./view/part/category');

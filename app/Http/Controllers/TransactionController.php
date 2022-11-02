@@ -35,9 +35,9 @@ class TransactionController extends Controller
     {
         $requestForms = $this->requestFormService->handleAllRequestFormInbound();
         // dd($requestForms);
-        return view("transaction.transaction", [
-            'requestForms' => $requestForms
-        ]);
+        // return view("transaction.transaction", [
+        //     'requestForms' => $requestForms
+        // ]);
     }
 
     /**

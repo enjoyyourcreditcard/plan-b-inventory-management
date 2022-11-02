@@ -812,8 +812,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('warehouse.get.home') }}"
-                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.home' ? " side-menu--active"
+                    <a href="{{ route('warehouse.get.request') }}"
+                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? " side-menu--active"
                         : "" }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"

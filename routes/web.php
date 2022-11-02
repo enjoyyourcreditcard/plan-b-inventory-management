@@ -231,17 +231,16 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware'
     // Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
     // Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
 Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['auth']], function () {
-    Route::get('/home', [WarehouseTransactionController::class, 'index'])->name('get.home');
+    Route::get('/request', [WarehouseTransactionController::class, 'viewRequest'])->name('get.request');
     Route::get('/return', [WarehouseTransactionController::class, 'indexReturn'])->name('get.return');
     Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
     Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
-
 });
 
 
-// // Route::get('/warehouse', [WarehouseTransactionController::class, 'index'])->name('warehouse.get.home');
+// // Route::get('/warehouse', [WarehouseTransactionController::class, 'index'])->name('warehouse.get.request');
 // Route::get('/warehouse-transfer', [WarehouseTransactionController::class, 'indexTransfer'])->middleware('auth')->name('get.warehouse.transfer');
 // Route::post('/warehouse-transfer', [WarehouseTransactionController::class, 'storeGrfTransfer'])->middleware('auth')->name('post.warehouse.transfer');
 // Route::get('/warehouse-transfer/{code}', [WarehouseTransactionController::class, 'createTransfer'])->middleware('auth')->name('get.warehouse.create');
