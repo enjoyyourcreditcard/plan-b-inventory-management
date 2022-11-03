@@ -51,6 +51,13 @@ Route::get('/', function () {
 });
 
 
+Route::get('/faq/transaction', function () {
+    return view('faq.transaction');
+});
+
+
+
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
