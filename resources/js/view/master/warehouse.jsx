@@ -18,6 +18,8 @@ function Warehouse() {
     const [loadingData, setLoadingData] = useState(true);
     const [noStock, setNoStock] = useState(false);
     const [data, setData] = useState([]);
+    const [warehouseId, setId] = useState([]);
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
     useEffect(() => {
         async function getData() {
@@ -100,7 +102,7 @@ function Warehouse() {
                             >
                                 <a
                                     class="flex items-center mr-3"
-                                    href="javascript:;"
+                                    href={"warehouse/edit/" + tableProps.row.original.id}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +127,8 @@ function Warehouse() {
                                     class="flex items-center text-danger"
                                     href="javascript:;"
                                     onClick={() => {
-                                        window.history.replaceState(
-                                            null,
-                                            null,
-                                            "?part_id=" +
-                                                tableProps.row.original.id
-                                        );
+                                        window.history.replaceState(null,null,);
+                                        setId( tableProps.row.original.id );
                                     }}
                                     data-tw-toggle="modal"
                                     data-tw-target="#part-delete-confirmation-modal"
@@ -206,9 +204,9 @@ function Warehouse() {
             {/* btn btn--primary */}
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <a
-                    href="javascript:;"
-                    data-tw-toggle="modal"
-                    data-tw-target="#superlarge-modal-size-preview"
+                    href="warehouse/create"
+                    // data-tw-toggle="modal"
+                    // data-tw-target="#superlarge-modal-size-preview"
                     class="btn btn-rounded-primary  shadow-md mr-1 "
                 >
                     {" "}
@@ -261,6 +259,31 @@ function Warehouse() {
                 headerGroups={headerGroups}
                 page={page}
             />
+            <div id="part-delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <div class="p-5 text-center">
+                                <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                                <div class="text-3xl mt-5">Are you sure?</div>
+                                <div class="text-slate-500 mt-2">Do you really want to delete these records? <br/>This
+                                    process cannot
+                                    be undone.</div>
+                            </div>
+                            <div class="px-5 pb-8 text-center">
+                                <form action="/warehouse/status" method="post">
+                                    <input type="hidden" name="_token" id="" value={csrfToken}/>
+                                    <input type="hidden" name="id" id="" value={warehouseId}/>
+                                    <button type="button" data-tw-dismiss="modal"
+                                        class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+                                    <button type="submit" class="btn btn-danger w-24">Delete</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {/* <div class="flex flex-col h-screen">
                 <div class="flex-grow overflow-auto">
                     <table class="relative w-full border">

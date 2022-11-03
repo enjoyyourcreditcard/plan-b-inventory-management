@@ -779,14 +779,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{Route('warehouse.get.master')}}"
-                                class="side-menu {{(request()->is('warehouse/master')) ? " side-menu--active" : "" }}">
+                            <a href="{{Route('warehouse.get.view')}}"
+                                class="side-menu {{(request()->is('warehouse')) ? " side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse </div>
                             </a>
                         </li>
-
-
+                        <li>
+                            <a href="{{Route('user.get.view')}}"
+                                class="side-menu {{(request()->is('user')) ? " side-menu--active" : "" }}">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> User </div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endif

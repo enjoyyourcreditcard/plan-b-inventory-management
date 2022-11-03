@@ -114,7 +114,7 @@ function Brands() {
                             >
                                 <a
                                     class="flex items-center mr-3"
-                                    href="javascript:;"
+                                    href={"/brand/edit/" + tableProps.row.original.id}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +219,7 @@ function Brands() {
             {/* btn btn--primary */}
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <a
-                    href="javascript:;"
+                    href="/brand/create"
                     data-tw-toggle="modal"
                     data-tw-target="#superlarge-modal-size-preview"
                     class="btn btn-rounded-primary  shadow-md mr-1 "

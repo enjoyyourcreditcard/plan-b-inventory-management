@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Brand;
+use Illuminate\Http\Request;
 use App\Services\BrandService;
+use App\Services\SegmentService;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
 {
-    public function __construct(BrandService $brandService)
+    public function __construct(BrandService $brandService, SegmentService $segmentService)
     {
+        $this->segmentService = $segmentService;
         $this->brandService = $brandService;
     }
 
@@ -22,11 +25,35 @@ class BrandController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        try {
+            $segments = $this->segmentService->handleAllSegment();
+            return view('master.brand.create', ['segments' => $segments]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
     public function store(Request $request)
     {
-        $this->brandService->handleStoreBrand($request);
-        return redirectTab("tabs-merek");
+        try {
+            $this->brandService->handleStoreBrand($request);
+            return redirect('brand');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
 
+    public function edit($id)
+    {
+        try {
+            $brand = $this->brandService->handleEditBrand($id);
+            $segments = $this->segmentService->handleAllSegment();
+            return view('master.brand.edit', ['brand' => $brand, 'segments' => $segments]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)

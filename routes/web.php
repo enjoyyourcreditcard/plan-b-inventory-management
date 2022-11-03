@@ -110,7 +110,7 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth','Inve
     Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });
 
-// part.post.deactive
+
 // * User 
 Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth','InventoryControl']], function () {
     Route::get('/', [UserController::class, 'index'])->name("get.view");
@@ -125,8 +125,10 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth','Inve
 // * Brand 
 Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth','InventoryControl']], function () {
     Route::get('/', [BrandController::class, 'index'])->name('get.view')->middleware("auth");
-    Route::post('/', [BrandController::class, 'store'])->name('post');
-    Route::post('/update', [CategoryController::class, 'update'])->name('post.update');
+    Route::get('/create', [BrandController::class, 'create'])->name('create');
+    Route::post('/', [BrandController::class, 'store'])->name('post.store');
+    Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [BrandController::class, 'update'])->name('post.update');
 });
 
 
@@ -246,7 +248,12 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['a
     Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-    Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
+    Route::get('', [WarehouseController::class, 'index'])->name('get.view');
+    Route::get('/create', [WarehouseController::class, 'create'])->name('create');
+    Route::post('/', [WarehouseController::class, 'store'])->name('post.store');
+    Route::get('/edit/{id}', [WarehouseController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [WarehouseController::class, 'update'])->name('post.update');
+    Route::post('/status', [WarehouseController::class, 'postStatus'])->name('post.status');
 });
 
 
@@ -333,16 +340,6 @@ Route::post('/transaction/approve/SJ', [TransactionController::class, 'postAppro
 Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class, 'getApprovePickup'])->middleware("auth")->name("post.approve.pickup");
 
 
-
-
-
-/*
-*--------------------------------------------------------------------------
-* Master 
-*--------------------------------------------------------------------------
-*/
-Route::get('/master/user', [UserController::class, 'index'])->middleware("auth");
-Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->middleware("auth")->name("post.deactive.user");
 
 
 Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
