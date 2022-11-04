@@ -22,30 +22,42 @@ class UserSeeder extends Seeder
             'warehouse_id' => '1',
             // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'admin@gmail.com',
+            'email' => 'admin@inVentree',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
 
         User::create([
-            'name' => 'Warehouse Test',
+            'name' => 'Gudang Test',
             'role' => 'warehouse',
             'regional' => 'surabaya',
             'warehouse_id' => '1',
             'no_telp' => '082993828824',
-            'email' => 'warehouse@gmail.com',
+            'email' => 'gudang@inVentree',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
 
         User::create([
-            'name' => 'Requester Test',
+            'name' => 'Requester Vendor',
             'role' => 'requester',
             'regional' => 'jakarta',
             'warehouse_id' => '1',
             // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'requester@gmail.com',
+            'email' => 'requester1@inVentree',
+            'password' => Hash::make('12345'),
+            // 'status' => 'active',
+        ]);
+
+        User::create([
+            'name' => 'Requester InHouse',
+            'role' => 'requester',
+            'regional' => 'jakarta',
+            'warehouse_id' => '1',
+            // 'nik' => '',
+            'no_telp' => '082993828824',
+            'email' => 'requester2@inVentree',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
@@ -57,7 +69,7 @@ class UserSeeder extends Seeder
             'warehouse_id' => '1',
             // 'nik' => '',
             'no_telp' => '082993828824',
-            'email' => 'ic@gmail.com',
+            'email' => 'ic@inVentree',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
         ]);
