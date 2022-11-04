@@ -25,11 +25,7 @@ class RequestController extends Controller
         $requests = $this->requestService->handleAllRequest();
         $parts = $this->partService->handleAllPart();
         $maxReq = $this->requestService->handleMaximumRequest(); //
-<<<<<<< HEAD
         return view('home.requester.index', [
-=======
-        return view('requester.home', [
->>>>>>> origin/redesign_ministock
             'notifications' => $notifications,            
             'requester' => $requests,
             'parts' => $parts,

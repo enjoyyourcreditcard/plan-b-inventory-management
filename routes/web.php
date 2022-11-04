@@ -105,19 +105,19 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 // * Part 
-Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth','InventoryControl']], function () {
+Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'InventoryControl']], function () {
     Route::get('/', [PartController::class, 'index'])->name("view.home");
     Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
     Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
     Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
     Route::post('/', [PartController::class, 'store'])->name("store");
-    Route::get('/tampilan/{id}',[PartController::class, 'tampilan'])->name("tampilan");
+    Route::get('/tampilan/{id}', [PartController::class, 'tampilan'])->name("tampilan");
     Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });
 
 
 // * User 
-Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth','InventoryControl']], function () {
+Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth', 'InventoryControl']], function () {
     Route::get('/', [UserController::class, 'index'])->name("get.view");
     Route::post('/', [UserController::class, 'store'])->name("store");
     Route::put('/update', [UserController::class, 'update'])->name('user.update');
@@ -130,7 +130,7 @@ Route::get('/master/user', [UserController::class, 'index'])->middleware("auth")
 // Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->middleware("auth")->name("post.deactive.user");
 
 // * Brand 
-Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth','InventoryControl']], function () {
+Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth', 'InventoryControl']], function () {
     Route::get('/', [BrandController::class, 'index'])->name('get.view')->middleware("auth");
     Route::get('/create', [BrandController::class, 'create'])->name('create');
     Route::post('/', [BrandController::class, 'store'])->name('post.store');
@@ -226,7 +226,7 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
     Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
-    
+
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
@@ -244,18 +244,20 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware'
 *--------------------------------------------------------------------------
 * Auth Warehouse Home
 *--------------------------------------------------------------------------
-*/          
+*/
 
 // Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'excluded_middleware' => ['web']], function () {
-    // Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
-    // Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
+// Route::get('/master', [WarehouseController::class, 'index'])->name('get.master');
+// Route::get('/', [WarehouseTransactionController::class, 'index'])->name('get.home');
+
 Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['auth']], function () {
+    Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
+
     Route::get('/request', [WarehouseTransactionController::class, 'viewRequest'])->name('get.request');
     Route::get('/return', [WarehouseTransactionController::class, 'indexReturn'])->name('get.return');
-    Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
     Route::post('/import/excel', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-    Route::get('', [WarehouseController::class, 'index'])->name('get.view');
+    Route::get('master', [WarehouseController::class, 'index'])->name('get.view');
     Route::get('/create', [WarehouseController::class, 'create'])->name('create');
     Route::post('/', [WarehouseController::class, 'store'])->name('post.store');
     Route::get('/edit/{id}', [WarehouseController::class, 'edit'])->name('edit');
@@ -280,7 +282,7 @@ Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::
 | Warehouse Transfer Routes
 |--------------------------------------------------------------------------
 */
-Route::group([ 'prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', 'middleware' => ['auth'] ], function () {
+Route::group(['prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', 'middleware' => ['auth']], function () {
     Route::get('/', [WarehouseTransactionController::class, 'indexTransfer'])->name('get.home');
     Route::get('/{code}', [WarehouseTransactionController::class, 'createTransfer'])->name('get.detail');
     Route::post('/', [WarehouseTransactionController::class, 'storeGrfTransfer'])->name('post');
@@ -357,10 +359,10 @@ Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class
 */
 
 
-Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
-Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
-Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+// Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+// Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
+// Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
+// Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
 // Route::post('/change-status/{id}', [WarehouseReturnController::class, 'changeStatus'])->name('changeStatus');
 
 // Route::resource('/warehouse' , WarehouseController::class)-> ("auth");
@@ -369,11 +371,11 @@ Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'
 * MINI STOCK 
 *--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'mini-stock', 'as' => 'mini.stock.', 'middleware' => ['auth'] ], function () {
+Route::group(['prefix' => 'mini-stock', 'as' => 'mini.stock.', 'middleware' => ['auth']], function () {
     Route::get('/', [MiniStockController::class, 'index'])->name("get");
 });
 
-Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth'] ], function () {
+Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth']], function () {
     Route::get('/{code}', [UserTransactionController::class, 'showReturnStock'])->name("get.detail");
     Route::put('/{code}', [UserTransactionController::class, 'updateReturnStock'])->name("put.detail");
 });
@@ -408,4 +410,3 @@ Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'
 Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
-
