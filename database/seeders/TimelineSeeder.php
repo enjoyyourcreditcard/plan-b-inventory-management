@@ -17,6 +17,13 @@ class TimelineSeeder extends Seeder
     {
         Timeline::create([
             "grf_id" => 2,
+            'grf_inbound_id' => 0,
+            "status" => "draft",
+        ]);
+
+        Timeline::create([
+            "grf_id" => 0,
+            'grf_inbound_id' => 1,
             "status" => "draft",
         ]);
     }

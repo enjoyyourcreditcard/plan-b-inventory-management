@@ -22,14 +22,11 @@ class InboundExport implements WithHeadings,ShouldAutoSize
     */
     public function headings():array{
         return[
-            'part_id',
-            'warehouse_id',
-            'orafin_code',
-            'sn_code',
-            'condition',
-            'expired_date',
-            'stock_status',
-            'status'
+            'Part_id',
+            'Orafin_code',
+            'SN code',
+            'Stock Status',
+            'Status'
         ];
     }
 

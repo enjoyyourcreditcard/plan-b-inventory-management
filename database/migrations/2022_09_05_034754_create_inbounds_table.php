@@ -17,14 +17,11 @@ class CreateInboundsTable extends Migration
             $table->id();
             $table->bigInteger('part_id')->unsigned();
             $table->foreign('part_id')->references('id')->on('parts');
-            $table->bigInteger('warehouse_id')->unsigned();
-            $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->string('orafin_code')->nullable();
             $table->string('sn_code')->nullable();
-            $table->enum('condition', ['good new', 'good rekondisi', 'good potongan', 'not good', 'karantina', 'reject', 'scrap', 'dismantle']);
-            $table->date('expired_date');
-            $table->string('stock_status')->default('in');
+            $table->string('stock_status')->default('order');
             $table->string('status');
+            $table->boolean('is_select')->default(0);
             $table->timestamps();
         });
     }

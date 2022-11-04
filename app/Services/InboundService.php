@@ -31,10 +31,8 @@ class InboundService
     {
         $validatedData = $request->validate([
             'part_id' => 'required',
-            'warehouse_id' => 'required',
-            'sn_code' => '',
+            'sn_code' => 'required',
             'condition' => 'required',
-            'inbound_date' => 'required',
             // 'inbound_status' => 'required',
         ]);
 

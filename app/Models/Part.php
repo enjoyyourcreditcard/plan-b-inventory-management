@@ -48,4 +48,8 @@ class Part extends Model
     {
         return $this->hasMany(Request::class);
     }
+    public function orderInbound()
+    {
+        return $this->hasMany(OrderInbound::class);
+    }
 }

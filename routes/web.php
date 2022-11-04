@@ -27,6 +27,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderInboundController;
 use App\Http\Controllers\UserTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
 use App\Http\Controllers\WarehouseTransactionController;
@@ -246,14 +247,23 @@ Route::post('/warehouse-transfer/bulk/{code}', [WarehouseTransactionController::
 Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth']], function(){
 
     Route::get('/', [InboundController::class, 'index'])->name('get.home');
-    Route::post('/', [InboundController::class, 'store'])->name('post.inbound');
-    Route::put('/', [InboundController::class, 'update'])->name('put.inbound');
-    Route::get('/up/{id}', [InboundController::class, 'up'])->name('get.up.inbound');
-    Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");    
+    Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
+
     //Xcel
     Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
     Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
     Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
+
+    Route::delete('/deleted/{code}', [InboundController::class, 'destroy'])->name("delete.item");
+    Route::put('/{id}', [InboundController::class, 'storeAddWarehouse'])->name('post.warehouse');
+    Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
+    Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
+    Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
+    Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
+});
+
+Route::get('/inboundshow', function () {
+    return view('stock.InboundShow');
 });
 
 /*
