@@ -6,6 +6,7 @@ use App\Models\Segment;
 use Illuminate\Http\Request;
 use App\Services\SegmentService;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Redirect;
 
 class SegmentController extends Controller
 {
@@ -17,21 +18,31 @@ class SegmentController extends Controller
 
     public function index()
     {
-        $segments = $this->segmentService->handleAllSegment();
-        // dd($segments);
-        return view('master.segment.index', ['segments' => $segments]);
+        try {
+            $segments = $this->segmentService->handleAllSegment();
+            return view('master.segment.index', ['segments' => $segments]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function create()
     {
-        $categories = $this->categoryService->handleGetAllCategory();
-        return view('part.create-segment', ['categories' => $categories]);
+        try {
+            $categories = $this->categoryService->handleGetAllCategory();
+            return view('master.segment.create', ['categories' => $categories]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function store(Request $request)
-    {
-        // dd($request);
-        return $this->segmentService->handleStoreSegment($request);
+    {   
+        try {
+            return $this->segmentService->handleStoreSegment($request);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function show(Segment $segment)
@@ -40,16 +51,24 @@ class SegmentController extends Controller
     }
 
     public function edit($id)
-    {
-        $categories = $this->categoryService->handleGetAllCategory();
-        $segment = $this->segmentService->handleEditSegment($id);
-        return view('part.edit-segment', ['segment' => $segment, 'categories' => $categories]);
+    {        
+        try {
+            $categories = $this->categoryService->handleGetAllCategory();
+            $segment = $this->segmentService->handleEditSegment($id);
+            return view('master.segment.edit', ['segment' => $segment, 'categories' => $categories]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $this->segmentService->handleUpdateSegment($request, $id);
-        return redirect('segment');
+        try {
+            $this->segmentService->handleUpdateSegment($request, $id);
+            return redirect('segment');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function destroy(Segment $segment)

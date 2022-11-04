@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\PartService;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
@@ -15,51 +16,76 @@ class CategoryController extends Controller
     }
     public function index()
     {
-    //    $category = $this->categoryService->handleGetAllCategory();
-       return view('master.category.index');
-        
+        try {
+            return view('master.category.index');   
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function show($id)
     {
-        $category = $this->categoryService->handleShowCategory($id);
-        $count = $this->categoryService->handlePartCount($id);
-        $uom = explode(', ', $category->uom);
-        return view('category.detail', [
-            'category' => $category,
-            'uom' => $uom,
-            'count' => $count,
-        ]);
+        try {
+            $category = $this->categoryService->handleShowCategory($id);
+            $count = $this->categoryService->handlePartCount($id);
+            $uom = explode(', ', $category->uom);
+            return view('category.detail', [
+                'category' => $category,
+                'uom' => $uom,
+                'count' => $count,
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function create()
     {
-        return view('part.create-category');
+        try {
+            return view('master.category.create');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function store(Request $request)
     {
-        $status = $this->categoryService->handleStoreCategory($request);
-        return ($status);
+        try {
+            $status = $this->categoryService->handleStoreCategory($request);
+            return ($status);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function edit($id)
     {
-        $category = $this->categoryService->handleEditCategory($id);
-        // dd($category);
-        return view('part.edit-category', ['category' => $category]);
+        try {
+            $category = $this->categoryService->handleEditCategory($id);
+            return view('master.category.edit', ['category' => $category]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $this->categoryService->handleUpdateCategory($request, $id  );
-        return redirect('category');
+        try {
+            $this->categoryService->handleUpdateCategory($request, $id  );
+            return redirect('category');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function delete($id)
     {
-        $this->categoryService->handleDeactiveCategory($id);
-        return redirectTab("tabs-category");
+        try {
+            $this->categoryService->handleDeactiveCategory($id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function getAllCategory()

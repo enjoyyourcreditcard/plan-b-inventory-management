@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
+use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\WareHouseService;
-use Illuminate\Http\Request;
-use Throwable;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -17,10 +18,14 @@ class UserController extends Controller
     
     public function index()
     {
-        $warehouse = $this->warehouseService->handleAllWareHouse();
-        return view('master.user', [
-            'warehouse' => $warehouse,
-        ]);
+        try {
+            $warehouse = $this->warehouseService->handleAllWareHouse();
+            return view('master.user.user', [
+                'warehouse' => $warehouse,
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function create()
@@ -30,10 +35,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
-        $this->userService->handleStoreUser($request);
-        return redirect()->back();
-        // return ('tes');
+        try {
+            $this->userService->handleStoreUser($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function show($id)
@@ -48,14 +55,22 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $this->userService->handleUpdateUser($request);
-        return redirect()->back();
+        try {
+            $this->userService->handleUpdateUser($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function postStatus(Request $request)
     {
-        $this->userService->handleStatus($request->id);
-        return redirect()->back();
+        try {
+            $this->userService->handleStatus($request->id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     /* 

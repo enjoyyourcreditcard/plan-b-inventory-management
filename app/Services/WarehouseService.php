@@ -40,6 +40,12 @@ class WareHouseService{
         return($warehouse);
     }
 
+    public function handleEditWarehouse($id)
+    {
+        $data = $this->warehouse->find($id);
+        return $data;
+    }
+
     public function handleUpdateWareHouse(Request $request, $id){
         $this->warehouse->find($id)->update([
             'name' => $request->name,
@@ -57,12 +63,26 @@ class WareHouseService{
             return('');
     }
 
-    public function inActive($id){
-        $warehouse = $this->warehouse->find($id); 
-        $data = []; 
-        $data['status'] = 'inactive'; 
-        $warehouse->update($data); 
-        return('');
+    // public function inActive($id){
+    //     $warehouse = $this->warehouse->find($id); 
+    //     $data = []; 
+    //     $data['status'] = 'inactive'; 
+    //     $warehouse->update($data); 
+    //     return('');
+    // }
+
+    public function handleStatus($request)
+    {
+        $warehouse = $this->warehouse->find($request->id);
+        if ($warehouse->status == 'active') {
+            $warehouse->status = 'inactive';
+            $warehouse->save();
+            return $warehouse;
+        } else {
+            $warehouse->status = 'active';
+            $warehouse->save();
+            return $warehouse;
+        }
     }
 
 }

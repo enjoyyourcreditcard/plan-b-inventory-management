@@ -149,7 +149,7 @@
 *| Modal Delete Confirmation
 *|--------------------------------------------------------------------------
 *--}}
-<div id="part-delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+{{-- <div id="part-delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -160,9 +160,10 @@
                         be undone.</div>
                 </div>
                 <div class="px-5 pb-8 text-center">
-                    <form action="{{Route('part.post.deactive')}}" method="post">
+                    <form action="{{Route('warehouse.post.status')}}" method="post">
                         @csrf
-                        <input type="hidden" name="id" id="part_id_delete">
+                        @method('put')
+                        <input type="hidden" name="id" id="" value="">
                         <button type="button" data-tw-dismiss="modal"
                             class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
                         <button type="submit" class="btn btn-danger w-24">Delete</button>
@@ -172,7 +173,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 {{-- *

@@ -32,16 +32,26 @@ class BrandService
             'segment_id' => 'required',
         ]);
 
+        $validatedData['name'] = strtoupper($request->name);
         $validatedData['status'] = 'active';
 
         $this->brand->create($validatedData);
         return ('Data has been stored');
     }
 
+    public function handleEditBrand($id)
+    {
+        $data = $this->brand->find($id);
+        return $data;
+    }
+
     public function handleUpdateBrand(Request $request, $id)
     {
-        $brand = $this->brand->find($id)->update($request->all());
-        return ($brand);
+        $data = $this->brand->find($id)->update([
+            'name' => strtoupper($request->name),
+            'segment_id' => $request->segment_id,
+        ]);
+        return ($data);
     }
 
     public function handleDeactiveBrand($id)
