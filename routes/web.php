@@ -51,7 +51,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/faq/transaction', function () {
+Route::get('/faq', function () {
     return view('faq.transaction');
 });
 
