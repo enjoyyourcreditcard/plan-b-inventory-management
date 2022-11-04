@@ -1201,138 +1201,6 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                 </div>
             </div>
-            <!-- END: Search -->
-            <!-- BEGIN: Notifications -->
-            <div class="intro-x dropdown mr-4 sm:mr-6">
-                <div class="dropdown-toggle notification notification--light notification--bullet cursor-pointer"
-                    role="button" aria-expanded="false" data-tw-toggle="dropdown">
-                    <i data-lucide="bell" class="notification__icon dark:text-slate-500"></i>
-                </div>
-                <div class="notification-content pt-2 dropdown-menu">
-                    <div class="notification-content__box dropdown-content">
-                        <div class="notification-content__title">
-                            Notifications
-                        </div>
-                        <div class="cursor-pointer relative flex items-center">
-                            <div class="w-12 h-12 flex-none image-fit mr-1">
-                                <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                    src="https://tinker-laravel.left4code.com/dist/images/profile-10.jpg" />
-                                <div
-                                    class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white">
-                                </div>
-                            </div>
-                            <div class="ml-2 overflow-hidden">
-                                <div class="flex items-center">
-                                    <a href="javascript:;" class="font-medium truncate mr-5">Johnny Depp</a>
-                                    <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                                        01:10 PM
-                                    </div>
-                                </div>
-                                <div class="w-full truncate text-slate-500 mt-0.5">
-                                    Contrary to popular belief, Lorem Ipsum
-                                    is not simply random text. It has roots
-                                    in a piece of classical Latin literature
-                                    from 45 BC, making it over 20
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit mr-1">
-                                <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                    src="https://tinker-laravel.left4code.com/dist/images/profile-2.jpg" />
-                                <div
-                                    class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white">
-                                </div>
-                            </div>
-                            <div class="ml-2 overflow-hidden">
-                                <div class="flex items-center">
-                                    <a href="javascript:;" class="font-medium truncate mr-5">Kate Winslet</a>
-                                    <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                                        01:10 PM
-                                    </div>
-                                </div>
-                                <div class="w-full truncate text-slate-500 mt-0.5">
-                                    It is a long established fact that a
-                                    reader will be distracted by the
-                                    readable content of a page when looking
-                                    at its layout. The point of using Lorem
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit mr-1">
-                                <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                    src="https://tinker-laravel.left4code.com/dist/images/profile-6.jpg" />
-                                <div
-                                    class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white">
-                                </div>
-                            </div>
-                            <div class="ml-2 overflow-hidden">
-                                <div class="flex items-center">
-                                    <a href="javascript:;" class="font-medium truncate mr-5">Russell Crowe</a>
-                                    <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                                        01:10 PM
-                                    </div>
-                                </div>
-                                <div class="w-full truncate text-slate-500 mt-0.5">
-                                    Contrary to popular belief, Lorem Ipsum
-                                    is not simply random text. It has roots
-                                    in a piece of classical Latin literature
-                                    from 45 BC, making it over 20
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit mr-1">
-                                <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                    src="https://tinker-laravel.left4code.com/dist/images/profile-5.jpg" />
-                                <div
-                                    class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white">
-                                </div>
-                            </div>
-                            <div class="ml-2 overflow-hidden">
-                                <div class="flex items-center">
-                                    <a href="javascript:;" class="font-medium truncate mr-5">Al Pacino</a>
-                                    <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                                        01:10 PM
-                                    </div>
-                                </div>
-                                <div class="w-full truncate text-slate-500 mt-0.5">
-                                    It is a long established fact that a
-                                    reader will be distracted by the
-                                    readable content of a page when looking
-                                    at its layout. The point of using Lorem
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer relative flex items-center mt-5">
-                            <div class="w-12 h-12 flex-none image-fit mr-1">
-                                <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                    src="https://tinker-laravel.left4code.com/dist/images/profile-15.jpg" />
-                                <div
-                                    class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white">
-                                </div>
-                            </div>
-                            <div class="ml-2 overflow-hidden">
-                                <div class="flex items-center">
-                                    <a href="javascript:;" class="font-medium truncate mr-5">Kevin Spacey</a>
-                                    <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                                        01:10 PM
-                                    </div>
-                                </div>
-                                <div class="w-full truncate text-slate-500 mt-0.5">
-                                    It is a long established fact that a
-                                    reader will be distracted by the
-                                    readable content of a page when looking
-                                    at its layout. The point of using Lorem
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Notifications -->
-            <!-- BEGIN: Account Menu -->
             <div class="intro-x dropdown w-8 h-8">
                 <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110"
                     role="button" aria-expanded="false" data-tw-toggle="dropdown">
@@ -1420,37 +1288,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </path>
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg> Related License
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="lock" data-lucide="lock"
-                                class="lucide lucide-lock w-4 h-4 mr-2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                            </svg> Part
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="settings" data-lucide="settings"
-                                class="lucide lucide-settings w-4 h-4 mr-2">
-                                <path
-                                    d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z">
-                                </path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg> Multi Application License
-                        </a>
-                    </div>
-                    <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                        <a class="flex items-center" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="activity" data-lucide="activity"
-                                class="lucide lucide-activity w-4 h-4 mr-2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                            </svg> Trem of Use
+                            </svg> Master
                         </a>
                         <a class="flex items-center mt-5" href="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -1462,37 +1300,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </path>
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg> Author Fees
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="lock" data-lucide="lock"
-                                class="lucide lucide-lock w-4 h-4 mr-2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                            </svg> Product Review
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="settings" data-lucide="settings"
-                                class="lucide lucide-settings w-4 h-4 mr-2">
-                                <path
-                                    d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z">
-                                </path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg> Privacy Policy
-                        </a>
-                    </div>
-                    <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                        <a class="flex items-center" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="activity" data-lucide="activity"
-                                class="lucide lucide-activity w-4 h-4 mr-2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                            </svg> About Our Products
+                            </svg> Inbound
                         </a>
                         <a class="flex items-center mt-5" href="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -1504,27 +1312,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </path>
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg> Related License
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="lock" data-lucide="lock"
-                                class="lucide lucide-lock w-4 h-4 mr-2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                            </svg> Single Application License
-                        </a>
-                        <a class="flex items-center mt-5" href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" icon-name="settings" data-lucide="settings"
-                                class="lucide lucide-settings w-4 h-4 mr-2">
-                                <path
-                                    d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z">
-                                </path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg> Multi Application License
+                            </svg> Warehouse Transfer
                         </a>
                     </div>
                 </div>
@@ -1536,29 +1324,8 @@ License: You must have a valid license purchased only from themeforest(the above
     </div>
     <!-- END: Content -->
     <!-- BEGIN: Dark Mode Switcher-->
-    <div data-url="https://tinker-laravel.left4code.com/dark-mode-switcher"
-        class="dark-mode-switcher cursor-pointer shadow-md fixed bottom-0 right-0 box border rounded-full w-40 h-12 flex items-center justify-center z-50 mb-10 mr-10">
-        <div class="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div>
-        <div class="dark-mode-switcher__toggle border"></div>
-    </div>
     <!-- END: Dark Mode Switcher-->
     <!-- BEGIN: Main Color Switcher-->
-    <div
-        class="shadow-md fixed bottom-0 right-0 box border rounded-full h-12 px-5 flex items-center justify-center z-50 mb-10 mr-52">
-        <div class="mr-4 hidden sm:block text-slate-600 dark:text-slate-200">
-            Color Scheme
-        </div>
-        <a href="https://tinker-laravel.left4code.com/color-scheme-switcher/default"
-            class="block w-8 h-8 cursor-pointer bg-emerald-900 rounded-full border-4 mr-1 hover:border-slate-200 border-slate-300 dark:border-darkmode-800/80"></a>
-        <a href="https://tinker-laravel.left4code.com/color-scheme-switcher/theme-1"
-            class="block w-8 h-8 cursor-pointer bg-blue-800 rounded-full border-4 mr-1 hover:border-slate-200 border-white dark:border-darkmode-600"></a>
-        <a href="https://tinker-laravel.left4code.com/color-scheme-switcher/theme-2"
-            class="block w-8 h-8 cursor-pointer bg-blue-900 rounded-full border-4 mr-1 hover:border-slate-200 border-white dark:border-darkmode-600"></a>
-        <a href="https://tinker-laravel.left4code.com/color-scheme-switcher/theme-3"
-            class="block w-8 h-8 cursor-pointer bg-cyan-900 rounded-full border-4 mr-1 hover:border-slate-200 border-white dark:border-darkmode-600"></a>
-        <a href="https://tinker-laravel.left4code.com/color-scheme-switcher/theme-4"
-            class="block w-8 h-8 cursor-pointer bg-indigo-900 rounded-full border-4 hover:border-slate-200 border-white dark:border-darkmode-600"></a>
-    </div>
     <!-- END: Main Color Switcher-->
 
     <!-- BEGIN: JS Assets-->
