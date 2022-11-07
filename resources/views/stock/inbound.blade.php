@@ -56,7 +56,7 @@
 
         </div>
         
-        <div class="border-slate-200/60 dark:border-darkmode-400 mt-2 h-96 overflow-y-scroll">
+        <div class="border-slate-200/60 dark:border-darkmode-400 mt-2 h-80 overflow-y-scroll">
             @foreach( $grfs->where( 'status', '!=', 'closed' ) as $grf )
             <div class="box px-2 py-3 flex-1 mb-2">
                 <div class="flex items-center">

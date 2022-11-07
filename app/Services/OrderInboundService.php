@@ -120,18 +120,7 @@ class OrderInboundService
     */
     public function handleGetAllInboundGrfByUser()
     {
-        $grfs = $this->grfInbound->where([['user_id', Auth::user()->id]])->get();
-
-        // $grfs->map(function ($grf) {
-        //     $grf['ended'] = ($grf->timeline == null ? null : Carbon::create($grf->timeline)->addDay()->toDateTimeString());
-            
-        //     $grf['total_quantity'] = 0;
-        //     // dd($grf['total_quantity']);
-            
-        //     $grf->grfInbound->map(function ($grfInbound) use ($grf) {  
-        //         $grf['total_quantity'] += $grfInbound->quantity;
-        //     });
-        // });
+        $grfs = $this->grfInbound->where([['user_id', Auth::user()->id]])->latest()->get();
 
         return ($grfs);
     }
