@@ -13,7 +13,8 @@ use App\Services\WarehouseService;
 use App\Services\WarehouseTransactionService;
 use App\Imports\WarehouseImport;
 use Illuminate\Support\Facades\Auth;
-use Excel;
+// use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -31,7 +32,7 @@ class WarehouseTransactionController extends Controller
         $this->brandService = $brandService;
     }
 
-    /*
+        /*
         *|--------------------------------------------------------------------------
         *| Index Warehouse Approv Dan Return
         *|--------------------------------------------------------------------------
