@@ -50,6 +50,8 @@ class WarehouseTransactionService
     public function handleFindWhApproval($id)
     {
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', $id)->get();
+      
+        dd($grfs);
         return ($grfs);
     }
     public function handleFindWhReturn($id)
