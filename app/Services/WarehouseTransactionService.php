@@ -51,7 +51,7 @@ class WarehouseTransactionService
     {
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', $id)->get();
       
-        dd($grfs);
+        // dd($grfs);
         return ($grfs);
     }
     public function handleFindWhReturn($id)
