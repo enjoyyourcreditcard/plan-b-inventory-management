@@ -32,7 +32,7 @@
             <h2 class="text-lg font-medium truncate mr-5">Mini Stock</h2>
         </div>
     </div>
-    <div class="intro-y col-span-5 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
+    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-12 sm:col-span-12">
 
 
 
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="intro-y col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 xl:flex-nowrap items-start">
+    <div class="intro-y col-span-12 xl:col-span-8 lg:col-span-8 md:col-span-12 sm:col-span-12 xl:flex-nowrap items-start">
 
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible mb-4">
