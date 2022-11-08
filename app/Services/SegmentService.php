@@ -33,10 +33,10 @@ class SegmentService
         $data = $this->segment->create($validatedData);
         if ($request->isAjax == 'yep') {
             return ResponseJSON($data, 200);
-        }else{
+        } else {
             // return redirectTab("tabs-segment");
             return redirect('segment');
-        }   
+        }
     }
 
     public function handleEditSegment($id)
@@ -61,5 +61,10 @@ class SegmentService
     {
         $segments = $this->segment->with('category')->withCount('parts')->get();
         return ($segments);
+    }
+
+    public function handleAllSegmentByCategory($id)
+    {
+        return $this->segment->where('category_id', $id)->select('id','name')->get();
     }
 }

@@ -67,24 +67,32 @@ class BrandService
         $brands = $this->brand->all()->groupBy('segment_id');
         if (count($brands) == 0) {
             $brandString = '';
-        }else{
+        } else {
             $array = [];
-            foreach($brands as $key1 => $brand) {
-                foreach($brand as $key2 => $data) {
+            foreach ($brands as $key1 => $brand) {
+                foreach ($brand as $key2 => $data) {
                     $array[$key1][$key2] = $data->id;
                 }
                 $brandString[$key1]['id'] = implode(', ', $array[$key1]);
-                foreach($brand as $key3 => $data) {
+                foreach ($brand as $key3 => $data) {
                     $array[$key1][$key3] = $data->name;
                 }
                 $brandString[$key1]['name'] = implode(', ', $array[$key1]);
             }
         }
-        return($brandString);
+        return ($brandString);
     }
+
+
+
 
     public function handleGetAllBrandForSelect()
     {
         return $this->brand->select("name")->get();
+    }
+
+    public function handleBrandBySegment($id)
+    {
+        return $this->brand->where('segment_id', $id)->select("id", "name")->get();
     }
 }

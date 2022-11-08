@@ -215,6 +215,7 @@ function MasterUser() {
         headerGroups,
         prepareRow,
         page,
+        setPageSize,
         state,
         canNextPage,
         pageSize,
@@ -300,7 +301,16 @@ function MasterUser() {
                     </div>
                 </div>
             </div>
-
+            <TabelFooter
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    pageIndex={pageIndex}
+                    canPreviousPage={canPreviousPage}
+                    canNextPage={canNextPage}
+                    setPageSize={setPageSize}
+                    pageOptions={pageOptions}
+                />
             <Table
                 getTableProps={getTableProps}
                 prepareRow={prepareRow}

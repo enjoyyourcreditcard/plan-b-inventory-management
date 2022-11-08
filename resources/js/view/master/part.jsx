@@ -330,12 +330,13 @@ function Parts() {
     return (
         <>
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
-                <a
-                    href="javascript:;"
-                    data-tw-toggle="modal"
-                    data-tw-target="#superlarge-modal-size-preview"
+            <a
+                    href="/part/create"
+                    // data-tw-toggle="modal"
+                    // data-tw-target="#superlarge-modal-size-preview"
                     class="btn btn-rounded-primary  shadow-md mr-1 "
                 >
+                    {" "}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-plus "
@@ -358,6 +359,7 @@ function Parts() {
                     </svg>
                     <span>&nbsp;Create Part&nbsp;</span>
                 </a>
+
 
                 <div class="hidden md:block mx-auto text-slate-500">
                     {/* Showing 1 to 10 of 150 entries */}

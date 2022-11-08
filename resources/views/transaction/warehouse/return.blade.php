@@ -10,7 +10,7 @@
 @section('content')
 <h2 class="intro-y text-lg font-medium mt-10">Warehouse Return</h2>
 <div class="grid grid-cols-12 gap-6 mt-5">
-    <div id="warehouse-transaction-return" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+    <div id="warehouse-transaction-return" data-wh_id={{Auth::user()->warehouse_id}} class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
 </div>
 
 @endsection

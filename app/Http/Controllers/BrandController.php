@@ -97,5 +97,14 @@ class BrandController extends Controller
         }
         return ResponseJSON($result,200);
     }
+
+
+    public function getBrandBySegment($id)
+    {
+
+        return ResponseJSON($this->brandService->handleBrandBySegment($id),200);
+        # code...
+    }
+
     
 }

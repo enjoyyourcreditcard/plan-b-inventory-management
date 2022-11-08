@@ -15,7 +15,7 @@
 <div class="grid grid-cols-12 gap-6 mt-5">
 
 
-    <div id="warehouse-transaction-request" class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
+    <div id="warehouse-transaction-request" data-wh_id={{Auth::user()->warehouse_id}} class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
 
 
 

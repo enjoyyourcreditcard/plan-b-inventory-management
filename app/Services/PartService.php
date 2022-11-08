@@ -52,6 +52,7 @@ class PartService
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:parts',
+            'category_id' => 'required',
             'segment_id' => 'required',
             'brand_id' => 'required',
             'uom' => 'required',
@@ -62,8 +63,6 @@ class PartService
             'note' => 'max:255',
             'img' => 'file|max:5120'
         ]);
-
-        // dd($validatedData);
 
         if ($request->file('img')) {
             $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');

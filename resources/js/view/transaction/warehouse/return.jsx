@@ -11,7 +11,7 @@ import TableSearch from "../../../components/table_search";
 import Api from "../../../utils/api";
 import Filter from "../../../utils/filter";
 
-function Return() {
+function Return(props) {
     const api = new Api();
     const filter = new Filter();
 
@@ -22,7 +22,7 @@ function Return() {
 
     useEffect(() => {
         async function getData() {
-            api.getWarehouseReturn().then((response) => {
+            api.getWarehouseReturn(props.wh_id).then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
 
@@ -631,9 +631,19 @@ function Return() {
 
 export default Return;
 
+// if (document.getElementById("warehouse-transaction-return")) {
+//     ReactDOM.render(
+//         <Return />,
+//         document.getElementById("warehouse-transaction-return")
+//     );
+// }
+
+
 if (document.getElementById("warehouse-transaction-return")) {
+    const propsContainer = document.getElementById("warehouse-transaction-return");
+    const props = Object.assign({}, propsContainer.dataset);
     ReactDOM.render(
-        <Return />,
+        <Return {...props} />,
         document.getElementById("warehouse-transaction-return")
     );
 }

@@ -53,6 +53,26 @@ class PartController extends Controller
         ]);
     }
 
+
+
+
+
+
+    /* 
+    *|--------------------------------------------------------------------------
+    *| View Part Create
+    *|--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+
+        $category = $this->categoryService->handleGetAllCategory();
+        $brand = $this->brandService->handleGetAllBrand();
+
+        return view('master.part.create', ['category' => $category, 'brand' => $brand]);
+    }
+
+
     /* 
     *|--------------------------------------------------------------------------
     *| Ajax Part for Select2 in part view 
@@ -77,10 +97,12 @@ class PartController extends Controller
     {
         try {
             $this->partService->handleStorePart($request);
-            return redirect()->back();
+            return "okeyy";
+            // return redirect()->back();
         } catch (\Exception $e) {
             // dd($e->getMessage());
-            return Redirect::back()->withError($e->getMessage());
+            return $e->getMessage();
+            // return Redirect::back()->withError();
         }
     }
 

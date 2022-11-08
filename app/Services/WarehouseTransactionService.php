@@ -35,13 +35,26 @@ class WarehouseTransactionService
     // *: Get data untuk warehouse approv
     public function handleAllWhApproval()
     {
-        $grfs = $this->grf->with('user')->where('status', 'ic_approved')->get();
+        $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', Auth::user()->warehouse_id)->get();
         return ($grfs);
     }
     // *: Get data untuk warehouse return
     public function handleAllWhReturn()
     {
-        $grfs = $this->grf->with('user')->where('status','return')->get();
+        $grfs = $this->grf->with('user')->where('status', 'return')->where('warehouse_id', Auth::user()->warehouse_id)->get();
+        return ($grfs);
+    }
+
+
+
+    public function handleFindWhApproval($id)
+    {
+        $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', $id)->get();
+        return ($grfs);
+    }
+    public function handleFindWhReturn($id)
+    {
+        $grfs = $this->grf->with('user')->where('status', 'return')->where('warehouse_id', $id)->get();
         return ($grfs);
     }
 
@@ -51,24 +64,24 @@ class WarehouseTransactionService
         $wherewh = str_replace('~', '/', $id);
         $whapproval = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
         $whapproval['quantity'] = 0;
-        
+
         foreach ($whapproval->requestForms as $requestForm) {
             $whapproval['quantity'] += $requestForm->quantity;
         }
         return ($whapproval);
     }
 
-     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode return
-     public function handleShowWhReturn($id)
-     {
-         $wherewh = str_replace('~', '/',$id);
-         $whreturn = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first(); 
-         $whreturn['quantity'] = 0;
-         foreach ($whreturn->requestForms as $requestForm) {
-             $whreturn['quantity'] += $requestForm->quantity;
-         }
-         return($whreturn);
-     }
+    // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode return
+    public function handleShowWhReturn($id)
+    {
+        $wherewh = str_replace('~', '/', $id);
+        $whreturn = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
+        $whreturn['quantity'] = 0;
+        foreach ($whreturn->requestForms as $requestForm) {
+            $whreturn['quantity'] += $requestForm->quantity;
+        }
+        return ($whreturn);
+    }
 
     // *: Untuk menggrouping banyak data menjadi 1 row
     public function handleGroubWhApproval()
@@ -234,11 +247,11 @@ class WarehouseTransactionService
             'status' => 'submited',
         ]);
 
-        $this->timeline->create( [
+        $this->timeline->create([
             'grf_id' => $request->grf_id,
             'status' => "submited",
             'created_at' => now(),
-        ] );
+        ]);
 
         return ResponseJSON(null, 200);
     }
@@ -272,7 +285,7 @@ class WarehouseTransactionService
     {
         $validatedData = $request->validate(["warehouse_id" => "required"]);
 
-        $validatedData[ "warehouse_destination" ] = null;
+        $validatedData["warehouse_destination"] = null;
 
         $this->transferForm->where("grf_id", $id)->get()->map(function ($itemList) {
             $itemList->delete();
@@ -280,7 +293,7 @@ class WarehouseTransactionService
 
         $this->grf->find($id)->update($validatedData);
 
-        return ( null );
+        return (null);
     }
 
 
@@ -296,7 +309,7 @@ class WarehouseTransactionService
 
         $this->grf->find($id)->update($validatedData);
 
-        return ( null );
+        return (null);
     }
 
 
@@ -310,20 +323,21 @@ class WarehouseTransactionService
     {
         $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
 
-        $validatedData = $request->validate( [
+        $validatedData = $request->validate([
             'transfer_form_id' => 'required',
             'grf_id' => 'required',
             'part_id' => 'required',
             'sn_code.*' => 'distinct|exists:stocks,sn_code',
-            'sn_code' => ['required', 'array', 'size:'.$limit, Rule::exists('stocks')->where(function ($query) use ($request) {
+            'sn_code' => [
+                'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
                     return $query->where('part_id', $request->part_id);
                 }),
             ],
-        ] );
-        
+        ]);
+
         $transferStocks = $this->transferStock->where([['transfer_form_id', $request->transfer_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
 
-        foreach ($validatedData[ "sn_code" ] as $key => $sn_code) {
+        foreach ($validatedData["sn_code"] as $key => $sn_code) {
             $transferStocks[$key]->update([
                 'sn' => $sn_code,
             ]);
@@ -342,15 +356,15 @@ class WarehouseTransactionService
     public function handleStoreBulkTransfer($request, $id)
     {
         $excel = Excel::toCollection(new WarehouseTransferImport, $request->file);
-        
+
         $sn_code = [];
-        
+
         foreach ($excel->first() as $row) {
             $sn_code[] = $row->first();
         }
 
         $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
-        
+
         $request['sn_code'] = $sn_code;
 
         $validatedData = $request->validate([
@@ -358,21 +372,22 @@ class WarehouseTransactionService
             'grf_id' => 'required',
             'part_id' => 'required',
             'sn_code.*' => 'distinct|exists:stocks,sn_code',
-            'sn_code' => ['required', 'array', 'size:'.$limit, Rule::exists('stocks')->where(function ($query) use ($request) {
+            'sn_code' => [
+                'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
                     return $query->where('part_id', $request->part_id);
                 }),
             ],
         ]);
 
-        
+
         $transferStocks = $this->transferStock->where([['transfer_form_id', $validatedData['transfer_form_id']], ['grf_id', $validatedData['grf_id']], ['part_id', $validatedData['part_id']]])->get();
-        
+
         foreach ($transferStocks as $key => $transferStock) {
             $transferStock->update([
                 'sn' => $validatedData['sn_code'][$key],
             ]);
         }
-        
+
         return $validatedData;
     }
 

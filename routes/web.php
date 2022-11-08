@@ -106,11 +106,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // * Part 
 Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'InventoryControl']], function () {
+    Route::get('/create', [PartController::class, 'create'])->name("create");
+
     Route::get('/', [PartController::class, 'index'])->name("view.home");
     Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
     Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
     Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
     Route::post('/', [PartController::class, 'store'])->name("store");
+
+    
     Route::get('/tampilan/{id}', [PartController::class, 'tampilan'])->name("tampilan");
     Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });

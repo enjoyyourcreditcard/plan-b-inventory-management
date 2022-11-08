@@ -45,8 +45,8 @@ Route::get('/tes123', function (Request $req) {
     AuthPermission("part:view");
     // dd(
     // dd(Auth::user()->token);
-// dd($req->user()->tokenCan("show-part"));
-// dd(auth('sanctum')->tokenCan("show-part"));
+    // dd($req->user()->tokenCan("show-part"));
+    // dd(auth('sanctum')->tokenCan("show-part"));
 })->middleware('auth');
 
 
@@ -61,6 +61,7 @@ Route::group(['prefix' => 'part'], function () {
 
 Route::group(['prefix' => 'segment'], function () {
     Route::get('/', [SegmentController::class, 'getAllSegment']);
+    Route::get('/category/{id}', [SegmentController::class, 'getAllSegementByCategory']);
 });
 
 
@@ -74,15 +75,16 @@ Route::group(['prefix' => 'category'], function () {
 
 Route::group(['prefix' => 'brand'], function () {
     Route::get('/', [BrandController::class, 'getAllBrand']);
+    Route::get('/segement/{id}', [BrandController::class, 'getBrandBySegment']);
     Route::post('/', [BrandController::class, 'postStoreBrand']);
     Route::put('/{id}', [BrandController::class, 'putUpdateBrand']);
     Route::get('/select', [BrandController::class, 'getAllBrandForSelect']);
-    
+
     Route::get('/delete/{id}', [BrandController::class, 'getDeactiveBrand']);
 });
 
 Route::group(['prefix' => 'stock'], function () {
-Route::get('/', [StockController::class, 'getAllStock']);
+    Route::get('/', [StockController::class, 'getAllStock']);
     Route::post('/', [StockController::class, 'postStoreStock']);
     Route::put('/{id}', [StockController::class, 'putUpdateStock']);
     Route::delete('/{id}', [StockController::class, 'getDeleteStock']);
@@ -92,17 +94,14 @@ Route::get('/', [StockController::class, 'getAllStock']);
 
 Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
-    Route::get('/all/request', [WarehouseTransactionController::class, 'apiRequest']);
-    Route::get('/all/return', [WarehouseTransactionController::class, 'apiReturn']);
-    
-    
-    
+    Route::get('/all/request/{id}', [WarehouseTransactionController::class, 'apiRequest']);
+    Route::get('/all/return/{id}', [WarehouseTransactionController::class, 'apiReturn']);
 
+    
 });
 
 Route::group(['prefix' => 'build'], function () {
     Route::get('/', [BuildController::class, 'getAllBuild']);
-
 });
 
 
@@ -133,10 +132,10 @@ Route::group(['prefix' => 'grf'], function () {
     Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
     Route::get('/request/list/{code}', [TransactionController::class, 'getAllSegmentByGRF']);
     Route::get('/all/outbound', [TransactionController::class, 'getAllGRFOutbound']);
-    
-    
+
+
     // Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
-    
+
 });
 
 
@@ -160,4 +159,3 @@ Route::group(['prefix' => 'grf'], function () {
 //     Route::get('/part', [HistorypriceController::class, 'getAllHistoryprice']);
 //     Route::post('/part', [HistorypriceController::class, 'postStoreHistoryprice']);
 // });
-

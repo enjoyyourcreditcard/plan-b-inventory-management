@@ -48,15 +48,16 @@ class WarehouseTransactionController extends Controller
     }
 
 
-    public function apiRequest()
+    public function apiRequest($id)
     {
-        $whapproval = $this->warehouseTransactionService->handleAllWhApproval();
+        $whapproval = $this->warehouseTransactionService->handleFindWhApproval($id);
         return ResponseJSON($whapproval, 200);
     }
-
-    public function apiReturn()
+    
+    
+    public function apiReturn($id)
     {
-        $whreturn = $this->warehouseTransactionService->handleAllWhReturn();
+        $whreturn = $this->warehouseTransactionService->handleFindWhReturn($id);
         return ResponseJSON($whreturn, 200);
         
     }

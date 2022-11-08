@@ -37,7 +37,7 @@ class SegmentController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
         try {
             return $this->segmentService->handleStoreSegment($request);
         } catch (\Exception $e) {
@@ -51,7 +51,7 @@ class SegmentController extends Controller
     }
 
     public function edit($id)
-    {        
+    {
         try {
             $categories = $this->categoryService->handleGetAllCategory();
             $segment = $this->segmentService->handleEditSegment($id);
@@ -79,5 +79,11 @@ class SegmentController extends Controller
     public function getAllSegment(Request $req)
     {
         return ResponseJSON($this->segmentService->handleAllSegmentApi($req), 200);
+    }
+
+
+    public function getAllSegementByCategory($id)
+    {
+        return ResponseJSON($this->segmentService->handleAllSegmentByCategory($id), 200);
     }
 }

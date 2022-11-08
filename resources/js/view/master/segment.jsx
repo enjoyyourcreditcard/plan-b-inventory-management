@@ -187,7 +187,7 @@ function Segments() {
         page,
         state,
         canNextPage,
-        pageSize,
+        setPageSize,
         gotoPage,
         canPreviousPage,
         pageOptions,
@@ -255,7 +255,16 @@ function Segments() {
                     </div>
                 </div>
             </div>
-
+            <TabelFooter
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    pageIndex={pageIndex}
+                    canPreviousPage={canPreviousPage}
+                    canNextPage={canNextPage}
+                    setPageSize={setPageSize}
+                    pageOptions={pageOptions}
+                />
             <Table
                 getTableProps={getTableProps}
                 prepareRow={prepareRow}

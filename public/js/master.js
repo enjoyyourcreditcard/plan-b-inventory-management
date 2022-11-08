@@ -1,17 +1,10 @@
-const partDeletModal = document.getElementById(
-    "part-delete-confirmation-modal"
-);
 
-partDeletModal.addEventListener("show.tw.modal", function (event) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get("part_id");
-    document.getElementById("part_id_delete").value = id;
-});
+// var control = new TomSelect(".tom-select-oum");
+// control.addOption({ value: "test" });
+// control.addItem("test");
 
-// $("#modal-confirmation-deactive").on("show.bs.modal", function (event) {
+$('#tom-select-oum').append($('<option>', {
+    value: 1,
+    text: 'My option'
+}));
 
-//     // console.log(id);
-//     var modal = $(this);
-//     modal.find(".modal-footer #user_id").val(id);
-// });

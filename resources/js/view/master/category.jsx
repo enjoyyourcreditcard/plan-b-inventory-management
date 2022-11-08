@@ -193,6 +193,7 @@ function Categorys() {
         state,
         canNextPage,
         pageSize,
+        setPageSize,
         gotoPage,
         canPreviousPage,
         pageOptions,
@@ -261,7 +262,16 @@ function Categorys() {
                     </div>
                 </div>
             </div>
-
+            <TabelFooter
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    pageIndex={pageIndex}
+                    canPreviousPage={canPreviousPage}
+                    canNextPage={canNextPage}
+                    setPageSize={setPageSize}
+                    pageOptions={pageOptions}
+                />
             <Table
                 getTableProps={getTableProps}
                 prepareRow={prepareRow}

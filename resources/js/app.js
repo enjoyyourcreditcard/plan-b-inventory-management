@@ -28,6 +28,7 @@ import './view/request/show';
 
 
 import './view/master/part';
+import './view/master/part_create';
 import './view/master/user';
 import './view/master/segment';
 import './view/master/category';
