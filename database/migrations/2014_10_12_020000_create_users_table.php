@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('status')->default("active");
+            $table->boolean('is_vendor')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

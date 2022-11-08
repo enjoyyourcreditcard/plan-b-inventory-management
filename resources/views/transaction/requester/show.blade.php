@@ -184,7 +184,7 @@
             <h2 class="text-lg font-medium truncate mr-5">Good Request Forms</h2>
         </div>
     </div>
-    <div class="intro-y col-span-5 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
+    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-12 sm:col-span-12">
 
 
 
@@ -193,7 +193,7 @@
         |  Request details
         |--------------------------------------------------------------------------
         / * --}}
-        <div class="box p-5 rounded-md">
+        <div class="box p-5 rounded-md w-full">
             <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
                 <div class="font-medium text-base truncate">Request Details</div>
             </div>
@@ -691,7 +691,7 @@
     </div>
 
     <div
-        class="intro-y col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 xl:flex-nowrap items-start">
+        class="intro-y col-span-12 xl:col-span-8 lg:col-span-8 md:col-span-12 sm:col-span-12 xl:flex-nowrap items-start">
         <div class=" w-full">
 
             <!--Begin Form Upload File Emergency GRF Document-->

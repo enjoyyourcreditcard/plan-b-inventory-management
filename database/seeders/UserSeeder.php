@@ -48,6 +48,7 @@ class UserSeeder extends Seeder
             'email' => 'requester1@inVentree',
             'password' => Hash::make('12345'),
             // 'status' => 'active',
+            'is_vendor' => true,
         ]);
 
         User::create([
