@@ -32,14 +32,15 @@ class InboundController extends Controller
         try{
         $inbound =  $this->inboundService->handleAllInbound();
         $parts = $this->partService->handleAllPart();
-        $notifications =  $this->notificationService->handleAllNotification();
+        // $notifications =  $this->notificationService->handleAllNotification();
         $warehouse = $this->warehouseService->handleAllWareHouse();
         $inbound_grf_code = $this->orderInboundService->handleGenerateInboundGrfCode();
         $grfs = $this->orderInboundService->handleGetAllInboundGrfByUser();
+
         return view('stock.inbound', [
             'inbound' => $inbound,
             'parts' => $parts,
-            'notifications' => $notifications,
+            // 'notifications' => $notifications,
             'warehouse' => $warehouse,
             'inbound_grf_code' => $inbound_grf_code,
             'grfs' => $grfs

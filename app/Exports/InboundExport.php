@@ -23,8 +23,8 @@ class InboundExport implements WithHeadings,ShouldAutoSize
     public function headings():array{
         return[
             'Part_id',
-            'Orafin_code',
-            'SN code',
+            'Orafin Code',
+            'Serial Number',
             'Stock Status',
             'Status'
         ];

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('inbound_id');
             $table->foreign('inbound_id')->references('id')->on('inbounds');
             $table->string('condition')->default('good new');
-            // $table->integer('quantity');
+            $table->integer('quantity');
             $table->string('remarks')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();

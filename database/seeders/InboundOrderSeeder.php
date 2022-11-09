@@ -14,17 +14,6 @@ class InboundOrderSeeder extends Seeder
      */
     public function run()
     {
-        OrderInbound::create([
-            'grf_inbound_id' => 1,
-            'inbound_id' => 1,
-        ]);
-        OrderInbound::create([
-            'grf_inbound_id' => 1,
-            'inbound_id' => 2,
-        ]);
-        OrderInbound::create([
-            'grf_inbound_id' => 1,
-            'inbound_id' => 3,
-        ]);
+        
     }
 }

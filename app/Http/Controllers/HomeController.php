@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $notifications =  $this->notificationService->handleAllNotification();
-        return view('home', ['notifications'=>$notifications]);
+        // $notifications =  $this->notificationService->handleAllNotification();
+        return view('home',);
     }
 }

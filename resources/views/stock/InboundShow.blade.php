@@ -1,3 +1,5 @@
+{{-- @dd($inbounds) --}}
+
 @extends('layouts.app')
 
 @section('breadcrumb')
@@ -133,11 +135,11 @@
 
     <div class="col-span-12 mt-8">
         <div class="intro-y flex items-center h-10">
-            <h2 class="text-lg font-medium truncate mr-5">Good Request Forms</h2>
+            <h2 class="text-lg font-medium truncate mr-5">Inbound Forms</h2>
         </div>
     </div>
 
-    <div class="intro-y col-span-5 xl:col-span-5 lg:col-span-5 md:col-span-12 sm:col-span-12">
+    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
 
 
 
@@ -281,42 +283,33 @@
                             </form>
                         </div>
                     @endIf
-                        
+                    
+                    @if ( $inboundForms->status == 'draft')
+                    
+                    
                     <form id="form-inbound" action="{{Route('inbound.post.add.item', $inboundForms->id)}}" method="POST">
                         @csrf
+
                         <div class="mt-3">
                             <label for="regular-form-3" class="form-label">Part</label>
-                            <div class="h-80 w-full overflow-y-scroll rounded-xl p-2 border">
-                                <table class="table table-report">
-                                    <div class="thead">
+                            <select name="inbound_id" data-placeholder="Select Part" class="tom-select w-full" required>
+                                <option></option>
+                                @foreach ( $inbounds as $inbound )
+                                <option value="{{ $inbound['id'] }}">{{ $inbound['part'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                                    </div>
-                                    <tbody>
-                                        @forelse ( $inbounds->where('is_select', 0) as $inbound )
-                                        <tr class="intro-x">
-                                            <td class="text-center whitespace-nowrap w-1/12 ">
-                                                <input type="checkbox" name="inbound_id[]" value="{{ $inbound->id }}" class="mr-4">{{ $inbound->sn_code ? $inbound->sn_code : "NULL"  }}
-                                            </td>
-                                            <td class="font-medium ml-2 mr-6 text-left w-4/12">
-                                                <a href="">{{ $inbound->part->name }}</a>
-                                            </td>
-                                            <td class="text-left w-4/12">{{ $inbound->part->segment->name }}</td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td class="text-center" colspan="12">No item on the list</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="mt-3">
+                            <label for="regular-form-2" class="form-label">Quantity</label>
+                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control"
+                                min="1" value="1" max="{{ $inbound['quantity'] }}" required>
                         </div>
 
                         <div class="mt-3">
                             <label for="regular-form-3" class="form-label">Note</label>
                             <textarea form="form-inbound" name="remarks" class="form-control" rows="3" placeholder="Request note.." required></textarea>
                         </div>
-                        @if($inboundForms->status == 'draft')
                             
                         <div
                             class="flex items-center border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
@@ -328,20 +321,40 @@
                                 </svg>Add to list
                             </button>
                         </div>
-                        @endif
                     </form>
+                    @else
+                    <form id="form-inbound" action="{{Route('inbound.post.add.item', $inboundForms->id)}}" method="POST">
+                        @csrf
 
+                        <div class="mt-3">
+                            <label for="regular-form-3" class="form-label">Part</label>
+                            <select name="inbound_id" data-placeholder="Select Part" class="tom-select w-full" required disabled>
+                                <option></option>
+                                @foreach ( $inbounds as $inbound )
+                                <option value="{{ $inbound['id'] }}">{{ $inbound['part'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
+                        <div class="mt-3">
+                            <label for="regular-form-2" class="form-label">Quantity</label>
+                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control"
+                                min="1" value="1" max="{{ $inbound['quantity'] }}" required disabled>
+                        </div>
 
-
-                    {{-- @endif --}}
+                        <div class="mt-3">
+                            <label for="regular-form-3" class="form-label">Note</label>
+                            <textarea form="form-inbound" name="remarks" class="form-control" rows="3" placeholder="Request note.." required disabled></textarea>
+                        </div>
+                    </form>
+                    @endif
 
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="intro-y col-span-7 xl:col-span-7 lg:col-span-7 md:col-span-12 sm:col-span-12" >
+    <div class="intro-y col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12" >
 
 
         <!-- BEGIN: Data List -->
@@ -350,9 +363,10 @@
                 <thead>
                     <tr>
                         <th class="whitespace-nowrap">PART NAME</th>
-                        <th class="text-center whitespace-nowrap">SEGMENT</th>
-                        <th class="text-center whitespace-nowrap">SN CODE</th>
-                        <th class="text-center whitespace-nowrap">ORAFIN CODE</th>
+                        <th class=" whitespace-nowrap">SEGMENT</th>
+                        {{-- <th class="text-center whitespace-nowrap">ORAFIN CODE</th> --}}
+                        <th class=" whitespace-nowrap">QUANTITY</th>
+                        <th class="whitespace-nowrap">REMARKS</th>
                         @if( $inboundForms->status === "draft" )
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                         @endIf
@@ -362,10 +376,11 @@
 
                     @forelse ( $orderInbounds as $order )
                     <tr class="intro-x">
-                        <td class="text-center capitalize w-4/12">{{ $order->inbound->part->name }}</td>
-                        <td class="text-center capitalize w-3/12">{{ $order->inbound->part->segment->name }}</td>
-                        <td class="text-center capitalize w-1/12">{{ $order->inbound->sn_code }}</td>
-                        <td class="text-center capitalize w-1/12">{{ $order->inbound->orafin_code }}</td>
+                        <td class=" capitalize w-4/12">{{ $order->inbound->part->name }}</td>
+                        <td class=" capitalize w-2/12">{{ $order->inbound->part->segment->name }}</td>
+                        {{-- <td class="text-center capitalize w-1/12">{{ $order->inbound->orafin_code }}</td> --}}
+                        <td class=" capitalize ">{{ $order->quantity }}</td> 
+                        <td class="table-report__action capitalize w-3/12 ">{{ $order->remarks }}</td> 
 
                         @if( $inboundForms->status === "draft" )
                         <td class="table-report__action w-1/12">

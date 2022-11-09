@@ -32,7 +32,12 @@ class OrderInboundService
         $this->timeline = $timeline;
     }
 
-    // Request Form SHOW
+    /*
+    *|--------------------------------------------------------------------------
+    *| Show Inbound Form
+    *|--------------------------------------------------------------------------
+    */
+
     public function handleShowInboundForm($code)
     {
         // dd($code);
@@ -70,6 +75,11 @@ class OrderInboundService
         
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| Store a new GRF
+    *|--------------------------------------------------------------------------
+    */
     public function handleGenerateInboundGrfCode()
     {
         // $warehouse = $this->inboundGrf->find($id, 'warehouse_id');
@@ -109,8 +119,6 @@ class OrderInboundService
             $inbound_grf_code = null;
         }
         return ($inbound_grf_code);
-
-        // dd($inbound_grf_code);
     }
 
      /*
@@ -132,28 +140,33 @@ class OrderInboundService
     */
     public function handleInboundStore($request, $id)
     {
+        // dd($request);
         $validatedDatas = $request->validate([
-            'inbound_id.*' => 'distinct',
-            'inbound_id' => 'required|array',
-            'remarks' => 'nullable',
-        ]);
-
+            'inbound_id' => 'required',
+            'remarks' => 'required',
+            'quantity' => 'required',
+        ]);   
         $validatedDatas['grf_inbound_id'] = $id;
-
         
-        foreach ($validatedDatas['inbound_id'] as $inboundId) {
-            $this->orderInbound->create([
+        $this->orderInbound->create([
                 'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
-                'inbound_id' => $inboundId,
+                'inbound_id' => $validatedDatas['inbound_id'],
                 'remarks' => $validatedDatas['remarks'],
-                // 'is_select' => $validatedDatas['is_select'],
+                'quantity' => $validatedDatas['quantity'],
                 'created_at' => now(),
             ]);
+        
+        // $inbounds = $this->inbound->where([['id', $request->inbound_id]])->with('orderInbound')->get();
+        // $inbounds->map(function ($inbound) use($request, $id) {
+       
+        //     $inbound['quantity_old'] = ($inbound->quantity);
+        //     $this->inbound->find($request->inbound_id)->update([
+        //         'quantity' => $inbound['quantity_old'] - $request->quantity,
+        //     ]);
+            
+        // });
 
-            $this->inbound->find($inboundId)->update([
-                'is_select' => 1,
-            ]);
-        }
+
         
         return ('data stored');
     }
@@ -192,13 +205,22 @@ class OrderInboundService
     */
     public function handleDeleteOrderInbound($request, $id)
     {
-        $orderInbound = $this->orderInbound->find($id)->delete();
-        
-        $this->inbound->find($request->inbound_id)->update([
-            'is_select' => 0,
-        ]);
+        $inbounds = $this->inbound->where([['id', $request->inbound_id]])->with('orderInbound')->get();
+        $inbounds->map(function ($inbound) {
 
-        return ResponseJSON($orderInbound, 200);
+            $inbound['quantity_new'] = ($inbound->quantity);
+
+            $inbound->orderInbound->map(function ($orderInbound) use ($inbound) {
+                $this->inbound->find($orderInbound->inbound_id)->update([
+                    'quantity' => $inbound['quantity_new'] += $orderInbound->quantity
+                ]);
+            });  
+
+        });
+
+        $this->orderInbound->find($id)->delete();
+
+        return ('data has been slain');
     }
 
         /*
@@ -233,7 +255,7 @@ class OrderInboundService
         $sn_code = [];
 
         foreach ($excel->first() as $row) {
-            $part_id[] = $this->part->where('name', $row['part_id'])->first()->id;
+            $part_id[] = $this->part->where('name', $row['part_id'])->first()->id;    
             $orafin_code[] = $this->part->where('name', $row['part_id'])->first()->orafin_code;
             $sn_code[] = $row['sn_code'];
         }
@@ -255,7 +277,7 @@ class OrderInboundService
                 'part_id' => $part_id,
                 'orafin_code' => $validatedData['orafin_code'][$key],
                 'sn_code' => $validatedData['sn_code'][$key],
-                'stock_status' => 'order',
+                'stock_status' => 'in',
                 'status' => 'active',
                 'is_select' => 0,
             ]);

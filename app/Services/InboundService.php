@@ -21,57 +21,73 @@ class InboundService
         $this->inbound = $inbound;
     }
 
+        /*
+    *|--------------------------------------------------------------------------
+    *| show all inbound
+    *|--------------------------------------------------------------------------
+    */
+
     public function handleAllInbound()
     {
-        $inbound = $this->inbound->with('part','warehouse')->get();
-        return($inbound);
+        $groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id');
+
+        foreach ($groupByPartIds as $key => $groupByPartId) {
+            $distinct[] = collect([
+                'id' =>$groupByPartId->first()->id, 
+                'part' => $groupByPartId->first()->part->name,
+                'segment' => $groupByPartId->first()->part->segment->name,
+                'quantity' => $groupByPartId->count(),
+            ]);
+        }
+
+        return ($distinct);
     }
 
-    public function handleStoreInbound($request)
-    {
-        $validatedData = $request->validate([
-            'part_id' => 'required',
-            'sn_code' => 'required',
-            'condition' => 'required',
-            // 'inbound_status' => 'required',
-        ]);
+    // public function handleStoreInbound($request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'part_id' => 'required',
+    //         'sn_code' => 'required',
+    //         'condition' => 'required',
+    //         // 'inbound_status' => 'required',
+    //     ]);
 
-        $this->inbound->create($validatedData);
+    //     $this->inbound->create($validatedData);
         
 
-        return('Inbound has been stored');
-    }
+    //     return('Inbound has been stored');
+    // }
 
-    public function handleUpdateInbound( $request)
-    {
-        $inbound = $this->inbound->find($request->id);
-        $validatedData = $request->validate([
-            'condition' => 'required',
-            // 'inbound_status' => 'required',
-        ]);
+    // public function handleUpdateInbound( $request)
+    // {
+    //     $inbound = $this->inbound->find($request->id);
+    //     $validatedData = $request->validate([
+    //         'condition' => 'required',
+    //         // 'inbound_status' => 'required',
+    //     ]);
 
-        $inbound->update($validatedData);
+    //     $inbound->update($validatedData);
 
-        return('Inbound has been stored');
-    }
+    //     return('Inbound has been stored');
+    // }
 
-    public function handleDeleteInbound($id)
-    {
-        $this->inbound->destroy($id);
+    // public function handleDeleteInbound($id)
+    // {
+    //     $this->inbound->destroy($id);
 
-        return('Inbound has been deleted');
-    }
+    //     return('Inbound has been deleted');
+    // }
 
-    public function handleUpInbound($id)
-    {
-        $data = $this->inbound->where('id', $id)->first();
-        $dataArray = $data->toArray();
-        unset($dataArray['id'],$dataArray['created_at'],$dataArray['updated_at']);
+    // public function handleUpInbound($id)
+    // {
+    //     $data = $this->inbound->where('id', $id)->first();
+    //     $dataArray = $data->toArray();
+    //     unset($dataArray['id'],$dataArray['created_at'],$dataArray['updated_at']);
         
         
-        $this->stock->create($dataArray);
-        // dd($data);
-    }
+    //     $this->stock->create($dataArray);
+    //     // dd($data);
+    // }
 
     public function handleAllDeleteInbound(Request $request)
     {
@@ -87,20 +103,20 @@ class InboundService
         return('Inbound has been deleted');
     }
     
-    public function handleAllUpInbound(Request $request)
-    {
-        if (isset($request['id']) == true) {
-            foreach ($request['id'] as $id) {
-                $inbound = $this->inbound->find($id);
-                $data = $inbound->toArray();
-                unset($data['id'],$data['created_at'],$data['updated_at']);
-                $this->stock->create($data);
-            }
-            return('Inbound stored!');
-        }else{
-            return('No inbound');
-        }
-    }
+    // public function handleAllUpInbound(Request $request)
+    // {
+    //     if (isset($request['id']) == true) {
+    //         foreach ($request['id'] as $id) {
+    //             $inbound = $this->inbound->find($id);
+    //             $data = $inbound->toArray();
+    //             unset($data['id'],$data['created_at'],$data['updated_at']);
+    //             $this->stock->create($data);
+    //         }
+    //         return('Inbound stored!');
+    //     }else{
+    //         return('No inbound');
+    //     }
+    // }
 
     
 

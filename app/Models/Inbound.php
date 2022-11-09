@@ -24,6 +24,6 @@ class Inbound extends Model
     }
 
     public function orderInbound() {
-        return $this->belongsTo(OrderInbound::class);
+        return $this->hasmany(OrderInbound::class);
     }
 }

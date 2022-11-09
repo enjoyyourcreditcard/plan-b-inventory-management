@@ -44,8 +44,8 @@ class InboundImport implements ToModel, WithHeadingRow
         
         return new Inbound([
             'part_id'       => $row['1'],
-            'sn_code'       => $row['3'],
             'orafin_code'   => $row['2'],
+            'sn_code'       => $row['3'],
             'stock_tatus'   => $row['4'],
             'status'        => $row['5'],
         ]);

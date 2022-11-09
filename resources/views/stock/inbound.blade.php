@@ -10,11 +10,11 @@
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10 mb-4">Stock</h2>
+<h2 class="intro-y text-lg font-medium mt-10 mb-4">Inbound Master</h2>
 
 <div class="grid grid-cols-12 gap-4 w-full">
 
-    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-12 sm:col-span-12">
+    <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
 
         <div class="box p-5 rounded-md">
 
@@ -275,58 +275,57 @@
 
     </div>
 
-    <div class="intro-x col-span-7 xl:col-span-8 lg:col-span-8 md:col-span-12 sm:col-span-12 ">
-        <table class="table table-report">
-            <thead>
-                <tr>
-
-                    <th class="text-center whitespace-nowrap">SN code</th>
-                    <th class=" whitespace-normal">Part</th>
-                    <th class=" whitespace-normal">Segment</th>
-                    <th class=" whitespace-normal">Orafin Code</th>
-                    @if( count($inbound) >= 1 )
-                    <th class="text-center whitespace-nowrap">ACTIONS</th>
-                    @endIf
-                </tr>
-            </thead>
-            <tbody>
-
-                @forelse ( $inbound as $inbounds )
-                <tr class="intro-x">
-
-                    <td class="text-center whitespace-nowrap w-1/12 ">{{ $inbounds->sn_code ? $inbounds->sn_code : "NULL"  }}</td>
-                    <td class="font-medium ml-2 mr-6 text-left w-4/12"> <a href="" >{{ $inbounds->part->name }}</a> </td>
-                    <td class="text-left w-4/12">{{ $inbounds->part->segment->name }}</td>
-                    <td class="text-left w-2/12"> {{ $inbounds->orafin_code ? $inbounds->orafin_code : "NULL"  }}</td>
-
-                    @if( $inbounds->part_id)
-                    <td class=" w-2">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center text-danger"
-                                href="{{ Route( "inbound.get.delete", $inbounds->id ) }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                    class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </a>
-                        </div>
-                    </td>
-                    @endif
-                </tr>
-                @empty
-                <tr>
-                    <td class="text-center" colspan="12">No item on the list</td>
-                </tr>
-                @endforelse
-
-            </tbody>
-        </table>
+    <div class="intro-x col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 ">
+        <div class="max-h-screen overflow-y-scroll mb-4">
+            <table class="table table-report">
+                <thead>
+                    <tr>
+                        <th class=" whitespace-normal">Part</th>
+                        <th class=" whitespace-normal">Segment</th>
+                        {{-- <th class=" whitespace-normal">Orafin Code</th> --}}
+                        <th class=" whitespace-normal">Quantity</th>
+                        
+                        {{-- <th class="text-center whitespace-nowrap">ACTIONS</th> --}}
+                        
+                    </tr>
+                </thead>
+                <tbody>
+    
+                    @forelse ( $inbound as $inbounds )
+                    <tr class="intro-x">
+    
+                        <td class="font-medium ml-2 mr-6 text-left w-6/12"> <a href="" >{{ $inbounds['part'] }}</a> </td>
+                        <td class="text-left w-3/12">{{ $inbounds['segment'] }}</td>
+                        <td class="text-left w-2/12"> {{ $inbounds['quantity'] }}</td>
+                        {{-- @if( $inbounds['part'])
+                        <td class=" w-2">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center text-danger"
+                                    href="{{ Route( "inbound.get.delete", "inboundsid" ) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
+                                        class="lucide lucide-trash-2 w-4 h-4 mr-1">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
+                                        </path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                        @endif --}}
+                    </tr>
+                    @empty
+                    <tr>
+                        <td class="text-center" colspan="12">No item on the list</td>
+                    </tr>
+                    @endforelse
+    
+                </tbody>
+            </table>
+        </div>
         <!-- BEGIN: Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
@@ -408,7 +407,7 @@
 
 {{-- *
 *|--------------------------------------------------------------------------
-*| Modal Delete Confirmation
+*| Modal Confirmation
 *|--------------------------------------------------------------------------
 *--}}
 

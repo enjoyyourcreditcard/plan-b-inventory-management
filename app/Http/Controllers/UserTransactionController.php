@@ -39,13 +39,13 @@ class UserTransactionController extends Controller
     public function index()
     {
         try {
-            $notifications =  $this->notificationService->handleAllNotification();
+            // $notifications =  $this->notificationService->handleAllNotification();
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
             
             return view('request.request', [
-                'notifications' => $notifications,
+                // 'notifications' => $notifications,
                 'grf_code' => $grf_code,
                 'grfs' => $grfs,
                 "chartDatas" => $chartDatas
@@ -100,7 +100,7 @@ class UserTransactionController extends Controller
     public function create($code)
     {
         try {
-            $notifications =  $this->notificationService->handleAllNotification();
+            // $notifications =  $this->notificationService->handleAllNotification();
             $grf = $this->requestFormService->handleGetCurrentGrf($code);
             $warehouses = $this->warehouseService->handleAllWareHouse();
             $brands = $this->brandService->handleGetAllBrand();
@@ -108,7 +108,7 @@ class UserTransactionController extends Controller
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
             return view( "request.show", [
-                'notifications' => $notifications,
+                // 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,
                 'brands' => $brands,

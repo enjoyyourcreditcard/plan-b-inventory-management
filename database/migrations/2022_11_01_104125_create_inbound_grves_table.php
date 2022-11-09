@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->text('note')->nullable();
             $table->enum('status', ['draft', 'submited','wh_approved','delivery_approved','closed'])->default('draft'); //untuk sistem 
-            // $table->integer('quantity');
             $table->timestamps();
         });
     }

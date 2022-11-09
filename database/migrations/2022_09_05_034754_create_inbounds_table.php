@@ -18,10 +18,11 @@ class CreateInboundsTable extends Migration
             $table->bigInteger('part_id')->unsigned();
             $table->foreign('part_id')->references('id')->on('parts');
             $table->string('orafin_code')->nullable();
-            $table->string('sn_code')->nullable();
-            $table->string('stock_status')->default('order');
-            $table->string('status');
-            $table->boolean('is_select')->default(0);
+            $table->string('sn_code')->nullable()->unique();
+            $table->string('condition')->default('good new');
+            $table->string('stock_status')->default('in');
+            $table->string('status')->default('active');
+            // $table->boolean('is_select')->default(0);
             $table->timestamps();
         });
     }

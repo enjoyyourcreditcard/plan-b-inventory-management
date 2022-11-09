@@ -350,3 +350,6 @@ Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/notification', function () {
+    return view('notification.notification');
+});

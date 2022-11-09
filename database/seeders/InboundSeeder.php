@@ -14,45 +14,18 @@ class InboundSeeder extends Seeder
      */
     public function run()
     {
-        Inbound::create([ 
-                'part_id' => 1,
-                'orafin_code' => '123',
-                'sn_code' => '14045100',
+
+        $part_id = [1, 2, 8, 9, 10, 11, 12, 13];
+        for ($i=100; $i <= 300; $i++) { 
+            Inbound::create([
+                'part_id' => $part_id[array_rand($part_id)],
+                'sn_code' => '14045'.$i,
+                'condition' => 'good new',
+                'stock_status' => 'in',
                 'status' => 'active',
-                'is_select' => 1,
-        ]);
-        Inbound::create([  
-                'part_id' => 12,
-                'orafin_code' => '124',
-                'sn_code' => '14045101',
-                'status' => 'active',
-                'is_select' => 1,
-        ]);
-        Inbound::create([  
-                'part_id' => 23,
-                'orafin_code' => '125',
-                'sn_code' => '14045102',
-                'status' => 'active',
-                'is_select' => 1,
-        ]);
-        Inbound::create([  
-                'part_id' => 34,
-                'orafin_code' => '126',
-                'sn_code' => '14045103',
-                'status' => 'active'
-        ]);
-        Inbound::create([ 
-                'part_id' => 45,
-                'orafin_code' => '127',
-                'sn_code' => '14045104',
-                'status' => 'active'
-        ]);
-        Inbound::create([  
-                'part_id' => 56,
-                'orafin_code' => '128',
-                'sn_code' => '14045105',
-                'status' => 'active'
-        ]);
+            ]);
+        }
+        
         
     }
 }

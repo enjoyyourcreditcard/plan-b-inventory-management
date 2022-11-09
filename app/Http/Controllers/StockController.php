@@ -23,7 +23,7 @@ class StockController extends Controller
         $stocks = $this->stockService->handleAllStock();
         $warehouse = $this->WarehouseService->handleAllWareHouse();
         $parts = $this->partService->handleAllPart();
-        $notifications =  $this->notificationService->handleAllNotification();
+        // $notifications =  $this->notificationService->handleAllNotification();
 
         // $is_sn = $part->sn_status == "sn";
 
@@ -31,7 +31,7 @@ class StockController extends Controller
             'stocks' => $stocks,
             'parts' => $parts,
             'warehouse' => $warehouse,
-            'notifications' => $notifications,
+            // 'notifications' => $notifications,
 
         ]);
     }
