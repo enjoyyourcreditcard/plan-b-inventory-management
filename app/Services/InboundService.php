@@ -31,14 +31,20 @@ class InboundService
     {
         $groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id');
 
-        foreach ($groupByPartIds as $key => $groupByPartId) {
-            $distinct[] = collect([
-                'id' =>$groupByPartId->first()->id, 
-                'part' => $groupByPartId->first()->part->name,
-                'segment' => $groupByPartId->first()->part->segment->name,
-                'quantity' => $groupByPartId->count(),
-            ]);
+        if( count($groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id')) ) {
+            foreach ($groupByPartIds as $key => $groupByPartId) {
+                $distinct[] = collect([
+                    'id' =>$groupByPartId->first()->id, 
+                    'part' => $groupByPartId->first()->part->name,
+                    'segment' => $groupByPartId->first()->part->segment->name,
+                    'quantity' => $groupByPartId->count(),
+                ]);
+            }
+        }else{
+            $distinct = [];
         }
+
+        
 
         return ($distinct);
     }

@@ -1,4 +1,3 @@
-{{-- @dd($grfs) --}}
 @extends('layouts.app')
 @section('breadcrumb')
 
@@ -40,8 +39,10 @@
                 </a>
             </div>
 
+            @if(count($inbound))
             <h2 class="intro-y text-lg font-medium mt-5">Warehouse Inbound</h2>
 
+                
             <div class=" border-slate-200/60 dark:border-darkmode-400 pt-5 font-medium mt-2">
                 <form action="{{ Route( "inbound.post.store.grf" ) }}" method="POST" class="">
                     @csrf
@@ -52,10 +53,12 @@
                     </svg>Warehouse Inbound</button>
                 </form>
             </div>
+            @endif
 
 
         </div>
-        
+
+        @if(count($inbound))
         <div class="border-slate-200/60 dark:border-darkmode-400 mt-2 h-80 overflow-y-scroll">
             @foreach( $grfs->where( 'status', '!=', 'closed' ) as $grf )
             <div class="box px-2 py-3 flex-1 mb-2">
@@ -208,6 +211,7 @@
             </div>
             @endforeach
         </div>
+        @endif
 
         {{-- <div class="box p-5 rounded-md mt-3">
             <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">

@@ -143,7 +143,7 @@ class OrderInboundService
         // dd($request);
         $validatedDatas = $request->validate([
             'inbound_id' => 'required',
-            'remarks' => 'required',
+            'warehouse_id' => 'required',
             'quantity' => 'required',
         ]);   
         $validatedDatas['grf_inbound_id'] = $id;
@@ -151,7 +151,7 @@ class OrderInboundService
         $this->orderInbound->create([
                 'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
                 'inbound_id' => $validatedDatas['inbound_id'],
-                'remarks' => $validatedDatas['remarks'],
+                'warehouse_id' => $validatedDatas['warehouse_id'],
                 'quantity' => $validatedDatas['quantity'],
                 'created_at' => now(),
             ]);
@@ -178,7 +178,7 @@ class OrderInboundService
     */
     public function handleInboundMiniStock($code)
     {
-        $orderInbound = $this->orderInbound->with('inbound')->where('grf_inbound_id', '=', str_replace('~', '/', strtoupper($code)))->get();
+        $orderInbound = $this->orderInbound->with('inbound', 'warehouse')->where('grf_inbound_id', '=', str_replace('~', '/', strtoupper($code)))->get();
 
         return ($orderInbound);
     }

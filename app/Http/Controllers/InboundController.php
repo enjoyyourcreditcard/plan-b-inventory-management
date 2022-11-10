@@ -179,7 +179,7 @@ class InboundController extends Controller
         
     /*
     *|--------------------------------------------------------------------------
-    *| Store Bulk Transfer
+    *| Store Bulk Part
     *|--------------------------------------------------------------------------
     */
     public function import (Request $request) {
