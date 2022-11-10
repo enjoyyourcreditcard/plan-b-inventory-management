@@ -65,7 +65,7 @@ class OrderInboundService
 
         $timeLine = [
             "status" => "draft",
-            "grf_inbound_id" => $createdData->id,
+            "inbound_grf_id" => $createdData->id,
         ];
 
         $this->timeline->create($timeLine);
@@ -236,9 +236,10 @@ class OrderInboundService
             "status" => "submited",
         ];
 
+        dd($data);
         $this->grfInbound->find($id)->update($data);
 
-        $this->timeline->find($id)->update($data);
+        $this->timeline->create($data);
 
         return ('Data has been updated');
     }
