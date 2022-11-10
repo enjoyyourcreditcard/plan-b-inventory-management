@@ -238,6 +238,8 @@ class OrderInboundService
 
         $this->grfInbound->find($id)->update($data);
 
+        $this->timeline->find($id)->update($data);
+
         return ('Data has been updated');
     }
 
