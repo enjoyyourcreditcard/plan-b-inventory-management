@@ -236,7 +236,6 @@ class OrderInboundService
             "status" => "submited",
         ];
 
-        dd($data);
         $this->grfInbound->find($id)->update($data);
 
         $this->timeline->create($data);
