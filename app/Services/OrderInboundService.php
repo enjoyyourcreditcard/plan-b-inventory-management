@@ -65,7 +65,7 @@ class OrderInboundService
 
         $timeLine = [
             "status" => "draft",
-            "inbound_grf_id" => $createdData->id,
+            "grf_inbound_id" => $createdData->id,
         ];
 
         $this->timeline->create($timeLine);
