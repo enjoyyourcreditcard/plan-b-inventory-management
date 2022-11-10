@@ -80,31 +80,31 @@
                 </a>
                 <ul class="menu__sub-open">
                     <li>
-                        <a href="index.html" class="menu menu--active">
+                        <a href="{{ Route('dashboard.stock') }}" class="menu menu--active">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Stock </div>
                         </a>
                     </li>
                     <li>
-                        <a href="side-menu-light-dashboard-overview-2.html" class="menu">
+                        <a href="{{ Route('dashboard.inbound') }}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Inbound </div>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('transaction.ic.view.outbound') }}" class="menu">
+                        <a href="{{ route('dashboard.outbound') }}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Outbound </div>
                         </a>
                     </li>
                     <li>
-                        <a href="side-menu-light-dashboard-overview-2.html" class="menu">
+                        <a href="{{ Route('dashboard.build') }}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Build </div>
                         </a>
                     </li>
                     <li>
-                        <a href="side-menu-light-dashboard-overview-3.html" class="menu">
+                        <a href="{{ Route('dashboard.warehouse') }}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Warehouse </div>
                         </a>
@@ -349,31 +349,31 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="index.html" class="side-menu">
+                            <a href="{{ Route('dashboard.stock') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Stock </div>
                             </a>
                         </li>
                         <li>
-                            <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ Route('dashboard.inbound') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('transaction.ic.view.outbound')}}" class="side-menu">
+                            <a href="{{route('dashboard.outbound')}}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ Route('dashboard.build') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Build </div>
                             </a>
                         </li>
                         <li>
-                            <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
+                            <a href="{{ Route('dashboard.warehouse') }}" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse </div>
                             </a>

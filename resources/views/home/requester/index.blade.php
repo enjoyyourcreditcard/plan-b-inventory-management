@@ -38,10 +38,11 @@
                     <div class="text-slate-500 mt-2">A GRF code will be generate for you. <br><span class="font-bold">process cannot
                         be undone.</span></div>
                 </div>
-                <form action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
+                <form id="form-new-grf" action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
-                    <button name="grf_code" value="{{ $grf_code }}" class="btn text-white bg-emerald-700 impor w-24">Sure</button>
+                    <input type="hidden" name="grf_code" value="{{ $grf_code }}">
+                    <button class="btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
             </div>
         </div>
@@ -458,7 +459,7 @@
         </div>
         <div class="intro-y h-full box p-5 mt-5">
             @if ($chartDatas == false)
-            <div class="h-72 w-72 flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
+            <div class="w-12/12 aspect-square flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
                 <div class="text-sm">No data yet</div>
             </div>
             @else
@@ -493,3 +494,7 @@
 
 
 @endsection
+
+@section('javasScript')
+<script src="{{ Asset('js/views/requester/index.js') }}"></script>
+@endSection

@@ -6,31 +6,32 @@ use App\Models\Warehouse;
 // Facades
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 // Controllers
 // use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MiniStockController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PartController;
-use App\Http\Controllers\RekondisiController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MiniStockController;
+use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-use App\Http\Controllers\WarehouseTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,21 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 //     return view('part.part');
 // })->middleware(["auth:sanctum", 'ability:check-status']);   
 
+
+
+
+/* 
+*|--------------------------------------------------------------------------
+*|  Dashboard pages 
+*|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
+    Route::get('/stock', [DashboardController::class, 'stock'])->name('stock');
+    Route::get('/inbound', [DashboardController::class, 'inbound'])->name('inbound');
+    Route::get('/outbound', [DashboardController::class, 'outbound'])->name('outbound');
+    Route::get('/build', [DashboardController::class, 'build'])->name('build');
+    Route::get('/warehouse', [DashboardController::class, 'warehouse'])->name('warehouse');
+});
 
 
 
