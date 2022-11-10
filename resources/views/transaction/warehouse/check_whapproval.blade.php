@@ -148,38 +148,52 @@
 <div id="upload" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body p-0">
+            <div class="modal-body">
                 <div class="p-5 text-center">
-                    <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
-                    <div class="text-3xl mt-5">Metode Tambah
-                        Data</div>
-                    {{-- <div class="text-slate-500 mt-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum ratione, quas nemo nobis ex deserunt neque ullam ut doloremque </div> --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                    </svg>
+                    <div class="text-3xl mt-5">Select input method</div>
                 </div>
-                <div class="px-5 pb-8 text-center">
-                    {{-- <button data-modal-toggle="popup-modal" data-tw-toggle="modal" data-tw-target="#importExcel"
-                        class="text-white bg-emerald-600 hover:bg-emerald-900 focus:ring-4 focus:outline-none focus:ring-emerald-700 dark:focus:ring-emerald-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 w-40 justify-center">
-                        Bulk
-                    </button> --}}
-                    <button class="btn btn-elevated-rounded-primary w-32 mr-2 mb-2"  data-modal-toggle="popup-modal" data-tw-toggle="modal" data-tw-target="#inputSn" >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                          </svg> <span class="ml-2">Pieces</span>
-                    </button>
-                    <button class="btn btn-elevated-rounded-primary w-32 mr-2 mb-2"  data-modal-toggle="popup-modal" type="button" data-tw-toggle="modal" data-tw-target="#importExcel">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel-fill" viewBox="0 0 16 16">
-                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM5.884 6.68 8 9.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 10l2.233 2.68a.5.5 0 0 1-.768.64L8 10.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 10 5.116 7.32a.5.5 0 1 1 .768-.64z"/>
-                          </svg> <span class="ml-2">Bulk</span>
-                    </button>
-                  
-
-                    {{-- <button data-modal-toggle="popup-modal" type="button" data-tw-toggle="modal"
-                        data-tw-target="#inputSn"
-                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 w-40">Pieces</button> --}}
+                <div class="p-5 pb-8 text-center">
+                    <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
+                        <li id="top-products-symfony-tab" class="nav-item flex flex-col flex-grow"
+                            role="presentation">
+                            <button type="submit" name="type" value="transfer gudang baru"
+                                class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
+                                data-tw-target="#importExcel" data-tw-toggle="modal" aria-selected="false"
+                                role="tab">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-file-earmark-diff block w-6 h-6 mb-2 mx-auto"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 5a.5.5 0 0 1 .5.5V7H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V8H6a.5.5 0 0 1 0-1h1.5V5.5A.5.5 0 0 1 8 5zm-2.5 6.5A.5.5 0 0 1 6 11h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
+                                    <path
+                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                                </svg> Bulk
+                            </button>
+                        </li>
+                        <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
+                            role="presentation">
+                            <button type="submit" name="type" value="transfer gudang lama"
+                                class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
+                                data-tw-target="#inputSn" data-tw-toggle="modal" aria-selected="false"
+                                role="tab">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-list-ul block w-6 h-6 mb-2 mx-auto"
+                                    viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                                </svg> Pieces
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 {{-- <div id="upload" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

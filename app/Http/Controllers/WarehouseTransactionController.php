@@ -13,7 +13,8 @@ use App\Services\WarehouseService;
 use App\Services\WarehouseTransactionService;
 use App\Imports\WarehouseImport;
 use Illuminate\Support\Facades\Auth;
-use Excel;
+// use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -31,7 +32,7 @@ class WarehouseTransactionController extends Controller
         $this->brandService = $brandService;
     }
 
-    /*
+        /*
         *|--------------------------------------------------------------------------
         *| Index Warehouse Approv Dan Return
         *|--------------------------------------------------------------------------
@@ -355,5 +356,20 @@ class WarehouseTransactionController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
+    }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get data for wh approv transfer
+    *|--------------------------------------------------------------------------
+    */
+
+    public function whtransfer()
+    {
+       $transferform = $this->warehouseTransactionService->handleAllWhTransfer();
+        // dd($transferform);
+        return view('transaction.warehouse.transferApprov', [
+            "transferform" => $transferform,
+        ]); 
     }
 }

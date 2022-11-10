@@ -7,7 +7,7 @@
 </nav>
 @endsection
 @section('content')
-{{-- <div class="grid grid-cols-12 gap-6 mb-14">
+<div class="grid grid-cols-12 gap-6 mb-14">
     <div class="col-span-12 lg:col-span-12 mt-6">
         <div class="box p-16 overflow-hidden bg-primary intro-y">
             <div class=" w-full  text-white text-3xl -mt-3">Selamat {{ Carbon\Carbon::now()->format('H') <= 10 ? "Pagi"
@@ -34,7 +34,7 @@
                 src="{{ asset('dist/images/warehouse3.png') }}">
         </div>
     </div>
-</div> --}}
+</div>
 {{-- ! --}}
 {{-- ! --}}
 <div class=" grid grid-cols-12 gap-6 xl:-mt-5 2xl:-mt-8 -mb-10 z-40 2xl:z-10 mt-3">

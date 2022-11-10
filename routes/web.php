@@ -267,6 +267,7 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['a
     Route::get('/edit/{id}', [WarehouseController::class, 'edit'])->name('edit');
     Route::put('/update/{id}', [WarehouseController::class, 'update'])->name('post.update');
     Route::post('/status', [WarehouseController::class, 'postStatus'])->name('post.status');
+    Route::get('/transfer', [WarehouseTransactionController::class, 'whtransfer'])->name('get.whtransfer');
 });
 
 
@@ -320,6 +321,7 @@ Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['
     Route::put('/file/{id}', [UserTransactionController::class, 'putDocumentEmergencyGRF'])->name('put.update.file.emergency.request');
     Route::put('/delete/doc/{id}', [UserTransactionController::class, 'destroyDocument'])->name("get.delete.doc");
 });
+
 
 
 

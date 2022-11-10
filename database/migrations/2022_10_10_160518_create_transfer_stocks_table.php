@@ -22,6 +22,7 @@ class CreateTransferStocksTable extends Migration
             $table->unsignedBigInteger('part_id');
             $table->foreign('part_id')->references('id')->on('parts');
             $table->string('sn')->nullable();
+            $table->string('sn_transfer_approv')->nullable();
             $table->timestamps();
         });
     }

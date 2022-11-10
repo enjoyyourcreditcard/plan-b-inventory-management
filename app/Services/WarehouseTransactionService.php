@@ -79,7 +79,7 @@ class WarehouseTransactionService
         $whreturn['quantity'] = 0;
         foreach ($whreturn->requestForms as $requestForm) {
             $whreturn['quantity'] += $requestForm->quantity;
-        }
+           }
         return ($whreturn);
     }
 
@@ -227,15 +227,15 @@ class WarehouseTransactionService
 
         $stocks = [];
 
-        foreach ($transferForms as $transferForm) {
-            foreach ($transferForm->transferStocks as $transferStock) {
-                if ($this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first()) {
-                    $stocks[] = $this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first();
-                } else {
-                    return redirect()->back()->with('error', 'SN Codes does not match, please recheck your SN Codes');
-                }
-            }
-        }
+        // foreach ($transferForms as $transferForm) {
+        //     foreach ($transferForm->transferStocks as $transferStock) {
+        //         if ($this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first()) {
+        //             $stocks[] = $this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first();
+        //         } else {
+        //             return redirect()->back()->with('error', 'SN Codes does not match, please recheck your SN Codes');
+        //         }
+        //     }
+        // }
 
         foreach ($stocks as $stock) {
             $stock->update([
@@ -323,21 +323,21 @@ class WarehouseTransactionService
     {
         $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
 
-        $validatedData = $request->validate([
-            'transfer_form_id' => 'required',
-            'grf_id' => 'required',
-            'part_id' => 'required',
-            'sn_code.*' => 'distinct|exists:stocks,sn_code',
-            'sn_code' => [
-                'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
-                    return $query->where('part_id', $request->part_id);
-                }),
-            ],
-        ]);
+        // $validatedData = $request->validate([
+        //     'transfer_form_id' => 'required',
+        //     'grf_id' => 'required',
+        //     'part_id' => 'required',
+        //     'sn_code.*' => 'distinct|exists:stocks,sn_code',
+        //     'sn_code' => [
+        //         'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
+        //             return $query->where('part_id', $request->part_id);
+        //         }),
+        //     ],
+        // ]);
 
         $transferStocks = $this->transferStock->where([['transfer_form_id', $request->transfer_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
 
-        foreach ($validatedData["sn_code"] as $key => $sn_code) {
+        foreach ($request["sn_code"] as $key => $sn_code) {
             $transferStocks[$key]->update([
                 'sn' => $sn_code,
             ]);
@@ -390,6 +390,27 @@ class WarehouseTransactionService
 
         return $validatedData;
     }
+
+
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get view wh transfer approv
+    *|--------------------------------------------------------------------------
+    */
+
+    public function handleAllWhTransfer()
+    {
+        $transferform = $this->grf->with('user', 'transferForms')->where([['warehouse_id', Auth::user()->warehouse_id], ['type', '!=', 'request']])->get();
+        return ($transferform);
+    }
+
+    public function handleShowWhTransfer()
+    {
+        
+    }
+
+
 
     // *: untuk input sn_code yang ada di field 
     // public function handleUpdateWhApproval($request)
