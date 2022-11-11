@@ -47,7 +47,7 @@
                         {{ $warehouse->name }}</option>
                     @endforeach
                 </select>
-                <div class="form-help">Changing the warehouse will affect your item list</div>
+                <div class="form-help">Merubah warehouse dapat berpengaruh pada item list anda</div>
             </div>
             <!-- END: Modal Body -->
 
@@ -82,9 +82,8 @@
                         <path
                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">All your item on the list will be deleted. <br>This process cannot
-                        be undone.</div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">Semua item pada list anda akan terhapus. <br>Proses ini tidak dapat dibatalkan.</div>
                 </div>
                 <form id="form-change-warehouse" action="{{ Route( 'request.put.update.warehouse', $grf->id ) }}"
                     method="POST" class="px-5 pb-8 text-center">
@@ -119,10 +118,8 @@
                         <path
                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">Your request will be sent to Inventory Control <br>This process
-                        cannot
-                        be undone.</div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">Permintaan anda akan dikirim ke Inventory Control <br>Proses ini tidak dapat dibatalkan.</div>
                 </div>
                 <form action="{{ Route( "request.put.update.status", $grf->id ) }}" method="POST"
                     class="px-5 pb-8 text-center">
@@ -154,9 +151,8 @@
                         <path
                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">Removing this item from list <br>This process cannot
-                        be undone.</div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">Menghapus item ini dari list <br>Proses ini tidak dapat dibatalkan.</div>
                 </div>
                 <form action="{{ Route( "request.post.store.create.grf" ) }}" method="POST"
                     class="px-5 pb-8 text-center">

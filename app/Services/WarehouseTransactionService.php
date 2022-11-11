@@ -274,6 +274,10 @@ class WarehouseTransactionService
 
         $validatedData[ "warehouse_destination" ] = null;
 
+        $this->transferStock->where("grf_id", $id)->get()->map(function ($itemList) {
+            $itemList->delete();
+        });
+
         $this->transferForm->where("grf_id", $id)->get()->map(function ($itemList) {
             $itemList->delete();
         });
