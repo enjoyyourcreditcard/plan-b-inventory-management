@@ -246,7 +246,7 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware'
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
-    // Route::post('/', [StockController::class, 'store'])->name('post.store');
+    // <Rou></Rou>te::post('/', [StockController::class, 'store'])->name('post.store');
     // Route::put('/{id}', [StockController::class, 'put'])->name('put.detail');
     // Route::delete('/{id}', [StockController::class, 'destroy'])->name('delete.detail');
 });

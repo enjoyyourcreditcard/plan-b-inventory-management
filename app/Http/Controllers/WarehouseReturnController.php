@@ -20,7 +20,6 @@ class WarehouseReturnController extends Controller
     }
 
     public function store(Request $request, $id){
-        // dd($request);
         $this->warehouseReturnService->handleStoreWhReturn($request, $id);
         return redirect()->back();
     }

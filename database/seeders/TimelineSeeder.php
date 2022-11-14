@@ -15,41 +15,6 @@ class TimelineSeeder extends Seeder
      */
     public function run()
     {
-        Timeline::create([
-            "grf_id" => 1,
-            "status" => "draft",
-            "created_at" => now()
-        ]);
-
-        Timeline::create([
-            "grf_id" => 2,
-            "status" => "draft",
-            "created_at" => now()
-        ]);
-
-        Timeline::create([
-            "grf_id" => 2,
-            "status" => "submited",
-            "created_at" => now()
-        ]);
-
-        Timeline::create([
-            "grf_id" => 2,
-            "status" => "ic_approved",
-            "created_at" => now()
-        ]);
-
-        Timeline::create([
-            "grf_id" => 2,
-            "status" => "wh_approved",
-            "created_at" => now()
-        ]);
-
-        Timeline::create([
-            "grf_id" => 2,
-            "status" => "delivery_approved",
-            "created_at" => now()
-        ]);
-
+        //
     }
 }

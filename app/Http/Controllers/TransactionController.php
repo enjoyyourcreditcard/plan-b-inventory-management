@@ -68,7 +68,7 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($code)
+     public function show($code)
     {
 
 

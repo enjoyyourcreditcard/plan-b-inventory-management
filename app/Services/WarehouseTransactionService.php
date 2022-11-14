@@ -98,10 +98,14 @@ class WarehouseTransactionService
 
     public function handlePostApproveWH($req, $transactionService)
     {
-        $grf = $this->grf->find($req->id);
+        $grf = $this->grf->with('requestStocks')->find($req->id);
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
         $grf->status = "delivery_approved";
         $grf->save();
+
+        foreach ($grf->requestStocks as $requestStock) {
+            $this->stock->where('sn_code', $requestStock->sn)->update(['stock_status' => 'hold']);
+        }
 
         $this->timeline->create([
             'grf_id' => $req->id,

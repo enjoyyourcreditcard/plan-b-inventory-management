@@ -43,7 +43,8 @@ class UserTransactionController extends Controller
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
-            // dd($grfs);
+            $this->requestFormService->handleCloseThreeDay($grfs);
+
             return view('home.requester.index', [
                 'notifications' => $notifications,
                 'grf_code' => $grf_code,
