@@ -18,61 +18,52 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin Test',
             'role' => 'admin',
-            'regional' => 'jakarta',
+            'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
-            // 'nik' => '',
             'no_telp' => '082993828824',
             'email' => 'admin@inVentree',
             'password' => Hash::make('12345'),
-            // 'status' => 'active',
         ]);
 
         User::create([
-            'name' => 'Gudang Test',
+            'name' => 'Gudang Depok',
             'role' => 'warehouse',
-            'regional' => 'surabaya',
+            'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
             'no_telp' => '082993828824',
             'email' => 'gudang@inVentree',
             'password' => Hash::make('12345'),
-            // 'status' => 'active',
         ]);
 
         User::create([
             'name' => 'Requester Vendor',
             'role' => 'requester',
-            'regional' => 'jakarta',
+            'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
-            // 'nik' => '',
             'no_telp' => '082993828824',
             'email' => 'requester1@inVentree',
             'password' => Hash::make('12345'),
-            // 'status' => 'active',
             'is_vendor' => true,
         ]);
 
         User::create([
             'name' => 'Requester InHouse',
             'role' => 'requester',
-            'regional' => 'jakarta',
+            'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
-            // 'nik' => '',
             'no_telp' => '082993828824',
             'email' => 'requester2@inVentree',
             'password' => Hash::make('12345'),
-            // 'status' => 'active',
         ]);
 
         User::create([
             'name' => 'Inventory Control Test',
             'role' => 'inventory_control',
-            'regional' => 'jakarta',
+            'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
-            // 'nik' => '',
             'no_telp' => '082993828824',
             'email' => 'ic@inVentree',
             'password' => Hash::make('12345'),
-            // 'status' => 'active',
         ]);
     }
 }

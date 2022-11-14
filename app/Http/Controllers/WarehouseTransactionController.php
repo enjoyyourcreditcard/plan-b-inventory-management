@@ -127,13 +127,17 @@ class WarehouseTransactionController extends Controller
     {
         $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
-        return view('transaction.warehouse.warehouse_return', compact('whreturn', 'requestForm'));
+
+        return view('transaction.warehouse.warehouse_return', compact('whreturn','requestForm'));
     }
 
-    public function store(Request $request)
-    {
-        $this->warehouseTransactionService->handleStoreWhApproval($request);
-        return redirect()->back();
+    public function store(Request $request){
+        try {
+            $this->warehouseTransactionService->handleStoreWhApproval($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function postApproveWH(Request $request)
@@ -148,26 +152,45 @@ class WarehouseTransactionController extends Controller
     *| Import Bulk Warehouse Approv
     *|--------------------------------------------------------------------------
     */
-    public function updateImport(Request $request)
-    {
-        $excel = [];
+    public function updateImport(Request $request){
 
-        $file = $request->file;
+        try {
+            $file = $request->file;
 
-        $excel = Excel::toArray(new WarehouseImport, $file);
-        // dd($excel);
-        foreach ($excel[0] as $row) {
-            RequestStock::create([
-                'request_form_id' => $request->request_form_id,
-                'grf_id' => $request->grf_id,
-                'part_id' => $request->part_id,
-                'sn' => $row[0],
-                'sn_return' => null,
-                'remarks' => null,
+            $excel = Excel::toCollection(new WarehouseImport, $file);
+
+            $sn_code = [];
+
+            foreach ($excel->first() as $row) {
+                $sn_code[] = $row->first();
+            }
+
+            $request['sn_code'] = $sn_code;
+
+            $validateData = $request->validate([
+                'request_form_id' => 'required',
+                'grf_id' => 'required',
+                'part_id' => 'required',
+                'sn_code.*' => 'distinct', 
+                'sn_code' => ['required', 'array'],
             ]);
+    
+    
+            foreach ($excel[0] as $row) {
+                RequestStock::create([
+                    'request_form_id' => $request->request_form_id,
+                    'grf_id' => $request->grf_id,
+                    'part_id' => $request->part_id,
+                    'sn' => $row[0],
+                    'sn_return' => null,
+                    'remarks' => null,
+                ]);
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
         }
-        return redirect()->back();
-    }
+        }
 
     /*
     *|--------------------------------------------------------------------------

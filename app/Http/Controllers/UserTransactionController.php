@@ -12,6 +12,7 @@ use App\Services\SegmentService;
 use App\Services\TransactionService;
 use App\Services\WarehouseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -103,11 +104,11 @@ class UserTransactionController extends Controller
         try {
             $notifications =  $this->notificationService->handleAllNotification();
             $grf = $this->requestFormService->handleGetCurrentGrf($code);
-            $warehouses = $this->warehouseService->handleAllWareHouse();
+            $warehouses = $this->warehouseService->handleGetWareHouseByRegional(Auth::user()->regional);
             $brands = $this->brandService->handleGetAllBrand();
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
-
+// dd($warehouses);
             return view("transaction.requester.show", [
                 'notifications' => $notifications,
                 'grf' => $grf,

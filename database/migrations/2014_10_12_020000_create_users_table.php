@@ -17,7 +17,23 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->enum('role', ['admin', 'inventory_control','requester','warehouse']);
-            $table->string('regional');
+            $table->enum('regional', [
+                "Jakarta 1",
+                "Jakarta 2",
+                "Jakarta 3",
+                "Surabaya",
+                "Medan",
+                "Bandung",
+                "Semarang",
+                "Malang",
+                "SUMATERA 1",
+                "SUMATERA 2",
+                "JAWA TENGAH",
+                "KALIMANTAN",
+                "JATIM, BALI & NT",
+                "SULAMPA",
+                "Others"
+            ]);
             $table->unsignedBigInteger('warehouse_id');
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->string('nik')->nullable();

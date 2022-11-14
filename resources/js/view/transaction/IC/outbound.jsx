@@ -59,15 +59,24 @@ function Outbound() {
                 // style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: (tableProps) => (
                     <>
-                        <a
-                            href={
-                                "/transaction/detail/grf/" +
-                                tableProps.row.original.grf_code.replaceAll("/", "~")
-                            }
-                            className="text-primary text-decoration-none "
-                        >
-                            &nbsp;{tableProps.row.original.grf_code}
-                        </a>
+                        {tableProps.row.original.status == "submited" ? (
+                            <a
+                                href={
+                                    "/transaction/detail/grf/" +
+                                    tableProps.row.original.grf_code.replaceAll(
+                                        "/",
+                                        "~"
+                                    )
+                                }
+                                className="text-primary text-decoration-none "
+                            >
+                                &nbsp;{tableProps.row.original.grf_code}
+                            </a>
+                        ) : (
+                            <p className="text-primary text-decoration-none ">
+                                &nbsp;{tableProps.row.original.grf_code}
+                            </p>
+                        )}
                     </>
                 ),
             },
@@ -254,7 +263,10 @@ function Outbound() {
                             className="text-primary text-decoration-none "
                         >
                             {" "}
-                            &nbsp;{moment(tableProps.row.original.created_at).format('DD-MM-Y')}
+                            &nbsp;
+                            {moment(tableProps.row.original.created_at).format(
+                                "DD-MM-Y"
+                            )}
                         </a>
                     </>
                 ),

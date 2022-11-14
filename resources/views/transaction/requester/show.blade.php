@@ -4,15 +4,15 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Breadcrumb
+| Breadcrumb
 |--------------------------------------------------------------------------
 */ --}}
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
-        <li class="breadcrumb-item"><a href="{{ Route( "request.get.home" ) }}">Outbound</a></li>
+        <li class="breadcrumb-item"><a href="{{ Route( 'request.get.home' ) }}">Outbound</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $grf->grf_code }}</li>
     </ol>
 </nav>
@@ -22,9 +22,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Modal Change Warehouse
+| Modal Change Warehouse
 |--------------------------------------------------------------------------
 */ --}}
 <div id="modal-change-warehouse" class="modal" tabindex="-1" aria-hidden="true">
@@ -66,9 +66,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Modal change warehouse confirmation
+| Modal change warehouse confirmation
 |--------------------------------------------------------------------------
 */ --}}
 <div id="modal-change-warehouse-confirmation" class="modal" tabindex="-1" aria-hidden="true">
@@ -103,9 +103,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Modal submit confirmation
+| Modal submit confirmation
 |--------------------------------------------------------------------------
 */ --}}
 <div id="modal-request-submit-confirmation" class="modal" tabindex="-1" aria-hidden="true">
@@ -124,7 +124,7 @@
                         cannot
                         be undone.</div>
                 </div>
-                <form action="{{ Route( "request.put.update.status", $grf->id ) }}" method="POST"
+                <form action="{{ Route( 'request.put.update.status', $grf->id ) }}" method="POST"
                     class="px-5 pb-8 text-center">
                     @csrf
                     @method( "PUT" )
@@ -138,9 +138,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Modal remove item from list confirmation
+| Modal remove item from list confirmation
 |--------------------------------------------------------------------------
 */ --}}
 <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
@@ -158,7 +158,7 @@
                     <div class="text-slate-500 mt-2">Removing this item from list <br>This process cannot
                         be undone.</div>
                 </div>
-                <form action="{{ Route( "request.post.store.create.grf" ) }}" method="POST"
+                <form action="{{ Route( 'request.post.store.create.grf' ) }}" method="POST"
                     class="px-5 pb-8 text-center">
                     @csrf
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
@@ -173,9 +173,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  View Container
+| View Container
 |--------------------------------------------------------------------------
 */ --}}
 <div class="grid grid-cols-12 gap-6">
@@ -188,9 +188,9 @@
 
 
 
-        {{-- * / 
+        {{-- * /
         |--------------------------------------------------------------------------
-        |  Request details
+        | Request details
         |--------------------------------------------------------------------------
         / * --}}
         <div class="box p-5 rounded-md w-full">
@@ -247,7 +247,7 @@
             <div class="border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
                 <ul class="pricing-tabs nav nav-pills box rounded-full mx-auto overflow-hidden" role="tablist">
                     <li id="layout-1-monthly-fees-tab" class="nav-item flex-1" role="presentation">
-                        <a href="{{ Route( "request.get.home" ) }}"
+                        <a href="{{ Route( 'request.get.home' ) }}"
                             class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-neutral-100 transition duration-300 ease-in-out hover:bg-white hover:text-slate-500"
                             data-tw-toggle="pill" data-tw-target="#layout-1-monthly-fees" role="tab"
                             aria-controls="layout-1-monthly-fees" aria-selected="true">
@@ -261,9 +261,10 @@
                     @if($grf->status === "draft")
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
                         <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation"
-                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
-                            data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
-                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "
+                            transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}" data-tw-toggle="pill"
+                            data-tw-target="#layout-1-annual-fees" role="tab" aria-controls="layout-1-annual-fees"
+                            aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-send w-4 h-4" viewBox="0 0 16 16">
                                 <path
@@ -275,11 +276,14 @@
                     @if($grf->status === "delivery_approved")
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
                         <a href="{{ Route('post.approve.pickup', $grf->id) }}"
-                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
-                            data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
-                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam w-4 h-4" viewBox="0 0 16 16">
-                                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "
+                            transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}" data-tw-toggle="pill"
+                            data-tw-target="#layout-1-annual-fees" role="tab" aria-controls="layout-1-annual-fees"
+                            aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-box-seam w-4 h-4" viewBox="0 0 16 16">
+                                <path
+                                    d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
                             </svg>
                             Pickup Item
                         </a>
@@ -287,13 +291,16 @@
                     @endIf
                     @if($grf->status === "user_pickup")
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
-                        <a href="{{  Route( "return.get.detail", str_replace( '/', '~', strtolower( $grf->grf_code ) ) )  }}"
-                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}"
+                        <a href="{{  Route( " return.get.detail", str_replace( '/' , '~' , strtolower( $grf->grf_code )
+                            ) ) }}"
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900
+                            text-white {{ $grf->warehouse_id && count( $requestForms ) ? "transition duration-300
+                            ease-in-out hover:bg-emerald-700" : "" }}"
                             data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
-                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count( $requestForms ) ? "" : "disabled" }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-arrow-left-right w-4 h-4"
-                                viewBox="0 0 16 16">
+                            aria-controls="layout-1-annual-fees" aria-selected="false" {{ $grf->warehouse_id && count(
+                            $requestForms ) ? "" : "disabled" }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-left-right w-4 h-4" viewBox="0 0 16 16">
                                 <path fillRule="evenodd"
                                     d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
                             </svg>
@@ -310,9 +317,9 @@
 
 
 
-        {{-- * / 
+        {{-- * /
         |--------------------------------------------------------------------------
-        |  Form box
+        | Form box
         |--------------------------------------------------------------------------
         / * --}}
         <div class="intro-y box p-5 rounded-md mt-4">
@@ -322,10 +329,8 @@
             </div>
             <div id="input" class="">
                 <div class="preview">
-                    <form action="{{ Route( "request.post.add.item", $grf->id ) }}" method="POST">
-
+                    <form action="{{ Route('request.post.add.item', $grf->id ) }}" method="POST">
                         @csrf
-
                         @if ( $grf->warehouse_id === null )
                         <div>
                             <label class="form-label">Warehouse</label>
@@ -339,15 +344,7 @@
                         </div>
                         @endIf
 
-                        <div class="mt-3">
-                            <label class="form-label">Material brand</label>
-                            <select name="brand_id" data-placeholder="Select brand" class="tom-select w-full" required>
-                                <option></option>
-                                @foreach ( $brands as $brand )
-                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         <div class="mt-3">
                             <label for="regular-form-1" class="form-label">Material description</label>
                             <select name="segment_id" data-placeholder="Select segment" class="tom-select w-full"
@@ -355,6 +352,15 @@
                                 <option></option>
                                 @foreach ( $segments as $segment )
                                 <option value="{{ $segment->id }}">{{ $segment->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label">Material brand</label>
+                            <select name="brand_id" data-placeholder="Select brand" disabled class="tom-select w-full">
+                                <option></option>
+                                @foreach ( $brands as $brand )
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -386,9 +392,9 @@
 
 
 
-        {{-- * / 
+        {{-- * /
         |--------------------------------------------------------------------------
-        |  Timeline box
+        | Timeline box
         |--------------------------------------------------------------------------
         / * --}}
         <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
@@ -400,9 +406,9 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static return
+                | Static return
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "return" ) )
@@ -428,9 +434,9 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static picked up
+                | Static picked up
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "user_pickup" ) )
@@ -456,9 +462,9 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static deliver
+                | Static deliver
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "delivery_approved" ) )
@@ -484,9 +490,9 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static on prgress out
+                | Static on prgress out
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "ic_approved" ) )
@@ -514,9 +520,9 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static Submited
+                | Static Submited
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "submited" ) )
@@ -543,9 +549,9 @@
                 @endIf
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Static new
+                | Static new
                 |--------------------------------------------------------------------------
                 / * --}}
                 @if ( !$grf->timelines->contains( "status", "draft" ) )
@@ -574,16 +580,16 @@
 
 
 
-                {{-- * / 
+                {{-- * /
                 |--------------------------------------------------------------------------
-                |  Dynamic timeline
+                | Dynamic timeline
                 |--------------------------------------------------------------------------
                 / * --}}
                 <div class="intro-x relative flex items-center mb-3">
                     <div
                         class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
-                        <div
-                            class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border {{ $loop->first == true ? "text-slate-50 bg-emerald-700" : "bg-slate-50 text-emerald-700" }}">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden flex justify-center items-center border {{ $loop->first == true ? "
+                            text-slate-50 bg-emerald-700" : "bg-slate-50 text-emerald-700" }}">
 
                             @switch($timeline->status)
 
@@ -756,7 +762,7 @@
                                 @endIf
 
                             </div>
-                        @endif
+                            @endif
                     </form>
                 </div>
             </div>
@@ -785,20 +791,21 @@
                         <td class="!py-3.5">
                             <div class="flex items-center">
                                 <div class="ml-4">
-                                    <a href=""
-                                        class="font-medium whitespace-nowrap">{{ $requestForm->segment->name }}</a>
+                                    <a href="" class="font-medium whitespace-nowrap">{{ $requestForm->segment->name
+                                        }}</a>
                                 </div>
                             </div>
                         </td>
-                        <td class="text-center capitalize">{{ $requestForm->brand->name }}</td>
+                        <td class="text-center capitalize">{{ $requestForm->brand ? $requestForm->brand->name : "-"}}
+                        </td>
                         <td class="text-center">{{ $requestForm->quantity }} Items</td>
                         <td>{{ $requestForm->remarks !== null ? $requestForm->remarks : '-' }}</td>
 
                         @if( $grf->status === "draft" )
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
-                                <a class="flex items-center text-danger"
-                                    href="{{ Route( "request.get.delete.item", $requestForm->id ) }}">
+                                <a class="flex items-center text-danger" href="{{ Route( 'request.get.delete.item',
+                                    $requestForm->id ) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
@@ -814,32 +821,12 @@
                             </div>
                         </td>
                         @endIf
-
-                        {{-- <td class="table-report__action w-56">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                                        data-tw-target="#delete-confirmation-modal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" icon-name="trash-2"
-                                            data-lucide="trash-2" class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path
-                                                d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                            </path>
-                                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                                        </svg> Delete
-                                    </a>
-                                </div>
-                            </td> --}}
                     </tr>
                     @empty
                     <tr class="intro-x">
                         <td class="text-center" colspan="5">No item on the list</td>
                     </tr>
                     @endforelse
-
                 </tbody>
             </table>
         </div>
@@ -921,7 +908,7 @@
 </div>
 </div>
 
-<form id="form-delete" method="POST" action="{{Route("request.get.delete.doc", $grf->id)}}">
+<form id="form-delete" method="POST" action="{{Route('request.get.delete.doc', $grf->id)}}">
     @csrf
     @method( "PUT" )
 </form>

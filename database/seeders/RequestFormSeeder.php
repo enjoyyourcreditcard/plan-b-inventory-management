@@ -31,20 +31,20 @@ class RequestFormSeeder extends Seeder
         //     "quantity" => 10,
         // ]);
 
-        RequestForm::create([
-            "grf_id" => 2,
-            "segment_id" => 2,
-            "brand_id" => 14,
-            "part_id" => 796,
-            "quantity" => 2,
-        ]);
+        // RequestForm::create([
+        //     "grf_id" => 2,
+        //     "segment_id" => 2,
+        //     "brand_id" => 14,
+        //     "part_id" => 796,
+        //     "quantity" => 2,
+        // ]);
 
-        RequestForm::create([
-            "grf_id" => 2,
-            "segment_id" => 1,
-            "brand_id" => 92,
-            "part_id" => 1093,
-            "quantity" => 4,
-        ]);
+        // RequestForm::create([
+        //     "grf_id" => 2,
+        //     "segment_id" => 1,
+        //     "brand_id" => 92,
+        //     "part_id" => 1093,
+        //     "quantity" => 4,
+        // ]);
     }
 }

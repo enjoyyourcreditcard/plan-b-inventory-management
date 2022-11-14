@@ -17,8 +17,9 @@ class CreateWarehouseTable extends Migration
             $table->id();
             $table->string('name');
             $table->enum('regional', [
-                "Jabodetabek",
-                "Jakarta",
+                "Jakarta 1",
+                "Jakarta 2",
+                "Jakarta 3",
                 "Surabaya",
                 "Medan",
                 "Bandung",

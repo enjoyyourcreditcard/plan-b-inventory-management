@@ -163,9 +163,29 @@ class TransactionController extends Controller
         return ResponseJSON($stock);
     }
 
+    public function getAllBrandListByGRF($code)
+    {
+        $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
+        // dd($requestForms);
+        $brand = collect();
+        foreach ($requestForms as $item) {
+            $brand = $brand->merge($this->brandService->handleBrandBySegment($item->segment_id));
+        };
+        return ResponseJSON($brand);
+    }
+
+
+    
+
+
     public function getAllSegmentByGRF($code)
     {
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        foreach ($requestForms as $key=>$item) {
+            $requestForms[$key]->brand = $this->brandService->handleBrandBySegment($item->segment_id);
+        };
+        
+     
         return ResponseJSON($requestForms);
     }
 

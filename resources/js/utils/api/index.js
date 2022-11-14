@@ -153,10 +153,11 @@ export default class Api {
             });
     };
 
-    postTransactionApprovedIC = (grf_id, part_id, qty) => {
+    postTransactionApprovedIC = (grf_id, part_id, brand_id, qty) => {
         return axios
             .post("http://localhost:8000/transaction/approve/IC", {
                 id: grf_id,
+                brand: brand_id.toString(),
                 part: part_id.toString(),
                 quantity: qty.toString(),
             })

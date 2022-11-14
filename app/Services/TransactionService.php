@@ -25,9 +25,9 @@ class TransactionService
 
     public function handlePostApproveIC($req)
     {
-        // dd();
         $parts = explode(',',$req->part);
         $quantity = explode(',',$req->quantity);
+        $brand = explode(',',$req->brand);
         $grf = $this->grf->find($req->id);
         $grf->status = "ic_approved";
         $grf->save();
@@ -40,12 +40,13 @@ class TransactionService
             if ($requestForm !== null) {
                 $requestForm->part_id = $parts[$i];
                 $requestForm->quantity = $quantity[$i];
+                $requestForm->brand_id = $brand[$i];
                 $requestForm->save();
             } else {
                 $requestForm = new RequestForm();
                 $requestForm->grf_id = $req->id;
                 $requestForm->segment_id = $segment_id;
-                $requestForm->brand_id = $brand_id;
+                $requestForm->brand_id = $brand[$i];
                 $requestForm->part_id = $parts[$i];
                 $requestForm->quantity = $quantity[$i];
                 $requestForm->remarks = "asdasd";

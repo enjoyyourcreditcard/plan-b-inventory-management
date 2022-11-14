@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
-class WareHouseService{
+class WareHouseService
+{
 
     public function __construct(warehouse $warehouse)
     {
@@ -15,12 +16,18 @@ class WareHouseService{
     public function handleAllWareHouse()
     {
         $warehouse = Warehouse::all();
-        return($warehouse);
+        return ($warehouse);
+    }
+
+    public function handleGetWareHouseByRegional($regional)
+    {
+        $warehouse = Warehouse::where('regional', $regional)->get();
+        return ($warehouse);
     }
 
     public function handleStoreWareHouse(Request $request)
     {
-        if($request->expired == null){
+        if ($request->expired == null) {
             $request['expired'] = "-";
         }
         $warehouse = $this->warehouse->create([
@@ -37,7 +44,7 @@ class WareHouseService{
             'lng' => $request->lng,
             'status' => "active",
         ]);
-        return($warehouse);
+        return ($warehouse);
     }
 
     public function handleEditWarehouse($id)
@@ -46,7 +53,8 @@ class WareHouseService{
         return $data;
     }
 
-    public function handleUpdateWareHouse(Request $request, $id){
+    public function handleUpdateWareHouse(Request $request, $id)
+    {
         $this->warehouse->find($id)->update([
             'name' => $request->name,
             'regional' => $request->regional,
@@ -59,8 +67,8 @@ class WareHouseService{
             'end_at' => $request->end_at,
             'lat' => $request->lat,
             'lng' => $request->lng,
-            ]);
-            return('');
+        ]);
+        return ('');
     }
 
     // public function inActive($id){
@@ -84,5 +92,4 @@ class WareHouseService{
             return $warehouse;
         }
     }
-
 }

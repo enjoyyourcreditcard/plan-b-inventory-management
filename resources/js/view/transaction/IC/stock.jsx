@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useTable, usePagination, useSortBy,useGlobalFilter } from 'react-table'
 import ReactTooltip from 'react-tooltip';
 import TabelFooter from '../../../components/tabel_footer';
-import Table from '../../../components/table';
+import Table from '../../../components/table'
 import TabelHiddenColumn from '../../../components/table_hidden_column';
 import TableLoading from '../../../components/table_loding';
 import TableSearch from '../../../components/table_search';
@@ -130,18 +130,7 @@ function Stock(props) {
                     </tbody>
                 </table>
             </div>
-            
             )}
-
-
-            {/* <TabelFooter
-                gotoPage={gotoPage}
-                pageIndex={pageIndex}
-                pageOptions={pageOptions}
-                canPreviousPage={canPreviousPage}
-                previousPage={previousPage}
-                canNextPage={canNextPage}
-                nextPage={nextPage} /> */}
         </div>
     );
 }

@@ -229,7 +229,7 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
-    Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
+Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
 
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 
@@ -256,7 +256,6 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware'
 
 Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['auth']], function () {
     Route::get('/', [WarehouseTransactionController::class, 'dashboard'])->name('get.dashboard');
-
     Route::get('/request', [WarehouseTransactionController::class, 'viewRequest'])->name('get.request');
     Route::get('/return', [WarehouseTransactionController::class, 'indexReturn'])->name('get.return');
     Route::get('/show/{id}', [WarehouseTransactionController::class, 'show'])->name("get.detail");
@@ -355,7 +354,6 @@ Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class
 
 
 
-
 /*
 *--------------------------------------------------------------------------
 * Master 
@@ -385,11 +383,12 @@ Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth']]
 });
 
 // return.get.detail
-
-Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
-Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
-Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
-Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+Route::group(['middleware' => ['auth'] ], function () {
+    Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
+    Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
+    Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
+    Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+});
 // Route::post('/change-status/{id}', [WarehouseReturnController::class, 'changeStatus'])->name('changeStatus');
 /*
 *--------------------------------------------------------------------------

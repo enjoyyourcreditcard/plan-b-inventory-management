@@ -131,7 +131,7 @@ class RequestFormService
         }
 
         $validatedData = $request->validate([
-            'brand_id' => 'required',
+            'brand_id' => 'nullable',
             'segment_id' => 'required',
             'quantity' => 'required|integer',
             'remarks' => 'nullable',

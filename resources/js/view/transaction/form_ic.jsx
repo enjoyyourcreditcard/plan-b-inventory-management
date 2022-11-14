@@ -18,6 +18,7 @@ function TransactionForm(props) {
     const [selectQty, setSelectQty] = useState([]);
     const [part, setPart] = useState([]);
     const [qty, setQty] = useState([]);
+    const [brand, setBrand] = useState([]);
     const [error, setError] = useState([]);
     const [totalQty, setTotalQty] = useState([]);
 
@@ -27,17 +28,20 @@ function TransactionForm(props) {
                 var selectQtyRaw = [];
                 var parts = [];
                 var qty_raw = [];
+                var brand_raw = [];
                 var error_raw = [];
                 var totalQty_raw = [];
                 for (let i = 0; i < response.data.data.length; i++) {
                     selectQtyRaw[i] = 1;
                     parts[i] = [];
                     qty_raw[i] = [];
+                    brand_raw[i] = [];
                     error_raw[i] = false;
                     totalQty_raw[i] = 0;
                 }
                 setPart(parts);
                 setQty(qty_raw);
+                setBrand(brand_raw);
                 setError(error_raw);
                 setTotalQty(totalQty_raw);
                 setSelectQty(selectQtyRaw);
@@ -60,6 +64,13 @@ function TransactionForm(props) {
         var parts = part.slice();
         parts[index][i] = event.value;
         setPart(parts);
+    };
+
+    const changeBrand = (event, index, i) => {
+        var brands = brand.slice();
+        brands[index][i] = event.value;
+        // console.log(brands)
+        setBrand(brands);
     };
     const changeQuantity = (event, index, i, max) => {
         var qty_raw = qty.slice();
@@ -84,242 +95,59 @@ function TransactionForm(props) {
 
     const handleClickSubmit = (event) => {
         event.preventDefault();
-        event.preventDefault();
         const margeParts = [];
+        const margeBrands = [];
         const margeQty = [];
 
         for (let i = 0; i < part.length; i++) {
             margeParts.push(...part[i]);
+            margeBrands.push(...brand[i]);
             margeQty.push(...qty[i]);
         }
+        // console.log(margeParts);
+        // console.log("brand:"+margeBrands);
+        // console.log(margeQty);
 
-        api.postTransactionApprovedIC(props.grf_id, margeParts, margeQty).then(
+        api.postTransactionApprovedIC(props.grf_id, margeParts,margeBrands, margeQty).then(
             (response) => {
-                window.location.replace("http://localhost:8000/transaction/outbound");
+                window.location.replace(
+                    "http://localhost:8000/transaction/outbound"
+                );
             }
         );
-        // const el = document.querySelector("#loading-modal");
-        // const modal = tailwind.Modal.getOrCreateInstance(el);
-        // modal.show();
-    };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("Pkeee");
     };
 
     return (
         <>
             <div className="intro-y box p-5">
-            <form onSubmit={handleClickSubmit}>
-
-                <div className="border-solid">
-
-
-                    <table class="table border ">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="col-1">SEGMENT</th>
-                                <th class="col-2">PART </th>
-                                <th class="col-2">QTY</th>
-                                <th class="col-10">APPROVE QTY</th>
-                              
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((item, index) => {
-                                return (
-                                    <tr>
-                                        <td class="!pr-2">{index + 1}.</td>
-                                        <td class="" style={{fontSize:12}}>
-                                            {item.segment.name}
-                                        </td>
-                                        <td class="!px-2" style={{width:250}}>
-                                             {[
-                                                ...Array(selectQty[index]),
-                                            ].map((x, i) => (
-                                                <Select
-                                                    onChange={(e) =>
-                                                        changePart(
-                                                            e,
-                                                            index,
-                                                            i
-                                                        )
-                                                    }
-                                                    className="part_id mt-2"
-                                                    options={item.segment.parts.map(
-                                                        (d) => ({
-                                                            value: d.id,
-                                                            label: d.name,
-                                                        })
-                                                    )}
-                                                    key={i}
-                                                />
-                                            ))}
-
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    addSelect(index)
-                                                }
-                                            >
-                                                Tambah +
-                                            </button>
-                                        </td>
-                                        <td class="!px-2">
-                                           <p>{item.quantity}</p>
-                                        </td>
-                                        <td class="!px-2">
-                                        {[
-                                                ...Array(selectQty[index]),
-                                            ].map((x, i) => (
-                                                <input
-                                                    onChange={(e) =>
-                                                        changeQuantity(
-                                                            e,
-                                                            index,
-                                                            i,
-                                                            item.quantity
-                                                        )
-                                                    }
-                                                    name="quantity"
-                                                    id="crud-form-1"
-                                                    type="number"
-                                                    class="form-control w-full quantity_part mt-2"
-                                                />
-                                            ))}
-
-                                            <p>Total : {totalQty[index]}</p>
-                                            {error[index] ? (
-                                                <p className="text-danger">
-                                                    Data tidak boleh lebih
-                                                    dari {item.quantity}
-                                                </p>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </td>
-                                       
-                                    </tr>
-                                    // <tr key={index}>
-                                    //     <td>{index + 1}</td>
-                                    //     <td>
-                                    //         {item.segment.name}{" "}
-                                    //         {item.select_qty}
-                                    //     </td>
-                                    //     <td>
-                                    //         {[
-                                    //             ...Array(selectQty[index]),
-                                    //         ].map((x, i) => (
-                                    //             <Select
-                                    //                 onChange={(e) =>
-                                    //                     changePart(
-                                    //                         e,
-                                    //                         index,
-                                    //                         i
-                                    //                     )
-                                    //                 }
-                                    //                 name="part_id[]"
-                                    //                 className="part_id"
-                                    //                 options={item.segment.parts.map(
-                                    //                     (d) => ({
-                                    //                         value: d.id,
-                                    //                         label: d.name,
-                                    //                     })
-                                    //                 )}
-                                    //                 key={i}
-                                    //             />
-                                    //         ))}
-
-                                    //         <button
-                                    //             type="button"
-                                    //             onClick={() =>
-                                    //                 addSelect(index)
-                                    //             }
-                                    //         >
-                                    //             Tambah +
-                                    //         </button>
-                                    //     </td>
-                                    //     <td>{item.quantity}</td>
-
-                                    //     <td>
-                                    //         {[
-                                    //             ...Array(selectQty[index]),
-                                    //         ].map((x, i) => (
-                                    //             <input
-                                    //                 onChange={(e) =>
-                                    //                     changeQuantity(
-                                    //                         e,
-                                    //                         index,
-                                    //                         i,
-                                    //                         item.quantity
-                                    //                     )
-                                    //                 }
-                                    //                 name="quantity"
-                                    //                 id="crud-form-1"
-                                    //                 type="number"
-                                    //                 class="form-control w-full quantity_part"
-                                    //                 placeholder="Input text"
-                                    //             />
-                                    //         ))}
-
-                                    //         <p>Total : {totalQty[index]}</p>
-                                    //         {error[index] ? (
-                                    //             <p className="text-danger">
-                                    //                 Data tidak boleh lebih
-                                    //                 dari {item.quantity}
-                                    //             </p>
-                                    //         ) : (
-                                    //             ""
-                                    //         )}
-                                    //     </td>
-                                    // </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-right mt-5">
-                        <button
-                            type="button"
-                            onClick={() => console.log("OKEY")}
-                            class="btn btn-outline-secondary w-24 mr-1"
-                        >
-                            Cancel
-                        </button>
-         
-                        <button type="submit" class="btn btn-primary w-24">
-                            Save
-                        </button>
-                                    
-                    </div>
-                </form>
-
-            </div>
-
-            {/* <div class="intro-y box p-5">
                 <form onSubmit={handleClickSubmit}>
-                    <div class="overflow-x-auto">
-                        <table class="table table-bordered">
+                    <div className="border-solid">
+                        <table class="table border ">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th class="col-3">SEGMENT</th>
-                                    <th class="col-3">PART </th>
-                                    <th class="col-2">TOTAL ITEM</th>
-                                    <th class="col-10">QUANTITY </th>
+                                    <th class="col-1">SEGMENT</th>
+                                    <th class="col-2">PART </th>
+                                    <th class="col-2">Brand </th>
+                                    <th class="col-2">QTY</th>
+                                    <th class="col-10">APPROVE QTY</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.map((item, index) => {
                                     return (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                                {item.segment.name}{" "}
-                                                {item.select_qty}
+                                        <tr>
+                                            <td class="!pr-2">{index + 1}.</td>
+                                            <td
+                                                class=""
+                                                style={{ fontSize: 12 }}
+                                            >
+                                                {item.segment.name}
                                             </td>
-                                            <td>
+                                            <td
+                                                class="!px-2"
+                                                style={{ width: 250 }}
+                                            >
                                                 {[
                                                     ...Array(selectQty[index]),
                                                 ].map((x, i) => (
@@ -331,8 +159,7 @@ function TransactionForm(props) {
                                                                 i
                                                             )
                                                         }
-                                                        name="part_id[]"
-                                                        className="part_id"
+                                                        className="part_id mt-2"
                                                         options={item.segment.parts.map(
                                                             (d) => ({
                                                                 value: d.id,
@@ -352,9 +179,39 @@ function TransactionForm(props) {
                                                     Tambah +
                                                 </button>
                                             </td>
-                                            <td>{item.quantity}</td>
+                                            <td
+                                                class="!px-2"
+                                                style={{ width: 250 }}
+                                            >
+                                                {[
+                                                    ...Array(selectQty[index]),
+                                                ].map((x, i) => (
+                                                    <Select
+                                                        onChange={(e) =>
+                                                            changeBrand(
+                                                                e,
+                                                                index,
+                                                                i
+                                                            )
+                                                        }
+                                                        className="part_id mt-2 "
+                                                        options={item.brand.map(
+                                                            (d) => ({
+                                                                value: d.id,
+                                                                label: d.name,
+                                                            })
+                                                        )}
+                                                        key={i}
+                                                    />
+                                                ))}
 
-                                            <td>
+                                                <div className="pt-5"></div>
+                                            </td>
+
+                                            <td class="!px-2">
+                                                <p>{item.quantity}</p>
+                                            </td>
+                                            <td class="!px-2">
                                                 {[
                                                     ...Array(selectQty[index]),
                                                 ].map((x, i) => (
@@ -370,8 +227,7 @@ function TransactionForm(props) {
                                                         name="quantity"
                                                         id="crud-form-1"
                                                         type="number"
-                                                        class="form-control w-full quantity_part"
-                                                        placeholder="Input text"
+                                                        class="form-control w-full quantity_part mt-2"
                                                     />
                                                 ))}
 
@@ -399,57 +255,12 @@ function TransactionForm(props) {
                         >
                             Cancel
                         </button>
-         
                         <button type="submit" class="btn btn-primary w-24">
                             Save
                         </button>
-                                    
                     </div>
                 </form>
-            </div> */}
-
-            {/* <div
-                id="loading-modal"
-                class="modal"
-                // tabindex="-1"
-                // aria-hidden="true"
-            >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body p-0">
-                            <div class="p-5 text-center">
-                                <i
-                                    data-lucide="x-circle"
-                                    class="w-16 h-16 text-danger mx-auto mt-3"
-                                ></i>
-                                <div class="text-3xl mt-5">
-                                    Apakah anda yakin?
-                                </div>
-                                <div class="text-slate-500 mt-2">
-                                    Proses ini tidak dapat di ulang
-                                </div>
-                            </div>
-                            <div class="px-5 pb-8 text-center">
-                                <button
-                                    type="button"
-
-                                    // data-tw-dismiss="modal"
-                                    class="btn btn-outline-secondary mr-1"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => console.log("OKEY")}
-                                    class="btn btn-primary"
-                                >
-                                    Ya, Saya yakin
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+            </div>
         </>
     );
 }
