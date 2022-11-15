@@ -77,7 +77,12 @@ class WarehouseReturnService {
 
     public function handlePostApproveReturnWH($req, $transactionService)
     {
-        $grf = $this->grf->find($req->id);
+        $grf = $this->grf->with('requestStocks')->find($req->id);
+        foreach ($grf->requestStocks as $requestStock) {
+            $this->stock->where('sn_code', $requestStock->sn_return)->update([
+                'stock_status' => 'in', 
+            ]);
+        }
         $grf->status = "closed";
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
         $grf->save();

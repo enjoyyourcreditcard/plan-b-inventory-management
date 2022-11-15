@@ -41,7 +41,7 @@ $('.upload-return').on('click', function (event) {
         html +=
         '<input class="input-pieces-part-id" type="hidden" name="part_id" value="' + partIdReturn + '">'+
         '<label class="input-pieces-part-name form-label">' + partNameReturn + '</label>'+
-        '<input class="input-pieces-form-id" type="hidden" name="request_form_id" value="' + grfId + '">'+
+        '<input class="input-pieces-form-id" type="hidden" name="grf_id" value="' + grfId + '">'+
         '<input type="text" class="form-control mb-3" name="sn_code[]" required="required">';
     }
 

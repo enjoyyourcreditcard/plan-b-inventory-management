@@ -25,7 +25,7 @@ class BrandSeeder extends Seeder
             if ($no != 0 && $no <= 116) {
                 try {
                     Brand::create([
-                        'segment_id' => 1,
+                        'segment_id' => rand(0,10),
                         'name' => $data[23],
                         'status' => 'active',
                     ]);

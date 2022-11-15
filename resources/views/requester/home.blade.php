@@ -187,7 +187,7 @@
                                 </svg>
                                 <div class="ml-auto">
                                     <div class="report-box__indicator bg-success tooltip cursor-pointer" title="33% item used">
-                                        33% <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-up" data-lucide="chevron-up" class="lucide lucide-chevron-up w-4 h-4 ml-0.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        Waiting for return
                                     </div>
                                 </div>
                                 @break

@@ -2,24 +2,26 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Notification;
 use App\Models\Part;
 use App\Models\RequestForm;
 use App\Models\RequestStock;
+use App\Models\Stock;
 use App\Models\Timeline;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class RequestFormService
 {
 
-    public function __construct(RequestForm $requestForm, RequestStock $requestStock, Grf $grf, Timeline $timeline, Notification $notification)
+    public function __construct(RequestForm $requestForm, RequestStock $requestStock, Grf $grf, Timeline $timeline, Notification $notification, Stock $stock)
     {
         $this->grf = $grf;
+        $this->stock = $stock;
         $this->requestForm = $requestForm;
         $this->requestStock = $requestStock;
         $this->timeline = $timeline;
@@ -36,7 +38,7 @@ class RequestFormService
     // Request Form SHOW
     public function handleAllRequestFormInbound()
     {
-        $requestForms = $this->grf->where('status', '=', 'submited')->orWhere('status', '=', 'ic_approved')->orWhere('status', '=', 'wh_approved')->orWhere('status', '=', 'delivery_approved')->orWhere('status', '=', 'user_pickup')->with('user')->with('warehouse')->get();
+        $requestForms = $this->grf->where('status', '!=', 'draft')->with('user')->with('warehouse')->get();
         return ($requestForms);
     }
 
@@ -371,7 +373,6 @@ class RequestFormService
     public function handleCloseThreeDay($grfs)
     {
         $grfsDelivery = $grfs->where('status', 'delivery_approved');
-        
         $grfsDelivery->map(function ($grfDelivery) {
             if (now() > $grfDelivery->timelines->where('status', 'delivery_approved')->first()->created_at->addDays(1)) {
                 $this->notification->create([
@@ -383,9 +384,16 @@ class RequestFormService
                 ]);
             }
             if (now() > $grfDelivery->timelines->where('status', 'delivery_approved')->first()->created_at->addDays(2)) {
-                $this->grf->find($grfDelivery->id)->update([
+                $grf = $this->grf->with('requestStocks')->find($grfDelivery->id);
+                
+                $grf->update([
                     'status' => 'closed'
                 ]);
+
+                foreach ($grf->requestStocks as $requestStock) {
+                    $this->stock->where('sn_code', $requestStock->sn)->update(['stock_status' => 'in']);
+                }
+
                 $this->timeline->create([
                     'grf_id' => $grfDelivery->id,
                     'status' => 'closed',
@@ -429,9 +437,14 @@ class RequestFormService
     */
     public function handlePostApprovePickup($id)
     {
-        $grf = $this->grf->find($id);
-        $grf->status = "user_pickup";
-        $grf->save();
+        $currentGrf = $this->grf->with('requestStocks')->find($id);
+        
+        foreach ($currentGrf->requestStocks as $requestStocks) {
+            $this->stock->where('sn_code', $requestStocks->sn)->update(['stock_status' => 'out']);
+        }
+
+        $currentGrf->status = "user_pickup";
+        $currentGrf->save();
 
         $this->timeline->create([
             'grf_id' => $id,

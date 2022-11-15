@@ -6,31 +6,32 @@ use App\Models\Warehouse;
 // Facades
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 // Controllers
 // use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MiniStockController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PartController;
-use App\Http\Controllers\RekondisiController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MiniStockController;
+use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTransactionController;
-use App\Http\Controllers\WarehouseTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,7 @@ Route::get('/', function () {
 });
 
 Route::get('/suratjalan/{grf}', [TransactionController::class, 'ViewSuratJalanPDF'])->name('view.surat.jalan');
+Route::get('/grf/{grf}', [TransactionController::class, 'ViewGRFPDF'])->name('view.grf.pdf');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -99,6 +101,21 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 /* 
 *|--------------------------------------------------------------------------
+*|  Dashboard pages 
+*|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
+    Route::get('/stock', [DashboardController::class, 'stock'])->name('stock');
+    Route::get('/inbound', [DashboardController::class, 'inbound'])->name('inbound');
+    Route::get('/outbound', [DashboardController::class, 'outbound'])->name('outbound');
+    Route::get('/build', [DashboardController::class, 'build'])->name('build');
+    Route::get('/warehouse', [DashboardController::class, 'warehouse'])->name('warehouse');
+});
+
+
+
+/* 
+*|--------------------------------------------------------------------------
 *|  Master Routes 
 *|--------------------------------------------------------------------------
 */
@@ -114,7 +131,7 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'Inv
     Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
     Route::post('/', [PartController::class, 'store'])->name("store");
 
-    
+
     Route::get('/tampilan/{id}', [PartController::class, 'tampilan'])->name("tampilan");
     Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });
@@ -229,12 +246,12 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
-Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
+    Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
 
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
-    // Route::post('/', [StockController::class, 'store'])->name('post.store');
+    // <Rou></Rou>te::post('/', [StockController::class, 'store'])->name('post.store');
     // Route::put('/{id}', [StockController::class, 'put'])->name('put.detail');
     // Route::delete('/{id}', [StockController::class, 'destroy'])->name('delete.detail');
 });
@@ -348,6 +365,7 @@ Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['
 Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
 Route::post('/transaction/approve/return/WH', [WarehouseReturnController::class, 'postApproveReturnWH'])->middleware("auth")->name("post.approve.return.WH");
 Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->name("post.approve.IC");
+Route::post('/transaction/reject/IC', [TransactionController::class, 'postRejectIC'])->middleware("auth")->name("post.reject.IC");
 Route::post('/transaction/approve/SJ', [TransactionController::class, 'postApproveSJ'])->middleware("auth")->name("post.approve.SJ");
 Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class, 'getApprovePickup'])->middleware("auth")->name("post.approve.pickup");
 
@@ -383,7 +401,7 @@ Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth']]
 });
 
 // return.get.detail
-Route::group(['middleware' => ['auth'] ], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
     Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
     Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');

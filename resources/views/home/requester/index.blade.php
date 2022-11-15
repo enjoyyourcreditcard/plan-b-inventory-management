@@ -34,14 +34,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper text-slate-600 mx-auto mt-3" viewBox="0 0 16 16">
                         <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">A GRF code will be generate for you. <br><span class="font-bold">process cannot
-                        be undone.</span></div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">Kode GRF akan dibuat untuk anda. <br><span class="font-bold">proses ini tidak dapat dibatalkan.</span></div>
                 </div>
-                <form action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
+                <form id="form-new-grf" action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
-                    <button name="grf_code" value="{{ $grf_code }}" class="btn text-white bg-emerald-700 impor w-24">Sure</button>
+                    <input type="hidden" name="grf_code" value="{{ $grf_code }}">
+                    <button class="btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
             </div>
         </div>
@@ -62,9 +62,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper text-slate-600 mx-auto mt-3" viewBox="0 0 16 16">
                         <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
                     </svg>
-                    <div class="text-2xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">An Emergency GRF code will be generate for you. <br><span class="font-bold">process cannot
-                        be undone.</span></div>
+                    <div class="text-2xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">Kode GRF darurat akan dibuat untuk anda. <br><span class="font-bold">proses ini tidak dapat dibatalkan.</span></div>
                 </div>
                 <form action="{{Route ( "request.post.store.create.emergency.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
@@ -186,7 +185,7 @@
                                 </svg>
                                 <div class="ml-auto">
                                     <div class="report-box__indicator bg-success tooltip cursor-pointer" title="33% item used">
-                                        33% <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-up" data-lucide="chevron-up" class="lucide lucide-chevron-up w-4 h-4 ml-0.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        User Pickup
                                     </div>
                                 </div>
                                 @break
@@ -369,7 +368,7 @@
                         <tr class="intro-x">
                             <td>
                                 <a href="" class="font-medium whitespace-nowrap">{{ $grf->grf_code }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{  Auth::user()->name }}</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{  $grf->status == "reject" ? "Reject" : "Close" }}</div>
                             </td>
                             <td class="text-center">{{ $grf->warehouse->name }}</td>
                             <td class="text-center">{{ $grf->total_quantity }}</td>
@@ -458,7 +457,7 @@
         </div>
         <div class="intro-y h-full box p-5 mt-5">
             @if ($chartDatas == false)
-            <div class="h-72 w-72 flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
+            <div class="w-12/12 aspect-square flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
                 <div class="text-sm">No data yet</div>
             </div>
             @else
@@ -493,3 +492,7 @@
 
 
 @endsection
+
+@section('javasScript')
+<script src="{{ Asset('js/views/requester/index.js') }}"></script>
+@endSection

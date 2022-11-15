@@ -130,13 +130,13 @@
 
             <!-- BEGIN: Modal Header -->
             <div class="modal-header">
-                <h2 class="font-medium text-base mr-auto">Change current warehouse</h2>
+                <h2 class="font-medium text-base mr-auto">Ubah gudang utama</h2>
             </div>
             <!-- END: Modal Header -->
 
             <!-- BEGIN: Modal Body -->
             <div class="modal-body">
-                <label class="form-label">Current warehouse</label>
+                <label class="form-label">Gudang utama</label>
                 <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-full"
                     form="form-change-current-warehouse" required>
                     @foreach ( $warehouses as $warehouse )
@@ -144,7 +144,7 @@
                         {{ $warehouse->name }}</option>
                     @endforeach
                 </select>
-                <div class="form-help">Changing the warehouse will affect your item list</div>
+                <div class="form-help">Mengubah gudang utama dapat berpengaruh pada list barang anda</div>
             </div>
             <!-- END: Modal Body -->
 
@@ -173,13 +173,13 @@
 
             <!-- BEGIN: Modal Header -->
             <div class="modal-header">
-                <h2 class="font-medium text-base mr-auto">Change warehouse destination</h2>
+                <h2 class="font-medium text-base mr-auto">ubah gudang tujuan</h2>
             </div>
             <!-- END: Modal Header -->
 
             <!-- BEGIN: Modal Body -->
             <div class="modal-body">
-                <label class="form-label">Warehouse</label>
+                <label class="form-label">Gudang tujuan</label>
                 <select name="warehouse_destination" data-placeholder="Select warehouse" class="tom-select w-full"
                     form="form-change-warehouse-destination" required>
                     @foreach ( $warehouses->where( "id", "!=", $grf->warehouse_id ) as $warehouse )
@@ -225,9 +225,8 @@
                         <path
                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">All your item on the list will be deleted. <br>This process cannot
-                        be undone.</div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">List barang anda akan terhapus. <br>Proses ini tidak dapat dibatalkan.</div>
                 </div>
                 <form id="form-change-current-warehouse"
                     action="{{ Route( 'warehouse.transfer.put.current', $grf->id ) }}" method="POST"
@@ -261,9 +260,8 @@
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
                     </svg>
-                    <div class="text-3xl mt-5">Are you sure?</div>
-                    <div class="text-slate-500 mt-2">Are you sure want to submit this transfer? <br>This process cannot
-                        be undone.</div>
+                    <div class="text-3xl mt-5">Apakah anda yakin?</div>
+                    <div class="text-slate-500 mt-2">List barang ini akan dikirim <br>Prosesn ini tidak dapat dibatalkan.</div>
                 </div>
                 <form action="{{ Route( "warehouse.transfer.put" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
@@ -408,13 +406,15 @@
                     </a>
                 </li>
 
-                                    <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
-                    <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation" class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white transition duration-300 ease-in-out hover:bg-emerald-700" role="tab" aria-controls="layout-1-annual-fees" aria-selected="false">
+                @if ($grf->status == "draft")
+                <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
+                <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation" class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white transition duration-300 ease-in-out hover:bg-emerald-700" role="tab" aria-controls="layout-1-annual-fees" aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send w-4 h-4" viewBox="0 0 16 16">
                             <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"></path>
                         </svg> Submit request
                     </button>
                 </li>
+                @endIf
                 
             </ul>
         </div>

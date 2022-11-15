@@ -25,9 +25,9 @@ class TransactionService
 
     public function handlePostApproveIC($req)
     {
-        $parts = explode(',',$req->part);
-        $quantity = explode(',',$req->quantity);
-        $brand = explode(',',$req->brand);
+        $parts = explode(',', $req->part);
+        $quantity = explode(',', $req->quantity);
+        $brand = explode(',', $req->brand);
         $grf = $this->grf->find($req->id);
         $grf->status = "ic_approved";
         $grf->save();
@@ -55,6 +55,25 @@ class TransactionService
         }
 
         return "success";
+    }
+
+    public function handlePostRejectIC($id)
+    {
+        // dd($id);
+        $grf = $this->grf->find($id);
+        $grf->status = "reject";
+        $grf->save();
+        // $id
+        $timeline = $this->timeline->create([
+            "grf_id" => $id,
+            "status" => "reject",
+        ]);
+
+        return $timeline;
+
+
+
+        // dd($grf);
     }
 
     public function handlePostApproveSJ($req)
@@ -110,30 +129,30 @@ class TransactionService
     public function handleTimer()
     {
         if (Auth::user()->is_vendor) {
-                $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]])->get();
-    
+            $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]])->get();
+
             $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
                 $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->timelines->where('status', 'delivery_approved')->last()->created_at->addDays(7)->toDateTimeString());
                 if (now() > $deliveryApprovedDate['ended']) {
                     $deliveryApprovedDate['ended'] = 'Melewati batas waktu';
                 } else {
-                    $deliveryApprovedDate['ended'] = $deliveryApprovedDate['ended']->diffforhumans(); 
+                    $deliveryApprovedDate['ended'] = $deliveryApprovedDate['ended']->diffforhumans();
                 }
             });
-    
+
             return $deliveryApprovedDates;
         } else {
             $deliveryApprovedDates = $this->grf->with('timelines')->where([['user_id', Auth::user()->id], ['status', '!=', 'draft'], ['status', '!=', 'return'], ['surat_jalan', '!=', null]])->get();
-    
+
             $deliveryApprovedDates->map(function ($deliveryApprovedDate) {
                 $deliveryApprovedDate['ended'] = Carbon::create($deliveryApprovedDate->timelines->where('status', 'delivery_approved')->last()->created_at->addDay()->toDateTimeString());
                 if (now() > $deliveryApprovedDate['ended']) {
                     $deliveryApprovedDate['ended'] = 'Melewati batas waktu';
                 } else {
-                    $deliveryApprovedDate['ended'] = $deliveryApprovedDate['ended']->diffforhumans(); 
+                    $deliveryApprovedDate['ended'] = $deliveryApprovedDate['ended']->diffforhumans();
                 }
             });
-    
+
             return $deliveryApprovedDates;
         }
     }

@@ -13,6 +13,7 @@ use App\Services\WarehouseService;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
 {
@@ -153,6 +154,19 @@ class TransactionController extends Controller
         return redirect()->route('view.IC.transaction');
     }
 
+
+    public function postRejectIC(Request $req)
+    {
+
+        // dd($req->id);
+        try {
+            $this->transactionService->handlePostRejectIC($req->id);
+            return Redirect::back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
     public function getAllStockListByGRF($code)
     {
         $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
@@ -175,17 +189,17 @@ class TransactionController extends Controller
     }
 
 
-    
+
 
 
     public function getAllSegmentByGRF($code)
     {
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
-        foreach ($requestForms as $key=>$item) {
+        foreach ($requestForms as $key => $item) {
             $requestForms[$key]->brand = $this->brandService->handleBrandBySegment($item->segment_id);
         };
-        
-     
+
+
         return ResponseJSON($requestForms);
     }
 
@@ -194,9 +208,19 @@ class TransactionController extends Controller
 
         $grf = Grf::find($grf_id);
         $request_form = RequestForm::where("grf_id", $grf_id)->get();
-        // dd($);
 
         $pdf = PDF::loadView('generate.suratjalan', ['grf' => $grf, 'request_form' => $request_form]);
+        return $pdf->stream('laporan-pdf.pdf');
+    }
+
+
+    public function ViewGRFPDF($grf_id)
+    {
+
+        $grf = Grf::find($grf_id);
+        $request_form = RequestForm::where("grf_id", $grf_id)->get();
+
+        $pdf = PDF::loadView('generate.grf', ['grf' => $grf, 'request_form' => $request_form]);
         return $pdf->stream('laporan-pdf.pdf');
     }
 
