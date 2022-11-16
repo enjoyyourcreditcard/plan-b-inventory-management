@@ -32,13 +32,14 @@ class RequestFormService
     public function handleShowRequestForm($code)
     {
         $requestForms = $this->grf->with('requestForms.segment')->with('requestForms.segment.parts')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
+        
         return ($requestForms);
     }
 
     // Request Form SHOW
     public function handleAllRequestFormInbound()
     {
-        $requestForms = $this->grf->where('status', '!=', 'draft')->with('user')->with('warehouse')->get();
+        $requestForms = $this->grf->where('status', '!=', 'draft')->with('user')->with('warehouse')->orderBy('id', 'DESC')->get();
         return ($requestForms);
     }
 
