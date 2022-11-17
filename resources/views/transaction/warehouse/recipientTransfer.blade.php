@@ -3,15 +3,13 @@
     <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Warehouse</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Warehouse Transfer</li>
+            <li class="breadcrumb-item active" aria-current="page">Warehouse Recipient Transfer</li>
         </ol>
     </nav>
 @endsection
 @section('content')
-    {{-- ! --}}
     <h2 class="intro-y text-lg font-medium my-10">Warehouse Transfer</h2>
-    {{-- ! --}}
-    <div id="listTransfer" class="table-responsive overflow-auto table-report -mt-2" data-warehouse_id='{{ Auth::user()->warehouse_id }}'></div>
+    <div id="listRecipient" class="table-responsive overflow-auto table-report -mt-2" data-warehousedestination='{{ Auth::user()->warehouse->name }}'></div>
     {{-- <div class="table-responsive overflow-auto">
         <table class="table table-report -mt-2">
             <thead>
@@ -27,7 +25,7 @@
                 @foreach ($transferform as $item)
                     {{-- <tr class="intro-x">
                         <td class="text-emerald-900 text-xs">
-                            <a href="{{ route('warehouse.get.detailtransferapprov', str_replace('/', '~', strtolower($item->grf_code))) }}"
+                            <a href="{{ route('warehouse.get.detailWhRecipient', str_replace('/', '~', strtolower($item->grf_code))) }}"
                                 class="underline underline-offset-4 text-emerald-900">
                                 {{ $item->grf_code }}
                             </a>

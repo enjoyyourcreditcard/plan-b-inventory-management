@@ -23,7 +23,7 @@ class CreateStocksTable extends Migration
             $table->enum('condition', ['good new', 'good rekondisi', 'good potongan', 'not good ',  'karantina', 'scrap', 'dismantle', 'replace', 'good canibal', 'function reject', 'physical reject']);
             $table->enum('recondition', ['good', 'not good', 'reject'])->nullable();
             $table->date('expired_date');
-            $table->string('stock_status')->default('in');
+            $table->enum('stock_status', ['in', 'out', 'hold'])->default('in');
             $table->string('status');
             $table->timestamps();
         });

@@ -21,12 +21,12 @@ class RequestController extends Controller
 
     public function index ()
     {
-        $notifications =  $this->notificationService->handleAllNotification();
+        // $notifications =  $this->notificationService->handleAllNotification();
         $requests = $this->requestService->handleAllRequest();
         $parts = $this->partService->handleAllPart();
         $maxReq = $this->requestService->handleMaximumRequest(); //
-        return view('home.requester.index', [
-            'notifications' => $notifications,            
+        return view('request.request', [
+            // 'notifications' => $notifications,            
             'requester' => $requests,
             'parts' => $parts,
             'maxReq' => $maxReq,

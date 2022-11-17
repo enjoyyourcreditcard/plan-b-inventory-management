@@ -1,36 +1,36 @@
 <?php
-// Models
+
+use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Warehouse;
 
-// Facades
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 // Controllers
-// use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HistoryPriceController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MiniStockController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PartController;
-use App\Http\Controllers\RekondisiController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\InboundController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MiniStockController;
+use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderInboundController;
 use App\Http\Controllers\UserTransactionController;
-use App\Http\Controllers\WarehouseTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -268,6 +268,13 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['a
     Route::put('/update/{id}', [WarehouseController::class, 'update'])->name('post.update');
     Route::post('/status', [WarehouseController::class, 'postStatus'])->name('post.status');
     Route::get('/transfer', [WarehouseTransactionController::class, 'whtransfer'])->name('get.whtransfer');
+    Route::get('/transfer/recipient', [WarehouseTransactionController::class, 'recipient'])->name('get.recipient');
+    Route::get('/show/transfer/{id}', [WarehouseTransactionController::class, 'showWhTransfer'])->name('get.detailtransferapprov');
+    Route::get('/show/recipient/{id}', [WarehouseTransactionController::class, 'showWhRecipient'])->name('get.detailWhRecipient');
+    Route::post('/store/pieces/{id}', [WarehouseTransactionController::class, 'manualWhTransfer'])->name('post.storemanual');
+    Route::post('/store/bulk/{id}', [WarehouseTransactionController::class, 'bulkRecipient'])->name('post.bulkRecipient');
+    Route::post('/submitStatus/{id}', [WarehouseTransactionController::class, 'submitStatus'])->name('post.changeStatus');
+    Route::post('/submitRecipient/{id}', [WarehouseTransactionController::class, 'submitRecipient'])->name('post.changeRecipient');
 });
 
 
@@ -301,6 +308,34 @@ Route::group(['prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', '
 });
 
 
+
+/*
+*--------------------------------------------------------------------------
+* PO Inbond 
+*--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth']], function(){
+
+    Route::get('/', [InboundController::class, 'index'])->name('get.home');
+    Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
+
+    //Xcel
+    Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
+    Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
+    Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
+
+    Route::delete('/deleted/{code}', [InboundController::class, 'destroy'])->name("delete.item");
+    Route::put('/{id}', [InboundController::class, 'storeAddWarehouse'])->name('post.warehouse');
+    Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
+    Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
+    Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
+    Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
+});
+
+Route::get('/inboundshow', function () {
+    return view('stock.InboundShow');
+});
 
 /*
 *--------------------------------------------------------------------------
@@ -416,3 +451,4 @@ Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'
 Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
+

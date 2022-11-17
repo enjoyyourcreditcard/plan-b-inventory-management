@@ -298,7 +298,7 @@ class WarehouseTransactionController extends Controller
         try {
             $this->warehouseTransactionService->handleStorePiecesTransfer($request, $id);
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -333,12 +333,12 @@ class WarehouseTransactionController extends Controller
     {
         try {
             $this->warehouseTransactionService->handleChangeCurrentWarehouseTransfer($request, $id);
-
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
+
 
 
 
@@ -364,12 +364,101 @@ class WarehouseTransactionController extends Controller
     *|--------------------------------------------------------------------------
     */
 
+    public function apiTransfer($warehouse_id){
+        return ResponseJSON($this->warehouseTransactionService->handleAllWhTransfer($warehouse_id), 200);
+    }
+
+    public function apiDetailWhtransfer($id){
+        return ResponseJSON($this->warehouseTransactionService->handleShowWhTransfer($id), 200);
+    }
+
     public function whtransfer()
     {
-       $transferform = $this->warehouseTransactionService->handleAllWhTransfer();
-        // dd($transferform);
+       $transferform = $this->warehouseTransactionService->handleAllWhTransfer(Auth::user()->warehouse_id);
         return view('transaction.warehouse.transferApprov', [
             "transferform" => $transferform,
         ]); 
+    }
+
+    public function showWhTransfer($id){
+        $grf = $this->requestFormService->handleGetCurrentGrf($id);
+        $currentGrf = $this->requestFormService->handleGetCurrentGrf($id);
+        $tfApprov = $this->warehouseTransactionService->handleShowWhTransfer($id);
+        return view('transaction.warehouse.detailTransferApprov', [
+            'currentGrf' => $currentGrf,
+            'grf' => $grf,
+            'tfApprov' => $tfApprov,
+        ]);
+    }
+
+    public function manualWhTransfer(Request $request, $id) {
+        try {
+            $this->warehouseTransactionService->handleStoreManualTransfer($request, $id);
+            return redirect()->back()->with('success', 'Berhasil');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    public function submitStatus(Request $request, $id){
+        try {
+            $this->warehouseTransactionService->handleSubmitTransferApprov($request, $id);
+            return Redirect()->route('warehouse.get.whtransfer');
+        } catch(\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+
+    }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get data for wh approv transfer
+    *|--------------------------------------------------------------------------
+    */
+
+    public function listRecipient($warehouse_destination){
+        return ResponseJSON($this->warehouseTransactionService->handleWhRecipientAPI($warehouse_destination), 200);
+    }
+
+    public function apiRecipient($id){
+        return ResponseJSON($this->warehouseTransactionService->handleShowRecipient($id), 200);
+    }
+
+    public function recipient(){
+        $transferform = $this->warehouseTransactionService->handleWhRecipient(Auth::user()->warehouse_destination);
+        return view('transaction.warehouse.recipientTransfer', [
+            "transferform" => $transferform,
+        ]); 
+    }
+
+    public function showWhRecipient($id){
+        $grf = $this->requestFormService->handleGetCurrentGrf($id);
+        $currentGrf = $this->requestFormService->handleGetCurrentGrf($id);
+        $tfApprov = $this->warehouseTransactionService->handleShowRecipient($id);
+        return view('transaction.warehouse.detailRecipientTransfer', [
+            'currentGrf' => $currentGrf,
+            'grf' => $grf,
+            'tfApprov' => $tfApprov,
+        ]);
+    }
+
+    public function bulkRecipient(Request $request, $id){
+        try {
+            $this->warehouseTransactionService->handleBulkRecipient($request, $id);
+            return redirect()->back()->with('success', 'Berhasil');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    public function submitRecipient(Request $request, $id)
+    {
+        try {
+            $this->warehouseTransactionService->handleSubmitRecipient($request, $id);
+            return Redirect()->route('warehouse.get.recipient');
+        } catch(\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+
     }
 }

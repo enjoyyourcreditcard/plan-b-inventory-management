@@ -15,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\WarehouseTransferImport;
+use App\Imports\WarehouseTransferRecipient;
 use App\Models\RequestStock;
 
 class WarehouseTransactionService
@@ -321,6 +322,7 @@ class WarehouseTransactionService
     */
     public function handleStorePiecesTransfer($request, $id)
     {
+        // dd($request);
         $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
 
         // $validatedData = $request->validate([
@@ -399,16 +401,126 @@ class WarehouseTransactionService
     *|--------------------------------------------------------------------------
     */
 
-    public function handleAllWhTransfer()
+    public function handleAllWhTransfer($warehouse_id)
     {
-        $transferform = $this->grf->with('user', 'transferForms')->where([['warehouse_id', Auth::user()->warehouse_id], ['type', '!=', 'request']])->get();
+        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_id', $warehouse_id], ['type', '!=', 'request'], ['status', 'submited']])->get();
         return ($transferform);
     }
 
-    public function handleShowWhTransfer()
+    public function handleShowWhTransfer($id)
     {
+        $wherewh = str_replace('~', '/', $id);
+        $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock',)->where('grf_code', $wherewh)->first();
+        // dd($whapproval);
+        return ($whapproval);
+    }
+
+    public function handleStoreManualTransfer($request, $id)
+    {
+
+        $validatedData = $request->validate([
+            'transfer_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'sn.*' => ['distinct'],
+            'sn' => ['required', 'array', Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
+                $query->where([['part_id', $request->part_id], ['grf_id', $request->grf_id], ['transfer_form_id', $request->transfer_form_id]]);
+            })]
+        ]);
+
+        return ('');
+    }
+
+    public function handleSubmitTransferApprov($request, $id){
+        $currentGrf = $this->grf->with('transferStock')->find($id);
+
+        foreach ($currentGrf->transferStock as $transferStock) {
+            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'out']);
+        }
+
+        $currentGrf->status = "delivery_approved";
+        $currentGrf->save();
+
+        $this->timeline->create([
+             'grf_id' => $id,
+             'status' => 'delivery_approved',
+             'created_at' => now(),
+         ]);
+
+        return ('succes');
         
     }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Get view wh transfer recipient
+    *|--------------------------------------------------------------------------
+    */
+    public function handleWhRecipientAPI($warehouse_destination){
+        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', $warehouse_destination], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
+        return $transferform;
+    }
+    
+    public function handleWhRecipient(){
+        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', Auth::user()->warehouse->name], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
+        return ($transferform);
+    }
+
+    public function handleShowRecipient($id){
+        $wherewh = str_replace('~', '/', $id);
+        $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock')->where('grf_code', $wherewh)->first();
+        return ($whapproval);
+    }
+
+    public function handleBulkRecipient($request, $id)
+    {
+        $excel = Excel::toCollection(new WarehouseTransferRecipient, $request->file);
+
+        $sn = [];
+
+        foreach ($excel->first() as $row) {
+            $sn[] = $row->first();
+        }
+
+        $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
+
+        $request['sn'] = $sn;
+
+        $validatedData = $request->validate([
+            'transfer_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'sn.*' => 'distinct|exists:transfer_stocks,sn',
+            'sn' => [
+                'required', 'array', 'size:' . $limit, Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
+                    return $query->where([['part_id', $request->part_id], ['grf_id', $request->grf_id]]);
+                }),
+            ],
+        ]);
+        return('success');
+    }
+
+    public function handleSubmitRecipient($request, $id){
+        $currentGrf = $this->grf->with('transferStock')->find($id);
+        // dd($this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id);
+        foreach ($currentGrf->transferStock as $transferStock) {
+            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id ]);
+        }
+
+        $currentGrf->status = "user_pickup";
+        $currentGrf->save();
+
+        $this->timeline->create([
+             'grf_id' => $id,
+             'status' => 'user_pickup',
+             'created_at' => now(),
+         ]);
+
+        return ('succes');
+        
+    }
+
+
 
 
 
