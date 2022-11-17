@@ -41,7 +41,7 @@ class OrderInboundService
     public function handleShowInboundForm($code)
     {
         // dd($code);
-        $inboundForms = $this->grfInbound->with('inboundForms.part')->where([['inbound_grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first();
+        $inboundForms = $this->grfInbound->with('inboundForms.part')->where([['id', '=', $code], ['status', '!=', 'closed']])->first();
         return ($inboundForms);
     }
 
@@ -54,7 +54,7 @@ class OrderInboundService
     {
         // dd($request);
         $validatedData = $request->validate([
-            'inbound_grf_code' => 'required',
+            'status' => 'required',
             'warehouse_id' => 'nullable',
             'type' => 'nullable',
         ]);
@@ -74,6 +74,7 @@ class OrderInboundService
         return ('Data has been stored');
         
     }
+
 
     /*
     *|--------------------------------------------------------------------------
@@ -143,7 +144,6 @@ class OrderInboundService
         // dd($request);
         $validatedDatas = $request->validate([
             'inbound_id' => 'required',
-            'warehouse_id' => 'required',
             'quantity' => 'required',
         ]);   
         $validatedDatas['grf_inbound_id'] = $id;
@@ -151,7 +151,6 @@ class OrderInboundService
         $this->orderInbound->create([
                 'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
                 'inbound_id' => $validatedDatas['inbound_id'],
-                'warehouse_id' => $validatedDatas['warehouse_id'],
                 'quantity' => $validatedDatas['quantity'],
                 'created_at' => now(),
             ]);
@@ -165,11 +164,10 @@ class OrderInboundService
         //     ]);
             
         // });
-
-
         
         return ('data stored');
     }
+
 
         /*
     *|--------------------------------------------------------------------------
@@ -178,7 +176,7 @@ class OrderInboundService
     */
     public function handleInboundMiniStock($code)
     {
-        $orderInbound = $this->orderInbound->with('inbound', 'warehouse')->where('grf_inbound_id', '=', str_replace('~', '/', strtoupper($code)))->get();
+        $orderInbound = $this->orderInbound->with('inbound', 'warehouse')->where('grf_inbound_id', '=', $code)->get();
 
         return ($orderInbound);
     }
@@ -251,26 +249,30 @@ class OrderInboundService
     public function handleImportExcel($request)
     {
         $excel = Excel::toCollection(new InboundImport, $request->excel);
-
         $part_id = [];
         $orafin_code = [];
         $sn_code = [];
-
+        $warehouse_id = [];
+        
         foreach ($excel->first() as $row) {
+            // dd($row);
             $part_id[] = $this->part->where('name', $row['part_id'])->first()->id;    
             $orafin_code[] = $this->part->where('name', $row['part_id'])->first()->orafin_code;
-            $sn_code[] = $row['sn_code'];
+            $sn_code[] = $row['serial_number'];
+            $warehouse_id[] = $this->warehouse->where('name', $row['warehouse'])->first()->id;
         }
 
         $request['part_id'] = $part_id;
         $request['orafin_code'] = $orafin_code;
         $request['sn_code'] = $sn_code;
+        $request['warehouse_id'] = $warehouse_id;
 
         $validatedData = $request->validate([
             'part_id' => 'required',
             'orafin_code' => 'required',
             'sn_code.*' => 'distinct',
             'sn_code' => ['required', 'array', 'unique:stocks'],
+            'warehouse_id' => 'required'
             // 'sn_code' => ['required', 'array', Rule::exists('stocks')],
         ]);
 
@@ -279,6 +281,7 @@ class OrderInboundService
                 'part_id' => $part_id,
                 'orafin_code' => $validatedData['orafin_code'][$key],
                 'sn_code' => $validatedData['sn_code'][$key],
+                'warehouse_id' => $validatedData['warehouse_id'][$key],
                 'stock_status' => 'in',
                 'status' => 'active',
                 'is_select' => 0,

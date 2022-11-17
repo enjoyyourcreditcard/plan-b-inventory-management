@@ -16,24 +16,54 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'email' => 'hajidalakhtar@gmail.com',
-            'name' => 'hajidalakhtar',
+            'name' => 'Admin Test',
+            'role' => 'admin',
+            'regional' => 'Jakarta 1',
+            'warehouse_id' => '1',
+            'no_telp' => '082993828824',
+            'email' => 'admin@inVentree',
             'password' => Hash::make('12345'),
-            'status' => 'aktif',
         ]);
 
         User::create([
-            'email' => 'actor@gmail.com',
-            'name' => 'Actor Number One',
+            'name' => 'Gudang Depok',
+            'role' => 'warehouse',
+            'regional' => 'Jakarta 1',
+            'warehouse_id' => '1',
+            'no_telp' => '082993828824',
+            'email' => 'gudang@inVentree',
             'password' => Hash::make('12345'),
-            'status' => 'aktif',
         ]);
 
         User::create([
-            'email' => 'delivery@gmail.com',
-            'name' => 'Delivery Dude',
+            'name' => 'Requester Vendor',
+            'role' => 'requester',
+            'regional' => 'Jakarta 1',
+            'warehouse_id' => '1',
+            'no_telp' => '082993828824',
+            'email' => 'requester1@inVentree',
             'password' => Hash::make('12345'),
-            'status' => 'aktif',
+            'is_vendor' => true,
+        ]);
+
+        User::create([
+            'name' => 'Requester InHouse',
+            'role' => 'requester',
+            'regional' => 'Jakarta 1',
+            'warehouse_id' => '1',
+            'no_telp' => '082993828824',
+            'email' => 'requester2@inVentree',
+            'password' => Hash::make('12345'),
+        ]);
+
+        User::create([
+            'name' => 'Inventory Control Test',
+            'role' => 'inventory_control',
+            'regional' => 'Jakarta 1',
+            'warehouse_id' => '1',
+            'no_telp' => '082993828824',
+            'email' => 'ic@inVentree',
+            'password' => Hash::make('12345'),
         ]);
     }
 }

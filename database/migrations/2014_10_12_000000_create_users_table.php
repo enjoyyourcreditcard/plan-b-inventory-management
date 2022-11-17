@@ -16,9 +16,32 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->enum('role', ['admin', 'inventory_control','requester','warehouse']);
+            $table->enum('regional', [
+                "Jakarta 1",
+                "Jakarta 2",
+                "Jakarta 3",
+                "Surabaya",
+                "Medan",
+                "Bandung",
+                "Semarang",
+                "Malang",
+                "SUMATERA 1",
+                "SUMATERA 2",
+                "JAWA TENGAH",
+                "KALIMANTAN",
+                "JATIM, BALI & NT",
+                "SULAMPA",
+                "Others"
+            ]);
+            $table->unsignedBigInteger('warehouse_id');
+            $table->foreign('warehouse_id')->references('id')->on('warehouse');
+            $table->string('nik')->nullable();
+            $table->string('no_telp');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('status')->default('aktif');
+            $table->string('status')->default("active");
+            $table->boolean('is_vendor')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

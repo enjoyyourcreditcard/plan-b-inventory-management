@@ -40,6 +40,9 @@ class InboundImport implements ToModel, WithHeadingRow
     {
         if (isset($row['part_id']) == false ) {
             $row['part_id'] = Part::where('name', $row['part'])->first('id')->id;
+            if (isset($row['warehouse_id']) == false) {
+                $row['warehouse_id'] = Warehouse::where('name', $row['warehouse'])->first('id')->id;
+            }
         }
         
         return new Inbound([
@@ -48,6 +51,7 @@ class InboundImport implements ToModel, WithHeadingRow
             'sn_code'       => $row['3'],
             'stock_tatus'   => $row['4'],
             'status'        => $row['5'],
+            'warehouse'     => $row['6']
         ]);
     }
 }

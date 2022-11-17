@@ -256,9 +256,10 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
 
     Route::delete('/deleted/{code}', [InboundController::class, 'destroy'])->name("delete.item");
     Route::put('/{id}', [InboundController::class, 'storeAddWarehouse'])->name('post.warehouse');
-    Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
+    Route::get('/show/{id}', [InboundController::class, 'create'])->name('get.detail');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
     Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
+    Route::post('/add/wh/{id}', [InboundController::class, 'storeAddWh'])->name("post.add.wh");
     Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
 });
 

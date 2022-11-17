@@ -1,4 +1,4 @@
-{{-- @dd($inbounds) --}}
+{{-- @dd($inboundForms) --}}
 
 @extends('layouts.app')
 
@@ -12,7 +12,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
         <li class="breadcrumb-item"><a href="{{ Route( "inbound.get.home" ) }}">inbound</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$inboundForms->inbound_grf_code}}</li>
+        <li class="breadcrumb-item active" aria-current="page"></li>
     </ol>
 </nav>
 @endsection
@@ -160,7 +160,7 @@
                     <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path>
                     <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                 </svg> Unique ID: <span
-                    class="underline decoration-dotted ml-1">{{ $inboundForms->inbound_grf_code }}</span>
+                    class="underline decoration-dotted ml-1">Request {{ $inboundForms->id }}</span>
             </div>
             <div class="flex items-center mt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -187,7 +187,7 @@
                         <path d="M3 21v-13l9 -4l9 4v13"></path>
                         <path d="M13 13h4v8h-10v-6h6"></path>
                         <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                        </svg> <span class="mr-1">Warehouse:</span>
+                        </svg> <span class="mr-1">Warehouse Tujuan :</span>
                             <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-7/12"
                                 required>
                                 <option></option>
@@ -215,7 +215,7 @@
                     <path d="M3 21v-13l9 -4l9 4v13"></path>
                     <path d="M13 13h4v8h-10v-6h6"></path>
                     <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                </svg> Warehouse: <span
+                </svg> Warehouse Tujuan: <span
                     class="underline decoration-dotted ml-1">{{ $inboundForms->warehouse->name  }}</span>
 
                 @if( $inboundForms->status === "draft" )
@@ -267,6 +267,7 @@
                         </button>
                     </li>
                     @endif
+
 
                 </ul>
             </div>
@@ -342,15 +343,6 @@
                                 min="1" value="1" max="{{ $inbound['quantity'] }}" required>
                         </div>
 
-                        <div class="mt-3">
-                            <label for="regular-form-3" class="form-label">Warehouse Tujuan</label>
-                            <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-full" required>
-                                <option></option>
-                                @foreach ( $warehouses as $warehouse )
-                                <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                             
                         <div
                             class="flex items-center border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
@@ -412,7 +404,6 @@
                         <th class=" whitespace-nowrap">SEGMENT</th>
                         {{-- <th class="text-center whitespace-nowrap">ORAFIN CODE</th> --}}
                         <th class=" whitespace-nowrap">QUANTITY</th>
-                        <th class="whitespace-nowrap">WAREHOUSE</th>
                         @if( $inboundForms->status === "draft" )
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                         @endIf
@@ -422,11 +413,10 @@
 
                     @forelse ( $orderInbounds as $order )
                     <tr class="intro-x">
-                        <td class=" capitalize w-4/12">{{ $order->inbound->part->name }}</td>
-                        <td class=" capitalize w-2/12">{{ $order->inbound->part->segment->name }}</td>
+                        <td class=" capitalize w-6/12">{{ $order->inbound->part->name }}</td>
+                        <td class=" capitalize w-3/12">{{ $order->inbound->part->segment->name }}</td>
                         {{-- <td class="text-center capitalize w-1/12">{{ $order->inbound->orafin_code }}</td> --}}
                         <td class=" capitalize ">{{ $order->quantity }}</td> 
-                        <td class="table-report__action capitalize w-3/12 ">{{ $order->warehouse->name }}</td> 
 
                         @if( $inboundForms->status === "draft" )
                         <td class="table-report__action w-1/12">

@@ -23,8 +23,6 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('remarks')->nullable();
             $table->string('status')->nullable();
-            $table->unsignedBigInteger('warehouse_id');
-            $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->timestamps();
         });
     }

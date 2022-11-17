@@ -26,7 +26,8 @@ class InboundExport implements WithHeadings,ShouldAutoSize
             'Orafin Code',
             'Serial Number',
             'Stock Status',
-            'Status'
+            'Status',
+            'Warehouse'
         ];
     }
 

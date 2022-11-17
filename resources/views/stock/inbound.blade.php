@@ -9,6 +9,7 @@
 </nav>
 @endsection
 @section('content')
+{{-- @dd($grfs) --}}
 <h2 class="intro-y text-lg font-medium mt-10 mb-4">Inbound Master</h2>
 
 <div class="grid grid-cols-12 gap-4 w-full">
@@ -46,7 +47,8 @@
             <div class=" border-slate-200/60 dark:border-darkmode-400 pt-5 font-medium mt-2">
                 <form action="{{ Route( "inbound.post.store.grf" ) }}" method="POST" class="">
                     @csrf
-                    <button name="inbound_grf_code" value="{{ $inbound_grf_code }}" class="btn !bg-green-900 mr-3 whitespace-nowrap rounded-full nav-item flex-1 mx-auto w-full text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    <input type="text" name="status" value="draft" hidden>
+                    <button type="submit" class="btn !bg-green-900 mr-3 whitespace-nowrap rounded-full nav-item flex-1 mx-auto w-full text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-send w-4 h-4 mx-2" viewBox="0 0 16 16">
                         <path
                             d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
@@ -103,7 +105,7 @@
 
                             @endswitch
                         </div>
-                        <div class="font-medium text-slate-800 text-center py-1 truncate"> {{ $grf->inbound_grf_code }} </div>
+                        <div class="font-medium text-slate-800 text-center py-1 truncate"> Request {{ $grf->id }} </div>
                     </div>
                     <div class="dropdown ml-auto">
                         <button class="dropdown-toggle" aria-expanded="false" data-tw-toggle="dropdown">
@@ -126,7 +128,7 @@
                                     |--------------------------------------------------------------------------
                                     / * --}}
                                 <li>
-                                    <a href="{{ Route( "inbound.get.detail", str_replace( "/", "~", strtolower( $grf->inbound_grf_code ) ) ) }}"
+                                    <a href="{{ Route( "inbound.get.detail", $grf->id ) }}"
                                         class="dropdown-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-info-circle w-4 h-4 mr-2"

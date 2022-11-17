@@ -23,6 +23,7 @@ class InboundSeeder extends Seeder
                 'condition' => 'good new',
                 'stock_status' => 'in',
                 'status' => 'active',
+                'warehouse_id' => 1
             ]);
         }
         

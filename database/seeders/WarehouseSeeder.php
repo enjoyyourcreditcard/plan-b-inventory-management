@@ -17,7 +17,7 @@ class WarehouseSeeder extends Seeder
         Warehouse::create([
 
             "name" => "MNC Warehouse Depok" ,
-            "regional" => "Jabodetabek",
+            "regional" => "Jakarta 1",
             "city" => "depok",
             "location" => "Jl. Tugu Raya, Tugu, Kec. Cimanggis, Kota Depok, Jawa Barat 16451",
             "type" => "Gedung",
@@ -29,7 +29,7 @@ class WarehouseSeeder extends Seeder
         Warehouse::create([
 
             "name" => "MNC Warehouse Jakarta" ,
-            "regional" => "Jakarta",
+            "regional" => "Jakarta 1",
             "city" => "Jakarta",
             "location" => "Jalan Kebon Sirih No. 17-19, Kebon Sirih, Menteng, RT.15/RW.7, Kb. Sirih, Menteng, Kota Jakarta Pusat, ",
             "type" => "Ruko",

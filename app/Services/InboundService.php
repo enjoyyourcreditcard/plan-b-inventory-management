@@ -175,16 +175,6 @@ class InboundService
         return ('Data has been stored');
     }
 
-    
-    public function handleUpdateInboundApi(Request $request, $id)
-    {
-        $this->inbound->find($id)->update([
-            // 'condition' => $request->condition,
-            // 'stock_status' => $request->stock_status,
-        ]);
-        return ('Data has been updated');
-    }
-
     public function handleDeleteInboundApi($id)
     {
         $this->inbound->find($id)->delete();        

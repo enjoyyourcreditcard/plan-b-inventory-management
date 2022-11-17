@@ -38,6 +38,7 @@
 <!-- END: Head -->
 
 <body class="py-5 md:py-0 bg-black/[0.15] dark:bg-transparent">
+{{-- @dd(Auth::user()->id) --}}
     <!-- BEGIN: Mobile Menu -->
     <div class="mobile-menu md:hidden">
         <div class="mobile-menu-bar">
@@ -955,8 +956,8 @@
                 </div>
                 <!-- END: Search -->
                 <!-- BEGIN: Notifications -->
-                <div class="intro-x dropdown mr-auto sm:mr-6">
-                    @if( '' )
+                {{-- <div class="intro-x dropdown mr-auto sm:mr-6">
+                    @if( count(auth()->user()->notifications->where('read_at', null)) < 1 )
                     <div class="dropdown-toggle notification cursor-pointer" role="button"
                         aria-expanded="false" data-tw-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -980,30 +981,33 @@
                     </div>
                     @endif
                     <div class="notification-content pt-2 dropdown-menu">
-                        <div class="notification-content__box dropdown-content">
+                        <div class="notification-content__box dropdown-content overflow-y-scroll h-80 w-80" >
                             <div class="notification-content__title">Notifications</div>
 
-                            <div class="cursor-pointer relative flex items-center">
-                                <div class="flex-none image-fit mr-2">
+                            @foreach (auth()->user()->notifications as $item)
+                            <div class="cursor-pointer relative flex items-center mt-4">
+                                <div class="flex-none image-fit mr-2 w-1/12">
+                                    @if($item->read_at == null)
                                     <div
-                                        class="w-4 h-4 bg-success object-center rounded-full border-2 border-white dark:border-darkmode-600">
+                                        class="w-2 h-2 bg-success object-center rounded-full border-2 border-white dark:border-darkmode-600">
                                     </div>
+                                    @endif
                                 </div>
                                 
-                                <div class="overflow-hidden">
+                                <div class="w-11/12">
                                     <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">INI NAMA</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">INI JAM</div>
+                                        <a href="javascript:;" class="font-medium truncate">{{ isset($item->data["username"]) ? $item->data["username"] : ""  }}</a>
+                                        <div class="text-xs text-slate-400 whitespace-nowrap ml-auto">{{ $item->created_at->diffForHumans() }}</div>
                                     </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">INI ISI NYA
-                                    </div>
+                                    <div class="w-full truncate text-slate-500">{{ isset($item->data["data"]) ? $item->data["data"] : ""  }}</div>
                                 </div>
                             </div>
+                            @endforeach
 
                             
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- END: Notifications -->
                 <!-- BEGIN: Account Menu -->
                 <div class="intro-x dropdown w-8 h-8">

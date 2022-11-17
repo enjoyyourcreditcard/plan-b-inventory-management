@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('inbound_grfs', function (Blueprint $table) {
             $table->id();
-            $table->string('inbound_grf_code');
+            $table->string('inbound_grf_code')->nullable();
             $table->string('surat_jalan')->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
