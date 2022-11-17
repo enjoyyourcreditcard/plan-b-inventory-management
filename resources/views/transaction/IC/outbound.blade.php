@@ -92,9 +92,8 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 @endsection
+
+@section('javaScript')
+<script src="{{ asset('js/transaction.js') }}" defer></script>
+@endSection

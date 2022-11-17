@@ -28,10 +28,11 @@ class WarehouseReturnService {
     }
 
     public function handleStoreWhReturn($request, $id) {
+        // $request['sn_code'] = array_filter($request->sn_code);
 
         $validateData = $request->validate([
-            'sn_code.*' => 'distinct|exists:request_stocks,sn_return',
-            'sn_code' => ['required', 'array']
+            'sn_code.*' => 'distinct|exists:request_stocks,sn|nullable|sometimes',
+            'sn_code' => ['array', 'nullable', 'sometimes']
         ]);
 
         $requestStockPerPart = $this->requestStock->where('part_id', $request->part_id)->get();
@@ -78,12 +79,19 @@ class WarehouseReturnService {
     public function handlePostApproveReturnWH($req, $transactionService)
     {
         $grf = $this->grf->with('requestStocks')->find($req->id);
+        
         foreach ($grf->requestStocks as $requestStock) {
             $this->stock->where('sn_code', $requestStock->sn_return)->update([
                 'stock_status' => 'in', 
             ]);
         }
-        $grf->status = "closed";
+
+        if ($grf->requestStocks->contains('sn_return', null)) {
+            null;
+        } else {
+            $grf->status = "closed";
+        }
+        
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
         $grf->save();
         return "success";

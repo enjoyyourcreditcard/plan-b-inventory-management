@@ -91,7 +91,7 @@ class TransactionController extends Controller
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->WarehouseService->handleAllWareHouse();
 
-        return view('transaction.IC.detail_transaction', [
+        return view('transaction.IC.detail-transaction', [
             'notifications' => $notifications,
             'requestForms' => $requestForms,
             'stock' => $stock,
@@ -240,5 +240,41 @@ class TransactionController extends Controller
     public function viewOutbound()
     {
         return view('transaction.IC.outbound');
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * Home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function returnStockIndex(){
+        try {
+            return view('transaction.IC.return-stock');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * Home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function returnStockStore($id){
+        try {
+            $this->transactionService->handleStoreReturnStockGrf($id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * API home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function getAllGRFReturnStock(){
+        return ResponseJSON($this->transactionService->handleGetReturnStockGrf(), 200);
     }
 }

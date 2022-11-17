@@ -247,8 +247,9 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
     Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
-
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
+    Route::get('/return-stock', [TransactionController::class, 'returnStockIndex'])->name('get.return.stock');
+    Route::post('/{id}', [TransactionController::class, 'returnStockStore'])->name('post.return.stock');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
     // <Rou></Rou>te::post('/', [StockController::class, 'store'])->name('post.store');

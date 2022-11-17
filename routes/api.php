@@ -133,6 +133,7 @@ Route::group(['prefix' => 'grf'], function () {
     Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);
     Route::get('/request/list/{code}', [TransactionController::class, 'getAllSegmentByGRF']);
     Route::get('/all/outbound', [TransactionController::class, 'getAllGRFOutbound']);
+    Route::get('return-stock', [TransactionController::class, 'getAllGRFReturnStock']);
 
 
     // Route::get('/stock/list/{code}', [TransactionController::class, 'getAllStockListByGRF']);

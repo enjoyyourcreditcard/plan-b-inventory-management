@@ -1602,6 +1602,6 @@ enctype="multipart/form-data">
 </div> --}}
 @endsection
 
-@section('javasScript')
+@section('javaScript')
     <script src="{{ asset("js/part.js") }}"></script>
 @endsection

@@ -140,9 +140,15 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ Route('transaction.ic.get.return.stock') }}" class="menu">
+                            <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                            <div class="menu__title"> Return Stock </div>
+                        </a>
+                    </li>
+                    <li>
                         <a href="top-menu-light-dashboard-overview-1.html" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Warehouse </div>
+                            <div class="menu__title"> Warehouse Transfer </div>
                         </a>
                     </li>
                 </ul>
@@ -414,6 +420,14 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{route('transaction.ic.get.return.stock')}}"
+                                class="side-menu {{ Route::currentRouteName() == " transaction.ic.get.return.stock"
+                                ? "side-menu--active" : "" }}">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Return Stock </div>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ Route( 'warehouse.transfer.get.home' ) }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.transfer.get.home'
                                 ? " side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
@@ -424,7 +438,7 @@
                 </li>
                 <li>
                     <a href="side-menu-light-inbox.html" class="side-menu">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
                                 fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                                 <path
                                     d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
@@ -456,7 +470,7 @@
                         <div class="side-menu__title">
                             Master
                             <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36"
+                                    class="icon icon-tabler icon-tabler-chevron-down" width="21" height="21"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -537,7 +551,7 @@
                         class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? " side-menu--active"
                         : "" }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
+                                class="icon icon-tabler icon-tabler-building-warehouse" width="21" height="21"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -553,7 +567,7 @@
                         class="side-menu {{ Route::currentRouteName() == 'warehouse.get.return' ? " side-menu--active"
                         : "" }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-transform" width="24" height="24"
+                                class="icon icon-tabler icon-tabler-transform" width="21" height="21"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -594,7 +608,7 @@
                 <li>
                     <a href="{{ route('mini.stock.get') }}" class="side-menu {{ Route::currentRouteName() == '
                             warehouse.get.dashboard' ? " side-menu--active" : "" }}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
                             <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
                           </svg> </div>
                         <div class="side-menu__title"> Mini Stock</div>
@@ -1002,13 +1016,10 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="{{ asset('js/master.js') }}" defer></script>
-    <script src="{{ asset('js/transaction.js') }}" defer></script>
 
     @yield( "javaScript" )
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    @yield('javasScript')
 
     {{-- {{ asset('js/main.js') }} --}}
 

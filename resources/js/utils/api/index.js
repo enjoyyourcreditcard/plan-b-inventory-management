@@ -139,6 +139,14 @@ export default class Api {
             });
     };
 
+    getReturnStockGRF = () => {
+        return this.init()
+            .get(`grf/return-stock`)
+            .catch((error) => {
+                // this.addError(error.message);
+            });
+    };
+
     getRequestFormByGRF = (code) => {
         return this.init()
             .get(`grf/request/list/` + code)

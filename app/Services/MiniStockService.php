@@ -79,7 +79,8 @@ class MiniStockService
 
         if ( $request->isReturn == "true" ) {
             $this->grf->find($id)->update([
-                'status' => 'return'
+                'status' => 'return',
+                'updated_at' => now()
             ]);
     
             $this->timeline->create([

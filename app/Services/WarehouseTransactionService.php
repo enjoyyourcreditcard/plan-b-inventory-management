@@ -65,7 +65,7 @@ class WarehouseTransactionService
     }
     public function handleFindWhReturn($id)
     {
-        $grfs = $this->grf->with('user')->where('status', 'return')->where('warehouse_id', $id)->get();
+        $grfs = $this->grf->with('user')->where('status', 'return_ic_approved')->where('warehouse_id', $id)->get();
         return ($grfs);
     }
 
@@ -120,7 +120,7 @@ class WarehouseTransactionService
             'request_form_id' => 'required',
             'grf_id' => 'required',
             'part_id' => 'required',
-            'sn_code.*' => 'distinct|exists:request_stock,sn', 
+            'sn_code.*' => 'distinct', 
             'sn_code' => ['required', 'array'],
         ]);
 
@@ -132,7 +132,6 @@ class WarehouseTransactionService
                 'sn' => $sn_code,
             ]);
         }
-
 
         return ('data stored!');
     }

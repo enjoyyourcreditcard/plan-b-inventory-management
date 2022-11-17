@@ -1,7 +1,7 @@
 function TabelFooter(props) {
     return (
         <>
-            <div class=" intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
+            <div className=" intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <div>
                     <select
                         className="w-20 form-select box mt-3 sm:mt-0"
@@ -17,7 +17,7 @@ function TabelFooter(props) {
                         ))}
                     </select>
                 </div>
-                <div class="hidden md:block mx-auto text-slate-500">
+                <div className="hidden md:block mx-auto text-slate-500">
                     {/* Showing 1 to 10 of 150 entries */}
                     <span>
                         Page{" "}

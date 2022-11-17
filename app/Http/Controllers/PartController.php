@@ -75,7 +75,7 @@ class PartController extends Controller
 
     /* 
     *|--------------------------------------------------------------------------
-    *| Ajax Part for Select2 in part view 
+    *| Ajax Part for w in part view 
     *|--------------------------------------------------------------------------
     */
     public function ajaxIndex()

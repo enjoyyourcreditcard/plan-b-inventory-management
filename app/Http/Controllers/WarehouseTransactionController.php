@@ -115,7 +115,7 @@ class WarehouseTransactionController extends Controller
     {
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
-        return view('transaction.warehouse.check_whapproval', compact('whapprov', 'requestForm'));
+        return view('transaction.warehouse.check-whapproval', compact('whapprov', 'requestForm'));
     }
 
     /*
@@ -128,7 +128,7 @@ class WarehouseTransactionController extends Controller
         $whreturn = $this->warehouseTransactionService->handleShowWhReturn($id);
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whreturn->requestForms);
 
-        return view('transaction.warehouse.warehouse_return', compact('whreturn','requestForm'));
+        return view('transaction.warehouse.warehouse-return', compact('whreturn','requestForm'));
     }
 
     public function store(Request $request){

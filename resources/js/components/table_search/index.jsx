@@ -24,7 +24,7 @@ const SearchSelectCategory = (props) => {
                 props.SearchFilter(e.target.value, props.searchColumnID)
             }
         >
-            <option>All</option>
+            <option key={'1'}>All</option>
             {rawData.map((item, i) => {
                 return (
                     <option key={i} name={item}>
@@ -59,7 +59,7 @@ const SearchSelectBrand = (props) => {
                 props.SearchFilter(e.target.value, props.searchColumnID)
             }
         >
-            <option>All</option>
+            <option key={'1'}>All</option>
             {rawData.map((item, i) => {
                 return (
                     <option key={i} name={item}>
@@ -79,9 +79,9 @@ const SearchSelectSN = (props) => {
                 props.SearchFilter(e.target.value, props.searchColumnID)
             }
         >
-            <option>All</option>
-            <option>SN</option>
-            <option>NON SN</option>
+            <option key={'1'}>All</option>
+            <option key={'1'}>SN</option>
+            <option key={'1'}>NON SN</option>
         </select>
     );
 };
@@ -105,8 +105,8 @@ function TableSearch(props) {
 
     return (
         <>
-            <div class="flex w-full sm:w-auto">
-                <div class="w-48 relative text-slate-500">
+            <div className="flex w-full sm:w-auto">
+                <div className="w-48 relative text-slate-500">
                     {searchColumnID === "category" ||
                     searchColumnID === "category_name" ? (
                         <SearchSelectCategory
@@ -136,7 +136,7 @@ function TableSearch(props) {
                                     ),
                                     setSearch(e.target.value)
                                 )}
-                                class="form-control w-48 box pr-10"
+                                className="form-control w-48 box pr-10"
                                 placeholder="Search by invoice..."
                             />
 
@@ -147,11 +147,11 @@ function TableSearch(props) {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                                 icon-name="search"
-                                class="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+                                className="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                 data-lucide="search"
                             >
                                 <circle cx="11" cy="11" r="8"></circle>
@@ -165,7 +165,7 @@ function TableSearch(props) {
                         </>
                     )}
                 </div>
-                <select class="form-select box ml-2" onChange={changeColumn}>
+                <select className="form-select box ml-2" onChange={changeColumn}>
                     {column.map((item, i) => {
                         return (
                             <option value={item.accessor}>{item.Header}</option>
@@ -174,20 +174,20 @@ function TableSearch(props) {
                 </select>
             </div>
             {/* <div className="ms-auto text-muted mb-3">
-                <div class="input-group">
+                <div className="input-group">
                     {searchColumnID === "category" || searchColumnID === "category_name" ? <SearchSelectCategory searchColumnID={searchColumnID} SearchFilter={props.SearchFilter} />
                         :  searchColumnID === "brand"  || searchColumnID === "brand_name"? 
                         <SearchSelectBrand searchColumnID={searchColumnID} SearchFilter={props.SearchFilter} />
                         :  searchColumnID === "sn_status" ?
                         <SearchSelectSN searchColumnID={searchColumnID} SearchFilter={props.SearchFilter} />
                         :
-                        <input type="text" class="form-control" placeholder="Search…" value={search} onChange={(e) => (props.SearchFilter(e.target.value, searchColumnID), setSearch(e.target.value))} />
+                        <input type="text" className="form-control" placeholder="Search…" value={search} onChange={(e) => (props.SearchFilter(e.target.value, searchColumnID), setSearch(e.target.value))} />
                     }
-                    <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle ">{searchColumn}</button>
-                    <div class="dropdown-menu dropdown-menu-end">
+                    <button data-bs-toggle="dropdown" type="button" className="btn dropdown-toggle ">{searchColumn}</button>
+                    <div className="dropdown-menu dropdown-menu-end">
                         {column.map((item, i) => {
                             return (
-                                <button class="dropdown-item" href="#" onClick={(e) => (setSearchColumn(item.Header), setSearchColumnID(item.accessor), setSearch(""), props.resetSearchFilter())}>
+                                <button className="dropdown-item" href="#" onClick={(e) => (setSearchColumn(item.Header), setSearchColumnID(item.accessor), setSearch(""), props.resetSearchFilter())}>
                                     {item.Header}
                                 </button>)
                         })}
@@ -195,10 +195,10 @@ function TableSearch(props) {
                 </div>
             </div> */}
 
-            {/* <div class="w-56 relative text-slate-500">
+            {/* <div className="w-56 relative text-slate-500">
                 <input
                     type="text"
-                    class="form-control w-56 box pr-10"
+                    className="form-control w-56 box pr-10"
                     placeholder="Search…"
                     value={search}
                     onChange={(e) => (
@@ -213,11 +213,11 @@ function TableSearch(props) {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     icon-name="search"
-                    class="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+                    className="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                     data-lucide="search"
                 >
                     <circle cx="11" cy="11" r="8"></circle>
