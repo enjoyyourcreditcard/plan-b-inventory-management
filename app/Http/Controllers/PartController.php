@@ -43,9 +43,9 @@ class PartController extends Controller
         $brands = $this->brandService->handleAllBrand();
         $segments = $this->segmentService->handleAllSegment();
         $part = $this->partService->handleAllPart();
-        $notifications =  $this->notificationService->handleAllNotification();
-        return view('master.part.index', [
-            'notifications' => $notifications,
+        // $notifications =  $this->notificationService->handleAllNotification();
+        return view('master.part', [
+            // 'notifications' => $notifications,
             'categories' => $categories,
             'brands' => $brands,
             'part' => $part,
@@ -127,10 +127,10 @@ class PartController extends Controller
         $is_sn = $part->sn_status == "sn";
         $uoms = $this->partService->handleShowUomGroupByCategory($id);
         $brandByCategory = $this->partService->handleShowBrandGroupByCategory($id); //todo nama variabel diganti jadi $brandByCategory
-        $notifications =  $this->notificationService->handleAllNotification();
+        // $notifications =  $this->notificationService->handleAllNotification();
 
-        return view('master.part.detail', [
-            'notifications' => $notifications,
+        return view('part.detail', [
+            // 'notifications' => $notifications,
             'Historyprices' => $history_prices,
             'attachment' => $attachment,
             'part' => $part,

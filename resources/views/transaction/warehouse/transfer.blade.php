@@ -4,9 +4,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Breadcrumb
+| Breadcrumb
 |--------------------------------------------------------------------------
 */ --}}
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
@@ -21,9 +21,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  Modal select new transfer
+| Modal select new transfer
 |--------------------------------------------------------------------------
 */ --}}
 <div id="modal-new-transfer" class="modal" tabindex="-1" aria-hidden="true">
@@ -38,10 +38,11 @@
                             d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                     </svg>
                     <div class="text-3xl mt-5">Pilih tipe transfer gudang</div>
-                    <div class="text-slate-500 mt-2">Kode GRF akan dibuat untuk anda. <br>Proses ini tidak dapat dibatalkan.</div>
+                    <div class="text-slate-500 mt-2">Kode GRF akan dibuat untuk anda. <br>Proses ini tidak dapat
+                        dibatalkan.</div>
                 </div>
                 <div class="p-5 pb-8 text-center">
-                    <form action="{{ Route( "warehouse.transfer.post" ) }}" method="POST">
+                    <form action="{{ Route( 'warehouse.transfer.post' ) }}" method="POST">
                         @csrf
                         <input type="hidden" name="grf_code" value="{{ $grf_code }}">
                         <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
@@ -98,9 +99,9 @@
 
 
 
-{{-- /* 
+{{-- /*
 |--------------------------------------------------------------------------
-|  View Container
+| View Container
 |--------------------------------------------------------------------------
 */ --}}
 <h2 class="intro-y text-lg font-medium mt-10">Warehouse Transfer</h2>
@@ -163,9 +164,11 @@
                         <a href="" class="underline decoration-dotted whitespace-nowrap">{{ $grf->grf_code }}</a>
                     </td>
                     <td class="w-40">
-                        <a href=""
-                            class="font-medium whitespace-nowrap">{{ isset( $grf->warehouse_id ) ? $grf->warehouse->name : "-" }}</a>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $grf->timelines->where( "status", "submited" )->first() ? $grf->timelines->where( "status", "submited" )->first()->created_at : "" }}</div>
+                        <a href="" class="font-medium whitespace-nowrap">{{ isset( $grf->warehouse_id ) ?
+                            $grf->warehouse->name : "-" }}</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $grf->timelines->where(
+                            "status", "submited" )->first() ? $grf->timelines->where( "status", "submited"
+                            )->first()->created_at : "" }}</div>
                     </td>
                     <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -180,11 +183,53 @@
                         <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5"> </div>
                     </td>
                     <td class="text-center">
-                        @if ( $grf->status == "draft" )
+                        @switch($grf->status)
+                        @case("submited")
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
+                                class="lucide lucide-check-square w-4 h-4 mr-2">
+                                <polyline points="9 11 12 14 22 4"></polyline>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                            </svg> Submited
+                        </div>
+                        @break
+                        @case("closed")
+                        <div class="flex items-center justify-center whitespace-nowrap text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
+                                class="lucide lucide-check-square w-4 h-4 mr-2">
+                                <polyline points="9 11 12 14 22 4"></polyline>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                            </svg> Closed
+                        </div>
+                        @break
+                        @case("delivery_approved")
+                        <div class="flex items-center justify-center whitespace-nowrap text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
+                                class="lucide lucide-check-square w-4 h-4 mr-2">
+                                <polyline points="9 11 12 14 22 4"></polyline>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                            </svg> On Delivery
+                        </div>
+                        @break
+
+                        
+                        @default
+
+                        @endswitch
+                        {{-- @if ( $grf->status == "draft" )
                         <div class="flex items-center justify-center whitespace-nowrap text-pending">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chat-square-dots w-4 h-4 mr-2" viewBox="0 0 16 16">
-                                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                class="bi bi-chat-square-dots w-4 h-4 mr-2" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path
+                                    d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                             </svg> Pending
                         </div>
                         @else
@@ -197,14 +242,15 @@
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg> Submited
                         </div>
-                        @endIf
+                        @endIf --}}
                     </td>
                     <td class="w-40 text-right">
                         <div class="pr-16">{{ $grf->total_stock }} stock</div>
                     </td>
                     <td class="table-report__action">
                         <div class="flex justify-center items-center">
-                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{{ Route( "warehouse.transfer.get.detail", str_replace( '/', '~', strtolower( $grf->grf_code ) ) ) }}">
+                            <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{{ Route( 'warehouse.transfer.get.detail', str_replace( '/' , '~' , strtolower( $grf->grf_code ) )
+                                ) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"

@@ -40,14 +40,13 @@ class UserTransactionController extends Controller
     public function index()
     {
         try {
-            $notifications =  $this->notificationService->handleAllNotification();
+            // $notifications =  $this->notificationService->handleAllNotification();
             $grf_code = $this->requestFormService->handleGenerateGrfCode();
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
-            $this->requestFormService->handleCloseThreeDay($grfs);
-
-            return view('home.requester.index', [
-                'notifications' => $notifications,
+            
+            return view('request.request', [
+                // 'notifications' => $notifications,
                 'grf_code' => $grf_code,
                 'grfsClosed' => $grfs->whereIn('status', ['closed', "reject"]),
                 'grfsAvailable' => $grfs->whereNotIn('status', ["closed", "reject"]),
@@ -103,15 +102,15 @@ class UserTransactionController extends Controller
     public function create($code)
     {
         try {
-            $notifications =  $this->notificationService->handleAllNotification();
+            // $notifications =  $this->notificationService->handleAllNotification();
             $grf = $this->requestFormService->handleGetCurrentGrf($code);
             $warehouses = $this->warehouseService->handleGetWareHouseByRegional(Auth::user()->regional);
             $brands = $this->brandService->handleGetAllBrand();
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
-            // dd($warehouses);
-            return view("transaction.requester.show", [
-                'notifications' => $notifications,
+
+            return view( "request.show", [
+                // 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,
                 'brands' => $brands,

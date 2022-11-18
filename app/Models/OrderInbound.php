@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Timeline extends Model
+class OrderInbound extends Model
 {
     use HasFactory;
-
+ 
     protected $guarded = ['id'];
 
-    public function grf ()
-    {
-        return $this->belongsTo(Grf::class);
+    public function inbound() {
+        return $this->belongsTo(Inbound::class);
     }
-    public function inboundGrf ()
+
+    public function part()
     {
-        return $this->belongsTo(GrfInbound::class);
+        return $this->belongsTo(Part::class);
     }
 }

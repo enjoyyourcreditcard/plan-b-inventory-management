@@ -3,7 +3,6 @@
     <div class="col-span-12 2xl:col-span-9">
         <div class="grid grid-cols-12 gap-6 mt-5">
             <!-- BEGIN: Notification -->
-           
             <!-- BEGIN: General Report -->
             <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-5">
                 <div class="intro-y block sm:flex items-center h-10">

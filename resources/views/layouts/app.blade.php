@@ -232,35 +232,44 @@
 
             @if (Auth::user()->role == "warehouse")
             <li>
-                <a href="{{ route('warehouse.get.dashboard') }}" class="menu">
-                    <div class="menu__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                        </svg>
-                    </div>
-                    <div class="menu__title">
-                        Dashboard
-                    </div>
+                <a href="{{ route('warehouse.get.dashboard') }}"
+                    class="side-menu {{ Route::currentRouteName() ==
+                    '
+                                                                        warehouse.get.dashboard'
+                        ? ' side-menu--active'
+                        : '' }}">
+                    <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21"
+                            height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                            <path fill-rule="evenodd"
+                                d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                        </svg> </div>
+                    <div class="side-menu__title"> Dashboard</div>
                 </a>
             </li>
             <li>
-                <a href="{{ route('warehouse.get.request') }}" class="menu">
-                    <div class="menu__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-warehouse" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('warehouse.get.request') }}"
+                    class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? ' side-menu--active' : '' }}">
+                    <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-building-warehouse" width="24"
+                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M3 21v-13l9 -4l9 4v13"></path>
                             <path d="M13 13h4v8h-10v-6h6"></path>
                             <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                        </svg>
-                    </div>
-                    <div class="menu__title"> Warehouse Approve </div>
+                        </svg> </div>
+                    <div class="side-menu__title"> Warehouse Approv</div>
                 </a>
             </li>
             <li>
-                <a href="{{ route('warehouse.get.return') }}" class="menu">
-                    <div class="menu__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-transform" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('warehouse.get.return') }}"
+                    class="side-menu {{ Route::currentRouteName() == 'warehouse.get.return' ? ' side-menu--active' : '' }}">
+                    <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-transform" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M5 13v.875c0 3.383 2.686 6.125 6 6.125"></path>
                             <circle cx="6" cy="6" r="3"></circle>
@@ -268,10 +277,70 @@
                             <path d="M16 9l2 2l2 -2"></path>
                             <path d="M18 10v-.875c0 -3.383 -2.686 -6.125 -6 -6.125"></path>
                             <path d="M3 15l2 -2l2 2"></path>
+                        </svg> </div>
+                    <div class="side-menu__title"> Warehouse Return</div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" class="side-menu">
+                    <div class="side-menu__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" icon-name="box" data-lucide="box"
+                            class="lucide lucide-box">
+                            <path
+                                d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         </svg>
                     </div>
-                    <div class="menu__title"> Warehouse return </div>
+                    <div class="side-menu__title">
+                        Warehouse Transfer
+                        <div class="side-menu__sub-icon transform rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-down"
+                                data-lucide="chevron-down" class="lucide lucide-chevron-down">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
                 </a>
+                <ul class="side-menu__sub-open" style="display: block;">
+                    <li>
+                        <a href="{{ route('warehouse.get.whtransfer') }}"
+                            class="side-menu {{ Route::currentRouteName() == 'warehouse.get.whtransfer' ? ' side-menu--active' : '' }}">
+                            <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-switch-horizontal" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <polyline points="16 3 20 7 16 11"></polyline>
+                                    <line x1="10" y1="7" x2="20" y2="7"></line>
+                                    <polyline points="8 13 4 17 8 21"></polyline>
+                                    <line x1="4" y1="17" x2="13" y2="17"></line>
+                                </svg> </div>
+                            <div class="side-menu__title"> Warehouse Transfer</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('warehouse.get.recipient') }}"
+                            class="side-menu {{ Route::currentRouteName() == 'warehouse.get.recipient' ? ' side-menu--active' : '' }}">
+                            <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-switch-horizontal" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <polyline points="16 3 20 7 16 11"></polyline>
+                                    <line x1="10" y1="7" x2="20" y2="7"></line>
+                                    <polyline points="8 13 4 17 8 21"></polyline>
+                                    <line x1="4" y1="17" x2="13" y2="17"></line>
+                                </svg> </div>
+                            <div class="side-menu__title"> Warehouse Transfer penerima</div>
+                        </a>
+                    </li>
+                </ul>
             </li>
             @endIf
 
@@ -520,10 +589,14 @@
 
                 @if (Auth::user()->role == "warehouse")
                 <li>
-                    <a href="{{ route('warehouse.get.dashboard') }}" class="side-menu {{ Route::currentRouteName() == '
-                        warehouse.get.dashboard' ? " side-menu--active" : "" }}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <a href="{{ route('warehouse.get.dashboard') }}"
+                        class="side-menu {{ Route::currentRouteName() ==
+                        '
+                                                                            warehouse.get.dashboard'
+                            ? ' side-menu--active'
+                            : '' }}">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21"
+                                height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                                 <path fill-rule="evenodd"
@@ -534,12 +607,11 @@
                 </li>
                 <li>
                     <a href="{{ route('warehouse.get.request') }}"
-                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? " side-menu--active"
-                        : "" }}">
+                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.request' ? ' side-menu--active' : '' }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                                class="icon icon-tabler icon-tabler-building-warehouse" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M3 21v-13l9 -4l9 4v13"></path>
                                 <path d="M13 13h4v8h-10v-6h6"></path>
@@ -550,8 +622,7 @@
                 </li>
                 <li>
                     <a href="{{ route('warehouse.get.return') }}"
-                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.return' ? " side-menu--active"
-                        : "" }}">
+                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.return' ? ' side-menu--active' : '' }}">
                         <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-transform" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -566,6 +637,67 @@
                             </svg> </div>
                         <div class="side-menu__title"> Warehouse Return</div>
                     </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="side-menu">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" icon-name="box" data-lucide="box"
+                                class="lucide lucide-box">
+                                <path
+                                    d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="side-menu__title">
+                            Warehouse Transfer
+                            <div class="side-menu__sub-icon transform rotate-180">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-down"
+                                    data-lucide="chevron-down" class="lucide lucide-chevron-down">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="side-menu__sub-open" style="display: block;">
+                        <li>
+                            <a href="{{ route('warehouse.get.whtransfer') }}"
+                                class="side-menu {{ Route::currentRouteName() == 'warehouse.get.whtransfer' ? ' side-menu--active' : '' }}">
+                                <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-switch-horizontal" width="24"
+                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <polyline points="16 3 20 7 16 11"></polyline>
+                                        <line x1="10" y1="7" x2="20" y2="7"></line>
+                                        <polyline points="8 13 4 17 8 21"></polyline>
+                                        <line x1="4" y1="17" x2="13" y2="17"></line>
+                                    </svg> </div>
+                                <div class="side-menu__title"> Warehouse Transfer</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('warehouse.get.recipient') }}"
+                                class="side-menu {{ Route::currentRouteName() == 'warehouse.get.recipient' ? ' side-menu--active' : '' }}">
+                                <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-switch-horizontal" width="24"
+                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <polyline points="16 3 20 7 16 11"></polyline>
+                                        <line x1="10" y1="7" x2="20" y2="7"></line>
+                                        <polyline points="8 13 4 17 8 21"></polyline>
+                                        <line x1="4" y1="17" x2="13" y2="17"></line>
+                                    </svg> </div>
+                                <div class="side-menu__title"> Warehouse Transfer penerima</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
 

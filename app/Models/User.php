@@ -62,6 +62,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Grf::class);
     }
+    public function grfInbound()
+    {
+        return $this->hasMany(GrfInbound::class);
+    }
     public function requester()
     {
         return $this->hasMany(Request::class);

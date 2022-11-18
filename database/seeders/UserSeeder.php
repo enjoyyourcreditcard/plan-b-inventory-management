@@ -31,7 +31,18 @@ class UserSeeder extends Seeder
             'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
             'no_telp' => '082993828824',
-            'email' => 'gudang@inVentree',
+            'email' => 'gudang1@inVentree',
+            'password' => Hash::make('12345'),
+            // 'status' => 'active',
+        ]);
+
+        User::create([
+            'name' => 'Gudang Test2',
+            'role' => 'warehouse',
+            'regional' => 'surabaya',
+            'warehouse_id' => '2',
+            'no_telp' => '082993828724',
+            'email' => 'gudang2@inVentree',
             'password' => Hash::make('12345'),
         ]);
 
