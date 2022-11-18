@@ -1,4 +1,4 @@
-{{-- @dd($inbounds) --}}
+{{-- @dd($inboundForms) --}}
 
 @extends('layouts.app')
 
@@ -13,6 +13,7 @@
         <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
         <li class="breadcrumb-item"><a href="{{ Route( "inbound.get.home" ) }}">inbound</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{$inboundForms->inbound_grf_code}}</li>
+        <li class="breadcrumb-item active" aria-current="page"></li>
     </ol>
 </nav>
 @endsection
@@ -160,7 +161,7 @@
                     <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path>
                     <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                 </svg> Unique ID: <span
-                    class="underline decoration-dotted ml-1">{{ $inboundForms->inbound_grf_code }}</span>
+                    class="underline decoration-dotted ml-1">Request {{ $inboundForms->id }}</span>
             </div>
             <div class="flex items-center mt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -170,6 +171,40 @@
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg> Name: <span class="underline decoration-dotted ml-1">{{ $inboundForms->user->name }}</span>
             </div>
+
+            {{-- warehouse --}}
+            
+            @if ( $inboundForms->warehouse_id === null )
+            <div class="mt-3">
+                <form action="{{Route('inbound.post.warehouse', $inboundForms->id )}}" method="POST" id="warehouse">
+                    @csrf
+                    @method('put')
+                    <div class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-building-warehouse w-4 h-4 text-slate-500 mr-2" width="24"
+                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M3 21v-13l9 -4l9 4v13"></path>
+                        <path d="M13 13h4v8h-10v-6h6"></path>
+                        <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
+                        </svg> <span class="mr-1">Warehouse Tujuan :</span>
+                            <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-7/12"
+                                required>
+                                <option></option>
+                                @foreach ( $warehouses as $warehouse )
+                                <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn !bg-emerald-900 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-send w-4 h-4 text-white" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                            </svg></button>
+                        </div>
+                </form>
+            </div>
+            @endIf
 
             @if( $inboundForms->warehouse_id )
             <div class="flex items-center mt-3">
@@ -181,7 +216,7 @@
                     <path d="M3 21v-13l9 -4l9 4v13"></path>
                     <path d="M13 13h4v8h-10v-6h6"></path>
                     <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                </svg> Warehouse: <span
+                </svg> Warehouse Tujuan: <span
                     class="underline decoration-dotted ml-1">{{ $inboundForms->warehouse->name  }}</span>
 
                 @if( $inboundForms->status === "draft" )
@@ -200,6 +235,8 @@
 
             </div>
             @endIf
+
+            {{-- warehouse --}}
 
             @if( $inboundForms->status === "draft" )
             <div class="border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
@@ -232,9 +269,36 @@
                     </li>
                     @endif
 
+
                 </ul>
             </div>
-            @endIf
+            @elseif($inboundForms->warehouse_id == null)
+            <div>
+                <form action="{{Route('inbound.post.warehouse', $inboundForms->id )}}" method="POST" id="warehouse">
+                    @csrf
+                    @method('put')
+
+                    <label class="form-label">Warehouse</label>
+
+                        <div class="flex">
+
+
+                            <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-full"
+                                required>
+                                <option></option>
+                                @foreach ( $warehouses as $warehouse )
+                                <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn !bg-emerald-900 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-send w-4 h-4 text-white" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                            </svg></button>
+                        </div>
+                </form>
+            </div>
+            @endif
 
         </div>
 
@@ -256,33 +320,6 @@
             <div id="input" class="">
                 <div class="preview">
                     
-                    @if ( $inboundForms->warehouse_id === null )
-                        <div>
-                            <form action="{{Route('inbound.post.warehouse', $inboundForms->id )}}" method="POST" id="warehouse">
-                                @csrf
-                                @method('put')
-
-                                <label class="form-label">Warehouse</label>
-
-                                    <div class="flex">
-
-    
-                                        <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-full"
-                                            required>
-                                            <option></option>
-                                            @foreach ( $warehouses as $warehouse )
-                                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <button type="submit" class="btn !bg-emerald-900 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                            class="bi bi-send w-4 h-4 text-white" viewBox="0 0 16 16">
-                                            <path
-                                                d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-                                        </svg></button>
-                                    </div>
-                            </form>
-                        </div>
-                    @endIf
                     
                     @if ( $inboundForms->status == 'draft')
                     
@@ -306,10 +343,6 @@
                                 min="1" value="1" max="{{ $inbound['quantity'] }}" required>
                         </div>
 
-                        <div class="mt-3">
-                            <label for="regular-form-3" class="form-label">Note</label>
-                            <textarea form="form-inbound" name="remarks" class="form-control" rows="3" placeholder="Request note.." required></textarea>
-                        </div>
                             
                         <div
                             class="flex items-center border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
@@ -343,8 +376,13 @@
                         </div>
 
                         <div class="mt-3">
-                            <label for="regular-form-3" class="form-label">Note</label>
-                            <textarea form="form-inbound" name="remarks" class="form-control" rows="3" placeholder="Request note.." required disabled></textarea>
+                            <label for="regular-form-3" class="form-label">Select Warehouse</label>
+                            <select name="warehouse_id" data-placeholder="Select warehouse" class="tom-select w-full" required>
+                                <option></option>
+                                @foreach ( $warehouses as $warehouse )
+                                <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </form>
                     @endif
@@ -366,7 +404,6 @@
                         <th class=" whitespace-nowrap">SEGMENT</th>
                         {{-- <th class="text-center whitespace-nowrap">ORAFIN CODE</th> --}}
                         <th class=" whitespace-nowrap">QUANTITY</th>
-                        <th class="whitespace-nowrap">REMARKS</th>
                         @if( $inboundForms->status === "draft" )
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                         @endIf
@@ -376,11 +413,10 @@
 
                     @forelse ( $orderInbounds as $order )
                     <tr class="intro-x">
-                        <td class=" capitalize w-4/12">{{ $order->inbound->part->name }}</td>
-                        <td class=" capitalize w-2/12">{{ $order->inbound->part->segment->name }}</td>
+                        <td class=" capitalize w-6/12">{{ $order->inbound->part->name }}</td>
+                        <td class=" capitalize w-3/12">{{ $order->inbound->part->segment->name }}</td>
                         {{-- <td class="text-center capitalize w-1/12">{{ $order->inbound->orafin_code }}</td> --}}
                         <td class=" capitalize ">{{ $order->quantity }}</td> 
-                        <td class="table-report__action capitalize w-3/12 ">{{ $order->remarks }}</td> 
 
                         @if( $inboundForms->status === "draft" )
                         <td class="table-report__action w-1/12">

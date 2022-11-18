@@ -36,6 +36,7 @@
 <!-- END: Head -->
 
 <body class="py-5 md:py-0 bg-black/[0.15] dark:bg-transparent">
+{{-- @dd(Auth::user()->id) --}}
     <!-- BEGIN: Mobile Menu -->
     <div class="mobile-menu md:hidden">
         <div class="mobile-menu-bar">
@@ -424,7 +425,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ Route('dashboard.inbound') }}" class="side-menu">
+                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{(request()->is('inbound')) ? 'side-menu--active' : ''}}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
@@ -469,7 +470,7 @@
                     </a>
                     <ul class="">
                         <li>
-                            <a href="index.html" class="side-menu">
+                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{(request()->is('inbound')) ? 'side-menu--active' : ''}}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
@@ -899,7 +900,19 @@
                 </div>
                 <!-- END: Search -->
                 <!-- BEGIN: Notifications -->
-                <div class="intro-x dropdown mr-auto sm:mr-6">
+                {{-- <div class="intro-x dropdown mr-auto sm:mr-6">
+                    @if( count(auth()->user()->notifications->where('read_at', null)) < 1 )
+                    <div class="dropdown-toggle notification cursor-pointer" role="button"
+                        aria-expanded="false" data-tw-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="bell" data-lucide="bell"
+                            class="lucide lucide-bell notification__icon dark:text-slate-500">
+                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 01-3.46 0"></path>
+                        </svg>
+                    </div>
+                    @else
                     <div class="dropdown-toggle notification notification--bullet cursor-pointer" role="button"
                         aria-expanded="false" data-tw-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -910,103 +923,35 @@
                             <path d="M13.73 21a2 2 0 01-3.46 0"></path>
                         </svg>
                     </div>
+                    @endif
                     <div class="notification-content pt-2 dropdown-menu">
-                        <div class="notification-content__box dropdown-content">
+                        <div class="notification-content__box dropdown-content overflow-y-scroll h-80 w-80" >
                             <div class="notification-content__title">Notifications</div>
-                            <div class="cursor-pointer relative flex items-center ">
-                                <div class="w-12 h-12 flex-none image-fit mr-1">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                        src="http://tinker-laravel.left4code.com/dist/images/profile-6.jpg">
+
+                            @foreach (auth()->user()->notifications as $item)
+                            <div class="cursor-pointer relative flex items-center mt-4">
+                                <div class="flex-none image-fit mr-2 w-1/12">
+                                    @if($item->read_at == null)
                                     <div
-                                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
+                                        class="w-2 h-2 bg-success object-center rounded-full border-2 border-white dark:border-darkmode-600">
                                     </div>
+                                    @endif
                                 </div>
-                                <div class="ml-2 overflow-hidden">
+                                
+                                <div class="w-11/12">
                                     <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">Arnold
-                                            Schwarzenegger</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">01:10 PM</div>
+                                        <a href="javascript:;" class="font-medium truncate">{{ isset($item->data["username"]) ? $item->data["username"] : ""  }}</a>
+                                        <div class="text-xs text-slate-400 whitespace-nowrap ml-auto">{{ $item->created_at->diffForHumans() }}</div>
                                     </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">Contrary to popular belief, Lorem
-                                        Ipsum is not simply random text. It has roots in a piece of classical Latin
-                                        literature from 45 BC, making it over 20</div>
+                                    <div class="w-full truncate text-slate-500">{{ isset($item->data["data"]) ? $item->data["data"] : ""  }}</div>
                                 </div>
                             </div>
-                            <div class="cursor-pointer relative flex items-center mt-5">
-                                <div class="w-12 h-12 flex-none image-fit mr-1">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                        src="http://tinker-laravel.left4code.com/dist/images/profile-5.jpg">
-                                    <div
-                                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
-                                    </div>
-                                </div>
-                                <div class="ml-2 overflow-hidden">
-                                    <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">Johnny Depp</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">05:09 AM</div>
-                                    </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">There are many variations of
-                                        passages of Lorem Ipsum available, but the majority have suffered alteration in
-                                        some form, by injected humour, or randomi</div>
-                                </div>
-                            </div>
-                            <div class="cursor-pointer relative flex items-center mt-5">
-                                <div class="w-12 h-12 flex-none image-fit mr-1">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                        src="http://tinker-laravel.left4code.com/dist/images/profile-5.jpg">
-                                    <div
-                                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
-                                    </div>
-                                </div>
-                                <div class="ml-2 overflow-hidden">
-                                    <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">John Travolta</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">01:10 PM</div>
-                                    </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">Contrary to popular belief, Lorem
-                                        Ipsum is not simply random text. It has roots in a piece of classical Latin
-                                        literature from 45 BC, making it over 20</div>
-                                </div>
-                            </div>
-                            <div class="cursor-pointer relative flex items-center mt-5">
-                                <div class="w-12 h-12 flex-none image-fit mr-1">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                        src="http://tinker-laravel.left4code.com/dist/images/profile-5.jpg">
-                                    <div
-                                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
-                                    </div>
-                                </div>
-                                <div class="ml-2 overflow-hidden">
-                                    <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">Johnny Depp</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">03:20 PM</div>
-                                    </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">There are many variations of
-                                        passages of Lorem Ipsum available, but the majority have suffered alteration in
-                                        some form, by injected humour, or randomi</div>
-                                </div>
-                            </div>
-                            <div class="cursor-pointer relative flex items-center mt-5">
-                                <div class="w-12 h-12 flex-none image-fit mr-1">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                        src="http://tinker-laravel.left4code.com/dist/images/profile-5.jpg">
-                                    <div
-                                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
-                                    </div>
-                                </div>
-                                <div class="ml-2 overflow-hidden">
-                                    <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate mr-5">Brad Pitt</a>
-                                        <div class="text-xs text-slate-400 ml-auto whitespace-nowrap">01:10 PM</div>
-                                    </div>
-                                    <div class="w-full truncate text-slate-500 mt-0.5">Contrary to popular belief, Lorem
-                                        Ipsum is not simply random text. It has roots in a piece of classical Latin
-                                        literature from 45 BC, making it over 20</div>
-                                </div>
-                            </div>
+                            @endforeach
+
+                            
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- END: Notifications -->
                 <!-- BEGIN: Account Menu -->
                 <div class="intro-x dropdown w-8 h-8">

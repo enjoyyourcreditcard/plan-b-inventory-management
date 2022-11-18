@@ -14,9 +14,6 @@ class InboundGrfSeeder extends Seeder
      */
     public function run()
     {
-        GrfInbound::create([
-            'inbound_grf_code' => '001/HAJIDALAKHTAR/Inbound/X/2022',
-            'user_id' => 1,
-        ]);
+        
     }
 }

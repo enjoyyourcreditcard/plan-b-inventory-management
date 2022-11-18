@@ -14,18 +14,18 @@ class HistoryPriceSeeder extends Seeder
      */
     public function run()
     {
-        HistoryPrice::truncate();
+        // HistoryPrice::truncate();
 
-        $historyprice = [
-            [
-                'part_id' => 1,
-                'price' => '100000',
-                'created_at' => '2022-08-23 10:53:17',
-                'updated_at' => '2022-08-23 10:53:17',
-            ],
+        // $historyprice = [
+        //     [
+        //         'part_id' => 1,
+        //         'price' => '100000',
+        //         'created_at' => '2022-08-23 10:53:17',
+        //         'updated_at' => '2022-08-23 10:53:17',
+        //     ],
            
-        ];
+        // ];
 
-        HistoryPrice::insert($historyprice);
+        // HistoryPrice::insert($historyprice);
     }
 }

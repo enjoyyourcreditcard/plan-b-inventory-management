@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\PartService;
 use App\Exports\InboundExport;
 use App\Imports\InboundImport;
+use App\Models\GrfInbound;
 use App\Services\InboundService;
 use App\Services\WarehouseService;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +35,7 @@ class InboundController extends Controller
         $parts = $this->partService->handleAllPart();
         // $notifications =  $this->notificationService->handleAllNotification();
         $warehouse = $this->warehouseService->handleAllWareHouse();
-        $inbound_grf_code = $this->orderInboundService->handleGenerateInboundGrfCode();
+        // $inbound_grf_code = $this->orderInboundService->handleGenerateInboundRequest();
         $grfs = $this->orderInboundService->handleGetAllInboundGrfByUser();
 
         return view('stock.inbound', [
@@ -42,7 +43,7 @@ class InboundController extends Controller
             'parts' => $parts,
             // 'notifications' => $notifications,
             'warehouse' => $warehouse,
-            'inbound_grf_code' => $inbound_grf_code,
+            // 'inbound_grf_code' => $inbound_grf_code,
             'grfs' => $grfs
         ]);
         } catch (\Exception $e) {
@@ -85,9 +86,10 @@ class InboundController extends Controller
     */
     public function storeCreateInboundGrf(Request $request)
     {
+        // dd($request);
         try {
             $this->orderInboundService->handleStoreInboundGrf($request);
-            return redirect()->route( 'inbound.get.detail', str_replace( '/', '~', strtolower( $request->inbound_grf_code ) ) );
+            return redirect()->route( 'inbound.get.detail', GrfInbound::get('id')->last() );
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -124,6 +126,22 @@ class InboundController extends Controller
     *|--------------------------------------------------------------------------
     */
     public function storeAddItem(Request $request, $id)
+    {
+        try {
+            $this->orderInboundService->handleInboundStore($request, $id);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Adding requested warehouse into the list
+    *|--------------------------------------------------------------------------
+    */
+    public function storeAddWh(Request $request, $id)
     {
         try {
             $this->orderInboundService->handleInboundStore($request, $id);
@@ -179,7 +197,7 @@ class InboundController extends Controller
         
     /*
     *|--------------------------------------------------------------------------
-    *| Store Bulk Transfer
+    *| Store Bulk Part
     *|--------------------------------------------------------------------------
     */
     public function import (Request $request) {

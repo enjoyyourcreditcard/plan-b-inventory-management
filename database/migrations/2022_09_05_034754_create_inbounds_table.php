@@ -22,6 +22,8 @@ class CreateInboundsTable extends Migration
             $table->string('condition')->default('good new');
             $table->string('stock_status')->default('in');
             $table->string('status')->default('active');
+            $table->bigInteger('warehouse_id')->unsigned();
+            $table->foreign('warehouse_id')->references('id')->on('warehouse');
             // $table->boolean('is_select')->default(0);
             $table->timestamps();
         });

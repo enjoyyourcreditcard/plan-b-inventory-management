@@ -31,7 +31,7 @@ class InboundService
     {
         $groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id');
 
-        if (count($groupByPartIds)) {
+        if( count($groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id')) ) {
             foreach ($groupByPartIds as $key => $groupByPartId) {
                 $distinct[] = collect([
                     'id' =>$groupByPartId->first()->id, 
@@ -40,9 +40,11 @@ class InboundService
                     'quantity' => $groupByPartId->count(),
                 ]);
             }
-        } else {
+        }else{
             $distinct = [];
         }
+
+        
 
         return ($distinct);
     }
@@ -171,16 +173,6 @@ class InboundService
 
         $this->inbound->create($validatedData);
         return ('Data has been stored');
-    }
-
-    
-    public function handleUpdateInboundApi(Request $request, $id)
-    {
-        $this->inbound->find($id)->update([
-            // 'condition' => $request->condition,
-            // 'stock_status' => $request->stock_status,
-        ]);
-        return ('Data has been updated');
     }
 
     public function handleDeleteInboundApi($id)

@@ -37,6 +37,10 @@ class Warehouse extends Model
     public function grfInbound() {
         return $this->hasMany(GrfInbound::class);
     }
+
+    public function inbound() {
+        return $this->hasMany(OrderInbound::class);
+    }
     
     public function requester(){
         return $this->hasMany(Request::class);
