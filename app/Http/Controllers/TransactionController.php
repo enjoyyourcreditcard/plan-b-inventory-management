@@ -73,7 +73,7 @@ class TransactionController extends Controller
     {
 
 
-        $notifications =  $this->notificationService->handleAllNotification();
+        // $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
         $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');
         $stock = collect();
@@ -91,8 +91,8 @@ class TransactionController extends Controller
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->WarehouseService->handleAllWareHouse();
 
-        return view('transaction.IC.detail-transaction', [
-            'notifications' => $notifications,
+        return view('transaction.IC.detail_transaction', [
+            // 'notifications' => $notifications,
             'requestForms' => $requestForms,
             'stock' => $stock,
             'parts' => $parts,

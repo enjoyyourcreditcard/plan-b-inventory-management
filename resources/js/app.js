@@ -44,6 +44,10 @@ import './view/transaction/IC/return-stock';
 
 import './view/transaction/warehouse/request';
 import './view/transaction/warehouse/return';
+import './view/transaction/warehouse/transfer';
+import './view/transaction/warehouse/recipient';
+import './view/transaction/warehouse/listTransfer';
+import './view/transaction/warehouse/listRecipient';
 
 
 

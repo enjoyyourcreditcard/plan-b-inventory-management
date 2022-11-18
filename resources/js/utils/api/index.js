@@ -233,6 +233,29 @@ export default class Api {
             .catch((error) => {});
     };
 
+    getWarehouseTransferApprov = (id) => {
+        return this.init()
+            .get(`warehouse/all/detail/transfer/` + id)
+            .catch((error) => {});
+    };
+
+    getWarehouseRecipient = (id) => {
+        return this.init()
+            .get(`warehouse/all/detail/recipient/` + id)
+            .catch((error) => {});
+    };
+
+    getWarehouseListTransfer = (id) => {
+        return this.init()
+            .get(`warehouse/all/warehouse/transfer/` + id)
+            .catch((error) => {});
+    };
+
+    getWarehouseListRecipient = (id) => {
+        return this.init()
+            .get(`warehouse/all/warehouse/recipient/` + id)
+            .catch((error) => {});
+    };
     // getTrandingList = () => {
     //   return this.init()
     //     .get(`/get/news/tranding`)

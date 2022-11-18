@@ -96,6 +96,10 @@ Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/', [WarehouseController::class, 'getAllWarehouse']);
     Route::get('/all/request/{id}', [WarehouseTransactionController::class, 'apiRequest']);
     Route::get('/all/return/{id}', [WarehouseTransactionController::class, 'apiReturn']);
+    Route::get('/all/detail/transfer/{id}', [WarehouseTransactionController::class, 'apiDetailWhtransfer']);
+    Route::get('/all/detail/recipient/{id}', [WarehouseTransactionController::class, 'apiRecipient']);
+    Route::get('/all/warehouse/transfer/{warehouse_id}', [WarehouseTransactionController::class, 'apiTransfer']);
+    Route::get('/all/warehouse/recipient/{warehouse_destination}', [WarehouseTransactionController::class, 'listRecipient']);
 
     
 });

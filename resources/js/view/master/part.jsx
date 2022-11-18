@@ -50,6 +50,7 @@ function Parts() {
         setData(rawData);
     }
 
+
     const columns = React.useMemo(
         () => [
             {
@@ -359,6 +360,9 @@ function Parts() {
                     </svg>
                     <span>&nbsp;Create Part&nbsp;</span>
                 </a>
+
+
+                {/* <button onClick={()=>console.log(data)}>CLick</button> */}
 
 
                 <div class="hidden md:block mx-auto text-slate-500">

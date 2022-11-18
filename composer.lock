@@ -1099,6 +1099,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v9.40.1",
             "source": {
                 "type": "git",
@@ -1109,6 +1110,40 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/9611fdaf2db5759b8299802d7185bcdbee0340bb",
                 "reference": "9611fdaf2db5759b8299802d7185bcdbee0340bb",
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "version": "v9.38.0",
+=======
+            "version": "v9.39.0",
+>>>>>>> origin/redesign_transfer_by_warehouse
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "67e674709e1e7db14f304a871481f310822d68c5"
+            },
+            "dist": {
+                "type": "zip",
+<<<<<<< HEAD
+                "url": "https://api.github.com/repos/laravel/framework/zipball/abf198e443e06696af3f356b44de67c0fa516107",
+                "reference": "abf198e443e06696af3f356b44de67c0fa516107",
+=======
+            "version": "v9.37.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "0c9675abf6d966e834b2ebeca3319f524e07a330"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0c9675abf6d966e834b2ebeca3319f524e07a330",
+                "reference": "0c9675abf6d966e834b2ebeca3319f524e07a330",
+>>>>>>> origin/warehouse_validate
+=======
+                "url": "https://api.github.com/repos/laravel/framework/zipball/67e674709e1e7db14f304a871481f310822d68c5",
+                "reference": "67e674709e1e7db14f304a871481f310822d68c5",
+>>>>>>> origin/redesign_transfer_by_warehouse
+>>>>>>> 26486ddb6ed4ce389d0d79f0418a59c53221e002
                 "shasum": ""
             },
             "require": {
@@ -1281,7 +1316,19 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< HEAD
             "time": "2022-11-15T16:13:22+00:00"
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2022-11-01T14:05:55+00:00"
+=======
+            "time": "2022-10-25T15:43:46+00:00"
+>>>>>>> origin/warehouse_validate
+=======
+            "time": "2022-11-08T14:47:39+00:00"
+>>>>>>> origin/redesign_transfer_by_warehouse
+>>>>>>> 26486ddb6ed4ce389d0d79f0418a59c53221e002
         },
         {
             "name": "laravel/sanctum",
