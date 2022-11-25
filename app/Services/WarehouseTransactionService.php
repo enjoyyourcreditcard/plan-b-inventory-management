@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\WarehouseTransferImport;
 use App\Imports\WarehouseTransferRecipient;
+use App\Models\Part;
 use App\Models\RequestStock;
+use Illuminate\Validation\ValidationException;
 
 class WarehouseTransactionService
 {
@@ -43,7 +45,7 @@ class WarehouseTransactionService
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', Auth::user()->warehouse_id)->get();
         return ($grfs);
     }
-    
+
     /*
     *--------------------------------------------------------------------------
     * Get data warehouse return
@@ -60,13 +62,13 @@ class WarehouseTransactionService
     public function handleFindWhApproval($id)
     {
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', $id)->get();
-      
+
         // dd($grfs);
         return ($grfs);
     }
     public function handleFindWhReturn($id)
     {
-        $grfs = $this->grf->with('user')->where('status', 'return')->where('warehouse_id', $id)->get();
+        $grfs = $this->grf->with('user')->where('status', 'return_ic_approved')->where('warehouse_id', $id)->get();
         return ($grfs);
     }
 
@@ -95,7 +97,7 @@ class WarehouseTransactionService
         $whreturn['quantity'] = 0;
         foreach ($whreturn->requestForms as $requestForm) {
             $whreturn['quantity'] += $requestForm->quantity;
-           }
+        }
         return ($whreturn);
     }
 
@@ -117,11 +119,28 @@ class WarehouseTransactionService
             'request_form_id' => 'required',
             'grf_id' => 'required',
             'part_id' => 'required',
-            'sn_code.*' => 'distinct|exists:request_stock,sn', 
+            'sn_code.*' => 'distinct',
             'sn_code' => ['required', 'array'],
         ]);
 
+
+
+
+
+        // dd("okeyy");
+
         foreach ($request->sn_code as $sn_code) {
+            if (!$this->stock->where("sn_code", $sn_code)->where('stock_status','in')->exists()) {
+                throw ValidationException::withMessages(['error' => "Serial Number (" .$sn_code. ") Tidak ditemukan"]);
+            }
+            // $this->part
+            // if () {
+            //     # code...
+            // }
+            // throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
+
+
+
             $this->requestStock->create([
                 'request_form_id' => $request->request_form_id,
                 'grf_id' => $request->grf_id,
@@ -129,7 +148,6 @@ class WarehouseTransactionService
                 'sn' => $sn_code,
             ]);
         }
-
 
         return ('data stored!');
     }
@@ -470,7 +488,8 @@ class WarehouseTransactionService
         return ('');
     }
 
-    public function handleSubmitTransferApprov($request, $id){
+    public function handleSubmitTransferApprov($request, $id)
+    {
         $currentGrf = $this->grf->with('transferStock')->find($id);
 
         foreach ($currentGrf->transferStock as $transferStock) {
@@ -481,13 +500,12 @@ class WarehouseTransactionService
         $currentGrf->save();
 
         $this->timeline->create([
-             'grf_id' => $id,
-             'status' => 'delivery_approved',
-             'created_at' => now(),
-         ]);
+            'grf_id' => $id,
+            'status' => 'delivery_approved',
+            'created_at' => now(),
+        ]);
 
         return ('succes');
-        
     }
 
     /*
@@ -495,17 +513,20 @@ class WarehouseTransactionService
     *| Get view wh transfer recipient
     *|--------------------------------------------------------------------------
     */
-    public function handleWhRecipientAPI($warehouse_destination){
+    public function handleWhRecipientAPI($warehouse_destination)
+    {
         $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', $warehouse_destination], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
         return $transferform;
     }
-    
-    public function handleWhRecipient(){
+
+    public function handleWhRecipient()
+    {
         $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', Auth::user()->warehouse->name], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
         return ($transferform);
     }
 
-    public function handleShowRecipient($id){
+    public function handleShowRecipient($id)
+    {
         $wherewh = str_replace('~', '/', $id);
         $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock')->where('grf_code', $wherewh)->first();
         return ($whapproval);
@@ -536,27 +557,27 @@ class WarehouseTransactionService
                 }),
             ],
         ]);
-        return('success');
+        return ('success');
     }
 
-    public function handleSubmitRecipient($request, $id){
+    public function handleSubmitRecipient($request, $id)
+    {
         $currentGrf = $this->grf->with('transferStock')->find($id);
         // dd($this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id);
         foreach ($currentGrf->transferStock as $transferStock) {
-            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id ]);
+            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id]);
         }
 
         $currentGrf->status = "closed";
         $currentGrf->save();
 
         $this->timeline->create([
-             'grf_id' => $id,
-             'status' => 'user_pickup',
-             'created_at' => now(),
-         ]);
+            'grf_id' => $id,
+            'status' => 'user_pickup',
+            'created_at' => now(),
+        ]);
 
         return ('succes');
-        
     }
 
 

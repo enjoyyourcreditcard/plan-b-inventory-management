@@ -26,7 +26,7 @@ function Stock() {
             api.getStock().then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
-
+// console.log(response.data.data[0])
                 setLoadingData(false);
             });
         }
@@ -53,135 +53,39 @@ function Stock() {
 
     const columns = React.useMemo(
 
-        () => [{
-
-            //Add this line to the column definition
-            Header: 'Serial Number',
-            accessor: 'sn_code',
-            style: { 'maxWidth': 1 },//Add this line to the column definition
-            Cell: tableProps => (
-                <>
-                    <a href={"/stock/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.sn_code ? tableProps.row.original.sn_code : " - "}</a>
-                </>
-            )
-        },
-
+        () => [
         {
 
             Header: 'Name',
             accessor: 'part_name',
             Cell: tableProps => (
                 <div style={{ "minWidth": 300 }}>
-                    <ReactTooltip place="right" effect="solid" backgroundColor="rgba(255, 355, 255,0)" getContent={(img) =>
-                        <img src={"/dist/" + tableProps.row.original.part.img} />} />
-                                    {/* src={"/dist/" + tableProps.row.original.img} */}
+                   
                     <div id="thumbwrap" style={{ "minWidth": 300 }} >
-                        {/* <a data-tip={tableProps.row.original.part.name}>
-                            <img src={"/dist/" + tableProps.row.original.part.img} alt="" width={30} height={25} style={{ border: "1px solid #CCCCEE" }} />
-                        </a> */}
-                        <a href={"/part/" + tableProps.row.original.part.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.part_name}</a>
+                        <a href={"/part/" + tableProps.row.original.id} className="text-primary text-decoration-none " > &nbsp;{tableProps.row.original.name}</a>
                     </div>
                 </div>
             )
-        }, {
-            Header: 'Warehouse',
-            accessor: 'wh_name',
-
-            Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.wh_name}</p>
-                </>
-
-            )
-
         },
       
         {
-            Header: 'Category',
-            accessor: 'category_name',
-
-            Cell: tableProps => (
-                <>
-                    <p >{tableProps.row.original.category_name}</p>
-                </>
-
-            )
-
-        },
-        {
-            Header: 'UOM',
-            accessor: 'uom',
-
-            Cell: tableProps => (
-                <>
-                    <p>{tableProps.row.original.part.uom}</p>
-                </>
-
-            )
-
-        },
-        {
-            Header: 'SN Status',
-            accessor: 'sn_status',
-
-            Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.part.sn_status}</p>
-                </>
-
-            )
-
-        },
-        {
-            Header: 'Color',
-            accessor: 'color',
-
-            Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.part.color}</p>
-                </>
-
-            )
-
-        },
-        {
             Header: 'Brand',
-            accessor: 'brand_name',
-
+            accessor: 'brand',
             Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.brand_name}</p>
-                </>
-
+                <p>{tableProps.row.original.brand.name}</p>
             )
-
         },
         {
-            Header: 'Condition',
-            accessor: 'condition',
 
+            Header: 'Stock',
+            accessor: 'stock',
             Cell: tableProps => (
-                <>
-                    <p style={{ "minWidth": 300 }}>{tableProps.row.original.condition}</p>
-                </>
-
+                <p>{tableProps.row.original.stock}</p>
             )
-
         },
+      
+       
         
-        {
-            Header: 'Created At',
-            accessor: 'created_at',
-
-            Cell: tableProps => (
-                <>
-                    <p >{moment(tableProps.row.original.created_at).format('DD-MM-YYYY')}</p>
-                </>
-
-            )
-
-        },
-
         ],
         []
     )
@@ -195,7 +99,7 @@ function Stock() {
         page,
         state,
         canNextPage,
-        pageSize,
+        setPageSize,
         gotoPage,
         canPreviousPage,
         pageOptions,
@@ -262,7 +166,18 @@ function Stock() {
                     </div>
                 </div>
             </div>
-
+            <div className="mt-8">
+                <TabelFooter
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    pageIndex={pageIndex}
+                    canPreviousPage={canPreviousPage}
+                    canNextPage={canNextPage}
+                    setPageSize={setPageSize}
+                    pageOptions={pageOptions}
+                />
+            </div>
             <Table
                 getTableProps={getTableProps}
                 prepareRow={prepareRow}

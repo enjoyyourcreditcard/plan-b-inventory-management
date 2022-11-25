@@ -39,6 +39,7 @@ import './view/stock/stock';
 import './view/transaction/form_ic';
 import './view/transaction/IC/stock';
 import './view/transaction/IC/outbound';
+import './view/transaction/IC/return-stock';
 
 
 import './view/transaction/warehouse/request';

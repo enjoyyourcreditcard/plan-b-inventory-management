@@ -44,7 +44,7 @@ class PartController extends Controller
         $segments = $this->segmentService->handleAllSegment();
         $part = $this->partService->handleAllPart();
         // $notifications =  $this->notificationService->handleAllNotification();
-        return view('master.part', [
+        return view('master.part.index', [
             // 'notifications' => $notifications,
             'categories' => $categories,
             'brands' => $brands,
@@ -75,7 +75,7 @@ class PartController extends Controller
 
     /* 
     *|--------------------------------------------------------------------------
-    *| Ajax Part for Select2 in part view 
+    *| Ajax Part for w in part view 
     *|--------------------------------------------------------------------------
     */
     public function ajaxIndex()
@@ -129,7 +129,7 @@ class PartController extends Controller
         $brandByCategory = $this->partService->handleShowBrandGroupByCategory($id); //todo nama variabel diganti jadi $brandByCategory
         // $notifications =  $this->notificationService->handleAllNotification();
 
-        return view('part.detail', [
+        return view('master.part.detail', [
             // 'notifications' => $notifications,
             'Historyprices' => $history_prices,
             'attachment' => $attachment,
@@ -152,6 +152,7 @@ class PartController extends Controller
     */
     public function update(Request $request, $id)
     {
+        // dd("asd");
         $this->partService->handleUpdatePart($request, $id);
         return redirect()->route("part.get.detail", $id);
     }

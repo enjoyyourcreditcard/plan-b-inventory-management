@@ -17,9 +17,9 @@
                 <div id="chats" class="tab-pane active" role="tabpanel" aria-labelledby="chats-tab">
                     <div class="pr-1">
                         <div class="box px-5 pt-5 pb-1 mt-5">
-                            <div class="flex mb-4">
+                            <div class="flex mb-4 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
@@ -30,25 +30,25 @@
                                     <line x1="12" y1="12" x2="4" y2="7.5">
                                     </line>
                                 </svg>
-                                <p class="text-sm ml-2">
+                                <span class="text-sm ml-2">
                                     <strong>GRF CODE :</strong> {{ $whapprov->grf_code }}
-                                </p>
+                                </span>
                             </div>
-                            <div class="flex mb-4">
+                            <div class="flex mb-4 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
                                 </svg>
-                                <p class="text-sm ml-2">
+                                <span class="text-sm ml-2">
                                     <strong>REQUESTER NAME :</strong> {{ $whapprov->user->name }}
-                                </p>
+                                </span>
                             </div>
-                            <div class="flex mb-4">
+                            <div class="flex mb-4 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24"
+                                    class="icon icon-tabler icon-tabler-building-warehouse" width="16" height="16"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -56,9 +56,9 @@
                                     <path d="M13 13h4v8h-10v-6h6"></path>
                                     <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
                                 </svg>
-                                <p class="text-sm ml-2">
+                                <span class="text-sm ml-2">
                                     <strong>WAREHOUSE LOCATION :</strong> {{ $whapprov->warehouse->name }}
-                                </p>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                                     <polyline points="9 11 12 14 22 4"></polyline>
                                                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                                     </path>
-                                                </svg>Open</p>
+                                                </svg>upload SN</p>
                                         </button>
                                     </div>
                                 </td>

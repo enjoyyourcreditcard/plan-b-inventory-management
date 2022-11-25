@@ -75,21 +75,21 @@ function Categorys() {
                 )
 
             }, 
-            {
-                Header: 'Total Segment',
-                accessor: 'total_segment',
-                Cell: tableProps => (
-                    <>
+            // {
+            //     Header: 'Total Segment',
+            //     accessor: 'total_segment',
+            //     Cell: tableProps => (
+            //         <>
 
-                        <a href='#' className='text-primary '>{tableProps.row.original.segments.length}</a>
+            //             <a href='#' className='text-primary '>{tableProps.row.original.segments.length}</a>
 
                        
 
-                    </>
+            //         </>
 
-                )
+            //     )
 
-            },
+            // },
 
             {
                 // Header: `Location `,

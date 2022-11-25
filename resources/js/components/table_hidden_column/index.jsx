@@ -1,24 +1,24 @@
 function TabelHiddenColumn(props) {
     return (
         <>
-            <div class="dropdown">
+            <div className="dropdown">
                 <button
-                    class="dropdown-toggle btn px-2 box"
+                    className="dropdown-toggle btn px-2 box"
                     aria-expanded="false"
                     data-tw-toggle="dropdown"
                 >
-                    <span class="w-5 h-5 flex items-center justify-center">
+                    <span className="w-5 h-5 flex items-center justify-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="icon icon-tabler icon-tabler-adjustments"
+                            className="icon icon-tabler icon-tabler-adjustments"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
-                            stroke-width="2"
+                            strokeWidth="2"
                             stroke="currentColor"
                             fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         >
                             <path
                                 stroke="none"
@@ -37,11 +37,11 @@ function TabelHiddenColumn(props) {
                         </svg>
                     </span>
                 </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
+                <div className="dropdown-menu w-40">
+                    <ul className="dropdown-content">
                         {props.allColumns.map((column) => (
-                            <li>
-                                <button class="dropdown-item" href="#">
+                            <li key={column.id}>
+                                <button className="dropdown-item" href="#">
                                     <input
                                         type="checkbox"
                                         {...column.getToggleHiddenProps()}
@@ -51,11 +51,11 @@ function TabelHiddenColumn(props) {
                             </li>
                         ))}
                     </ul>
-                    {/* {props.allColumns.map(column => (<li><button class="dropdown-item" href="#"><input type="checkbox" {...column.getToggleHiddenProps()} />&nbsp; {column.Header}</button><li>))} */}
-                    {/* <ul class="dropdown-content">
+                    {/* {props.allColumns.map(column => (<li key={column.id}><button className="dropdown-item" href="#"><input type="checkbox" {...column.getToggleHiddenProps()} />&nbsp; {column.Header}</button><li key={column.id}>))} */}
+                    {/* <ul className="dropdown-content">
                              
-                            <li>
-                                <a href="" class="dropdown-item">
+                            <li key={column.id}>
+                                <a href="" className="dropdown-item">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -63,12 +63,12 @@ function TabelHiddenColumn(props) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         icon-name="printer"
                                         data-lucide="printer"
-                                        class="lucide lucide-printer w-4 h-4 mr-2"
+                                        className="lucide lucide-printer w-4 h-4 mr-2"
                                     >
                                         <polyline points="6 9 6 2 18 2 18 9"></polyline>
                                         <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path>
@@ -82,8 +82,8 @@ function TabelHiddenColumn(props) {
                                     Print
                                 </a>
                             </li>
-                            <li>
-                                <a href="" class="dropdown-item">
+                            <li key={column.id}>
+                                <a href="" className="dropdown-item">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -91,12 +91,12 @@ function TabelHiddenColumn(props) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         icon-name="file-text"
                                         data-lucide="file-text"
-                                        class="lucide lucide-file-text w-4 h-4 mr-2"
+                                        className="lucide lucide-file-text w-4 h-4 mr-2"
                                     >
                                         <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
                                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -122,8 +122,8 @@ function TabelHiddenColumn(props) {
                                     Export to Excel
                                 </a>
                             </li>
-                            <li>
-                                <a href="" class="dropdown-item">
+                            <li key={column.id}>
+                                <a href="" className="dropdown-item">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -131,12 +131,12 @@ function TabelHiddenColumn(props) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         icon-name="file-text"
                                         data-lucide="file-text"
-                                        class="lucide lucide-file-text w-4 h-4 mr-2"
+                                        className="lucide lucide-file-text w-4 h-4 mr-2"
                                     >
                                         <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path>
                                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -165,9 +165,9 @@ function TabelHiddenColumn(props) {
                         </ul> */}
                 </div>
             </div>
-            {/* <div class="btn-group h-25 ">
-                <button type="button" class=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            {/* <div className="btn-group h-25 ">
+                <button type="button" className=" btn btn-outline-light  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <circle cx="6" cy="10" r="2"></circle>
                         <line x1="6" y1="4" x2="6" y2="8"></line>
@@ -180,9 +180,9 @@ function TabelHiddenColumn(props) {
                         <line x1="18" y1="9" x2="18" y2="20"></line>
                     </svg>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {props.allColumns.map(column => (
-                        <button class="dropdown-item" href="#"><input type="checkbox" {...column.getToggleHiddenProps()} />&nbsp; {column.Header}</button>
+                        <button className="dropdown-item" href="#"><input type="checkbox" {...column.getToggleHiddenProps()} />&nbsp; {column.Header}</button>
                     ))}
 
                 </div>

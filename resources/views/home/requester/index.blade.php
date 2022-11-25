@@ -493,6 +493,6 @@
 
 @endsection
 
-@section('javasScript')
+@section('javaScript')
 <script src="{{ Asset('js/views/requester/index.js') }}"></script>
 @endSection

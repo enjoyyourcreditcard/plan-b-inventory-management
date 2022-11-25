@@ -16,6 +16,7 @@ use App\Http\Controllers\PartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\InboundController;
 use App\Http\Controllers\RequestController;
@@ -247,8 +248,9 @@ Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['auth']], 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware' => ['auth']], function () {
     Route::get('/', [TransactionController::class, 'index'])->middleware("auth")->name("get.home");
     Route::get('/outbound', [TransactionController::class, 'viewOutbound'])->middleware("auth")->name("view.outbound");
-
     Route::get('/detail/grf/{code}', [TransactionController::class, 'show'])->middleware("auth")->name('get.detail.grf');
+    Route::get('/return-stock', [TransactionController::class, 'returnStockIndex'])->name('get.return.stock');
+    Route::post('/{id}', [TransactionController::class, 'returnStockStore'])->name('post.return.stock');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
     // <Rou></Rou>te::post('/', [StockController::class, 'store'])->name('post.store');
@@ -428,13 +430,13 @@ Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['
 * Approval Routes
 *--------------------------------------------------------------------------
 */
+
 Route::post('/transaction/approve/WH', [WarehouseTransactionController::class, 'postApproveWH'])->middleware("auth")->name("post.approve.WH");
 Route::post('/transaction/approve/return/WH', [WarehouseReturnController::class, 'postApproveReturnWH'])->middleware("auth")->name("post.approve.return.WH");
 Route::post('/transaction/approve/IC', [TransactionController::class, 'postApproveIC'])->name("post.approve.IC");
-Route::post('/transaction/reject/IC', [TransactionController::class, 'postRejectIC'])->middleware("auth")->name("post.reject.IC");
+Route::get('/transaction/reject/IC', [TransactionController::class, 'postRejectIC'])->middleware("auth")->name("post.reject.IC");
 Route::post('/transaction/approve/SJ', [TransactionController::class, 'postApproveSJ'])->middleware("auth")->name("post.approve.SJ");
 Route::get('/transaction/approve/pickup/{id}', [UserTransactionController::class, 'getApprovePickup'])->middleware("auth")->name("post.approve.pickup");
-
 
 
 

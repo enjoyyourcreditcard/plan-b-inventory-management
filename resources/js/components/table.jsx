@@ -1,7 +1,7 @@
 function Table(props) {
     return (
         <>
-            <div class="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <div className="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
                 <table
                     {...props.getTableProps()}
                     // style={{ position: "relative", borderCollapse: "collapse" }}
@@ -12,7 +12,7 @@ function Table(props) {
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column) => (
                                     <th
-                                        class="whitespace-nowrap uppercase"
+                                        className="whitespace-nowrap uppercase"
                                         {...column.getHeaderProps(
                                             column.getSortByToggleProps()
                                         )}
@@ -28,7 +28,7 @@ function Table(props) {
                             <>
                                 <tr>
                                     <td
-                                        colspan="100%"
+                                        colSpan="100%"
                                         style={{ textAlign: "center" }}
                                     >
                                         No records found
@@ -39,7 +39,7 @@ function Table(props) {
                             props.page.map((row, i) => {
                                 props.prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()} class="intro-x">
+                                    <tr {...row.getRowProps()} className="intro-x">
                                         {row.cells.map((cell) => {
                                             return (
                                                 <td

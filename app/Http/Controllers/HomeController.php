@@ -26,7 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $notifications =  $this->notificationService->handleAllNotification();
-        return view('home',);
+        $notifications =  $this->notificationService->handleAllNotification();
+        if (Auth::user()->role == 'requester') {
+            return redirect()->route('request.get.home');
+        }
+
+        if (Auth::user()->role == 'warehouse') {
+            return redirect()->route('warehouse.get.dashboard');
+        }
+
+        return view('home', ['notifications' => $notifications]);
     }
 }

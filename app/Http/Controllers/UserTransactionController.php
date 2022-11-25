@@ -45,7 +45,7 @@ class UserTransactionController extends Controller
             $grfs = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
             
-            return view('request.request', [
+            return view('home.requester.index', [
                 // 'notifications' => $notifications,
                 'grf_code' => $grf_code,
                 'grfsClosed' => $grfs->whereIn('status', ['closed', "reject"]),
@@ -109,7 +109,7 @@ class UserTransactionController extends Controller
             $segments = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
-            return view( "request.show", [
+            return view( "transaction.requester.show", [
                 // 'notifications' => $notifications,
                 'grf' => $grf,
                 'warehouses' => $warehouses,

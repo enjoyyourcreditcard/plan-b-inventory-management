@@ -19,14 +19,17 @@ function TransactionForm(props) {
     const [part, setPart] = useState([]);
     const [qty, setQty] = useState([]);
     const [brand, setBrand] = useState([]);
+    const [brandOption, setBrandOption] = useState([]);
     const [error, setError] = useState([]);
     const [totalQty, setTotalQty] = useState([]);
+    // const [totalQty, setTotalQty] = useState();
 
     useEffect(() => {
         async function getData() {
             api.getRequestFormByGRF(props.grfcode).then((response) => {
                 var selectQtyRaw = [];
                 var parts = [];
+                var brandOption_raw = [];
                 var qty_raw = [];
                 var brand_raw = [];
                 var error_raw = [];
@@ -34,6 +37,7 @@ function TransactionForm(props) {
                 for (let i = 0; i < response.data.data.length; i++) {
                     selectQtyRaw[i] = 1;
                     parts[i] = [];
+                    brandOption_raw[i] = [[{id:null,name:"select option"}]];
                     qty_raw[i] = [];
                     brand_raw[i] = [];
                     error_raw[i] = false;
@@ -44,6 +48,7 @@ function TransactionForm(props) {
                 setBrand(brand_raw);
                 setError(error_raw);
                 setTotalQty(totalQty_raw);
+                setBrandOption(brandOption_raw);
                 setSelectQty(selectQtyRaw);
                 setData(response.data.data);
                 setLoadingData(false);
@@ -55,12 +60,26 @@ function TransactionForm(props) {
     }, []);
 
     const addSelect = (index) => {
+
+        let newBrandOption = brandOption.slice();
+
+        newBrandOption[index].push([{id:null, name:"Select Option"}]);
+        // console.log(newBrandOption[0])
+        setBrandOption(newBrandOption);
+    
         let newSelectQty = [...selectQty];
         newSelectQty[index] = selectQty[index] + 1;
         setSelectQty(newSelectQty);
+
+        
     };
 
     const changePart = (event, index, i) => {
+
+        var brand = brandOption.slice();
+        brand[index][i] = [data[index].segment.parts.find(o => o.id === event.value).brand];
+        setBrandOption(brand);
+
         var parts = part.slice();
         parts[index][i] = event.value;
         setPart(parts);
@@ -69,7 +88,6 @@ function TransactionForm(props) {
     const changeBrand = (event, index, i) => {
         var brands = brand.slice();
         brands[index][i] = event.value;
-        // console.log(brands)
         setBrand(brands);
     };
     const changeQuantity = (event, index, i, max) => {
@@ -80,8 +98,6 @@ function TransactionForm(props) {
         setQty(qty_raw);
         var total = simpleArraySum(qty[index]);
         total_raw[index] = isNaN(total) ? 0 : total;
-        // console.log(total_raw);
-
         setTotalQty(total_raw);
 
         if (simpleArraySum(qty[index]) > parseInt(max)) {
@@ -104,9 +120,6 @@ function TransactionForm(props) {
             margeBrands.push(...brand[i]);
             margeQty.push(...qty[i]);
         }
-        // console.log(margeParts);
-        // console.log("brand:"+margeBrands);
-        // console.log(margeQty);
 
         api.postTransactionApprovedIC(props.grf_id, margeParts,margeBrands, margeQty).then(
             (response) => {
@@ -116,7 +129,6 @@ function TransactionForm(props) {
             }
         );
     };
-
     return (
         <>
             <div className="intro-y box p-5">
@@ -156,7 +168,8 @@ function TransactionForm(props) {
                                                             changePart(
                                                                 e,
                                                                 index,
-                                                                i
+                                                                i,
+
                                                             )
                                                         }
                                                         className="part_id mt-2"
@@ -169,7 +182,7 @@ function TransactionForm(props) {
                                                         key={i}
                                                     />
                                                 ))}
-
+ 
                                                 <button
                                                     type="button"
                                                     onClick={() =>
@@ -195,12 +208,14 @@ function TransactionForm(props) {
                                                             )
                                                         }
                                                         className="part_id mt-2 "
-                                                        options={item.brand.map(
+                                                        isDisabled={brandOption[index][i][0].id === null}
+                                                        options={brandOption[index][i].map(
                                                             (d) => ({
                                                                 value: d.id,
                                                                 label: d.name,
                                                             })
                                                         )}
+
                                                         key={i}
                                                     />
                                                 ))}
@@ -248,15 +263,16 @@ function TransactionForm(props) {
                         </table>
                     </div>
                     <div class="text-right mt-5">
-                        <button
+                    {/* http://localhost:8000/transaction/reject/IC */}
+                        <a
+                        href={"/transaction/reject/IC?id="+props.id}
                             type="button"
-                            onClick={() => console.log("OKEY")}
-                            class="btn btn-outline-secondary w-24 mr-1"
+                            class="btn btn-outline-danger w-24 mr-1"
                         >
-                            Cancel
-                        </button>
+                            Reject
+                        </a>
                         <button type="submit" class="btn btn-primary w-24">
-                            Save
+                            Approve
                         </button>
                     </div>
                 </form>

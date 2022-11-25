@@ -89,18 +89,18 @@ function Brands() {
                 )
 
             },
-            {
-                Header: 'Total Part',
-                accessor: 'total_part',
-                Cell: tableProps => (
-                    <>
+            // {
+            //     Header: 'Total Part',
+            //     accessor: 'total_part',
+            //     Cell: tableProps => (
+            //         <>
 
-                        <a href='#' className='text-primary text-center'>{tableProps.row.original.parts_count}</a>
-                    </>
+            //             <a href='#' className='text-primary text-center'>{tableProps.row.original.parts_count}</a>
+            //         </>
 
-                )
+            //     )
 
-            },
+            // },
             {
                 // Header: `Location `,
                 Header: () => <p className="text-center">ACTION</p>,

@@ -20,7 +20,7 @@ class StockService
     public function handleAllStock()
     {
         $stocks = $this->stock->all();
-        return($stocks);
+        return ($stocks);
     }
 
     public function handleGetStockByPartId($id)
@@ -28,7 +28,7 @@ class StockService
         // $stocks = $this->stock->with('warehouse')->get();
         $stocks = $this->stock->where('part_id', $id)->with('warehouse')->get();
         // dd($stocks->warehouse_id);
-        return($stocks);
+        return ($stocks);
     }
 
     public function handleStoreStock($request)
@@ -49,7 +49,7 @@ class StockService
 
         $this->stock->create($validatedData);
 
-        return('Stock has been stored');
+        return ('Stock has been stored');
     }
 
     public function handleUpdateConditionStock($id, $request)
@@ -62,56 +62,60 @@ class StockService
 
         $this->stock->update($validatedData);
 
-        return('Stock has been stored');
+        return ('Stock has been stored');
     }
 
     public function handleDeleteStock($id)
     {
         $this->stock->destroy($id);
 
-        return('Stock has been deleted');
+        return ('Stock has been deleted');
     }
 
     public function handleAllStockApi(Request $request)
-    {   
+    {
         $part_id = $request->input('part_id');
         $warehouse_id = $request->input('warehouse_id');
         $condition = $request->input('condition');
         $stock_status = $request->input('stock_status');
         $status = $request->input('status');
         $created_at = $request->input('created_at');
-        $stocks = $this->stock
-        ->when($part_id, function ($query, $part_id){
-            return $query->where('part_id', $part_id);
-        })
-        ->when($warehouse_id, function ($query, $warehouse_id){
-            return $query->where('warehouse_id', $warehouse_id);
-        })
-        ->when($condition, function ($query, $condition){
-            return $query->where('condition', $condition);
-        })
-        ->when($stock_status, function ($query, $stock_status){
-            return $query->where('stock_status', $stock_status);
-        })
-        ->when($status, function ($query, $status){
-            return $query->where('status', $status);
-        })
-        ->when($created_at, function ($query, $created_at){
-            return $query->where('created_at', $created_at);
-        })->with('part')->with('warehouse:id,name')->with('part.brand:id,name')->with('part.segment:id,name')->with('part.segment.category:id,name')
-        ->get()->map(function($item){
-            $item->wh_name = $item->warehouse->name;
-            $item->brand_name = $item->part->brand->name;
-            $item->category_name = $item->part->segment->category->name;
-            $item->part_name = $item->part->name;
-            $item->uom = $item->part->uom;
-            $item->sn_status = $item->part->sn_status;
-            $item->color = $item->part->color;
-            
-            return $item;
+
+        $part  = $this->part->with("brand")->get()->map(function ($item) use(
+        $part_id,
+        $warehouse_id,
+        $condition,
+        $stock_status,
+        $status,
+        $created_at) {
+            $item->stock = $this->stock
+                ->when($part_id, function ($query, $part_id) {
+                    return $query->where('part_id', $part_id);
+                })
+                ->when($warehouse_id, function ($query, $warehouse_id) {
+                    return $query->where('warehouse_id', $warehouse_id);
+                })
+                ->when($condition, function ($query, $condition) {
+                    return $query->where('condition', $condition);
+                })
+                ->when($stock_status, function ($query, $stock_status) {
+                    return $query->where('stock_status', $stock_status);
+                })
+                ->when($status, function ($query, $status) {
+                    return $query->where('status', $status);
+                })
+                ->when($created_at, function ($query, $created_at) {
+                    return $query->where('created_at', $created_at);
+                })
+                ->where("part_id",$item->id)
+                ->count();
+                return $item;
         });
-        
-        return($stocks);
+
+
+
+
+        return ($part);
     }
 
     public function handleStoreStockApi(Request $request)
@@ -130,7 +134,7 @@ class StockService
         return ('Data has been stored');
     }
 
-    
+
     public function handleUpdateStockApi(Request $request, $id)
     {
         $this->stock->find($id)->update([
@@ -142,7 +146,7 @@ class StockService
 
     public function handleDeleteStockApi($id)
     {
-        $this->stock->find($id)->delete();        
+        $this->stock->find($id)->delete();
         return ('Data has been delete');
     }
 }

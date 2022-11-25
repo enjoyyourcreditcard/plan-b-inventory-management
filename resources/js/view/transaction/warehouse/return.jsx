@@ -53,10 +53,8 @@ function Return(props) {
     const columns = React.useMemo(
         () => [
             {
-                //Add this line to the column definition
                 Header: "Grf",
                 accessor: "grf_code",
-                // style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: (tableProps) => (
                     <>
                         <a
@@ -71,143 +69,168 @@ function Return(props) {
                     </>
                 ),
             },
-            {
-                //Add this line to the column definition
-                Header: "Status",
-                accessor: "status",
-                // style: { 'maxWidth': 10 },//Add this line to the column definition
-                Cell: (tableProps) => {
-                    switch (tableProps.row.original.status) {
-                        case "submited":
-                            return (
-                                <>
-                                    <div class="flex items-center justify-center whitespace-nowrap text-pending">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            icon-name="check-square"
-                                            data-lucide="check-square"
-                                            class="lucide lucide-check-square w-4 h-4 mr-2"
-                                        >
-                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                        </svg>{" "}
-                                        Submited
-                                    </div>
-                                </>
-                            );
-                        case "ic_approved":
-                            return (
-                                <>
-                                    <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            icon-name="check-square"
-                                            data-lucide="check-square"
-                                            class="lucide lucide-check-square w-4 h-4 mr-2"
-                                        >
-                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                        </svg>{" "}
-                                        Approved By IC
-                                    </div>
-                                </>
-                            );
-                        case "delivery_approved":
-                            return (
-                                <>
-                                    <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            icon-name="check-square"
-                                            data-lucide="check-square"
-                                            class="lucide lucide-check-square w-4 h-4 mr-2"
-                                        >
-                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                        </svg>{" "}
-                                        Approved By Warehouse
-                                    </div>
-                                </>
-                            );
-                        case "user_pickup":
-                            return (
-                                <>
-                                    <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            icon-name="check-square"
-                                            data-lucide="check-square"
-                                            class="lucide lucide-check-square w-4 h-4 mr-2"
-                                        >
-                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                        </svg>{" "}
-                                        User Pickup
-                                    </div>
-                                </>
-                            );
-                        case "closed":
-                            return (
-                                <>
-                                    <div class="flex items-center justify-center whitespace-nowrap text-success">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            icon-name="check-square"
-                                            data-lucide="check-square"
-                                            class="lucide lucide-check-square w-4 h-4 mr-2"
-                                        >
-                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                        </svg>{" "}
-                                        Closed
-                                    </div>
-                                </>
-                            );
-                        default:
-                            return "foo";
-                    }
-                },
-            },
+            // {
+            //     //Add this line to the column definition
+            //     Header: "Status",
+            //     accessor: "status",
+            //     // style: { 'maxWidth': 10 },//Add this line to the column definition
+            //     Cell: (tableProps) => {
+            //         switch (tableProps.row.original.status) {
+            //             case "submited":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-pending">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             Submited
+            //                         </div>
+            //                     </>
+            //                 );
+            //             case "ic_approved":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-success">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             Approved By IC
+            //                         </div>
+            //                     </>
+            //                 );
+            //             case "delivery_approved":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-success">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             Approved By Warehouse
+            //                         </div>
+            //                     </>
+            //                 );
+            //             case "user_pickup":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-success">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             User Pickup
+            //                         </div>
+            //                     </>
+            //                 );
+            //                 case "return_ic_approved":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-success">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             IC Approve Return
+            //                         </div>
+            //                     </>
+            //                 );
+            //             case "closed":
+            //                 return (
+            //                     <>
+            //                         <div class="flex items-center justify-center whitespace-nowrap text-success">
+            //                             <svg
+            //                                 xmlns="http://www.w3.org/2000/svg"
+            //                                 width="24"
+            //                                 height="24"
+            //                                 viewBox="0 0 24 24"
+            //                                 fill="none"
+            //                                 stroke="currentColor"
+            //                                 stroke-width="2"
+            //                                 stroke-linecap="round"
+            //                                 stroke-linejoin="round"
+            //                                 icon-name="check-square"
+            //                                 data-lucide="check-square"
+            //                                 class="lucide lucide-check-square w-4 h-4 mr-2"
+            //                             >
+            //                                 <polyline points="9 11 12 14 22 4"></polyline>
+            //                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            //                             </svg>{" "}
+            //                             Closed
+            //                         </div>
+            //                     </>
+            //                 );
+            //             default:
+            //                 return "foo";
+            //         }
+            //     },
+            // },
             {
                 //Add this line to the column definition
                 Header: "PIC",

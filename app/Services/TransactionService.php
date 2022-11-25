@@ -49,7 +49,7 @@ class TransactionService
                 $requestForm->brand_id = $brand[$i];
                 $requestForm->part_id = $parts[$i];
                 $requestForm->quantity = $quantity[$i];
-                $requestForm->remarks = "asdasd";
+                $requestForm->remarks = "grf_id :".$req->id;
                 $requestForm->save();
             }
         }
@@ -155,5 +155,25 @@ class TransactionService
 
             return $deliveryApprovedDates;
         }
+    }
+
+    public function handleGetReturnStockGrf(){
+        $grfs = $this->grf->with('user', 'requestForms.part')->where([['type', 'request'], ['status', 'return']])->orderBy('updated_at', 'desc')->get();
+        return $grfs;
+    }
+
+    public function handleStoreReturnStockGrf($id){
+        $grf = $this->grf->find($id)->update([
+            'status' => 'return_ic_approved',
+            'updated_at' => now()
+        ]);
+
+        $this->timeline->create([
+            'grf_id' => $id,
+            'status' => 'return_ic_approved',
+            'created_at' => now(),
+        ]);
+
+        return $grf;
     }
 }

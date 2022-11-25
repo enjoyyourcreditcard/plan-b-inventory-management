@@ -91,7 +91,7 @@ class TransactionController extends Controller
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->WarehouseService->handleAllWareHouse();
 
-        return view('transaction.IC.detail_transaction', [
+        return view('transaction.IC.detail-transaction', [
             // 'notifications' => $notifications,
             'requestForms' => $requestForms,
             'stock' => $stock,
@@ -157,11 +157,9 @@ class TransactionController extends Controller
 
     public function postRejectIC(Request $req)
     {
-
-        // dd($req->id);
         try {
             $this->transactionService->handlePostRejectIC($req->id);
-            return Redirect::back();
+            return Redirect()->route("transaction.ic.view.outbound");
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -195,6 +193,8 @@ class TransactionController extends Controller
     public function getAllSegmentByGRF($code)
     {
         $requestForms = $this->requestFormService->handleShowRequestForm($code);
+        // dd($requestForms);
+        // dd($this->brandService->handleBrandBySegment(1));
         foreach ($requestForms as $key => $item) {
             $requestForms[$key]->brand = $this->brandService->handleBrandBySegment($item->segment_id);
         };
@@ -240,5 +240,41 @@ class TransactionController extends Controller
     public function viewOutbound()
     {
         return view('transaction.IC.outbound');
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * Home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function returnStockIndex(){
+        try {
+            return view('transaction.IC.return-stock');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * Home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function returnStockStore($id){
+        try {
+            $this->transactionService->handleStoreReturnStockGrf($id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * API home IC return stock
+    *--------------------------------------------------------------------------
+    */
+    public function getAllGRFReturnStock(){
+        return ResponseJSON($this->transactionService->handleGetReturnStockGrf(), 200);
     }
 }

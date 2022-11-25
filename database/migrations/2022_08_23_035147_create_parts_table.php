@@ -22,6 +22,7 @@ class CreatePartsTable extends Migration
             $table->string('im_code')->nullable();
             $table->string('inventory_code')->nullable();
             $table->string('orafin_code')->nullable();
+            $table->string('brand_name');
             $table->string('name');
             $table->enum('uom', ['METER', 'SET', 'EACH', 'ROLL', 'UNIT', 'BATANG', 'LITER', 'KALENG', 'KG', 'KUBIC', 'PACK']);
             $table->enum('sn_status', ['SN', 'NON SN']);

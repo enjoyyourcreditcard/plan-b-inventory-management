@@ -77,17 +77,7 @@ function Segments() {
                 )
 
             },
-            {
-                Header: 'Total Part',
-                accessor: 'total_part',
-                Cell: tableProps => (
-                    <>
-                        <a href='#' className='text-primary '>{tableProps.row.original.parts_count}</a>
-                    </>
-
-                )
-
-            },
+         
 
             {
                 // Header: `Location `,

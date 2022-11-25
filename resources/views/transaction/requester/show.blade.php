@@ -353,7 +353,7 @@
                         </div>
                         <div class="mt-3">
                             <label class="form-label">Material brand</label>
-                            <select name="brand_id" data-placeholder="Select brand" disabled class="tom-select w-full">
+                            <select name="brand_id" data-placeholder="Select brand"  disabled class="tom-select w-full">
                                 <option></option>
                                 @foreach ( $brands as $brand )
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
