@@ -1,7 +1,6 @@
-{{-- @dd($grfs) --}}
 @extends('layouts.app')
-@section('breadcrumb')
 
+@section('breadcrumb')
 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Transaction</a></li>
@@ -9,54 +8,54 @@
     </ol>
 </nav>
 @endsection
+
 @section('content')
 <h2 class="intro-y text-lg font-medium mt-10 mb-4">Inbound Master</h2>
-
 <div class="grid grid-cols-12 gap-4 w-full">
-
     <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
-
         <div class="box p-5 rounded-md">
-
-            <h2 class="intro-y text-lg font-medium ">Excel</h2>
-
-            <div class="pt-5 font-medium mb-4">
-                <a href="/inbound/excel"
-                    class=" btn !bg-orange-600 mr-3 whitespace-nowrap text-white rounded-full w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-diff w-4 h-4 mx-2" viewBox="0 0 16 16">
+            <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div class="font-medium text-base truncate">Excel</div>
+            </div>
+            {{-- <h2 class="intro-y text-lg font-medium ">Excel</h2> --}}
+            <div class="font-medium ">
+                <a href="/inbound/excel" class="btn !bg-slate-100 whitespace-nowrap text-emerald-900 rounded-full w-full transition duration-200 ease-in-out hover:text-emerald-800 hover:!bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-diff w-4 h-4 mr-2" viewBox="0 0 16 16">
                         <path d="M8 5a.5.5 0 0 1 .5.5V7H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V8H6a.5.5 0 0 1 0-1h1.5V5.5A.5.5 0 0 1 8 5zm-2.5 6.5A.5.5 0 0 1 6 11h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
                     </svg>
-                    Template Excel
+                    <span>Template Excel</span>
                 </a>
                 </br>
                 <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#inbound-post-excel-modal"
-                    class="btn !bg-green-900 mr-3 whitespace-nowrap text-white rounded-full mt-3 w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel w-4 h-4 mx-2" viewBox="0 0 16 16">
+                    class="btn !bg-emerald-900 whitespace-nowrap text-white rounded-full mt-3 w-full transition duration-200 ease-in-out hover:!bg-emerald-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel w-4 h-4 mr-2" viewBox="0 0 16 16">
                         <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
                       </svg>
-                    Import Excel
+                    <span>Import Excel</span>
                 </a>
             </div>
 
-            <h2 class="intro-y text-lg font-medium mt-5">Warehouse Inbound</h2>
-
-            <div class=" border-slate-200/60 dark:border-darkmode-400 pt-5 font-medium mt-2">
+            @if(count($inbound))
+            <div class="font-medium border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5">
                 <form action="{{ Route( "inbound.post.store.grf" ) }}" method="POST" class="">
                     @csrf
-                    <button name="inbound_grf_code" value="{{ $inbound_grf_code }}" class="btn !bg-green-900 mr-3 whitespace-nowrap rounded-full nav-item flex-1 mx-auto w-full text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-send w-4 h-4 mx-2" viewBox="0 0 16 16">
-                        <path
-                            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-                    </svg>Warehouse Inbound</button>
+                    <input type="text" name="status" value="draft" hidden>
+                    <button type="submit" class="btn !bg-emerald-900 mr-3 whitespace-nowrap rounded-full nav-item flex-1 mx-auto w-full text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send w-4 h-4 mx-2" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                        </svg> Warehouse Inbound
+                    </button>
                 </form>
             </div>
+            @endif
 
 
         </div>
-        
-        <div class="border-slate-200/60 dark:border-darkmode-400 mt-2 h-80 overflow-y-scroll">
+
+        @if(count($inbound))
+        <div class="border-slate-200/60 dark:border-darkmode-400 mt-2 h-80 overflow-y-auto">
             @foreach( $grfs->where( 'status', '!=', 'closed' ) as $grf )
             <div class="box px-2 py-3 flex-1 mb-2">
                 <div class="flex items-center">
@@ -100,7 +99,7 @@
 
                             @endswitch
                         </div>
-                        <div class="font-medium text-slate-800 text-center py-1 truncate"> {{ $grf->inbound_grf_code }} </div>
+                        <div class="font-medium text-slate-800 text-center py-1 truncate"> Request {{ $grf->id }} </div>
                     </div>
                     <div class="dropdown ml-auto">
                         <button class="dropdown-toggle" aria-expanded="false" data-tw-toggle="dropdown">
@@ -123,7 +122,7 @@
                                     |--------------------------------------------------------------------------
                                     / * --}}
                                 <li>
-                                    <a href="{{ Route( "inbound.get.detail", str_replace( "/", "~", strtolower( $grf->inbound_grf_code ) ) ) }}"
+                                    <a href="{{ Route( "inbound.get.detail", $grf->id ) }}"
                                         class="dropdown-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-info-circle w-4 h-4 mr-2"
@@ -208,70 +207,7 @@
             </div>
             @endforeach
         </div>
-
-        {{-- <div class="box p-5 rounded-md mt-3">
-            <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-                <div class="font-medium text-base truncate">Inbound Details</div>
-            </div>
-            <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    icon-name="clipboard" data-lucide="clipboard"
-                    class="lucide lucide-clipboard w-4 h-4 text-slate-500 mr-2">
-                    <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path>
-                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                </svg> Unique ID: <span class="underline decoration-dotted ml-1">UNIK UNIK UNIK</span>
-            </div>
-            <div class="flex items-center mt-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    icon-name="user" data-lucide="user" class="lucide lucide-user w-4 h-4 text-slate-500 mr-2">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg> Name: <span class="underline decoration-dotted ml-1">FATTAN</span>
-            </div>
-
-            @if( $warehouse )
-            <div class="flex items-center mt-3">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-building-warehouse w-4 h-4 text-slate-500 mr-2" width="24"
-                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M3 21v-13l9 -4l9 4v13"></path>
-                    <path d="M13 13h4v8h-10v-6h6"></path>
-                    <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
-                </svg> Warehouse: <span
-                    class="underline decoration-dotted ml-1 whitespace-nowrap">WAREHOUSE ANU</span>
-
-                <button data-tw-toggle="modal" data-tw-target="#modal-change-warehouse"
-                    class="flex items-center ml-auto transition duration-200 ease-in-ou text-white pl-2 py-2 bg-cyan-600 text-center rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-pencil-square w-4 h-4 mr-2 text-ms" viewBox="0 0 16 16">
-                        <path
-                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                        <path fill-rule="evenodd"
-                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                    </svg>
-                </button>
-
-            </div>
-            @endif
-
-            <div class="border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
-                <button type="submit"
-                    class="btn btn-warning mr-3 whitespace-nowrap rounded-full nav-item flex-1 mx-auto w-full"
-                    id="deleteAllSelectedRecord" form="inboundAllForm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-send w-4 h-4 mx-2" viewBox="0 0 16 16">
-                        <path
-                            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-                    </svg>Fix All Data</button>
-            </div>
-
-
-        </div> --}}
-
+        @endif
 
     </div>
 
@@ -282,40 +218,16 @@
                     <tr>
                         <th class=" whitespace-normal">Part</th>
                         <th class=" whitespace-normal">Segment</th>
-                        {{-- <th class=" whitespace-normal">Orafin Code</th> --}}
                         <th class=" whitespace-normal">Quantity</th>
-                        
-                        {{-- <th class="text-center whitespace-nowrap">ACTIONS</th> --}}
-                        
                     </tr>
                 </thead>
                 <tbody>
     
                     @forelse ( $inbound as $inbounds )
                     <tr class="intro-x">
-    
                         <td class="font-medium ml-2 mr-6 text-left w-6/12"> <a href="" >{{ $inbounds['part'] }}</a> </td>
                         <td class="text-left w-3/12">{{ $inbounds['segment'] }}</td>
                         <td class="text-left w-2/12"> {{ $inbounds['quantity'] }}</td>
-                        {{-- @if( $inbounds['part'])
-                        <td class=" w-2">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center text-danger"
-                                    href="{{ Route( "inbound.get.delete", "inboundsid" ) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2"
-                                        class="lucide lucide-trash-2 w-4 h-4 mr-1">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">
-                                        </path>
-                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                    </svg>
-                                </a>
-                            </div>
-                        </td>
-                        @endif --}}
                     </tr>
                     @empty
                     <tr>
@@ -397,12 +309,8 @@
             </select>
         </div>
         <!-- END: Pagination -->
-
-</div>
-
-
+    </div>
 <!-- END: Data List -->
-
 </div>
 
 {{-- *
@@ -410,38 +318,41 @@
 *| Modal Confirmation
 *|--------------------------------------------------------------------------
 *--}}
-
 <div id="inbound-post-excel-modal" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="p-5 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                        class="bi bi-envelope-paper text-slate-600 mx-auto mt-3" viewBox="0 0 16 16">
-                        <path
-                            d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-spreadsheet mx-auto mt-3 text-emerald-900" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                        <path d="M8 11h8v7h-8z"></path>
+                        <path d="M8 15h8"></path>
+                        <path d="M11 11v7"></path>
                     </svg>
                 </div>
-                <form action="{{Route('inbound.post.excel.import')}}" method="POST" enctype="multipart/form-data"
-                    class="px-5 pb-8 text-center">
+                <form action="{{Route('inbound.post.excel.import')}}" method="POST" enctype="multipart/form-data" class="px-5">
                     @csrf
-
                     <div class="mb-3">
-                        <label for="inboundImportExcel" class="text-lg">Import Excel to Inbound</label>
-                        <input class="form-control outline outline-1 p-3 mt-3" type="file" id="importExcel" name="excel"
-                            required>
+                        <label>Warehouse</label>
+                        <select name="warehouse_id" data-placeholder="Select warehouse to store" class="tom-select w-full" required>
+                            @foreach ($warehouses as $warehouse)
+                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-
-                    <div class="modal-footer">
-                        <a data-tw-dismiss="modal" class="btn w-24 mr-2 ml-auto !bg-zinc-200 !text-zinc-900">Cancel</a>
-                        {{-- <a href="/inbound/row" class="btn btn-success my-3" target="_blank">EXPORT ROW</a> --}}
-                        <button type="submit" class="btn !bg-green-800 !text-zinc-200 w-24">Submit</button>
+                    <div class="mb-3">
+                        <label for="inboundImportExcel">Import Excel to Inbound</label>
+                        <input class="form-control border border-slate-100 p-3" type="file" id="importExcel" name="excel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                    </div>
+                    <div class="modal-footer flex gap-2 justify-center items-center">
+                        <a data-tw-dismiss="modal" class="btn !bg-zinc-200 !text-zinc-900 rounded-full px-8">Cancel</a>
+                        <button type="submit" class="btn !bg-emerald-900 !text-zinc-200 rounded-full px-8">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-
 @endsection

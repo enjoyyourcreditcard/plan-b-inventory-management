@@ -17,12 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('grf_inbound_id');
             $table->foreign('grf_inbound_id')->references('id')->on('inbound_grfs');
-            $table->unsignedBigInteger('inbound_id');
+            $table->unsignedBigInteger('inbound_id')->nullable();
             $table->foreign('inbound_id')->references('id')->on('inbounds');
-            $table->string('condition')->default('good new');
-            $table->integer('quantity');
-            $table->string('remarks')->nullable();
-            $table->string('status')->nullable();
+            $table->string('received_sn_code')->nullable();
+            $table->string('part_name');
             $table->timestamps();
         });
     }

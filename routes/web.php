@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Warehouse;
-
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 // Controllers
 // use App\Http\Controllers\HomeController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
@@ -24,11 +24,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderInboundController;
 use App\Http\Controllers\UserTransactionController;
 use App\Http\Controllers\WarehouseReturnController;
 use App\Http\Controllers\WarehouseTransactionController;
@@ -346,8 +346,44 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::put('/{id}', [InboundController::class, 'storeAddWarehouse'])->name('post.warehouse');
     Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
-    Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
+    // Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
     Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
+});
+
+Route::get('/inboundshow', function () {
+    return view('stock.InboundShow');
+});
+
+/*
+*--------------------------------------------------------------------------
+* PO Inbond 
+*--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth']], function(){
+    Route::get('/', [InboundController::class, 'index'])->name('get.home');
+    Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
+    Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
+    Route::get('/show/{id}', [InboundController::class, 'create'])->name('get.detail');
+    Route::get('/giver', [InboundController::class, 'giverIndex'])->name('get.giver');
+    Route::get('/giver/{id}', [InboundController::class, 'giverShow'])->name('get.giver.detail');
+    Route::get('/recipient', [InboundController::class, 'recipientIndex'])->name('get.recipient');
+    Route::get('/recipient/{id}', [InboundController::class, 'recipientShow'])->name('get.recipient.detail');
+    Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
+    Route::post('/recipient/pieces/{id}', [InboundController::class, 'recipientPiecesStore'])->name('post.pieces.recipient');
+    Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');
+    Route::post('/recipient/bulk/{id}', [InboundController::class, 'recipientBulkStore'])->name('post.bulk.recipient');
+    Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
+    Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
+    Route::post('/add/wh/{id}', [InboundController::class, 'storeAddWh'])->name("post.add.wh");
+    Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
+    Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
+    Route::put('/giver/{id}', [InboundController::class, 'giverSubmit'])->name('put.giver');
+    Route::put('/recipient/{id}', [InboundController::class, 'recipientSubmit'])->name('put.recipient');
+    Route::put('/current/{id}', [InboundController::class, 'updateCurrentWarehouse'])->name('put.current.warehouse');
+    Route::put('/destination/{id}', [InboundController::class, 'updateWarehouseDestination'])->name('put.warehouse.destination');
+    Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
+    Route::delete('/deleted/{code}', [InboundController::class, 'destroy'])->name("delete.item");
 });
 
 Route::get('/inboundshow', function () {
@@ -470,3 +506,6 @@ Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/notification', function () {
+    return view('notification.notification');
+});

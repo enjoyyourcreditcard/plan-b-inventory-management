@@ -12,7 +12,7 @@ use Database\Seeders\StockSeeder;
 use Database\Seeders\InboundSeeder;
 use Database\Seeders\SegmentSeeder;
 use Database\Seeders\CategorySeeder;
-use Database\Seeders\InboundGrfSeeder;
+use Database\Seeders\TimelineSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RequestFormSeeder;
 use Database\Seeders\HistoryPriceSeeder;
@@ -44,8 +44,10 @@ class DatabaseSeeder extends Seeder
         $this->call(BuildSeeder::class);
         $this->call(GrfSeeder::class);
         $this->call(RequestFormSeeder::class);
-        $this->call(InboundSeeder::class);
+        $this->call(TimelineSeeder::class);
+        $this->call(RequestStockSeeder::class);
         $this->call(InboundGrfSeeder::class);
         $this->call(InboundOrderSeeder::class);
+        $this->call(InboundSeeder::class);
     }
 }

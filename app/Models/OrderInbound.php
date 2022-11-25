@@ -10,13 +10,20 @@ class OrderInbound extends Model
     use HasFactory;
  
     protected $guarded = ['id'];
-
+    
     public function inbound() {
         return $this->belongsTo(Inbound::class);
     }
 
-    public function part()
-    {
+    public function grfInbound() {
+        return $this->belongsTo(GrfInbound::class);
+    }
+
+    public function warehouse() {
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    public function part() {
         return $this->belongsTo(Part::class);
     }
 }

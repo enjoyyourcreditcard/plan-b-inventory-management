@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Inbound;
-// use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Concerns\Exportable;
 // use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+// use Maatwebsite\Excel\Events\AfterSheet;
+use App\Models\Inbound;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class InboundExport implements WithHeadings,ShouldAutoSize
 {
@@ -26,7 +26,7 @@ class InboundExport implements WithHeadings,ShouldAutoSize
             'Orafin Code',
             'Serial Number',
             'Stock Status',
-            'Status'
+            'Status',
         ];
     }
 

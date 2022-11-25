@@ -91,7 +91,7 @@ class TransactionController extends Controller
         $parts = $this->partService->handleAllPart();
         $warehouses = $this->WarehouseService->handleAllWareHouse();
 
-        return view('transaction.IC.detail_transaction', [
+        return view('transaction.IC.detail-transaction', [
             // 'notifications' => $notifications,
             'requestForms' => $requestForms,
             'stock' => $stock,

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('inbound_grfs', function (Blueprint $table) {
             $table->id();
-            $table->string('inbound_grf_code');
-            $table->string('surat_jalan')->nullable();
-            $table->unsignedInteger('user_id');
+            $table->string('grf_code')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            $table->text('note')->nullable();
+            $table->string('warehouse_destination')->nullable();
+            $table->string('surat_jalan')->nullable();
             $table->enum('status', ['draft', 'submited','wh_approved','delivery_approved','closed'])->default('draft'); //untuk sistem 
             $table->timestamps();
         });

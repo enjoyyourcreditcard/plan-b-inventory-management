@@ -58,26 +58,6 @@ class StockSeeder extends Seeder
         ]);
 
         Stock::create([
-            'part_id' => 1093,
-            'warehouse_id' => 1,
-            'sn_code' => 56789,
-            'condition' => 'GOOD NEW',
-            'expired_date' => '2025-11-02',
-            'stock_status' => 'in',
-            'status' => 'active',
-        ]);
-
-        Stock::create([
-            'part_id' => 1093,
-            'warehouse_id' => 1,
-            'sn_code' => 67890,
-            'condition' => 'GOOD NEW',
-            'expired_date' => '2025-11-02',
-            'stock_status' => 'in',
-            'status' => 'active',
-        ]);
-
-        Stock::create([
             'part_id' => 811,
             'warehouse_id' => 1,
             'sn_code' => 98765,

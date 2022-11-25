@@ -9,16 +9,16 @@ use Faker\Factory as Faker;
 
 class PartSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    /*
+    * Run the database seeds.
+    *
+    * @return void
+    */
     public function run()
     {
         $csvFile = fopen(base_path("public/seeder_data/part.csv"), "r");
-        $no = 0;
-        $faker = Faker::create('id_ID');
+        $no      = 0;
+        $faker   = Faker::create('id_ID');
 
         while (!feof($csvFile)) {
             $data = explode(';', fgetcsv($csvFile)[0]);
@@ -26,31 +26,30 @@ class PartSeeder extends Seeder
             if ($no != 0) {
                 try {
                     Part::create([
-                        'segment_id' => $data[1],
-                        'brand_id' => $data[6],
-                        'im_code' => $data[2],
+                        'segment_id'     => $data[1],
+                        'brand_id'       => $data[6],
+                        'im_code'        => $data[2],
                         'inventory_code' => $data[3],
-                        'orafin_code' => $data[4],
-                        'name' => $data[5],
-                        'uom' => $data[7],
-                        'sn_status' => $data[8],
-                        'color' => $data[9],
-                        'size' => 1,
-                        'description' => $faker->text(100),
-                        'note' => $data[12],
-                        'img' => $data[13],
-                        'status' => 'active',
+                        'orafin_code'    => $data[4],
+                        'name'           => $data[5],
+                        'uom'            => $data[7],
+                        'sn_status'      => $data[8],
+                        'color'          => $data[9],
+                        'size'           => 1,
+                        'description'    => $faker->text(100),
+                        'note'           => $data[12],
+                        'img'            => $data[13],
+                        'status'         => 'active',
                     ]);
                 } catch (Throwable $e) {
                     report($e);
-                    // dd($e);
                 }
             }
 
             $no++;
         }
-        fclose($csvFile);
 
+        fclose($csvFile);
 
         Part::where('name', 'like', '%INLINE CLOSURE%')->update([
             'segment_id' => 1
@@ -75,7 +74,6 @@ class PartSeeder extends Seeder
         Part::where('name', 'like', '%CABLE DROP WIRE FIBER OPTIC SINGLE CORE%')->update([
             'segment_id' => 6
         ]);;
-
 
         Part::where('name', 'like', '%HEATSHRINK%')->update([
             'segment_id' => 7
@@ -120,8 +118,4 @@ class PartSeeder extends Seeder
     //     // print($data_raw[0]);
 
     //     }
-
-
-
-
 }
