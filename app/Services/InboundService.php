@@ -2,23 +2,27 @@
 
 namespace App\Services;
 
-use App\Models\Stock;
-use App\Models\Inbound;
 // use App\Models\Part;
 // use App\Models\Warehouse;
-
+use App\Models\Stock;
+use App\Models\Inbound;
+use App\Models\GrfInbound;
+use App\Models\OrderInbound;
 use Illuminate\Http\Request;
 use App\Exports\InboundExport;
+use App\Models\Part;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InboundService
 {
 
-    public function __construct(Inbound $inbound, Stock $stock)
+    public function __construct(Inbound $inbound, Stock $stock, Part $part,GrfInbound $grfInbound, OrderInbound $orderInbound)
     {
         $this->stock = $stock;
-        // $this->part = $part;
+        $this->part = $part;
         $this->inbound = $inbound;
+        $this->grfInbound = $grfInbound;
+        $this->orderInbound = $orderInbound;
     }
 
         /*
@@ -29,14 +33,16 @@ class InboundService
 
     public function handleAllInbound()
     {
-        $groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id');
+        $groupByPartIds = $this->inbound->with('part')->where('status', 'active')->get()->groupBy('part_id');
 
-        if( count($groupByPartIds = $this->inbound->with('part')->get()->groupBy('part_id')) ) {
+        if( count($groupByPartIds) ) {
             foreach ($groupByPartIds as $key => $groupByPartId) {
                 $distinct[] = collect([
                     'id' =>$groupByPartId->first()->id, 
+                    'part_id' =>$groupByPartId->first()->part->id, 
                     'part' => $groupByPartId->first()->part->name,
                     'segment' => $groupByPartId->first()->part->segment->name,
+                    'brand' => $groupByPartId->first()->part->brand_name,
                     'quantity' => $groupByPartId->count(),
                 ]);
             }
@@ -161,14 +167,14 @@ class InboundService
     public function handleStoreInboundApi(Request $request)
     {
         $validatedData = $request->validate([
-            'part_id' => 'required',
-            'warehouse_id' => 'required',
-            'sn_code' => '',
-            'orafin_code' => '',
-            'condition' => 'reuired',
-            'expired_date' => 'required',
-            'stock_status' => 'required',
-            'status' => 'required',
+            'part_id'       => 'required',
+            'warehouse_id'  => 'required',
+            'sn_code'       => '',
+            'orafin_code'   => '',
+            'condition'     => 'reuired',
+            'expired_date'  => 'required',
+            'stock_status'  => 'required',
+            'status'        => 'required',
         ]);
 
         $this->inbound->create($validatedData);
@@ -179,5 +185,69 @@ class InboundService
     {
         $this->inbound->find($id)->delete();        
         return ('Data has been delete');
+    }
+
+    public function handleGetGrfInboundGiver($id)
+    {
+        $data = $this->grfInbound->with('user', 'warehouse')->where([['status', '!=', 'closed'], ['warehouse_id', $id]])->get();
+        return $data;
+    }
+
+    public function handleShowGrfInboundGiver($id)
+    {
+        $data = $this->grfInbound->with('warehouse', 'inboundForms.inbound')->find($id);
+        return $data;
+    }
+
+    public function handleShowOrderInboundGiver($id)
+    {
+        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_name');
+        $collect         = collect([]);
+        $inputedQuantity = collect([]);
+
+        foreach ($datas as $key => $data) {
+            $inputedQuantity = count($data->where('inbound_id', '!=', null)); 
+            // dd();
+
+            $collect->push([
+                'part_name'         => $data[0]->part->name,
+                'part_id'         => $data[0]->part->id,
+                'quantity'          => count($data),
+                'inputed_quantity'  => $inputedQuantity,
+            ]);
+        }
+        
+        return $collect;
+    }
+
+    public function handleGetGrfInboundRecipient($id)
+    {
+        $data = $this->grfInbound->with('user', 'warehouse')->where([['status', '!=', 'closed'], ['status', '!=', 'submited'], ['warehouse_destination', $id]])->get();
+        return $data;
+    }
+
+    public function handleShowGrfInboundRecipient($id)
+    {
+        $data = $this->grfInbound->with('warehouse', 'inboundForms.inbound')->find($id);
+        return $data;
+    }
+
+    public function handleShowOrderInboundRecipient($id)
+    {
+        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_name');
+        $collect         = collect([]);
+        $inputedQuantity = collect([]);
+
+        foreach ($datas as $key => $data) {
+            $inputedQuantity = count($data->where('received_sn_code', '!=', null)); 
+            $collect->push([
+                'part_name'         => $this->part->find($data[0]->part_id)->name,
+                'part_id'         => $data[0]->part_id,
+                'quantity'          => count($data),
+                'inputed_quantity'  => $inputedQuantity,
+            ]);
+        }
+        
+        return $collect;
     }
 }

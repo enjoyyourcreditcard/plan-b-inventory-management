@@ -256,6 +256,30 @@ export default class Api {
             .get(`warehouse/all/warehouse/recipient/` + id)
             .catch((error) => {});
     };
+
+    getInboundGiverIndex = (id) => {
+        return this.init()
+            .get(`inbound/giver/` + id)
+            .catch((error) => {});
+    };
+
+    getInboundGiverShow = (id) => {
+        return this.init()
+            .get(`inbound/giver/show/` + id)
+            .catch((error) => {});
+    };
+
+    getInboundRecipientIndex = (id) => {
+        return this.init()
+            .get(`inbound/recipient/` + id)
+            .catch((error) => {});
+    };
+
+    getInboundRecipientShow = (id) => {
+        return this.init()
+            .get(`inbound/recipient/show/` + id)
+            .catch((error) => {});
+    };
     // getTrandingList = () => {
     //   return this.init()
     //     .get(`/get/news/tranding`)

@@ -1101,6 +1101,20 @@
             "name": "laravel/framework",
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+            "version": "v9.40.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "9611fdaf2db5759b8299802d7185bcdbee0340bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9611fdaf2db5759b8299802d7185bcdbee0340bb",
+                "reference": "9611fdaf2db5759b8299802d7185bcdbee0340bb",
+=======
+>>>>>>> origin/redesign_inbound_gudang
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             "version": "v9.38.0",
@@ -1133,6 +1147,12 @@
                 "url": "https://api.github.com/repos/laravel/framework/zipball/67e674709e1e7db14f304a871481f310822d68c5",
                 "reference": "67e674709e1e7db14f304a871481f310822d68c5",
 >>>>>>> origin/redesign_transfer_by_warehouse
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 26486ddb6ed4ce389d0d79f0418a59c53221e002
+=======
+>>>>>>> origin/redesign_inbound_gudang
 =======
             "version": "v9.40.1",
             "source": {
@@ -1145,6 +1165,7 @@
                 "url": "https://api.github.com/repos/laravel/framework/zipball/9611fdaf2db5759b8299802d7185bcdbee0340bb",
                 "reference": "9611fdaf2db5759b8299802d7185bcdbee0340bb",
 >>>>>>> origin/redesign_inbound
+<<<<<<< HEAD
 =======
             "version": "v9.40.1",
             "source": {
@@ -1157,6 +1178,9 @@
                 "url": "https://api.github.com/repos/laravel/framework/zipball/9611fdaf2db5759b8299802d7185bcdbee0340bb",
                 "reference": "9611fdaf2db5759b8299802d7185bcdbee0340bb",
 >>>>>>> origin/redesign_return_ic_approve
+=======
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
                 "shasum": ""
             },
             "require": {
@@ -1331,6 +1355,11 @@
             },
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+            "time": "2022-11-15T16:13:22+00:00"
+=======
+>>>>>>> origin/redesign_inbound_gudang
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             "time": "2022-11-01T14:05:55+00:00"
@@ -1340,12 +1369,22 @@
 =======
             "time": "2022-11-08T14:47:39+00:00"
 >>>>>>> origin/redesign_transfer_by_warehouse
+<<<<<<< HEAD
 =======
             "time": "2022-11-15T16:13:22+00:00"
 >>>>>>> origin/redesign_inbound
 =======
             "time": "2022-11-15T16:13:22+00:00"
 >>>>>>> origin/redesign_return_ic_approve
+=======
+<<<<<<< HEAD
+>>>>>>> 26486ddb6ed4ce389d0d79f0418a59c53221e002
+=======
+=======
+            "time": "2022-11-15T16:13:22+00:00"
+>>>>>>> origin/redesign_inbound
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
         },
         {
             "name": "laravel/sanctum",
@@ -1793,10 +1832,18 @@
             "name": "league/flysystem",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             "version": "3.10.2",
 =======
             "version": "3.10.3",
 >>>>>>> origin/redesign_return_ic_approve
+=======
+            "version": "3.10.3",
+=======
+<<<<<<< HEAD
+            "version": "3.10.2",
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
@@ -1805,6 +1852,12 @@
             "dist": {
                 "type": "zip",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
+                "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
+=======
+>>>>>>> origin/redesign_inbound_gudang
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/b9bd194b016114d6ff6765c09d40c7d427e4e3f6",
                 "reference": "b9bd194b016114d6ff6765c09d40c7d427e4e3f6",
 =======
@@ -1819,10 +1872,14 @@
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
                 "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
 >>>>>>> origin/redesign_inbound
+<<<<<<< HEAD
 =======
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
                 "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
 >>>>>>> origin/redesign_return_ic_approve
+=======
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
                 "shasum": ""
             },
             "require": {
@@ -1886,6 +1943,7 @@
                 "issues": "https://github.com/thephpleague/flysystem/issues",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "source": "https://github.com/thephpleague/flysystem/tree/3.10.2"
 =======
                 "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
@@ -1893,6 +1951,16 @@
 =======
                 "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
 >>>>>>> origin/redesign_return_ic_approve
+=======
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
+=======
+<<<<<<< HEAD
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.2"
+=======
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
+>>>>>>> origin/redesign_inbound
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
             },
             "funding": [
                 {
@@ -1910,6 +1978,7 @@
             ],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2022-10-25T07:01:47+00:00"
 =======
             "time": "2022-11-14T10:42:43+00:00"
@@ -1917,6 +1986,16 @@
 =======
             "time": "2022-11-14T10:42:43+00:00"
 >>>>>>> origin/redesign_return_ic_approve
+=======
+            "time": "2022-11-14T10:42:43+00:00"
+=======
+<<<<<<< HEAD
+            "time": "2022-10-25T07:01:47+00:00"
+=======
+            "time": "2022-11-14T10:42:43+00:00"
+>>>>>>> origin/redesign_inbound
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
         },
         {
             "name": "league/mime-type-detection",
@@ -2776,11 +2855,19 @@
             "name": "nunomaduro/termwind",
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/redesign_inbound_gudang
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> origin/redesign_inbound
+<<<<<<< HEAD
 =======
 >>>>>>> origin/redesign_return_ic_approve
+=======
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
             "version": "v1.14.2",
             "source": {
                 "type": "git",
@@ -2792,6 +2879,10 @@
                 "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/9a8218511eb1a0965629ff820dda25985440aefc",
                 "reference": "9a8218511eb1a0965629ff820dda25985440aefc",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/redesign_inbound_gudang
 <<<<<<< HEAD
 =======
             "version": "v1.14.1",
@@ -2807,8 +2898,12 @@
 >>>>>>> origin/warehouse_validate
 =======
 >>>>>>> origin/redesign_inbound
+<<<<<<< HEAD
 =======
 >>>>>>> origin/redesign_return_ic_approve
+=======
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
                 "shasum": ""
             },
             "require": {
@@ -2868,16 +2963,29 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
 =======
+=======
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+                "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
+=======
+>>>>>>> origin/redesign_inbound_gudang
                 "source": "https://github.com/nunomaduro/termwind/tree/v1.14.1"
 >>>>>>> origin/warehouse_validate
 =======
                 "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
 >>>>>>> origin/redesign_inbound
+<<<<<<< HEAD
 =======
                 "source": "https://github.com/nunomaduro/termwind/tree/v1.14.2"
 >>>>>>> origin/redesign_return_ic_approve
+=======
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
             },
             "funding": [
                 {
@@ -2896,8 +3004,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/redesign_return_ic_approve
+=======
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 654e28e2df9bc113e357ecf4812bf15ca52d59c0
+>>>>>>> origin/redesign_inbound_gudang
             "time": "2022-10-28T22:51:32+00:00"
         },
         {

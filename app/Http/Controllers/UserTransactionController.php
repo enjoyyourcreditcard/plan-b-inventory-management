@@ -41,16 +41,16 @@ class UserTransactionController extends Controller
     {
         try {
             // $notifications =  $this->notificationService->handleAllNotification();
-            $grf_code = $this->requestFormService->handleGenerateGrfCode();
-            $grfs = $this->requestFormService->handleGetAllGrfByUser();
+            $grf_code   = $this->requestFormService->handleGenerateGrfCode();
+            $grfs       = $this->requestFormService->handleGetAllGrfByUser();
             $chartDatas = $this->requestFormService->handleChartDatas();
             
             return view('home.requester.index', [
                 // 'notifications' => $notifications,
-                'grf_code' => $grf_code,
-                'grfsClosed' => $grfs->whereIn('status', ['closed', "reject"]),
+                'grf_code'      => $grf_code,
+                'grfsClosed'    => $grfs->whereIn('status', ['closed', "reject"]),
                 'grfsAvailable' => $grfs->whereNotIn('status', ["closed", "reject"]),
-                "chartDatas" => $chartDatas
+                "chartDatas"    => $chartDatas
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -67,15 +67,15 @@ class UserTransactionController extends Controller
     public function showReturnStock($code)
     {
         // Services
-        $grf = $this->requestFormService->handleGetCurrentGrf($code);
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
-        $miniStocks = $this->miniStockService->handleShowMiniStock($code);
+        $grf            = $this->requestFormService->handleGetCurrentGrf($code);
+        $requestForms   = $this->requestFormService->handleShowRequestForm($code);
+        $miniStocks     = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View
         return view("transaction.requester.return", [
-            "grf" => $grf,
-            "requestForms" => $requestForms,
-            "miniStocks" => $miniStocks,
+            "grf"           => $grf,
+            "requestForms"  => $requestForms,
+            "miniStocks"    => $miniStocks,
         ]);
     }
 
@@ -103,18 +103,18 @@ class UserTransactionController extends Controller
     {
         try {
             // $notifications =  $this->notificationService->handleAllNotification();
-            $grf = $this->requestFormService->handleGetCurrentGrf($code);
-            $warehouses = $this->warehouseService->handleGetWareHouseByRegional(Auth::user()->regional);
-            $brands = $this->brandService->handleGetAllBrand();
-            $segments = $this->segmentService->handleAllSegment();
+            $grf          = $this->requestFormService->handleGetCurrentGrf($code);
+            $warehouses   = $this->warehouseService->handleGetWareHouseByRegional(Auth::user()->regional);
+            $brands       = $this->brandService->handleGetAllBrand();
+            $segments     = $this->segmentService->handleAllSegment();
             $requestForms = $this->requestFormService->handleShowRequestForm($code);
 
-            return view( "transaction.requester.show", [
+            return view('transaction.requester.show', [
                 // 'notifications' => $notifications,
-                'grf' => $grf,
-                'warehouses' => $warehouses,
-                'brands' => $brands,
-                'segments' => $segments,
+                'grf'          => $grf,
+                'warehouses'   => $warehouses,
+                'brands'       => $brands,
+                'segments'     => $segments,
                 'requestForms' => $requestForms,
             ]);
         } catch (\Exception $e) {
@@ -133,7 +133,6 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleStore($request, $id);
-
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -168,7 +167,6 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleStoreGrfEmergency($request);
-
             return redirect::route("request.get.emergency.detail", str_replace("/", "~", strtolower($request->grf_code)));
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -186,7 +184,6 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleDocumentEmergencyGRF($request, $id);
-
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -222,7 +219,6 @@ class UserTransactionController extends Controller
     {
         try {
             $this->requestFormService->handleUpdateRequestForm($request, $id);
-
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());

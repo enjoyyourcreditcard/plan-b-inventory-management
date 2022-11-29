@@ -9,6 +9,7 @@ use App\Models\Inbound;
 use App\Models\Warehouse;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Psy\Readline\Hoa\Console;
 
 class InboundImport implements ToModel, WithHeadingRow
 {
@@ -39,19 +40,20 @@ class InboundImport implements ToModel, WithHeadingRow
     public function Model(array $row)
     {
         if (isset($row['part_id']) == false ) {
-            $row['part_id'] = Part::where('name', $row['part'])->first('id')->id;
+            $row['part_id'] = Part::where('name', $row['part'])->where('brand_name',$row['brand'])->first('id')->id;
             if (isset($row['warehouse_id']) == false) {
                 $row['warehouse_id'] = Warehouse::where('name', $row['warehouse'])->first('id')->id;
             }
         }
-        
+
         return new Inbound([
             'part_id'       => $row['1'],
             'orafin_code'   => $row['2'],
             'sn_code'       => $row['3'],
             'stock_tatus'   => $row['4'],
             'status'        => $row['5'],
-            'warehouse'     => $row['6']
+            'warehouse'     => $row['6'],
+            'brand'     => $row['brand']
         ]);
     }
 }

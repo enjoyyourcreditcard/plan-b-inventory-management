@@ -26,7 +26,6 @@ import './view/request/show';
 // require('./view/stock');
 // require('./view/stock/warehouse');
 
-
 import './view/master/part';
 import './view/master/part_create';
 import './view/master/user';
@@ -40,19 +39,16 @@ import './view/transaction/form_ic';
 import './view/transaction/IC/stock';
 import './view/transaction/IC/outbound';
 import './view/transaction/IC/return-stock';
-
-
 import './view/transaction/warehouse/request';
 import './view/transaction/warehouse/return';
 import './view/transaction/warehouse/transfer';
 import './view/transaction/warehouse/recipient';
 import './view/transaction/warehouse/listTransfer';
 import './view/transaction/warehouse/listRecipient';
-
-
-
-
-
+import './view/transaction/warehouse/inbound-giver';
+import './view/transaction/warehouse/inbound-giver-show';
+import './view/transaction/warehouse/inbound-recipient'
+import './view/transaction/warehouse/inbound-recipient-show';
 
 // require('./view/part/detail');
 // require('./view/part/category');
@@ -66,7 +62,3 @@ import './view/transaction/warehouse/listRecipient';
 // require('./view/transaction/IC/form');
 // require('./view/transaction/IC/stock');
 // require('./view/warehouse');
-
-
-
-

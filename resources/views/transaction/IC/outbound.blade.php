@@ -80,7 +80,7 @@
                         be undone.</div>
                 </div>
                 <div class="px-5 pb-8 text-center">
-                    <form action="{{Route('post.reject.IC')}}" method="post">
+                    <form action="{{Route('post.reject.IC')}}" method="get">
                         @csrf
                         <input type="hidden" name="id" id="grf_id_delete">
                         <button type="button" data-tw-dismiss="modal"

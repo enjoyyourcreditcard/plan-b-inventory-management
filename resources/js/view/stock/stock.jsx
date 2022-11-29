@@ -26,7 +26,6 @@ function Stock() {
             api.getStock().then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
-// console.log(response.data.data[0])
                 setLoadingData(false);
             });
         }
@@ -42,7 +41,7 @@ function Stock() {
     }
 
     function SearchFilter(search, column) {
-        console.log(column);
+        // console.log(search);
         let result = filter.search(search, column, rawData);
         setData(result);
     }
@@ -119,7 +118,7 @@ function Stock() {
             {/* btn btn--primary */}
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <a
-                    href="javascript:;"
+                    href="/inbound"
                     data-tw-toggle="modal"
                     data-tw-target="#superlarge-modal-size-preview"
                     class="btn btn-rounded-primary  shadow-md mr-1 "

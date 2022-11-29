@@ -2,13 +2,19 @@
 export default class Filter {
 
     search = (search, column, rawData) => {
-        // console.log(column);
 
         if (column === "brand" || column === "brand_name") {
             if (search === "All") {
                 return rawData;
             } else {
                 let data = column === "brand_name" ? rawData.filter((item) => item.brand_name === search) : rawData.filter((item) => item.brand.name === search)
+                return data;
+            }
+        }if (column === "part" || column === "part_name") {
+            if (search === "All") {
+                return rawData;
+            } else {
+                let data = column === "part_name" ? rawData.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())) : rawData.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
                 return data;
             }
         } else if (column === "category" || column === "category_name") {

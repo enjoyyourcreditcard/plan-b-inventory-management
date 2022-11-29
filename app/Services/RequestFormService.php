@@ -32,7 +32,6 @@ class RequestFormService
     public function handleShowRequestForm($code)
     {
         $requestForms = $this->grf->with('requestForms.segment')->with('requestForms.segment.parts.brand')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
-        
         return ($requestForms);
     }
 

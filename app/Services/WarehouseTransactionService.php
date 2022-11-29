@@ -468,7 +468,6 @@ class WarehouseTransactionService
     {
         $wherewh = str_replace('~', '/', $id);
         $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock',)->where('grf_code', $wherewh)->first();
-        // dd($whapproval);
         return ($whapproval);
     }
 
@@ -477,10 +476,10 @@ class WarehouseTransactionService
 
         $validatedData = $request->validate([
             'transfer_form_id' => 'required',
-            'grf_id' => 'required',
-            'part_id' => 'required',
-            'sn.*' => ['distinct'],
-            'sn' => ['required', 'array', Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
+            'grf_id'           => 'required',
+            'part_id'          => 'required',
+            'sn.*'             => ['distinct'],
+            'sn'               => ['required', 'array', Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
                 $query->where([['part_id', $request->part_id], ['grf_id', $request->grf_id], ['transfer_form_id', $request->transfer_form_id]]);
             })]
         ]);
