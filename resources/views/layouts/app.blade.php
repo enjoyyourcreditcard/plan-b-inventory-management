@@ -397,8 +397,7 @@
                     <div class="menu__icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-archive" viewBox="0 0 16 16">
-                            <path
-                                d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                         </svg>
                     </div>
                     <div class="menu__title"> Mini Stock </div>
@@ -427,52 +426,50 @@
                 */ --}}
                 @if (Auth::user()->role == "admin" || Auth::user()->role == "inventory_control")
                 <li>
-                    <a href="javascript:;" class="side-menu">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                <path fill-rule="evenodd"
-                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                            </svg> </div>
+                    <a href="javascript:;" class="side-menu {{ request()->is('dashboard/*') ? 'side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                            </svg>
+                        </div>
                         <div class="side-menu__title">
                             Dashboard
-                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ request()->is('dashboard/*') ? 'transform rotate-180' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg> </div>
+                                </svg>
+                            </div>
                         </div>
                     </a>
-                    <ul class="">
+                    <ul class="{{ request()->is('dashboard/*') ? 'side-menu__sub-open' : ''}}">
                         <li>
-                            <a href="{{ Route('dashboard.stock') }}" class="side-menu">
+                            <a href="{{ Route('dashboard.stock') }}" class="side-menu {{ Route::currentRouteName() == "dashboard.stock" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Stock </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{(request()->is('inbound')) ? 'side-menu--active' : ''}}">
+                            <a href="{{Route('inbound.get.home')}}" class="side-menu {{ Route::currentRouteName() == "dashboard.inbound" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('dashboard.outbound')}}" class="side-menu">
+                            <a href="{{route('dashboard.outbound')}}" class="side-menu {{ Route::currentRouteName() == "dashboard.outbound" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ Route('dashboard.build') }}" class="side-menu">
+                            <a href="{{ Route('dashboard.build') }}" class="side-menu {{ Route::currentRouteName() == "dashboard.build" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Build </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ Route('dashboard.warehouse') }}" class="side-menu">
+                            <a href="{{ Route('dashboard.warehouse') }}" class="side-menu {{ Route::currentRouteName() == "dashboard.warehouse" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse </div>
                             </a>
@@ -480,49 +477,54 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript:;" class="side-menu">
-                        <div class="side-menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-                                <path
-                                    d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            </svg></div>
+                    <a href="{{ Route('stock.get.home') }}"
+                        class="side-menu {{ Route::currentRouteName() == "stock.get.home" ? 'side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                            </svg>
+                        </div>
+                        <div class="side-menu__title"> Stock </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="side-menu {{ request()->is('inbound*') || request()->is('transaction*') || request()->is('warehouse-transfer*')  ? 'side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            </svg>
+                        </div>
                         <div class="side-menu__title">
                             Transaksi
-                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ request()->is('inbound*') || request()->is('transaction*') || request()->is('warehouse-transfer*')  ? 'transform rotate-180' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg> </div>
+                                </svg>
+                            </div>
                         </div>
                     </a>
-                    <ul class="">
+                    <ul class="{{ request()->is('inbound*') || request()->is('transaction*') || request()->is('warehouse-transfer*')  ? 'side-menu__sub-open' : ''}}">
                         <li>
-                            <a href="{{ Route('inbound.get.home') }}" class="side-menu {{ (request()->is('inbound')) ? 'side-menu--active' : '' }}">
+                            <a href="{{ Route('inbound.get.home') }}" class="side-menu {{ Route::currentRouteName() == "inbound.get.home" ? 'side-menu--active' : '' }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Inbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('transaction.ic.view.outbound')}}"
-                                class="side-menu {{ Route::currentRouteName() == " transaction.ic.view.outbound"
-                                ? "side-menu--active" : "" }}">
+                            <a href="{{ route('transaction.ic.view.outbound') }}" class="side-menu {{ Route::currentRouteName() == "transaction.ic.view.outbound" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Outbound </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('transaction.ic.get.return.stock')}}"
-                                class="side-menu {{ Route::currentRouteName() == " transaction.ic.get.return.stock"
-                                ? "side-menu--active" : "" }}">
+                            <a href="{{ route('transaction.ic.get.return.stock') }}" class="side-menu {{ Route::currentRouteName() == "transaction.ic.get.return.stock" ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Return Stock </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ Route( 'warehouse.transfer.get.home' ) }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.transfer.get.home'
-                                ? " side-menu--active" : "" }}">
+                            <a href="{{ Route( 'warehouse.transfer.get.home' ) }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.transfer.get.home' ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse Transfer </div>
                             </a>
@@ -530,62 +532,29 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="side-menu-light-inbox.html" class="side-menu">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                                <path fill-rule="evenodd"
-                                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
-                            </svg> </div>
-                        <div class="side-menu__title"> Recondition </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{Route('stock.get.home')}}"
-                        class="side-menu {{(request()->is('stock')) ? 'side-menu--active' : ''}}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
-                                <path
-                                    d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
-                            </svg> </div>
-                        <div class="side-menu__title"> Stock </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;"
-                        class="side-menu {{(request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('warehouse/master')) ? 'side-menu--active' : ''}}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
-                                <path
-                                    d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z" />
-                            </svg></div>
+                    <a href="javascript:;" class="side-menu {{ (request()->is('part')) || (request()->is('segment')) || (request()->is('category')) || (request()->is('brand')) || (request()->is('warehouse/master')) || (request()->is('user')) ? 'side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
+                                <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z" />
+                            </svg>
+                        </div>
                         <div class="side-menu__title">
                             Master
-                            <div class="side-menu__sub-icon "><svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-chevron-down" width="21" height="21"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                            <div class="side-menu__sub-icon {{ (request()->is('part')) || (request()->is('segment')) || (request()->is('category')) || (request()->is('brand')) || (request()->is('warehouse/master')) || (request()->is('user')) ? 'transform rotate-180' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" width="21" height="21" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg> </div>
+                                </svg>
+                            </div>
                         </div>
                     </a>
-                    <ul
-                        class="{{(request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) || (request()->is('warehouse/master')) ? 'side-menu__sub-open' : ''}}">
+                    <ul class="{{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) || (request()->is('warehouse/master')) || (request()->is('user')) ? 'side-menu__sub-open' : '' }}">
                         <li>
-                            <a href="javascript:;" class="side-menu ">
-                                <div class="side-menu__icon">
-                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="activity" data-lucide="activity"
-                                        class="lucide lucide-activity">
-                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                                    </svg> --}}
-                                </div>
+                            <a href="javascript:;" class="side-menu {{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) ? 'side-menu--active' : '' }}">
+                                <div class="side-menu__icon"></div>
                                 <div class="side-menu__title">
                                    Master Part
-                                    <div class="side-menu__sub-icon transform ">
+                                    <div class="side-menu__sub-icon transform {{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) ? 'transform rotate-180' : '' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-down"
@@ -596,56 +565,81 @@
                                 </div>
                             </a>
                           
-                            <ul class="" >
+                            <ul class="{{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) ? 'side-menu__sub-open' : '' }}">
                                 <li>
-                                    <a href="{{Route('part.view.home')}}" class="side-menu {{(request()->is('part')) ? "
-                                        side-menu--active" : "" }}">
+                                    <a href="{{Route('part.view.home')}}" class="side-menu {{ (request()->is('part')) ? "side-menu--active" : "" }}">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Part </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{Route('segment.index')}}" class="side-menu {{(request()->is('segment')) ? "
-                                        side-menu--active" : "" }}">
+                                    <a href="{{Route('segment.index')}}" class="side-menu {{ (request()->is('segment')) ? "side-menu--active" : "" }}">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Segment </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{Route('category.get.view')}}" class="side-menu {{(request()->is('category')) ? "
-                                        side-menu--active" : "" }}">
+                                    <a href="{{Route('category.get.view')}}" class="side-menu {{ (request()->is('category')) ? "side-menu--active" : "" }}">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Category </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{Route('brand.get.view')}}" class="side-menu {{(request()->is('brand')) ? "
-                                        side-menu--active" : "" }}">
+                                    <a href="{{Route('brand.get.view')}}" class="side-menu {{ (request()->is('brand')) ? "side-menu--active" : "" }}">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> Brand </div>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                      
-                       
-                       
                         <li>
-                            <a href="{{Route('warehouse.get.view')}}"
-                                class="side-menu {{(request()->is('warehouse')) ? " side-menu--active" : "" }}">
+                            <a href="{{Route('warehouse.get.view')}}" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.view' ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Warehouse </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{Route('user.get.view')}}" class="side-menu {{(request()->is('user')) ? "
-                                side-menu--active" : "" }}">
+                            <a href="{{Route('user.get.view')}}" class="side-menu {{ Route::currentRouteName() == 'user.get.view' ? "side-menu--active" : "" }}">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> User </div>
                             </a>
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#" class="side-menu">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                            </svg>
+                        </div>
+                        <div class="side-menu__title"> Recondition </div>
+                    </a>
+                </li>
+                {{-- <li>
+                    <a href="#" class="side-menu">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                            </svg>
+                        </div>
+                        <div class="side-menu__title"> Stock Opname </div>
+                    </a>
+                </li> --}}
+                {{-- <li>
+                    <a href="#" class="side-menu">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            </svg>
+                        </div>
+                        <div class="side-menu__title"> Clearance </div>
+                    </a>
+                </li> --}}
                 @endif
 
                 {{-- /*

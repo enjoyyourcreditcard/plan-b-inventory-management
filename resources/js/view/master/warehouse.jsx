@@ -205,7 +205,7 @@ function Warehouse() {
             {/* btn btn--primary */}
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <a
-                    href="warehouse/create"
+                    href="/warehouse/create"
                     // data-tw-toggle="modal"
                     // data-tw-target="#superlarge-modal-size-preview"
                     class="btn btn-rounded-primary  shadow-md mr-1 "
@@ -231,7 +231,7 @@ function Warehouse() {
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>&nbsp;Create Segment&nbsp;</span>
+                    <span>&nbsp;Create Warehouse&nbsp;</span>
                 </a>
 
                 <div class="hidden md:block mx-auto text-slate-500">

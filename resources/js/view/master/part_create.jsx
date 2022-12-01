@@ -49,6 +49,7 @@ function CreatePart(props) {
     const [sizeInput, setSizeInput] = useState("");
     const [descriptionInput, setDescriptionInput] = useState("");
     const [noteInput, setNoteInput] = useState("");
+    const [imgInput, setImgInput] = useState("");
 
     useEffect(() => {
         let category = [];
@@ -94,14 +95,15 @@ function CreatePart(props) {
             colorInput,
             sizeInput,
             descriptionInput,
-            noteInput
+            noteInput,
+            imgInput
         ).then((response) => (location.href = "http://localhost:8000/part"));
     };
 
     return (
         <>
             <div class="mt-5">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} enctype="multipart/form-data">
                     <div class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                         <div class="form-label xl:w-64 xl:!mr-10">
                             <div class="text-left">
@@ -279,6 +281,7 @@ function CreatePart(props) {
                                 id="file_input"
                                 type="file"
                                 name="img"
+                                onChange={ (e) => setImgInput(e.target.value)  }
                             />
                             <p
                                 class="mt-1 text-sm text-gray-500 dark:text-gray-300"

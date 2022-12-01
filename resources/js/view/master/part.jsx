@@ -75,7 +75,7 @@ function Parts() {
                         <div class="flex" style={{ minWidth: 200 }}>
                             <div class="flex-none pr-5">
                                 <img
-                                    src={"/dist/" + tableProps.row.original.img}
+                                    src={"http://localhost:8000/" + tableProps.row.original.img}
                                     alt=""
                                     width={30}
                                     data-action="zoom"

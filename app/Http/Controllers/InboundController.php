@@ -42,10 +42,10 @@ class InboundController extends Controller
         // $inbound_grf_code = $this->orderInboundService->handleGenerateInboundRequest();
 
         return view('stock.inbound', [
-            'inbound'   => $inbound,
-            'parts'     => $parts,
+            'inbound'    => $inbound,
+            'parts'      => $parts,
             'warehouses' => $warehouses,
-            'grfs'      => $grfs
+            'grfs'       => $grfs
             // 'notifications'    => $notifications,
             // 'inbound_grf_code' => $inbound_grf_code,
         ]);

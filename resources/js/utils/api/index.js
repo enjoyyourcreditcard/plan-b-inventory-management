@@ -197,7 +197,7 @@ export default class Api {
                 color: color,
                 size: size,
                 description: description,
-                note: note,
+                note: note
             })
             .catch(function (error) {
                 console.error(error);

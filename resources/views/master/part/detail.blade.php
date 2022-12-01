@@ -218,12 +218,10 @@
         </ul>
     </div>
 
-    <div
-        class="post_content tab-content p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mt-10">
+    <div class="post_content tab-content p-6 bg-white rounded-lg shadow-md mt-10">
         <div class="grid grid-cols-12 mt-5 tab-pane active" id="table-stock" role="presentation">
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-                <button class="btn btn-primary shadow-lg mr-2 rounded-full" data-tw-toggle="modal"
-                    data-tw-target="#stock-modal" type="button">+ New Stock</button>
+                {{-- <button class="btn btn-primary shadow-lg mr-2 rounded-full" data-tw-toggle="modal" data-tw-target="#stock-modal" type="button">+ New Stock</button> --}}
                 <div class="hidden md:block mx-auto text-slate-500"></div>
                 <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                     <div class="w-56 relative text-slate-500 shadow">

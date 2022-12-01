@@ -61,8 +61,10 @@ class PartService
             'size' => 'required',
             'description' => 'required|max:255',
             'note' => 'max:255',
-            'img' => 'file|max:5120'
+            'img' => 'nullable|file|max:5120'
         ]);
+
+        $validatedData['brand_name'] = $this->brand->find($validatedData['brand_id'])->name;
 
         if ($request->file('img')) {
             $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');
