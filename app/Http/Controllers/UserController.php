@@ -5,24 +5,23 @@ namespace App\Http\Controllers;
 use Throwable;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Services\VendorService;
 use App\Services\WareHouseService;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function __construct(UserService $userService, WareHouseService $warehouseService)
+    public function __construct(UserService $userService, WareHouseService $warehouseService, VendorService $vendorService)
     {
         $this->warehouseService = $warehouseService;
         $this->userService = $userService;
+        $this->vendorService = $vendorService;
     }
     
     public function index()
     {
         try {
-            $warehouse = $this->warehouseService->handleAllWareHouse();
-            return view('master.user.user', [
-                'warehouse' => $warehouse,
-            ]);
+            return view('master.user.index');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -30,14 +29,23 @@ class UserController extends Controller
 
     public function create()
     {
-        //
+        try {
+            $vendor = $this->vendorService->handleGetAllVendor();
+            $warehouse = $this->warehouseService->handleAllWareHouse();
+            return view('master.user.create', [
+                'warehouse' => $warehouse,
+                'vendor' => $vendor,
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function store(Request $request)
     {
         try {
             $this->userService->handleStoreUser($request);
-            return redirect()->back();
+            return redirect('/user');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -50,19 +58,30 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        //
+        try { 
+            $user = $this->userService->handleGetUser($id);
+            $vendor = $this->vendorService->handleGetAllVendor();
+            $warehouse = $this->warehouseService->handleAllWareHouse();
+            return view('master.user.edit', [
+                'warehouse' => $warehouse,
+                'user' => $user,
+                'vendor' => $vendor,
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
     }
 
     public function update(Request $request)
     {
         try {
             $this->userService->handleUpdateUser($request);
-            return redirect()->back();
+            return redirect('/user');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
-
+  
     public function postStatus(Request $request)
     {
         try {

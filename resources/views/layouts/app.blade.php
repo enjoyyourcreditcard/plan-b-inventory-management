@@ -604,6 +604,13 @@
                                 <div class="side-menu__title"> User </div>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{Route('vendor.get.view')}}"
+                                class="side-menu {{(request()->is('vendor')) ? " side-menu--active" : "" }}">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Vendor </div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -696,7 +703,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" class="side-menu">
+                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu--active' : '' }}">
                         <div class="side-menu__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -720,7 +727,7 @@
                             </div>
                         </div>
                     </a>
-                    <ul class="">
+                    <ul class="{{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu__sub-open' : '' }}">
                         <li>
                             <a href="{{ route('warehouse.get.whtransfer') }}"
                                 class="side-menu {{ Route::currentRouteName() == 'warehouse.get.whtransfer' ? ' side-menu--active' : '' }}">
@@ -753,46 +760,45 @@
                                 <div class="side-menu__title"> Warehouse Transfer penerima</div>
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.giver') || (Route::currentRouteName() == 'inbound.get.giver.detail') ? 'side-menu--active' : '' }}">
-                        <div class="side-menu__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-import" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
-                                <path d="M12 12l8 -4.5"></path>
-                                <path d="M12 12v9"></path>
-                                <path d="M12 12l-8 -4.5"></path>
-                                <path d="M22 18h-7"></path>
-                                <path d="M18 15l-3 3l3 3"></path>
-                            </svg>
-                        </div>
-                        <div class="side-menu__title">
-                            Inbound
-                            <div class="side-menu__sub-icon {{ (Route::currentRouteName() == 'inbound.get.giver') || (Route::currentRouteName() == 'inbound.get.giver.detail') ? 'transform rotate-180' : '' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-chevron-down" width="21" height="21"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                    </a>
-                    <ul class="{{ (Route::currentRouteName() == 'inbound.get.giver') || (Route::currentRouteName() == 'inbound.get.giver.detail') || (Route::currentRouteName() == 'inbound.get.recipient') ? 'side-menu__sub-open' : '' }}">
                         <li>
-                            <a href="{{ Route('inbound.get.giver') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.giver') ? "side-menu--active" : "" }}">
-                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                <div class="side-menu__title"> Pengirim </div>
+                            <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu--active' : '' }}">
+                                <div class="side-menu__icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-import" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
+                                        <path d="M12 12l8 -4.5"></path>
+                                        <path d="M12 12v9"></path>
+                                        <path d="M12 12l-8 -4.5"></path>
+                                        <path d="M22 18h-7"></path>
+                                        <path d="M18 15l-3 3l3 3"></path>
+                                     </svg>
+                                </div>
+                                <div class="side-menu__title">
+                                   Inbound
+                                    <div class="side-menu__sub-icon transform {{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) ? 'transform rotate-180' : '' }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-down"
+                                            data-lucide="chevron-down" class="lucide lucide-chevron-down">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
                             </a>
-                        </li>
-                        <li>
-                            <a href="{{ Route('inbound.get.recipient') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.recipient') ? "side-menu--active" : "" }}">
-                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                <div class="side-menu__title"> Penerima </div>
-                            </a>
+                            <ul class="{{ Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu__sub-open' : '' }}">
+                                <li>
+                                    <a href="{{ Route('inbound.get.giver') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.giver') ? "side-menu--active" : "" }}">
+                                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                        <div class="side-menu__title"> Pengirim </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ Route('inbound.get.recipient') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.recipient') ? "side-menu--active" : "" }}">
+                                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                        <div class="side-menu__title"> Penerima </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>

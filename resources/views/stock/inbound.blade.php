@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-{{-- @dd($grfs) --}}
 <h2 class="intro-y text-lg font-medium mt-10 mb-4">Inbound Master</h2>
 <div class="grid grid-cols-12 gap-4 w-full">
     <div class="intro-y col-span-12 xl:col-span-4 lg:col-span-12 md:col-span-12 sm:col-span-12">
@@ -18,7 +17,6 @@
             <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
                 <div class="font-medium text-base truncate">Excel</div>
             </div>
-            {{-- <h2 class="intro-y text-lg font-medium ">Excel</h2> --}}
             <div class="font-medium ">
                 <a href="/inbound/excel" class="btn !bg-slate-100 whitespace-nowrap text-emerald-900 rounded-full w-full transition duration-200 ease-in-out hover:text-emerald-800 hover:!bg-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-diff w-4 h-4 mr-2" viewBox="0 0 16 16">
@@ -209,18 +207,17 @@
             @endforeach
         </div>
         @endif
-
     </div>
 
-    <div class="intro-x col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 ">
-        <div class="max-h-screen overflow-y-scroll mb-4">
-            <table class="table table-report">
+    <div class="intro-x col-span-12 xl:col-span-8 lg:col-span-12 md:col-span-12 sm:col-span-12 flex flex-col" style="max-height: 70vh">
+        <div class="mb-4 flex-grow overflow-auto">
+            <table class="table table-report relative">
                 <thead>
                     <tr>
-                        <th class=" whitespace-normal">Part</th>
-                        <th class=" whitespace-normal">Segment</th>
-                        <th class=" whitespace-normal">Brand</th>
-                        <th class=" whitespace-normal">Quantity</th>
+                        <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Part</th>
+                        <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Segment</th>
+                        <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Brand</th>
+                        <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -236,11 +233,9 @@
                         <td class="text-center" colspan="12">No item on the list</td>
                     </tr>
                     @endforelse
-    
                 </tbody>
             </table>
         </div>
-       
     </div>
 <!-- END: Data List -->
 </div>

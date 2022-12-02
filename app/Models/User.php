@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Warehouse::class);
     }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

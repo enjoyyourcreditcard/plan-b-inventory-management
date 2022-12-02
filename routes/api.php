@@ -20,6 +20,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WarehouseTransactionController;
 
 /*
@@ -116,6 +117,10 @@ Route::group(['prefix' => 'inbound'], function () {
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'getAllUser']);
+});
+
+Route::group(['prefix' => 'vendor'], function () {
+    Route::get('/', [VendorController::class, 'getAllVendor']);
 });
 
 Route::group(['prefix' => 'grf'], function () {

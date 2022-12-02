@@ -36,10 +36,13 @@ class CreateUsersTable extends Migration
             ]);
             $table->unsignedBigInteger('warehouse_id');
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
+            $table->unsignedBigInteger('vendor_id')->nullable();
+            $table->foreign('vendor_id')->references('id')->on('vendors');
             $table->string('nik')->nullable();
             $table->string('no_telp');
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('pin')->length(4);
             $table->string('status')->default("active");
             $table->boolean('is_vendor')->default(false);
             $table->rememberToken();

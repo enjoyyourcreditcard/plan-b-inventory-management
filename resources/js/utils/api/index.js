@@ -106,6 +106,14 @@ export default class Api {
             });
     };
 
+    getVendor = () => {
+        return this.init()
+            .get(`vendor`)
+            .catch((error) => {
+                // this.addError(error.message);
+            });
+    };
+
     getWarehouseRequest = (wh_id) => {
         console.log(wh_id);
         return this.init()

@@ -10,6 +10,7 @@ use Database\Seeders\BrandSeeder;
 use Database\Seeders\BuildSeeder;
 use Database\Seeders\StockSeeder;
 use Database\Seeders\InboundSeeder;
+use Database\Seeders\VendorSeeder;
 use Database\Seeders\SegmentSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\TimelineSeeder;
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(VendorSeeder::class);
         $this->call(WarehouseSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PermissionSeeder::class);

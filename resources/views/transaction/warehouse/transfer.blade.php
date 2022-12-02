@@ -79,7 +79,7 @@
                             </li>
                             <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
                                 role="presentation">
-                                <button type="submit" name="type" value="transfer gudang lama" disabled
+                                <button type="submit" name="type" value="transfer gudang lama"
                                     class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
                                     data-tw-target="#top-products-bootstrap" aria-selected="false" role="tab">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

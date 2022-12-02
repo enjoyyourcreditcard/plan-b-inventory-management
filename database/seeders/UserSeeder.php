@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'no_telp' => '082993828824',
             'email' => 'admin@inVentree',
             'password' => Hash::make('12345'),
+            'pin' => '1234',
         ]);
 
         User::create([
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'no_telp' => '082993828824',
             'email' => 'gudang1@inVentree',
             'password' => Hash::make('12345'),
+            'pin' => '1234',
             // 'status' => 'active',
         ]);
 
@@ -44,6 +46,7 @@ class UserSeeder extends Seeder
             'no_telp' => '082993828724',
             'email' => 'gudang2@inVentree',
             'password' => Hash::make('12345'),
+            'pin' => '1234',
         ]);
 
         User::create([
@@ -51,10 +54,12 @@ class UserSeeder extends Seeder
             'role' => 'requester',
             'regional' => 'Jakarta 1',
             'warehouse_id' => '1',
+            'vendor_id' => '1',
             'no_telp' => '082993828824',
             'email' => 'requester1@inVentree',
             'password' => Hash::make('12345'),
             'is_vendor' => true,
+            'pin' => '1234',
         ]);
 
         User::create([
@@ -65,6 +70,7 @@ class UserSeeder extends Seeder
             'no_telp' => '082993828824',
             'email' => 'requester2@inVentree',
             'password' => Hash::make('12345'),
+            'pin' => '1234',
         ]);
 
         User::create([
@@ -75,6 +81,7 @@ class UserSeeder extends Seeder
             'no_telp' => '082993828824',
             'email' => 'ic@inVentree',
             'password' => Hash::make('12345'),
+            'pin' => '1234',
         ]);
     }
 }

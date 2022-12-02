@@ -1,7 +1,7 @@
 function TabelFooter(props) {
     return (
         <>
-            <div className=" intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
+            <div className=" intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
                 <div>
                     <select
                         className="w-20 form-select box mt-3 sm:mt-0"

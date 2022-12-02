@@ -57,7 +57,13 @@ class RequestFormService
     */
     public function handleGetAllGrfByUser()
     {
-        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', 'request']])->with('requestForms', 'timelines')->get();
+        if (Auth::user()->is_vendor == 1) {
+            $grfs = $this->grf->with('user','requestForms', 'timelines')->whereHas('user', function ($query) {
+                $query->where([['vendor_id', Auth::user()->vendor_id], ['regional', Auth::user()->regional]]);
+            })->get();
+        } else {
+            $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', 'request']])->with('requestForms', 'timelines')->get();
+        }
 
         $grfs->map(function ($grf) {
             $grf['ended'] = ($grf->delivery_approved_date == null ? null : Carbon::create($grf->delivery_approved_date)->addDay()->toDateTimeString());

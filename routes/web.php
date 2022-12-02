@@ -32,6 +32,7 @@ use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderInboundController;
 use App\Http\Controllers\UserTransactionController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WarehouseReturnController;
 use App\Http\Controllers\WarehouseTransactionController;
 
@@ -107,7 +108,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 *|--------------------------------------------------------------------------
 */
 // * Part 
-Route::group(['prefix' => 'part', 'as' => 'part.'], function () {
+Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'InventoryControl']], function () {
     Route::get('/', [PartController::class, 'index'])->name("view.home");
     Route::get('/create', [PartController::class, 'create'])->name("create");
     Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
@@ -121,8 +122,10 @@ Route::group(['prefix' => 'part', 'as' => 'part.'], function () {
 // * User 
 Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth', 'InventoryControl']], function () {
     Route::get('/', [UserController::class, 'index'])->name("get.view");
-    Route::post('/', [UserController::class, 'store'])->name("store");
-    Route::put('/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('/create', [UserController::class, 'create'])->name("get.create");
+    Route::post('/store', [UserController::class, 'store'])->name("store");
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name("get.edit");
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
     Route::post('/status', [UserController::class, 'postStatus'])->name('post.status');
     // Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
     // Route::get('/ajax', [PartController::class, 'ajaxIndex'])->name("get.ajax");
@@ -130,6 +133,15 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth', 'Inv
 
 Route::get('/master/user', [UserController::class, 'index'])->middleware("auth");
 // Route::post('/master/user/deactive', [UserController::class, 'postDeactive'])->middleware("auth")->name("post.deactive.user");
+
+// * Vendor
+Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
+    Route::get('/', [VendorController::class, 'index'])->name('get.view')->middleware("auth");
+    Route::get('/create', [VendorController::class, 'create'])->name('create')->middleware("auth");
+    Route::post('/store', [VendorController::class, 'store'])->name('post.store')->middleware("auth");
+    Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('edit')->middleware("auth");
+    Route::put('/update/{id}', [VendorController::class, 'update'])->name('post.update')->middleware("auth");
+});
 
 // * Brand 
 Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => ['auth', 'InventoryControl']], function () {

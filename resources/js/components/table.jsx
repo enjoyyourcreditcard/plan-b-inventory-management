@@ -1,13 +1,13 @@
 function Table(props) {
     return (
         <>
-            <div className="intro-y col-span-12 overflow-auto 2xl:overflow-visible">
+            <div className="intro-y col-span-12 overflow-auto 2xl:overflow-visible" style={{ maxHeight: '50vh' }}>
                 <table
                     {...props.getTableProps()}
                     // style={{ position: "relative", borderCollapse: "collapse" }}
                     className="table table-report -mt-2 overflow-scroll w-full"
                 >
-                    <thead className="sticky top-0">
+                    <thead className="sticky top-0 z-50 bg-slate-100">
                         {props.headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column) => (

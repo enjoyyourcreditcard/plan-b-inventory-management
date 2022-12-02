@@ -24,6 +24,7 @@ function MasterUser() {
     useEffect(() => {
         async function getData() {
             api.getUser().then((response) => {
+                console.log(response.data.data)
                 setRawData(response.data.data)
                 setData(response.data.data);
                 setLoadingData(false);
@@ -55,14 +56,21 @@ function MasterUser() {
         () => [
 
             {
-                //Add this line to the column definition
                 Header: 'Name',
                 accessor: 'name',
-                style: { 'maxWidth': 10 },//Add this line to the column definition
+                style: { 'maxWidth': 10 },
                 Cell: tableProps => (
                     <>
                             <p>{tableProps.row.original.name}</p>
                     </>
+                )
+            }, 
+            {
+                Header: 'Vendor',
+                accessor: 'vendor',
+                Cell: tableProps => (
+                    tableProps.row.original.vendor != null ? 
+                    <><p style={{ minWidth: 75 }}>{tableProps.row.original.vendor.name}</p></> : <><p style={{ minWidth: 75 }}>OrangDalam</p></>
                 )
             }, 
             {
@@ -136,14 +144,13 @@ function MasterUser() {
                 )
             },
             {
-                // Header: `Location `,
                 Header: () => <p className="text-center">ACTION</p>,
                 accessor: "action",
                 Cell: (tableProps) => (
                     <>
                         <div className="border-l-2">
                             <div class="flex justify-center items-center" style={{ minWidth: 200 }}>
-                                <a 
+                                {/* <a 
                                 class="flex items-center mr-3 edit-user-modal" 
                                     data-tw-toggle="modal" data-tw-target="#edit-user-modal"
                                     data-id={tableProps.row.original.id}
@@ -157,6 +164,16 @@ function MasterUser() {
                                     data-nik={tableProps.row.original.nik}
                                     data-notelp={tableProps.row.original.no_telp}
                                 >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
+                                        class="lucide lucide-check-square w-4 h-4 mr-1">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Edit
+                                </a> */}
+                                <a class="flex items-center mr-3" href={"/user/edit/" + tableProps.row.original.id}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" icon-name="check-square" data-lucide="check-square"
@@ -276,10 +293,9 @@ function MasterUser() {
                 </div>
             </div>
             {/* btn btn--primary */}
-            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
+            {/* <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
                 <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#create-user-modal"
                     class="btn btn-rounded-primary  shadow-md mr-1 ">
-                    {" "}
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus " width="24"
                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -291,7 +307,29 @@ function MasterUser() {
                 </a>
 
                 <div class="hidden md:block mx-auto text-slate-500">
-                    {/* Showing 1 to 10 of 150 entries */}
+                </div>
+                <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 flex">
+                    <TableSearch className="flex-none" columns={columns} SearchFilter={SearchFilter}
+                        resetSearchFilter={resetSearchFilter} />
+                    <div className="ml-2">
+                        <TabelHiddenColumn allColumns={allColumns} className="flex-none" />
+                    </div>
+                </div>
+            </div> */}
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
+                <a href="/user/create" class="btn btn-rounded-primary  shadow-md mr-1 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus " width="24"
+                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>&nbsp;Create User&nbsp;</span>
+                </a>
+
+                <div class="hidden md:block mx-auto text-slate-500">
+
                 </div>
                 <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 flex">
                     <TableSearch className="flex-none" columns={columns} SearchFilter={SearchFilter}
