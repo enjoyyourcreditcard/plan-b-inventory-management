@@ -506,7 +506,7 @@ class OrderInboundService
 
             $this->stock->create([
                 'part_id' => $orderInbounds->inbound->part_id,
-                'warehouse_id' => $currentGrf->warehouse_id,
+                'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
                 'sn_code' => $orderInbounds->received_sn_code,
                 'condition' => 'GOOD NEW',
                 'expired_date' => now(),
