@@ -37,7 +37,7 @@ function TransactionForm(props) {
                 for (let i = 0; i < response.data.data.length; i++) {
                     selectQtyRaw[i] = 1;
                     parts[i] = [];
-                    brandOption_raw[i] = [[{id:null,name:"select option"}]];
+                    brandOption_raw[i] = [[[{id:null,name:"select option"}]]];
                     qty_raw[i] = [];
                     brand_raw[i] = [];
                     error_raw[i] = false;
@@ -63,7 +63,7 @@ function TransactionForm(props) {
 
         let newBrandOption = brandOption.slice();
 
-        newBrandOption[index].push([{id:null, name:"Select Option"}]);
+        newBrandOption[index].push([[{id:null, name:"Select Option"}]]);
         // console.log(newBrandOption[0])
         setBrandOption(newBrandOption);
     
@@ -77,8 +77,17 @@ function TransactionForm(props) {
     const changePart = (event, index, i) => {
 
         var brand = brandOption.slice();
-        brand[index][i] = [data[index].segment.parts.find(o => o.id === event.value).brand];
-        setBrandOption(brand);
+        brand[index][i] = [data[index].segment.parts.find(o => o.name === event.value).brand];
+        setBrandOption(brand)
+        // console.log(brandOption[0][0][0]  )
+
+        // if (typeof brand[index][i][0].length === "undefined") {
+        //     ;
+        // }else{
+        //     setBrandOption(brand[0]);
+        //     console.log(brand[0]);
+
+        // }
 
         var parts = part.slice();
         parts[index][i] = event.value;
@@ -175,7 +184,7 @@ function TransactionForm(props) {
                                                         className="part_id mt-2"
                                                         options={item.segment.parts.map(
                                                             (d) => ({
-                                                                value: d.id,
+                                                                value: d.name,
                                                                 label: d.name,
                                                             })
                                                         )}
@@ -209,7 +218,7 @@ function TransactionForm(props) {
                                                         }
                                                         className="part_id mt-2 "
                                                         isDisabled={brandOption[index][i][0].id === null}
-                                                        options={brandOption[index][i].map(
+                                                        options={brandOption[index][i][0].map(
                                                             (d) => ({
                                                                 value: d.id,
                                                                 label: d.name,

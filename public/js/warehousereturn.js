@@ -28,8 +28,6 @@ $('.upload-return').on('click', function (event) {
 
     inputBulkPartName.html(partNameReturn);
 
-
-
     // /
     // --------------------------------------------------------------------------
     //  Pieces Print HTML

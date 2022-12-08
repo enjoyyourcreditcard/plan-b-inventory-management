@@ -35,16 +35,18 @@ use App\Http\Controllers\WarehouseTransactionController;
 */
 
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logoutall', [AuthController::class, 'logoutall']);
+Route::post('logoutall', [AuthController::class, 'logoutall'])->name('logoutall');
+// Route::post('apilogin', [AuthController::class, 'apiLogin']);
+// Route::get('apilogout', [AuthController::class, 'apiLogout']);
 
 Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
     // Route::post('logout', [AuthController::class, 'logout']);
     // Route::post('logoutall', [AuthController::class, 'logoutall']);
 });
 
-Route::get('/tes123', function (Request $req) {
-    AuthPermission("part:view");
-})->middleware('auth');
+// Route::get('/tes123', function (Request $req) {
+//     AuthPermission("part:view");
+// })->middleware('auth');
 
 Route::group(['prefix' => 'part'], function () {
     Route::get('/', [PartController::class, 'getAllPart']);
@@ -73,7 +75,7 @@ Route::group(['prefix' => 'brand'], function () {
     Route::get('/delete/{id}', [BrandController::class, 'getDeactiveBrand']);
 });
 
-Route::group(['prefix' => 'stock'], function () {
+Route::group(['prefix' => 'stock', 'as' => 'stock.', 'middleware' => ['JWTAuth']], function () {
     Route::get('/', [StockController::class, 'getAllStock']);
     Route::post('/', [StockController::class, 'postStoreStock']);
     Route::put('/{id}', [StockController::class, 'putUpdateStock']);
@@ -90,7 +92,7 @@ Route::group(['prefix' => 'warehouse'], function () {
     Route::get('/all/warehouse/recipient/{warehouse_destination}', [WarehouseTransactionController::class, 'listRecipient']);
 });
 
-Route::group(['prefix' => 'build'], function () {
+Route::group(['prefix' => 'build', 'as' => 'build.', 'middleware' => ['JWTAuth']], function () {
     Route::get('/', [BuildController::class, 'getAllBuild']);
 });
 
@@ -101,7 +103,7 @@ Route::group(['prefix' => 'notification'], function () {
     Route::delete('/{id}', [NotificationController::class, 'getDeleteNotification']);
 });
 
-Route::group(['prefix' => 'request'], function () {
+Route::group(['prefix' => 'request', 'as' => 'request.', 'middleware' => ['JWTAuth']], function () {
     Route::get('/', [RequestController::class, 'getAllRequest']);
     Route::post('/', [RequestController::class, 'postStoreRequest']);
     Route::put('/{id}', [RequestController::class, 'putUpdateRequest']);

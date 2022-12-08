@@ -31,7 +31,13 @@ class RequestFormService
     // Request Form SHOW
     public function handleShowRequestForm($code)
     {
-        $requestForms = $this->grf->with('requestForms.segment')->with('requestForms.segment.parts.brand')->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])->first()->requestForms;
+        $requestForms = $this->grf
+            ->with('requestForms.segment')
+            ->with('requestForms.segment.parts.brand')
+            ->where([['grf_code', '=', str_replace('~', '/', strtoupper($code))], ['status', '!=', 'closed']])
+            ->first()
+            ->requestForms;
+
         return ($requestForms);
     }
 
@@ -87,7 +93,7 @@ class RequestFormService
     */
     public function handleGetAllWarehouseTransferGrfByUser()
     {
-        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', "!=", 'request']])->with('transferForms', "timelines" )->get();
+        $grfs = $this->grf->where([['user_id', Auth::user()->id], ['type', "!=", 'request']])->with('transferForms', "timelines")->get();
 
         $grfs->map(function ($grf) {
             $grf['total_stock'] = 0;
@@ -215,10 +221,10 @@ class RequestFormService
             'type' => 'nullable',
         ]);
         $validatedData['user_id'] = Auth::user()->id;
-        $validatedData['is_emergency'] = 1 ;
+        $validatedData['is_emergency'] = 1;
         $createdData = $this->grf->create($validatedData);
 
-        $timeline =[
+        $timeline = [
             'status' => 'draft',
             'grf_id' => $createdData->id,
         ];
@@ -262,20 +268,21 @@ class RequestFormService
             $query->where("user_id", Auth::user()->id);
         })->get();
 
-        function chart ( $condition, $requestStocks ) {
-            if ( count( $condition ) > 0 && count( $requestStocks ) > 0 ) {
-                $calc = count( $condition ) / count( $requestStocks );
-                return ( $calc * 100 );
+        function chart($condition, $requestStocks)
+        {
+            if (count($condition) > 0 && count($requestStocks) > 0) {
+                $calc = count($condition) / count($requestStocks);
+                return ($calc * 100);
             } else {
                 return 0;
             }
         }
 
         $chartDatas = [
-            "good" => chart( $requestStocks->where( "condition", "good"), $requestStocks ),
-            "not_good" => chart( $requestStocks->where( "condition", "not good"), $requestStocks ),
-            "used" => chart( $requestStocks->where( "condition", "used"), $requestStocks ),
-            "replace" => chart( $requestStocks->where( "condition", "replace"), $requestStocks ),
+            "good" => chart($requestStocks->where("condition", "good"), $requestStocks),
+            "not_good" => chart($requestStocks->where("condition", "not good"), $requestStocks),
+            "used" => chart($requestStocks->where("condition", "used"), $requestStocks),
+            "replace" => chart($requestStocks->where("condition", "replace"), $requestStocks),
             "requestStocks" => $requestStocks
         ];
 
@@ -362,8 +369,7 @@ class RequestFormService
             } else {
                 $grf_code = '001' . '/' . $name . '/' . 'IB' . '/' . $month . '/' . $year;
             }
-        }
-         else {
+        } else {
             $grf_code = null;
         }
         return ($grf_code);
@@ -391,7 +397,7 @@ class RequestFormService
             }
             if (now() > $grfDelivery->timelines->where('status', 'delivery_approved')->first()->created_at->addDays(2)) {
                 $grf = $this->grf->with('requestStocks')->find($grfDelivery->id);
-                
+
                 $grf->update([
                     'status' => 'closed'
                 ]);
@@ -430,8 +436,7 @@ class RequestFormService
 
         $this->grf->where('id', $id)->update($validatedData);
 
-        return('Data has been stored');
-
+        return ('Data has been stored');
     }
 
 
@@ -444,9 +449,9 @@ class RequestFormService
     public function handlePostApprovePickup($id)
     {
         $currentGrf = $this->grf->with('requestStocks')->find($id);
-        
+
         foreach ($currentGrf->requestStocks as $requestStocks) {
-            $this->stock->where('sn_code', $requestStocks->sn)->update(['stock_status' => 'out']);
+            $this->stock->where([['sn_code', $requestStocks->sn], ['warehouse_id', $currentGrf->warehouse_id], ['quantity', $requestStocks->quantity]])->update(['stock_status' => 'out']);
         }
 
         $currentGrf->status = "user_pickup";
@@ -477,7 +482,7 @@ class RequestFormService
             "file" => null
         ]);
 
-        return('File has benn deleted');
+        return ('File has benn deleted');
     }
 }
 

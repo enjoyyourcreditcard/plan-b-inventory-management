@@ -101,4 +101,14 @@ class UserController extends Controller
     {
         return ResponseJSON($this->userService->handleAllUserApi($req), 200);
     } 
+
+    // profile
+    public function indexProfile()
+    {
+        $userProfile = $this->userService->handleAllUserProfile();
+        return view('profile', [
+            'userProfile' => $userProfile,
+        ]);
+
+    }
 }

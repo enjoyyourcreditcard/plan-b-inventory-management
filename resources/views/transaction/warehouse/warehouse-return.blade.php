@@ -73,7 +73,7 @@
                             <th class="whitespace-nowrap">Part Name</th>
                             <th class="whitespace-nowrap">Request QTY</th>
                             <th class="whitespace-nowrap">Return QTY</th>
-                            <th class="whitespace-nowrap">Return QTY</th>
+                            <th class="whitespace-nowrap">Checked QTY</th>
                             <th class="whitespace-nowrap text-center">Action</th>
                         </tr>
                     </thead>
@@ -85,14 +85,27 @@
                                     <p class="font-medium " style="width: 100%">{{ $item['name'] }}</p>
                                 </td>
                                 <td class="w-8">
-                                    <p class="font-medium whitespace-nowrap">{{ $item['quantity'] }}</p>
+                                    <p class="font-medium whitespace-nowrap">{{ $item['quantity'] . ' ' . $item['uom'] }}</p>
                                 </td>
+                                @if ($item['sn_status'] == 'SN')
                                 <td class="w-8">
-                                    <p class="font-medium whitespace-nowrap">{{ $item['count'] }}</p>
+                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $item['count_return'] . ' ' . $item['uom'] }}</p>
                                 </td>
+                                @else
                                 <td class="w-8">
-                                    <p class="font-medium whitespace-nowrap">{{ $item['count'] }}</p>
+                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ ($item['non_sn_count_return'] == null ? 0 : $item['non_sn_count_return']) . ' ' . $item['uom'] }}</p>
                                 </td>
+                                @endIf
+                                @if ($item['sn_status'] == 'SN')
+                                <td class="w-8">
+                                    <p class="font-medium whitespace-nowrap">{{ $item['count'] . ' ' . $item['uom'] }}</p>
+                                </td>
+                                @else
+                                <td class="w-8">
+                                    <p class="font-medium whitespace-nowrap">{{ $item['non_sn_count'] ? $item['non_sn_count'] . ' ' . $item['uom'] : '0' . ' ' . $item['uom']  }}</p>
+                                </td>
+                                @endIf
+                                @if ($item['sn_status'] == 'SN')
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
                                         <button type="button"
@@ -101,7 +114,7 @@
                                             data-partidreturn="{{ $item['part_id'] }}"
                                             data-partnamereturn="{{ $item['name'] }}"
                                             data-grfidreturn="{{ $whreturn->id }}"
-                                            data-icquantityreturn="{{ $item['quantity'] }}">
+                                            data-icquantityreturn="{{ $item['count_return'] }}">
                                             <p class="flex items-center mr-3 text-white"> <svg
                                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -114,6 +127,21 @@
                                         </button>
                                     </div>
                                 </td>
+                                @else
+                                <td class="table-report__action w-56">
+                                    <div class="flex justify-center items-center">
+                                        <button type="button" class="upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $item['part_id'] }}" data-partname="{{ $item['name'] }}" data-requestformid="{{ $item['id'] }}" data-icquantity="{{ $item['non_sn_count_return'] }}" data-partuom="{{ $item['uom'] }}">
+                                            <p class="flex items-center mr-3 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
+                                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                    </path>
+                                                </svg> Check
+                                            </p>
+                                        </button>
+                                    </div>
+                                </td>
+                                @endIf
                             </tr>
                         @endforeach
                     </tbody>
@@ -156,10 +184,7 @@
                                         <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
                                             <li id="top-products-symfony-tab" class="nav-item flex flex-col flex-grow"
                                                 role="presentation">
-                                                <button type="submit" name="type" value="transfer gudang baru"
-                                                    class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
-                                                    data-tw-target="#importExcelReturn" data-tw-toggle="modal"
-                                                    aria-selected="false" role="tab">
+                                                <button class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#importExcelReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor"
                                                         class="bi bi-file-earmark-diff block w-6 h-6 mb-2 mx-auto"
@@ -173,10 +198,7 @@
                                             </li>
                                             <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
                                                 role="presentation">
-                                                <button type="submit" name="type" value="transfer gudang lama"
-                                                    class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
-                                                    data-tw-target="#inputSnReturn" data-tw-toggle="modal"
-                                                    aria-selected="false" role="tab">
+                                                <button class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#inputSnReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor"
                                                         class="bi bi-list-ul block w-6 h-6 mb-2 mx-auto"
@@ -192,7 +214,37 @@
                             </div>
                         </div>
                     </div>
+
                     {{-- ! --}}
+                    <div id="non-sn" class="modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="p-5 text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                        </svg>
+                                        <div class="text-3xl mt-5">Apakah anda ingin mengchecklist item ini?</div>
+                                        <div class="html-non-sn">
+                                            <div class="flex px-8 mt-4 w-full justify-between">
+                                                <span>barang</span>
+                                                <span>quantity KG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-5 pb-8 text-center">
+                                        <form id="form-nonsn" action="{{ Route('returnnonsn') }}" method="POST">
+                                            @csrf
+                                            <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
+                                            <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {{-- ! --}}
                     {{-- todo modal redesign excel --}}
                     <div id="importExcelReturn" class="modal" tabindex="-1" aria-hidden="true">
@@ -241,7 +293,7 @@
                                     <form action="/warehouse-return/{{ $whreturn->id }}" method="POST"
                                         id="formPiecesReturn">
                                         @csrf
-                                        <div id="input-pieces-return" class="modal-body"> </div>
+                                    <div id="input-pieces-return" class="modal-body"> </div>
                                 </div>
                                 <!-- END: Modal Body -->
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -19,4 +21,21 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function edit() {
+        return view('auth.forgotPassword');
+    }
+    
+    /**
+ * @param UpdatePasswordRequest $request
+ * @return \Illuminate\Http\RedirectResponse
+ */
+public function update(UpdatePasswordRequest $request)
+{
+    $request->user()->update([
+        'password' => Hash::make($request->get('password'))
+    ]);
+
+    return redirect()->route('home');
+}
 }

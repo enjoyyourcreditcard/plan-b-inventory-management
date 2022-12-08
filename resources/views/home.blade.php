@@ -1,4 +1,18 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('breadcrumb')
+{{-- /* 
+|--------------------------------------------------------------------------
+|  Breadcrumb
+|--------------------------------------------------------------------------
+*/ --}}
+
+<nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+    </ol>
+</nav>
+@endsection
+@section('content')
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 2xl:col-span-9">
         <div class="grid grid-cols-12 gap-6 mt-5">

@@ -67,15 +67,26 @@ class MiniStockService
     */
     public function handleUpdateReturnStock ( $request, $id )
     {
-        $miniStocks = $this->requestStock->where( 'grf_id', $id )->get();
 
-        foreach ( $request->old_sn_code as $key => $sn_code ) {
-            $miniStocks->where('sn', $sn_code)->first()->update([
-                'condition' => $request['condition'][$key],
-                'sn_return' => $request['sn_code'][$key],
-                'remarks' => $request['remarks'][$key],
+        for ($i = 0; $i < count($request->old_sn_code); $i++) {
+            $this->requestStock->where([
+                    ['grf_id', $id],
+                    ['sn', $request->old_sn_code[$i]],
+                    ['request_form_id', $request->request_form_id[$i]]
+                ])->first()->update([
+                'condition' => $request->condition[$i],
+                'sn_return' => $request->sn_code[$i],
+                'remarks' => $request->remarks[$i],
             ]);
         }
+
+        // foreach ( $request->old_sn_code as $key => $sn_code ) {
+        //     $miniStocks->where([['sn', $sn_code], ['request_form_id', $request->request_form_id[$key]]])->first()->update([
+        //         'condition' => $request['condition'][$key],
+        //         'sn_return' => $request['sn_code'][$key],
+        //         'remarks' => $request['remarks'][$key],
+        //     ]);
+        // }
 
         if ( $request->isReturn == "true" ) {
             $this->grf->find($id)->update([

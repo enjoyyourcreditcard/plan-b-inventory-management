@@ -187,6 +187,7 @@
                             <tbody>
 
                                 @foreach ( $categories as $miniStock )
+                                <input type="hidden" form="form-return-item" name="request_form_id[]" value="{{ $miniStock->request_form_id }}">
                                 <input type="hidden" form="form-return-item" name="old_sn_code[]" value="{{ $miniStock->sn }}">
                                 <tr>
                                     <td class="text-right">
@@ -198,8 +199,7 @@
                                             <option value="not good" {{ $miniStock->condition == "not good" ? "selected" : "" }}>NOT GOOD</option>
                                         </select>
                                     </td>
-                                    <td class="text-right">{{ $miniStock->sn }}</td>
-
+                                    <td class="text-right">{{ $miniStock->sn ? $miniStock->sn : '-' }}</td>
                                     <td>
                                         <div class="flex items-center">
                                             <span class="font-medium whitespace-nowrap">{{ $miniStock->part->name }}</span>

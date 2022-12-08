@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -103,6 +104,14 @@ class UserService
             $user->save();
             return $user;
         }
+    }
+
+    // profile
+
+    public function handleAllUserProfile()
+    {
+        $userProfile = $this->user->with('warehouse')->find(Auth::id());
+        return $userProfile;
     }
 
 }

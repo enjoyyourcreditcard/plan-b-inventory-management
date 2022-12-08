@@ -30,7 +30,7 @@ function Request(props) {
             });
         }
         if (loadingData) {
-            console.log(props.auth)
+            // console.log(props.auth)
             getData();
         }
     }, []);
@@ -42,7 +42,7 @@ function Request(props) {
     }
 
     function SearchFilter(search, column) {
-        console.log(column);
+        // console.log(column);
         let result = filter.search(search, column, rawData);
         setData(result);
     }

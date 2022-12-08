@@ -80,7 +80,6 @@ class StockService
         $stock_status = $request->input('stock_status');
         $status = $request->input('status');
         $created_at = $request->input('created_at');
-
         $part  = $this->part->with("brand")->get()->map(function ($item) use(
         $part_id,
         $warehouse_id,
@@ -108,13 +107,14 @@ class StockService
                     return $query->where('created_at', $created_at);
                 })
                 ->where("part_id",$item->id)
+                ->where("stock_status","in")
                 ->count();
                 return $item;
         });
 
 
 
-
+// dd($part[0]);
         return ($part);
     }
 

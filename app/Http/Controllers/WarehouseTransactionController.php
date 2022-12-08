@@ -115,8 +115,7 @@ class WarehouseTransactionController extends Controller
     {
         $whapprov = $this->warehouseTransactionService->handleShowWhApproval($id);
      
-        // dd($whapprov->requestForms);
-     //masih error tidak bisa mengambil stock name
+        //masih error tidak bisa mengambil stock name
         $requestForm = $this->requestStockService->handleRequestStockByRequestForms($whapprov->requestForms);
 
         return view('transaction.warehouse.check-whapproval', compact('whapprov', 'requestForm'));
@@ -138,6 +137,15 @@ class WarehouseTransactionController extends Controller
     public function store(Request $request){
         try {
             $this->warehouseTransactionService->handleStoreWhApproval($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    public function storeNonSn(Request $request){
+        try {
+            $this->warehouseTransactionService->handleStoreNonSnWhApproval($request);
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());

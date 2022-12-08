@@ -87,7 +87,7 @@ class UserTransactionController extends Controller
     */
     public function ajaxReturnStock($code)
     {
-        // Services
+        // Servicesshow
         $miniStocks = $this->miniStockService->handleShowMiniStock($code);
 
         // Return View

@@ -15,7 +15,7 @@ export default class Api {
             "Content-Type": "application/x-www-form-urlencoded",
         };
         // if (this.api_token) {
-        //   headers.Authorization = `Bearer ${this.api_token}`;
+      headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjY5ODY0MjAwLCJuYmYiOjE2Njk4NjQyMDAsImp0aSI6InVidENhaFJueUhtb3lIZEIiLCJzdWIiOiI2IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.1dyeHroTDrK3Z-R4rObKZtJZDC0Lirz0p9w4OqxQgLk`;
         // }
         // console.log(headers);
         this.client = axios.create({
@@ -98,7 +98,7 @@ export default class Api {
             });
     };
 
-    getUser = () => {
+    getUser = () => {       
         return this.init()
             .get(`user`)
             .catch((error) => {
@@ -115,7 +115,7 @@ export default class Api {
     };
 
     getWarehouseRequest = (wh_id) => {
-        console.log(wh_id);
+        // console.log(wh_id);
         return this.init()
             .get(`warehouse/all/request/` + wh_id)
             .catch((error) => {
@@ -160,6 +160,8 @@ export default class Api {
             .get(`grf/request/list/` + code)
             .catch((error) => {});
     };
+
+    // brand
     // http://localhost:8000/api001~hajidalakhtar~ib~ix~2022
     getWarehouseApproved = () => {
         return this.init()

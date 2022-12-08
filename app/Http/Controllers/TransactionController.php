@@ -10,6 +10,7 @@ use App\Services\PartService;
 use App\Services\RequestFormService;
 use App\Services\TransactionService;
 use App\Services\WarehouseService;
+use FontLib\TrueType\Collection;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use PDF;
 use Illuminate\Http\Request;
@@ -192,14 +193,70 @@ class TransactionController extends Controller
 
     public function getAllSegmentByGRF($code)
     {
-        $requestForms = $this->requestFormService->handleShowRequestForm($code);
-        // dd($requestForms);
-        // dd($this->brandService->handleBrandBySegment(1));
+        $requestForms = $this->requestFormService->handleShowRequestForm($code)
+            ->map(function ($item_part) {
+                $recordsAll = collect($item_part->segment->parts);
+                $recordsCleaned = $item_part->segment->parts->unique(function ($item) {
+                    return $item['name'] . $item['name'];
+                });
+                $recordsAll = collect($recordsAll->toArray())->map(function ($row) {
+                    return collect($row);
+                });
+                $recordsCleaned = collect($recordsCleaned->toArray())->map(function ($row) {
+                    $row['brand'] = $row['brand'];
+                    return collect($row);
+                });
+                $diff = array_values($recordsAll->diff($recordsCleaned)->toArray());
+                for ($i = 0; $i < count($diff); $i++) {
+                    $diff_data = $diff[$i];
+                    $old_data = $recordsCleaned->search(function ($collection) use ($diff_data) {
+                        return $diff_data["name"] ===  $collection["name"];
+                    });
+                    $brand = [];
+                    try {
+                        if ($recordsCleaned[$old_data]['brand'][0] != null) {
+                            $brand = $recordsCleaned[$old_data]['brand'];
+                            array_push($brand, $diff_data['brand']);
+                        }
+                    } catch (\Throwable $exception) {
+                        $brand = [$recordsCleaned[$old_data]['brand']];
+                        array_push($brand, $diff_data['brand']);
+                    }
+
+                    $recordsCleaned[$old_data]['brand'] = $brand;
+                }
+
+
+
+                $recordsCleaned->map(function ($item) {
+                    // dd();
+                    try {
+                        if ($item['brand'][0] != null) {
+                        }
+                    } catch (\Throwable $exception) {
+                        $item['brand'] = array($item['brand']);
+                        return $item;
+                        
+                    }
+
+
+                });
+
+
+                $segment = collect(["id" => $item_part->segment->id, "name" => $item_part->segment->name, "category_id" => $item_part->category_id, "parts" => array_values($recordsCleaned->toArray())]);
+                $result = collect(["id" => $item_part->id, "grf_id" => $item_part->grf_id, "segment_id" => $item_part->segment_id, "brand_id" => $item_part->brand_id, "part_id" => $item_part->part_id, "quantity" => $item_part->quantity, "remarks" => $item_part->remarks, "segment" => $segment]);
+                return $result;
+            });
+
+
+        // dd($requestForms[0]->);
         foreach ($requestForms as $key => $item) {
-            $requestForms[$key]->brand = $this->brandService->handleBrandBySegment($item->segment_id);
+            $requestForms[$key]->brand = $this->brandService->handleBrandBySegment($item["segment_id"]);
         };
 
 
+        // dd($requestForms);
+        // return $requestForms[];
         return ResponseJSON($requestForms);
     }
 
@@ -247,7 +304,8 @@ class TransactionController extends Controller
     * Home IC return stock
     *--------------------------------------------------------------------------
     */
-    public function returnStockIndex(){
+    public function returnStockIndex()
+    {
         try {
             return view('transaction.IC.return-stock');
         } catch (\Exception $e) {
@@ -260,9 +318,10 @@ class TransactionController extends Controller
     * Home IC return stock
     *--------------------------------------------------------------------------
     */
-    public function returnStockStore($id){
+    public function returnStockStore(Request $request, $id)
+    {
         try {
-            $this->transactionService->handleStoreReturnStockGrf($id);
+            $this->transactionService->handleStoreReturnStockGrf($request, $id);
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -274,7 +333,8 @@ class TransactionController extends Controller
     * API home IC return stock
     *--------------------------------------------------------------------------
     */
-    public function getAllGRFReturnStock(){
+    public function getAllGRFReturnStock()
+    {
         return ResponseJSON($this->transactionService->handleGetReturnStockGrf(), 200);
     }
 }

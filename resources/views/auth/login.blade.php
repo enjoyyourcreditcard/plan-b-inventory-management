@@ -164,6 +164,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <body class="login">
     <form method="POST" action="{{ route('login') }}">
         @csrf
+        {{-- <input type="hidden" name="loginPage" value="pageLogin"> --}}
         <div class="container sm:px-10">
             <div class="block xl:grid grid-cols-2 gap-4">
                 <!-- BEGIN: Login Info -->

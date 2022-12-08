@@ -12,7 +12,7 @@
     <meta name="keywords"
         content="admin template, Tinker Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title>Dashboard - Tinker - Tailwind HTML Admin Template</title>
+    <title>InVentree</title>
     <!-- BEGIN: CSS Assets-->
     <!-- END: CSS Assets-->
 
@@ -36,7 +36,6 @@
 <!-- END: Head -->
 
 <body class="py-5 md:py-0 bg-black/[0.15] dark:bg-transparent">
-{{-- @dd(Auth::user()->id) --}}
     <!-- BEGIN: Mobile Menu -->
     <div class="mobile-menu md:hidden">
         <div class="mobile-menu-bar">
@@ -250,8 +249,8 @@
                     <div class="menu__title"> Recondition </div>
                 </a>
             </li>
-            
-            
+
+
             @endIf
 
             {{-- /*
@@ -264,8 +263,8 @@
             <li>
                 <a href="{{ route('warehouse.get.dashboard') }}"
                     class="side-menu {{ Route::currentRouteName() == 'warehouse.get.dashboard' ? ' side-menu--active' : '' }}">
-                    <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21"
-                            height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                            fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                             <path fill-rule="evenodd"
@@ -413,7 +412,7 @@
         <nav class="side-nav">
             <a href="" class="intro-x flex items-center pl-5 pt-4 mt-3">
                 <img alt="Midone - HTML Admin Template" class="w-6" src="{{asset('dist/images/logo.svg')}}">
-                <span class="hidden xl:block text-white text-lg ml-3"> Tinker </span>
+                <span class="hidden xl:block text-white text-lg ml-3"> InVentree </span>
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
@@ -659,8 +658,8 @@
                 <li>
                     <a href="{{ route('warehouse.get.dashboard') }}"
                         class="side-menu {{ Route::currentRouteName() == 'warehouse.get.dashboard' ? ' side-menu--active' : '' }}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21"
-                                height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                                 <path fill-rule="evenodd"
@@ -1005,9 +1004,9 @@
                 <!-- END: Search -->
                 <!-- BEGIN: Notifications -->
                 {{-- <div class="intro-x dropdown mr-auto sm:mr-6">
-                    @if( count(auth()->user()->notifications->where('read_at', null)) < 1 )
-                    <div class="dropdown-toggle notification cursor-pointer" role="button"
-                        aria-expanded="false" data-tw-toggle="dropdown">
+                    @if( count(auth()->user()->notifications->where('read_at', null)) < 1 ) <div
+                        class="dropdown-toggle notification cursor-pointer" role="button" aria-expanded="false"
+                        data-tw-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             icon-name="bell" data-lucide="bell"
@@ -1015,123 +1014,126 @@
                             <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 01-3.46 0"></path>
                         </svg>
-                    </div>
-                    @else
-                    <div class="dropdown-toggle notification notification--bullet cursor-pointer" role="button"
-                        aria-expanded="false" data-tw-toggle="dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            icon-name="bell" data-lucide="bell"
-                            class="lucide lucide-bell notification__icon dark:text-slate-500">
-                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 01-3.46 0"></path>
-                        </svg>
-                    </div>
-                    @endif
-                    <div class="notification-content pt-2 dropdown-menu">
-                        <div class="notification-content__box dropdown-content overflow-y-scroll h-80 w-80" >
-                            <div class="notification-content__title">Notifications</div>
+                </div>
+                @else
+                <div class="dropdown-toggle notification notification--bullet cursor-pointer" role="button"
+                    aria-expanded="false" data-tw-toggle="dropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        icon-name="bell" data-lucide="bell"
+                        class="lucide lucide-bell notification__icon dark:text-slate-500">
+                        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 01-3.46 0"></path>
+                    </svg>
+                </div>
+                @endif
+                <div class="notification-content pt-2 dropdown-menu">
+                    <div class="notification-content__box dropdown-content overflow-y-scroll h-80 w-80">
+                        <div class="notification-content__title">Notifications</div>
 
-                            @foreach (auth()->user()->notifications as $item)
-                            <div class="cursor-pointer relative flex items-center mt-4">
-                                <div class="flex-none image-fit mr-2 w-1/12">
-                                    @if($item->read_at == null)
-                                    <div
-                                        class="w-2 h-2 bg-success object-center rounded-full border-2 border-white dark:border-darkmode-600">
-                                    </div>
-                                    @endif
+                        @foreach (auth()->user()->notifications as $item)
+                        <div class="cursor-pointer relative flex items-center mt-4">
+                            <div class="flex-none image-fit mr-2 w-1/12">
+                                @if($item->read_at == null)
+                                <div
+                                    class="w-2 h-2 bg-success object-center rounded-full border-2 border-white dark:border-darkmode-600">
                                 </div>
-                                
-                                <div class="w-11/12">
-                                    <div class="flex items-center">
-                                        <a href="javascript:;" class="font-medium truncate">{{ isset($item->data["username"]) ? $item->data["username"] : ""  }}</a>
-                                        <div class="text-xs text-slate-400 whitespace-nowrap ml-auto">{{ $item->created_at->diffForHumans() }}</div>
-                                    </div>
-                                    <div class="w-full truncate text-slate-500">{{ isset($item->data["data"]) ? $item->data["data"] : ""  }}</div>
+                                @endif
+                            </div>
+
+                            <div class="w-11/12">
+                                <div class="flex items-center">
+                                    <a href="javascript:;" class="font-medium truncate">{{
+                                        isset($item->data["username"]) ? $item->data["username"] : "" }}</a>
+                                    <div class="text-xs text-slate-400 whitespace-nowrap ml-auto">{{
+                                        $item->created_at->diffForHumans() }}</div>
                                 </div>
                                 <div class="w-full truncate text-slate-500">{{ isset($item->data["data"]) ?
                                     $item->data["data"] : "" }}</div>
                             </div>
-                            @endforeach
-
-                            
+                            <div class="w-full truncate text-slate-500">{{ isset($item->data["data"]) ?
+                                $item->data["data"] : "" }}</div>
                         </div>
                         @endforeach
 
 
                     </div>
-                </div> --}}
-                <!-- END: Notifications -->
-                <!-- BEGIN: Account Menu -->
-                <div class="intro-x dropdown w-8 h-8">
-                    <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
-                        role="button" aria-expanded="false" data-tw-toggle="dropdown">
-                        <img alt="Midone - HTML Admin Template"
-                            src="http://tinker-laravel.left4code.com/dist/images/profile-15.jpg">
-                    </div>
-                    <div class="dropdown-menu w-56">
-                        <ul class="dropdown-content bg-primary text-white">
-                            <li class="p-2">
-                                <div class="font-medium">{{Auth::user()->name}}</div>
-                                <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">Backend Engineer</div>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider border-white/[0.08]">
-                            </li>
-                            <li>
-                                <a href="" class="dropdown-item hover:bg-white/5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="user" data-lucide="user"
-                                        class="lucide lucide-user w-4 h-4 mr-2">
-                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg> Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="dropdown-item hover:bg-white/5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="edit" data-lucide="edit"
-                                        class="lucide lucide-edit w-4 h-4 mr-2">
-                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg> Add Account
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="dropdown-item hover:bg-white/5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="lock" data-lucide="lock"
-                                        class="lucide lucide-lock w-4 h-4 mr-2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                                    </svg> Reset Password
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="dropdown-item hover:bg-white/5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="help-circle" data-lucide="help-circle"
-                                        class="lucide lucide-help-circle w-4 h-4 mr-2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                    </svg> Help
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider border-white/[0.08]">
-                            </li>
-                            <li>
+                    @endforeach
 
-                            <form method="POST" class=" hover:bg-white/5" action="{{ route('logout') }}">
+
+                </div>
+            </div> --}}
+            <!-- END: Notifications -->
+            <!-- BEGIN: Account Menu -->
+            <div class="intro-x dropdown w-8 h-8">
+                <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
+                    role="button" aria-expanded="false" data-tw-toggle="dropdown">
+                    <img alt="Midone - HTML Admin Template"
+                        src="http://tinker-laravel.left4code.com/dist/images/profile-15.jpg">
+                </div>
+                <div class="dropdown-menu w-56">
+                    <ul class="dropdown-content bg-primary text-white">
+                        <li class="p-2">
+                            <div class="font-medium">{{Auth::user()->name}}</div>
+                            <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500 uppercase">{{Auth::user()->role}}</div>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider border-white/[0.08]">
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item hover:bg-white/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" icon-name="user" data-lucide="user"
+                                    class="lucide lucide-user w-4 h-4 mr-2">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item hover:bg-white/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" icon-name="edit" data-lucide="edit"
+                                    class="lucide lucide-edit w-4 h-4 mr-2">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg> Add Account
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item hover:bg-white/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" icon-name="lock" data-lucide="lock"
+                                    class="lucide lucide-lock w-4 h-4 mr-2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                </svg> Reset Password
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item hover:bg-white/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" icon-name="help-circle" data-lucide="help-circle"
+                                    class="lucide lucide-help-circle w-4 h-4 mr-2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg> Help
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider border-white/[0.08]">
+                        </li>
+
+                        <form method="POST"  action="{{ route('logout') }}">
+                            <li>
                                 @csrf
 
-                                <button type="submit" class="dropdown-item">
+                                <button type="submit" class="dropdown-item hover:bg-white/5" style="width: 100%">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" icon-name="toggle-right" data-lucide="toggle-right"
@@ -1140,9 +1142,10 @@
                                         <circle cx="16" cy="12" r="3"></circle>
                                     </svg> Logout
                                 </button>
-                            </form>
 
-                        </li>
+                            </li>
+                        </form>
+
                     </ul>
                 </div>
             </div>
@@ -1167,6 +1170,7 @@
         @endif
 
         @yield("content")
+        {{-- <input type="hidden" name="token" value="{{ $token }}" id="auth"> --}}
     </div>
     <!-- END: Content -->
     </div>
@@ -1177,6 +1181,8 @@
         <div class="dark-mode-switcher__toggle border"></div>
     </div> --}}
     <!-- END: Dark Mode Switcher-->
+
+
 
     <!-- BEGIN: JS Assets-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -1190,6 +1196,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
     <script src="{{ asset('js/master.js') }}" defer></script>
+    <script src="{{ asset('js/token.js') }}" defer></script>
+
 
     @yield( "javaScript" )
 

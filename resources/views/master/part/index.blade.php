@@ -9,7 +9,7 @@
 </nav>
 @endsection
 @section('content')
-<h2 class="intro-y text-lg font-medium mt-10">Master Part</h2>
+<h2 class="intro-y text-lg font-medium mt-4">Master Part</h2>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
 

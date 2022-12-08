@@ -2,24 +2,26 @@
 
 namespace App\Services;
 
-use App\Imports\WarehouseReturn;
-use App\Models\Grf;
-use App\Models\RequestStock;
-use App\Models\Stock;
-use Illuminate\Support\Facades\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
+use App\Models\Grf;
+use App\Models\Stock;
+use App\Models\RequestForm;
+use App\Models\RequestStock;
 use Illuminate\Validation\Rule;
+use App\Imports\WarehouseReturn;
 use Illuminate\Validation\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class WarehouseReturnService {
 
-    public function __construct(Grf $grf, RequestStock $requestStock, Stock $stock)
+    public function __construct(Grf $grf, RequestStock $requestStock, Stock $stock, RequestForm $requestForm)
     {
         $this->grf = $grf;
         $this->requestStock = $requestStock;
-        $this->stock = $stock;    
+        $this->requestForm = $requestForm;
+        $this->stock = $stock;
     }
 
     public function handleGroupReturn(){
@@ -73,13 +75,30 @@ class WarehouseReturnService {
     {
         $grf = $this->grf->with('requestStocks')->find($req->id);
         
-        foreach ($grf->requestStocks as $requestStock) {
+        foreach ($grf->requestStocks->where('sn', '!=', null)->where('condition', 'good') as $requestStock) {
             $this->stock->where('sn_code', $requestStock->sn_return)->update([
                 'stock_status' => 'in', 
             ]);
         }
 
-        if ($grf->requestStocks->contains('sn_return', null)) {
+        foreach ($grf->requestStocks->where('sn', null)->where('condition', 'good') as $requestStock) {
+            $stockIn = $this->stock->where([['part_id', $requestStock->part_id], ['warehouse_id', $grf->warehouse_id], ['sn_code', null], ['stock_status', 'in']])->first();
+            $stockOut = $this->stock->where([['part_id', $requestStock->part_id], ['warehouse_id', $grf->warehouse_id], ['sn_code', null], ['stock_status', 'out']])->first();
+
+            $stockIn->update([
+                'quantity' => $stockIn->quantity + $requestStock->quantity_return
+            ]);
+            
+            $stockOut->update([
+                'quantity' => $stockOut->quantity - $requestStock->quantity_return
+            ]);
+
+            if ($stockOut->quantity < 1) {
+                $stockOut->delete();
+            }
+        }
+
+        if ($grf->requestStocks->contains([['sn_return', null], ['condition', 'good']])) {
             null;
         } else {
             $grf->status = "closed";
@@ -88,5 +107,26 @@ class WarehouseReturnService {
         $grf->surat_jalan = $transactionService->handleGenerateSuratJalan(1);
         $grf->save();
         return "success";
+    }
+
+    /*
+    *--------------------------------------------------------------------------
+    * return Non SN
+    *--------------------------------------------------------------------------
+    */
+    public function handleReturnNonSnWhApproval($request)
+    {
+        $validatedData = $request->validate([
+            'request_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'quantity' => 'nullable',
+        ]);
+
+        $this->requestStock->where([['request_form_id', $request->request_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->first()->update([
+            'quantity_return' => $request->quantity
+        ]);
+
+        return ('data stored!');
     }
 }

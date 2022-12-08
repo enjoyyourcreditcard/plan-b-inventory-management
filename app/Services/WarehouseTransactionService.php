@@ -79,25 +79,28 @@ class WarehouseTransactionService
     */
     public function handleShowWhApproval($id)
     {
-        $wherewh = str_replace('~', '/', $id);
-        $whapproval = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
+        $wherewh                = str_replace('~', '/', $id);
+        $whapproval             = $this->grf->with('requestForms.part', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
         $whapproval['quantity'] = 0;
 
         foreach ($whapproval->requestForms as $requestForm) {
             $whapproval['quantity'] += $requestForm->quantity;
         }
+
         return ($whapproval);
     }
 
     // *: Untuk show data sesuai id yang untuk tampil sesuai grfcode return
     public function handleShowWhReturn($id)
     {
-        $wherewh = str_replace('~', '/', $id);
-        $whreturn = $this->grf->with('requestForms', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
+        $wherewh              = str_replace('~', '/', $id);
+        $whreturn             = $this->grf->with('requestForms.part', 'user', 'warehouse')->where('grf_code', $wherewh)->first();
         $whreturn['quantity'] = 0;
+
         foreach ($whreturn->requestForms as $requestForm) {
             $whreturn['quantity'] += $requestForm->quantity;
         }
+        
         return ($whreturn);
     }
 
@@ -108,6 +111,30 @@ class WarehouseTransactionService
         return ($whapproval);
     }
 
+    /*
+    *--------------------------------------------------------------------------
+    * Input Non SN
+    *--------------------------------------------------------------------------
+    */
+    public function handleStoreNonSnWhApproval($request)
+    {
+        $validatedData = $request->validate([
+            'request_form_id' => 'required',
+            'grf_id' => 'required',
+            'part_id' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        $this->requestStock->create([
+            'request_form_id' => $request->request_form_id,
+            'grf_id' => $request->grf_id,
+            'part_id' => $request->part_id,
+            'quantity' => $request->quantity,
+        ]);
+
+        return ('data stored!');
+    }
+    
     /*
     *--------------------------------------------------------------------------
     * Input sn Satuan
@@ -163,7 +190,7 @@ class WarehouseTransactionService
         $grf->save();
 
         foreach ($grf->requestStocks as $requestStock) {
-            $this->stock->where('sn_code', $requestStock->sn)->update(['stock_status' => 'hold']);
+            $this->stock->where([['sn_code', $requestStock->sn], ['quantity', $requestStock->quantity]])->update(['stock_status' => 'hold']);
         }
 
         $this->timeline->create([

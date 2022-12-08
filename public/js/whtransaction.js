@@ -1,4 +1,4 @@
-       // /
+    // /
     // --------------------------------------------------------------------------
     //  JAVASCRIPT WAREHOUSE APPROV
     // --------------------------------------------------------------------------
@@ -55,4 +55,30 @@ $(".upload-sn").on("click", function (event) {
     }
 
     inputPieces.html(html);
+});
+
+
+// /
+// --------------------------------------------------------------------------
+//  Approving Non Sn Item
+// --------------------------------------------------------------------------
+// /
+$('.upload-non-sn').on('click', function (event) {
+    const button = $(event.currentTarget);
+    const partId = button.data("partid");
+    const partName = button.data("partname");
+    const icQuantity = button.data("icquantity");
+    const partUom = button.data("partUom");
+    const requestFormsid = button.data("requestformid");
+    const media = $('.html-non-sn');
+
+    media.html(
+        '<div class="flex px-8 mt-4 w-full justify-between">' +
+            '<span>' + partName + '</span>' +
+            '<span>' + icQuantity + ' ' + partUom + '</span>' +
+        '</div>' +
+        '<input form="form-nonsn" type="hidden" name="request_form_id" value="' + requestFormsid + '">' +
+        '<input form="form-nonsn" type="hidden" name="part_id" value="' + partId + '"></input>' +
+        '<input form="form-nonsn" type="hidden" name="quantity" value="' + icQuantity + '"></input>'
+    );
 });

@@ -69,6 +69,7 @@
 			{{-- <th>WH CODE</th> --}}
 			<th>SEGMENT</th>
 			<th>DESKRIPSI</th>
+			<th>BRAND</th>
 			<th>JUMLAH</th>
 			<th>SATUAN</th>
 			<th>REMARKS</th>
@@ -79,6 +80,7 @@
 			<th>{{$loop->iteration}}</th>
 			<th>{{$item->segment->name}}</th>
 			<th>{{$item->part->name}}</th>
+			<th>{{$item->brand->name}}</th>
 			<th>{{$item->quantity}}</th>
 			<th>{{$item->part->uom}}</th>
 			<th>Good</th>

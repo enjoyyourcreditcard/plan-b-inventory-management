@@ -25,6 +25,7 @@ function Parts() {
             api.getPart().then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
+                console.log(response.data.data);
 
                 setLoadingData(false);
             });
@@ -330,7 +331,7 @@ function Parts() {
     const { pageIndex } = state;
     return (
         <>
-            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 mb-5">
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center  ">
             <a
                     href="/part/create"
                     // data-tw-toggle="modal"
@@ -368,7 +369,7 @@ function Parts() {
                 <div class="hidden md:block mx-auto text-slate-500">
                     {/* Showing 1 to 10 of 150 entries */}
                 </div>
-                <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 flex">
+                <div class="w-full sm:w-auto  sm:mt-0 sm:ml-auto md:ml-0 flex">
                     <TableSearch
                         className="flex-none"
                         columns={columns}

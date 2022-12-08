@@ -27,6 +27,7 @@ use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\RekondisiController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryPriceController;
 use App\Http\Controllers\NotificationController;
@@ -48,7 +49,12 @@ use App\Http\Controllers\WarehouseTransactionController;
 */
 
 // Jangan di rubah
-Route::post('/api/login', [AuthController::class, 'login']);
+Route::post('/api/login', [AuthController::class, 'login'])->name('authJWTLogin');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/password', [ForgotPasswordController::class, 'edit']);
+    Route::post('/forgot', [ForgotPasswordController::class, 'update'])->name('updatePassword');
+});
 
 Route::get('/', function () {
     return view('layout.app');
@@ -109,6 +115,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 */
 // * Part 
 Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'InventoryControl']], function () {
+    Route::get('/create', [PartController::class, 'create'])->name("create");
     Route::get('/', [PartController::class, 'index'])->name("view.home");
     Route::get('/create', [PartController::class, 'create'])->name("create");
     Route::get('/{id}', [PartController::class, 'show'])->name("get.detail");
@@ -116,6 +123,7 @@ Route::group(['prefix' => 'part', 'as' => 'part.', 'middleware' => ['auth', 'Inv
     Route::get('/tampilan/{id}', [PartController::class, 'tampilan'])->name("tampilan");
     Route::post('/deactive', [PartController::class, 'deactive'])->name('post.deactive');
     Route::post('/', [PartController::class, 'store'])->name("store");
+    Route::get('/tampilan/{id}', [PartController::class, 'tampilan'])->name("tampilan");
     Route::put('/{id}', [PartController::class, 'update'])->name("put.part");
 });
 
@@ -236,7 +244,7 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.ic.', 'middleware'
     Route::post('/{id}', [TransactionController::class, 'returnStockStore'])->name('post.return.stock');
 
     // Route::get('/', [StockController::class, 'index'])->name('get.home');
-    // <Rou></Rou>te::post('/', [StockController::class, 'store'])->name('post.store');
+    // Route::post('/', [StockController::class, 'store'])->name('post.store');
     // Route::put('/{id}', [StockController::class, 'put'])->name('put.detail');
     // Route::delete('/{id}', [StockController::class, 'destroy'])->name('delete.detail');
 });
@@ -396,6 +404,12 @@ Route::group(['prefix' => 'request-form', 'as' => 'request.', 'middleware' => ['
 
 
 
+// Route Profile
+Route::get('/profile', [UserController::class, 'indexProfile']);
+// Route::get('/profile', function () {
+//     return view('profile');
+// });
+
 
 
 
@@ -462,8 +476,10 @@ Route::group(['prefix' => 'return', 'as' => 'return.', 'middleware' => ['auth']]
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/warehouse-import', [WarehouseTransactionController::class, 'updateImport'])->name('importexcel');
     Route::post('/warehouse-import-return', [WarehouseReturnController::class, 'updateImport'])->name('importexcelreturn');
+    Route::post('/warehouse-approv/non-sn', [WarehouseTransactionController::class, 'storeNonSn'])->name('inputnonsn');
     Route::post('/warehouse-approv', [WarehouseTransactionController::class, 'store'])->name('inputsatuan');
     Route::post('/warehouse-return/{id}', [WarehouseReturnController::class, 'store'])->name('returnsatuan');
+    Route::post('/warehouse-return', [WarehouseReturnController::class, 'storeReturnNonSn'])->name('returnnonsn');
 });
 // Route::post('/change-status/{id}', [WarehouseReturnController::class, 'changeStatus'])->name('changeStatus');
 /*

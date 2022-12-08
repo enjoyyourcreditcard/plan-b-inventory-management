@@ -24,6 +24,7 @@ function Stock() {
     useEffect(() => {
         async function getData() {
             api.getStock().then((response) => {
+                console.log(response.data.data);
                 setRawData(response.data.data);
                 setData(response.data.data);
                 setLoadingData(false);
@@ -41,7 +42,6 @@ function Stock() {
     }
 
     function SearchFilter(search, column) {
-        // console.log(search);
         let result = filter.search(search, column, rawData);
         setData(result);
     }

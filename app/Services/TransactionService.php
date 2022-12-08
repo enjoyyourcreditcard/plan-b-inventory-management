@@ -2,23 +2,25 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Grf;
 use App\Models\Part;
-use App\Models\RequestForm;
+use App\Models\Stock;
 use App\Models\Timeline;
 use App\Models\Warehouse;
-use Carbon\Carbon;
+use App\Models\RequestForm;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionService
 {
 
-    public function __construct(Timeline $timeline, Grf $grf, Part $part, RequestForm $requestForm, Warehouse $warehouse)
+    public function __construct(Timeline $timeline, Grf $grf, Part $part, RequestForm $requestForm, Warehouse $warehouse, Stock $stock)
     {
         $this->warehouse = $warehouse;
         $this->timeline = $timeline;
         $this->grf = $grf;
         $this->part = $part;
+        $this->stock = $stock;
         $this->requestForm = $requestForm;
     }
 
@@ -34,11 +36,10 @@ class TransactionService
         $timeline = $this->timeline::create(['grf_id' => $req->id, 'status' => 'ic_approved']);
 
         for ($i = 0; $i < count($parts); $i++) {
-            $segment_id = $this->part->find($parts[$i])->segment_id;
-            $brand_id = $this->part->find($parts[$i])->brand_id;
+            $segment_id = $this->part->where("name",$parts[$i])->first()->segment_id;
             $requestForm = $this->requestForm->where('grf_id', $req->id)->where('segment_id', $segment_id)->whereNull('part_id')->first();
             if ($requestForm !== null) {
-                $requestForm->part_id = $parts[$i];
+                $requestForm->part_id = $this->part->where("name",$parts[$i])->where("brand_id",$brand[$i])->first()->id;
                 $requestForm->quantity = $quantity[$i];
                 $requestForm->brand_id = $brand[$i];
                 $requestForm->save();
@@ -47,10 +48,26 @@ class TransactionService
                 $requestForm->grf_id = $req->id;
                 $requestForm->segment_id = $segment_id;
                 $requestForm->brand_id = $brand[$i];
-                $requestForm->part_id = $parts[$i];
+                $requestForm->part_id = $this->part->where("name",$parts[$i])->where("brand_id",$brand[$i])->first()->id;
                 $requestForm->quantity = $quantity[$i];
                 $requestForm->remarks = "grf_id :".$req->id;
                 $requestForm->save();
+            }
+            if ($this->part->where('name', $parts[$i])->first()->sn_status == 'NON SN') {
+                $stock = $this->stock->where([['part_id', $this->part->where('name', $parts[$i])->first()->id], ['warehouse_id', $grf->warehouse_id]])->first();
+                $stock->update([
+                    'quantity' => ($stock->quantity - $quantity[$i])
+                ]);
+                $this->stock->create([
+                    'part_id' => $stock->part_id, 
+                    'warehouse_id' => $stock->warehouse_id, 
+                    'condition' => $stock->condition, 
+                    'recondition' => $stock->recondition, 
+                    'quantity' => $quantity[$i], 
+                    'expired_date' => $stock->expired_date, 
+                    'stock_status' => 'hold', 
+                    'status' => 'active', 
+                ]);
             }
         }
 
@@ -158,21 +175,40 @@ class TransactionService
     }
 
     public function handleGetReturnStockGrf(){
-        $grfs = $this->grf->with('user', 'requestForms.part')->where([['type', 'request'], ['status', 'return']])->orderBy('updated_at', 'desc')->get();
+        $grfs = $this->grf->with(['requestForms.part', 'user', 'requestForms.requestStocks' => function ($q) {
+            $q->where('condition', 'good');
+        }, 'requestForms' => function ($q) {
+            $q->whereHas('requestStocks', function ($qRequestStocks) {
+                $qRequestStocks->where('condition', '!=', 'used');
+            });
+        }])->where([['type', 'request'], ['status', 'return']])->orderBy('updated_at', 'desc')->get();
         return $grfs;
     }
 
-    public function handleStoreReturnStockGrf($id){
-        $grf = $this->grf->find($id)->update([
-            'status' => 'return_ic_approved',
-            'updated_at' => now()
-        ]);
-
-        $this->timeline->create([
-            'grf_id' => $id,
-            'status' => 'return_ic_approved',
-            'created_at' => now(),
-        ]);
+    public function handleStoreReturnStockGrf($request, $id){
+        if ($request->isUsed == 'true') {
+            $grf = $this->grf->find($id)->update([
+                'status' => 'return_ic_approved',
+                'updated_at' => now()
+            ]); 
+    
+            $this->timeline->create([
+                'grf_id' => $id,
+                'status' => 'return_ic_approved',
+                'created_at' => now(),
+            ]);
+        } else {
+            $grf = $this->grf->find($id)->update([
+                'status' => 'closed',
+                'updated_at' => now()
+            ]); 
+    
+            $this->timeline->create([
+                'grf_id' => $id,
+                'status' => 'closed',
+                'created_at' => now(),
+            ]);
+        }
 
         return $grf;
     }

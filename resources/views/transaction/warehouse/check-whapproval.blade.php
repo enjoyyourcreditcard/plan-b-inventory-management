@@ -75,6 +75,7 @@
                     <thead>
                         <tr>
                             <th class="whitespace-nowrap">Part Name</th>
+                            <th class="whitespace-nowrap">Type</th>
                             <th class="whitespace-nowrap">IC QTY</th>
                             <th class="whitespace-nowrap">WH QTY</th>
                             <th class="whitespace-nowrap">Action</th>
@@ -84,36 +85,52 @@
                         @foreach ($requestForm as $key => $data)
                             <tr class="intro-x relative mr-3 sm:mr-6">
                                 <td>
-                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $data['name'] }}</p>
+                                    <p style="font-size:12px" class="font-medium">{{ $data['name'] }} / {{$data['brand_name']}}</p>
+                                </td>
+                                <td>
+                                    <p style="font-size:12px" class="font-medium">{{ $data['sn_status'] }}</p>
                                 </td>
                                 <td class="w-8">
-                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $data['quantity'] }}
-                                    </p>
+                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $data['quantity'] . ' ' . $data['uom'] }}</p>
                                 </td>
+                                @if ($data['sn_status'] == 'SN')
                                 <td class="w-8">
-                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $data['count'] }}
-                                    </p>
+                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ $data['count'] . ' ' . $data['uom'] }}</p>
                                 </td>
+                                @else
+                                <td class="w-8">
+                                    <p style="font-size:12px" class="font-medium whitespace-nowrap">{{ ($data['non_sn_count'] == null ? 0 : $data['non_sn_count']) . ' ' . $data['uom'] }}</p>
+                                </td>
+                                @endIf
+                                @if ($data['sn_status'] == 'SN')
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <button type="button"
-                                            class="upload-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2"
-                                            data-tw-toggle="modal" data-tw-target="#upload"
-                                            data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}"
-                                            data-requestformid="{{ $data['id'] }}"
-                                            data-icquantity="{{ $data['quantity'] }}">
-                                            <p class="flex items-center mr-3 text-white"> <svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-check-square w-4 h-4 mr-1">
+                                        <button type="button" class="upload-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#upload" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}">
+                                            <p class="flex items-center mr-3 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                                     <polyline points="9 11 12 14 22 4"></polyline>
                                                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                                     </path>
-                                                </svg>upload SN</p>
+                                                </svg> upload SN
+                                            </p>
                                         </button>
                                     </div>
                                 </td>
+                                @else
+                                <td class="table-report__action w-56">
+                                    <div class="flex justify-center items-center">
+                                        <button type="button" class="upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}" data-partuom="{{ $data['uom'] }}">
+                                            <p class="flex items-center mr-3 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
+                                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                    </path>
+                                                </svg> Check
+                                            </p>
+                                        </button>
+                                    </div>
+                                </td>
+                                @endIf
                             </tr>
                         @endforeach
                     </tbody>
@@ -134,6 +151,37 @@
     </div>
     {{-- !end redesign --}}
     {{-- * end alert validasi --}}
+
+    <div id="non-sn" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="p-5 text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        </svg>
+                        <div class="text-3xl mt-5">Apakah anda ingin mengchecklist item ini?</div>
+                        <div class="html-non-sn">
+                            <div class="flex px-8 mt-4 w-full justify-between">
+                                <span>barang</span>
+                                <span>quantity KG</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pb-8 text-center">
+                        <form id="form-nonsn" action="{{ Route('inputnonsn') }}" method="POST">
+                            @csrf
+                            <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
+                            <input type="hidden" name="grf_id" value="{{ $whapprov->id }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="upload" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -185,6 +233,7 @@
             </div>
         </div>
     </div>
+
     {{-- !Modal excel redesign --}}
     <div id="importExcel" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

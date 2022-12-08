@@ -29,6 +29,15 @@ class WarehouseReturnController extends Controller
         }
     }
 
+    public function storeReturnNonSn(Request $request){
+        try {
+            $this->warehouseReturnService->handleReturnNonSnWhApproval($request);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
     public function updateImport(Request $request){
         try {
             $this->warehouseReturnService->hanldeImportWarehouseReturn($request);

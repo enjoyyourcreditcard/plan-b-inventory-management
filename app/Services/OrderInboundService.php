@@ -433,7 +433,6 @@ class OrderInboundService
 
         $orderInbounds  = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_name]])->get();
         $inboundBySn    = collect([]);
-
         for ($i = 0; $i < count($orderInbounds); $i++) {
             $orderInbounds[$i]->update([
                 'received_sn_code' => $validatedData['sn_code'][$i],
