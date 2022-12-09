@@ -21,7 +21,8 @@ class CreateInboundsTable extends Migration
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->string('brand')->nullable();
             $table->string('orafin_code')->nullable();
-            $table->string('sn_code')->nullable()->unique();
+            $table->string('sn_code')->nullable()->unique()->comment('for sn only');
+            $table->integer('quantity')->nullable()->comment('for non sn only');
             $table->string('condition')->default('good new');
             $table->string('stock_status')->default('in');
             $table->string('status')->default('active');

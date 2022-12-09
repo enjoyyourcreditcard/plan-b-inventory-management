@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreign('grf_inbound_id')->references('id')->on('inbound_grfs');
             $table->unsignedBigInteger('inbound_id')->nullable();
             $table->foreign('inbound_id')->references('id')->on('inbounds');
-            $table->string('received_sn_code')->nullable();
-            // $table->string('part_id');
+            $table->string('received_sn_code')->nullable()->comment('for sn only');
+            $table->integer('quantity')->nullable()->comment('for non sn only');
+            $table->integer('received_quantity')->nullable()->comment('for non sn only');
             $table->unsignedBigInteger('part_id')->nullable();
             $table->foreign('part_id')->references('id')->on('parts');
             $table->timestamps();

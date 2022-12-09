@@ -38,19 +38,18 @@ class InboundService
         if( count($groupByPartIds) ) {
             foreach ($groupByPartIds as $key => $groupByPartId) {
                 $distinct[] = collect([
-                    'id' =>$groupByPartId->first()->id, 
-                    'part_id' =>$groupByPartId->first()->part->id, 
-                    'part' => $groupByPartId->first()->part->name,
-                    'segment' => $groupByPartId->first()->part->segment->name,
-                    'brand' => $groupByPartId->first()->part->brand_name,
-                    'quantity' => $groupByPartId->count(),
+                    'id'       => $groupByPartId->first()->id, 
+                    'part_id'  => $groupByPartId->first()->part->id, 
+                    'part'     => $groupByPartId->first()->part->name,
+                    'segment'  => $groupByPartId->first()->part->segment->name,
+                    'brand'    => $groupByPartId->first()->part->brand_name,
+                    'quantity' => $this->part->find($key)->sn_status == 'SN' || $this->part->find($key)->sn_status == 'sn' ? $groupByPartId->count() : $groupByPartId->first()->quantity,
+                    'uom'      => $groupByPartId->first()->part->uom,
                 ]);
             }
         }else{
             $distinct = [];
         }
-
-        
 
         return ($distinct);
     }
@@ -201,19 +200,20 @@ class InboundService
 
     public function handleShowOrderInboundGiver($id)
     {
-        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_name');
+        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_id');
         $collect         = collect([]);
         $inputedQuantity = collect([]);
 
         foreach ($datas as $key => $data) {
             $inputedQuantity = count($data->where('inbound_id', '!=', null)); 
-            // dd();
 
             $collect->push([
                 'part_name'         => $data[0]->part->name,
-                'part_id'         => $data[0]->part->id,
-                'quantity'          => count($data),
-                'inputed_quantity'  => $inputedQuantity,
+                'uom'               => $data[0]->part->uom,
+                'part_id'           => $data[0]->part->id,
+                'quantity'          => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? count($data) : $data[0]->quantity,
+                'inputed_quantity'  => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? $inputedQuantity : ($data[0]->inbound_id == null ? 0 : $data[0]->quantity),
+                'is_sn'             => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? true : false,
             ]);
         }
         
@@ -234,7 +234,7 @@ class InboundService
 
     public function handleShowOrderInboundRecipient($id)
     {
-        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_name');
+        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_id');
         $collect         = collect([]);
         $inputedQuantity = collect([]);
 
@@ -242,9 +242,12 @@ class InboundService
             $inputedQuantity = count($data->where('received_sn_code', '!=', null)); 
             $collect->push([
                 'part_name'         => $this->part->find($data[0]->part_id)->name,
-                'part_id'         => $data[0]->part_id,
-                'quantity'          => count($data),
-                'inputed_quantity'  => $inputedQuantity,
+                'uom'               => $data[0]->part->uom,
+                'inbound_id'        => $data[0]->inbound_id,
+                'part_id'           => $data[0]->part_id,
+                'quantity'          => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? count($data) : $data[0]->quantity,
+                'inputed_quantity'  => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? $inputedQuantity : ($data[0]->received_quantity == null ? 0 : $data[0]->received_quantity),
+                'is_sn'             => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? true : false,
             ]);
         }
         

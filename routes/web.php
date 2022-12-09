@@ -339,7 +339,7 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
     // Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
-    Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
+    // Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
 });
 
 Route::get('/inboundshow', function () {
@@ -361,6 +361,7 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::get('/giver/{id}', [InboundController::class, 'giverShow'])->name('get.giver.detail');
     Route::get('/recipient', [InboundController::class, 'recipientIndex'])->name('get.recipient');
     Route::get('/recipient/{id}', [InboundController::class, 'recipientShow'])->name('get.recipient.detail');
+    Route::post('/giver/non-sn/{id}', [InboundController::class, 'giverNonSnStore'])->name('post.non.sn.giver');
     Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
     Route::post('/recipient/pieces/{id}', [InboundController::class, 'recipientPiecesStore'])->name('post.pieces.recipient');
     Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');

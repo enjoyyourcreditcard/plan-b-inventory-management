@@ -28,14 +28,29 @@
 
 $('.chat').on("click", ".btn-input-sn", function (event) {
     var thisButton = event;
-    var partName = $(thisButton).data("partname");
-    var partId = $(thisButton).data("partid");
-    
-    var quantity = $(thisButton).data("quantity");
+    var partName   = $(thisButton).data("partname");
+    var partId     = $(thisButton).data("partid");
+    var inboundId     = $(thisButton).data("inboundid");
+    var partUom     = $(thisButton).data("uom");
+    var quantity   = $(thisButton).data("quantity");
+
+    $("#modal-non-sn").on("show.tw.modal", function () {
+        const media = $('.html-non-sn');
+
+        media.html(
+            '<div class="flex px-8 mt-4 w-full justify-between">' +
+                '<span>' + partName + '</span>' +
+                '<span>' + quantity + ' ' + partUom + '</span>' +
+            '</div>' +
+            '<input form="form-nonsn" type="hidden" name="part_id" value="' + partId + '"></input>' +
+            '<input form="form-nonsn" type="hidden" name="inbound_id" value="' + inboundId + '"></input>' +
+            '<input form="form-nonsn" type="hidden" name="quantity" value="' + quantity + '"></input>'
+        );
+    });
 
     $("#modal-pieces").on("show.tw.modal", function () {
         let htmlPieces =
-            '<input type="hidden" name="part_name" value="' +
+            '<input type="hidden" name="part_id" value="' +
             partId +
             '">' +
             '<div class="text-slate-500 mt-2">' +

@@ -131,6 +131,18 @@ class OrderInboundService
     *| Get all grf requester data by it's user
     *|--------------------------------------------------------------------------
     */
+    public function handleGetAllInboundGrf()
+    {
+        $grfs = $this->grfInbound->latest()->get();
+
+        return ($grfs);
+    }
+
+     /*
+    *|--------------------------------------------------------------------------
+    *| Get all grf requester data by it's user
+    *|--------------------------------------------------------------------------
+    */
     public function handleGetAllInboundGrfByUser()
     {
         $grfs = $this->grfInbound->where([['user_id', Auth::user()->id]])->latest()->get();
@@ -159,10 +171,19 @@ class OrderInboundService
 
         $validatedDatas['grf_inbound_id'] = $id;
         
-        for ($i = 0; $i < $validatedDatas['quantity']; $i++) {
+        if ($this->part->find($validatedDatas['part_id'])->sn_status == 'SN' || $this->part->find($validatedDatas['part_id'])->sn_status == 'sn') {
+            for ($i = 0; $i < $validatedDatas['quantity']; $i++) {
+                $this->orderInbound->create([
+                    'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
+                    'part_id'        => $validatedDatas['part_id'],
+                    'created_at'     => now(),
+                ]);
+            }
+        } else {
             $this->orderInbound->create([
                 'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
-                'part_id'      => $validatedDatas['part_id'],
+                'part_id'        => $validatedDatas['part_id'],
+                'quantity'       => $validatedDatas['quantity'],
                 'created_at'     => now(),
             ]);
         }
@@ -178,7 +199,7 @@ class OrderInboundService
     public function handleInboundMiniStock($code)
     {
         $grf          = $this->grfInbound->where('id', $code)->first();
-        $orderInbound = $this->orderInbound->with('inbound', 'warehouse')->where('grf_inbound_id', '=', $grf->id)->get()->groupby('part_name');
+        $orderInbound = $this->orderInbound->with('part', 'inbound', 'warehouse')->where('grf_inbound_id', '=', $grf->id)->get()->groupby('part_id');
         return ($orderInbound);
     }
 
@@ -265,47 +286,57 @@ class OrderInboundService
         $part_id      = [];
         $orafin_code  = [];
         $sn_code      = [];
-        $brand      = [];
+        $quantity     = [];
+        $brand        = [];
         $warehouse_id = $request->warehouse_id;
-        // dd($excel);
+
+        // for ($i = 0; $i < count($excel->first()); $i++) {
+        //     $row            = $excel->first()[$i];
+        //     $part_id[]      = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->id;    
+        //     $orafin_code[]  = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->orafin_code;
+        //     $brand[]        = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->brand->name;
+        //     $sn_code[]      = $row['serial_numbersn_only'];
+        //     $quantity[]     = $row['quantitynon_sn_only'];
+        // }
+
 
         foreach ($excel->first() as $row) {
             try {
                 $part_id[]      = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->id;    
                 $orafin_code[]  = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->orafin_code;
-                $brand[]  = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->brand->name;
-                $sn_code[]      = $row['serial_number'];
+                $brand[]        = $this->part->where('name', $row['part_id'])->where('brand_name',$row['brand'])->first()->brand->name;
+                $sn_code[]      = $row['serial_numbersn_only'];
+                $quantity[]     = $row['quantitynon_sn_only'];
             } catch (\Throwable $th) {
                 continue;
                 // dd($row['part_id'],$row['brand']);
                 //throw $th;
             }
-           
-
         }
-
 
         $request['part_id']      = $part_id;
         $request['orafin_code']  = $orafin_code;
         $request['sn_code']      = $sn_code;
-        $request['brand']      = $brand;
+        $request['quantity']     = $quantity;
+        $request['brand']        = $brand;
         $request['warehouse_id'] = $warehouse_id;
 
         $validatedData = $request->validate([
             'part_id'      => 'required',
             'orafin_code'  => 'required',
-            'brand'  => 'required',
-            'sn_code.*'    => 'distinct',
-            'sn_code'      => ['required', 'array', 'unique:stocks'],
+            'brand'        => 'required',
+            'sn_code'      => ['nullable', 'array'],
+            'quantity'     => 'nullable|array',
             'warehouse_id' => 'required'
         ]);
-
+        
         foreach ($validatedData['part_id'] as $key => $part_id) {
             $this->inbound->create([
                 'part_id'      => $part_id,
                 'orafin_code'  => $validatedData['orafin_code'][$key],
                 'sn_code'      => $validatedData['sn_code'][$key],
-                'brand'      => $validatedData['brand'][$key],
+                'quantity'     => $validatedData['quantity'][$key],
+                'brand'        => $validatedData['brand'][$key],
                 'warehouse_id' => $validatedData['warehouse_id'],
                 'stock_status' => 'in',
                 'status'       => 'active',
@@ -317,24 +348,46 @@ class OrderInboundService
 
     /*
     *|--------------------------------------------------------------------------
+    *| Store non sn Inbound Giver
+    *|--------------------------------------------------------------------------
+    */
+    public function handleStoreNonSnInboundGiverPieces($request, $id)
+    {
+        $validatedData = $request->validate([
+            'part_id'    => 'required',
+            'inbound_id' => 'required',
+            'quantity'   => 'required'
+        ]);
+
+        $currentGrf   = $this->grfInbound->with('inboundForms.inbound')->find($id);
+        $orderInbound = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_id], ['inbound_id', $request->inbound_id]])->first();
+
+        $orderInbound->update([
+            'received_quantity' => $request->quantity,
+        ]);
+
+        return 'stored';
+    }
+
+    /*
+    *|--------------------------------------------------------------------------
     *| Store sn Inbound Giver
     *|--------------------------------------------------------------------------
     */
     public function handleStoreSnInboundGiverPieces($request, $id)
     {
-        // dd($request->part_name);
         $validatedData = $request->validate([
             'sn_code.*' => ['distinct'],
             'sn_code'   => ['required', 'array', Rule::exists('inbounds')->where(function ($query) use ($request) {
-                $query->where('part_id', $request->part_name);
+                $query->where('part_id', $request->part_id);
             })]
         ]);
 
-        $orderInbounds  = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_name]])->get();
+        $orderInbounds  = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_id]])->get();
         $inboundBySn    = collect([]);
 
         for ($i = 0; $i < count($request->sn_code); $i++) {
-            $inboundBySn->push($this->inbound->where([['sn_code', $request->sn_code[$i]], ['part_id', $request->part_name]])->first());
+            $inboundBySn->push($this->inbound->where([['sn_code', $request->sn_code[$i]], ['part_id', $request->part_id]])->first());
         }
 
         for ($i = 0; $i < count($orderInbounds); $i++) {
@@ -392,7 +445,7 @@ class OrderInboundService
     */
     public function handleUpdateGiver($request, $id, $grf_code, $transactionService)
     {
-        $currentGrf = $this->grfInbound->find($id);
+        $currentGrf = $this->grfInbound->with('inboundForms.inbound', 'inboundForms.part')->find($id);
         $data       = $currentGrf->update([
             "grf_code"    => $grf_code,
             "surat_jalan" => $transactionService->handleGenerateSuratJalan(1),
@@ -400,9 +453,15 @@ class OrderInboundService
         ]);
 
         foreach ($currentGrf->inboundForms as $orderInbound) {
-            $this->inbound->find($orderInbound->inbound_id)->update([
-                'stock_status' => 'out',
-            ]);
+            if ($orderInbound->part->sn_status == 'SN' || $orderInbound->part->sn_status == 'sn') {
+                $this->inbound->find($orderInbound->inbound_id)->update([
+                    'stock_status' => 'out',
+                ]);
+            } else {
+                $this->inbound->find($orderInbound->inbound_id)->update([
+                    'quantity' => $this->inbound->find($orderInbound->inbound_id)->quantity - $orderInbound->quantity,
+                ]);
+            }
         }
 
         $this->timeline->create([
@@ -427,11 +486,11 @@ class OrderInboundService
         $validatedData = $request->validate([
             'sn_code.*' => ['distinct'],
             'sn_code'   => ['required', 'array', Rule::exists('inbounds')->where(function ($query) use ($request) {
-                $query->where('part_id', $request->part_name);
+                $query->where('part_id', $request->part_id);
             })]
         ]);
 
-        $orderInbounds  = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_name]])->get();
+        $orderInbounds  = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_id]])->get();
         $inboundBySn    = collect([]);
         for ($i = 0; $i < count($orderInbounds); $i++) {
             $orderInbounds[$i]->update([
@@ -484,15 +543,23 @@ class OrderInboundService
     */
     public function handleUpdateRecipient($request, $id)
     {
-        $currentGrf = $this->grfInbound->find($id);
+        $currentGrf = $this->grfInbound->with('inboundForms.inbound', 'inboundForms.part')->find($id);
         $data       = $currentGrf->update([
             "status" => "closed",
         ]);
 
         foreach ($currentGrf->inboundForms as $orderInbound) {
-            $this->inbound->find($orderInbound->inbound_id)->update([
-                'status' => 'inactive',
-            ]);
+            if ($orderInbound->part->sn_status == "sn" || $orderInbound->part->sn_status == "SN") {
+                $this->inbound->find($orderInbound->inbound_id)->update([
+                    'status' => 'inactive',
+                ]);
+            } 
+            // else
+            // {
+            //     $this->inbound->find($orderInbound->inbound_id)->update([
+            //         'quantity' => $this->inbound->find($orderInbound->inbound_id)->quantity,
+            //     ]);
+            // }
         }
 
         $this->timeline->create([
@@ -502,16 +569,28 @@ class OrderInboundService
 
         for ($i = 0; $i < count($currentGrf->inboundForms); $i++) {
             $orderInbounds = $currentGrf->inboundForms[$i];
-
-            $this->stock->create([
-                'part_id' => $orderInbounds->inbound->part_id,
-                'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
-                'sn_code' => $orderInbounds->received_sn_code,
-                'condition' => 'GOOD NEW',
-                'expired_date' => now(),
-                'stock_status' => 'in',
-                'status' => 'active',
-            ]);
+            
+            if ($orderInbounds->part->sn_status == "sn" || $orderInbounds->part->sn_status == "SN") {
+                $this->stock->create([
+                    'part_id' => $orderInbounds->inbound->part_id,
+                    'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
+                    'sn_code' => $orderInbounds->received_sn_code,
+                    'condition' => 'GOOD NEW',
+                    'expired_date' => now(),
+                    'stock_status' => 'in',
+                    'status' => 'active',
+                ]);
+            } else {
+                $this->stock->create([
+                    'part_id' => $orderInbounds->inbound->part_id,
+                    'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
+                    'quantity' => $orderInbounds->received_quantity,
+                    'condition' => 'GOOD NEW',
+                    'expired_date' => now(),
+                    'stock_status' => 'in',
+                    'status' => 'active',
+                ]);
+            }
         }
 
         return $data;

@@ -34,21 +34,21 @@ class InboundController extends Controller
     public function index()
     {
         try{
-        $inbound   = $this->inboundService->handleAllInbound();
-        $parts     = $this->partService->handleAllPart();
-        $warehouses = $this->warehouseService->handleAllWareHouse();
-        $grfs      = $this->orderInboundService->handleGetAllInboundGrfByUser();
-        // $notifications    =  $this->notificationService->handleAllNotification();
-        // $inbound_grf_code = $this->orderInboundService->handleGenerateInboundRequest();
+            $inbound    = $this->inboundService->handleAllInbound();
+            $parts      = $this->partService->handleAllPart();
+            $warehouses = $this->warehouseService->handleAllWareHouse();
+            $grfs       = $this->orderInboundService->handleGetAllInboundGrf();
+            // $notifications    =  $this->notificationService->handleAllNotification();
+            // $inbound_grf_code = $this->orderInboundService->handleGenerateInboundRequest();
 
-        return view('stock.inbound', [
-            'inbound'    => $inbound,
-            'parts'      => $parts,
-            'warehouses' => $warehouses,
-            'grfs'       => $grfs
-            // 'notifications'    => $notifications,
-            // 'inbound_grf_code' => $inbound_grf_code,
-        ]);
+            return view('stock.inbound', [
+                'inbound'    => $inbound,
+                'parts'      => $parts,
+                'warehouses' => $warehouses,
+                'grfs'       => $grfs
+                // 'notifications'    => $notifications,
+                // 'inbound_grf_code' => $inbound_grf_code,
+            ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -89,7 +89,6 @@ class InboundController extends Controller
     */
     public function storeCreateInboundGrf(Request $request)
     {
-        // dd($request);
         try {
             $createdData = $this->orderInboundService->handleStoreInboundGrf($request);
             return redirect()->route( 'inbound.get.detail', $createdData->id );
@@ -112,8 +111,6 @@ class InboundController extends Controller
             $orderInbounds      = $this->orderInboundService->handleInboundMiniStock($code);
             $warehouseInbounds  = $this->orderInboundService->handleGetWarehouseInbound();
             $grfs               = $this->orderInboundService->handleGetAllInboundGrfByUser();
-
-            // dd($inbounds[0]);
 
             return view( "stock.InboundShow", [
                 'inbounds'          => $inbounds,
@@ -275,6 +272,20 @@ class InboundController extends Controller
         
     /*
     *|--------------------------------------------------------------------------
+    *| Giver store Non SN
+    *|--------------------------------------------------------------------------
+    */
+    public function giverNonSnStore (Request $request, $id) {
+        try {
+            $this->orderInboundService->handleStoreNonSnInboundGiverPieces($request, $id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+        
+    /*
+    *|--------------------------------------------------------------------------
     *| Giver store SN Pieces
     *|--------------------------------------------------------------------------
     */
@@ -341,7 +352,6 @@ class InboundController extends Controller
             $currentGrf   = $this->inboundService->handleShowGrfInboundRecipient($id);
             $confirmation = $this->orderInboundService->handleConfirmationInboundRecipient($currentGrf);
 
-            // dd($confirmation);
             return view('transaction.warehouse.recipient-show', [
                 'currentGrf' => $currentGrf,
                 'confirmation' => $confirmation,

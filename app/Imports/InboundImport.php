@@ -51,9 +51,10 @@ class InboundImport implements ToModel, WithHeadingRow
             'orafin_code'   => $row['2'],
             'sn_code'       => $row['3'],
             'stock_tatus'   => $row['4'],
-            'status'        => $row['5'],
-            'warehouse'     => $row['6'],
-            'brand'     => $row['brand']
+            'quantity'      => $row['5'],
+            'status'        => $row['6'],
+            'warehouse'     => $row['7'],
+            'brand'         => $row['brand']
         ]);
     }
 }

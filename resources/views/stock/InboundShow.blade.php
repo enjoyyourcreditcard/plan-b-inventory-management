@@ -395,8 +395,7 @@
 
                         <div class="mt-3">
                             <label for="regular-form-2" class="form-label">Quantity</label>
-                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control"
-                                min="1" value="1" max="{{ $inbound['quantity'] }}" required>
+                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control" min="1" value="1" required>
                         </div>
 
                         <div
@@ -472,10 +471,9 @@
 
                     @forelse ( $orderInbounds as $key => $order )
                     <tr class="intro-x">
-                        <td class=" capitalize w-6/12">{{$order[0]->part->name}}</td>
-                        <td class=" capitalize w-6/12">{{$order[0]->part->brand->name}}</td>
-                        {{-- <td class=" capitalize w-6/12">tes</td> --}}
-                        <td class=" capitalize ">{{ $order->count() }}</td>
+                        <td class=" capitalize w-6/12">{{ $order[0]->part->name }}</td>
+                        <td class=" capitalize w-6/12">{{ $order[0]->part->brand->name }}</td>
+                        <td class=" capitalize ">{{ $order[0]->part->sn_status == 'SN' || $order[0]->part->sn_status == 'sn' ? $order->count() : $order[0]->quantity }}</td>
 
                         @if( $inboundForms->status === "draft" )
                         <td class="table-report__action w-1/12">

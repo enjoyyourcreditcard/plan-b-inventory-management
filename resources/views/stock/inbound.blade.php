@@ -62,7 +62,6 @@
                         <div class="mr-2 text-xs">
                             @switch( $grf->status )
                             @case( "draft" )
-
                             <div class="ml-auto">
                                 <div class="py-1 px-3 rounded-full text-white bg-amber-500">
                                     Draft
@@ -223,10 +222,10 @@
                 <tbody>
                     @forelse ( $inbound as $inbounds )
                     <tr class="intro-x">
-                        <td class="font-medium ml-2 mr-6 text-left w-6/12"> <a href="" >{{ $inbounds['part'] }}</a> </td>
-                        <td class="text-left w-3/12">{{ $inbounds['segment'] }}</td>
-                        <td class="text-left w-3/12">{{ $inbounds['brand'] }}</td>
-                        <td class="text-left w-2/12"> {{ $inbounds['quantity'] }}</td>
+                        <td class="font-medium ml-2 mr-6 text-left w-6/12">{{ $inbounds['part'] }}</td>
+                        <td class="text-left">{{ $inbounds['segment'] }}</td>
+                        <td class="text-left">{{ $inbounds['brand'] }}</td>
+                        <td class="text-left">{{ $inbounds['quantity'] . ' ' . $inbounds['uom'] }}</td>
                     </tr>
                     @empty
                     <tr>

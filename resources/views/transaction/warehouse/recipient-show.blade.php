@@ -57,7 +57,7 @@
                                 {{-- <form action="{{ route('inbound.put.giver', $currentGrf->id) }}" method="POST" class="w-full">
                                     @csrf
                                     @method('PUT') --}}
-                                    <button class="btn btn-primary w-full rounded-full flex items-center justify-center gap-1" data-tw-toggle="modal" data-tw-target="#modal-confirm-recipient" {{ $confirmation ? '' : 'disabled' }}>
+                                    <button class="btn btn-primary w-full rounded-full flex items-center justify-center gap-1" data-tw-toggle="modal" data-tw-target="#modal-confirm-recipient">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-save w-4 h-4" viewBox="0 0 16 16">
                                             <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
                                         </svg>
@@ -108,6 +108,37 @@
                 </div>
             </div>
         </div>
+
+        {{-- * Non SN --}}
+        <div id="modal-non-sn" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="p-5 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <div class="text-3xl mt-5">Apakah anda ingin mengchecklist item ini?</div>
+                            <div class="html-non-sn">
+                                <div class="flex px-8 mt-4 w-full justify-between">
+                                    <span>Barang</span>
+                                    <span>Quantity KG</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 pb-8 text-center">
+                            <form id="form-nonsn" action="{{ Route('inbound.post.non.sn.giver', $currentGrf->id) }}" method="POST">
+                                @csrf
+                                <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- * End Non SN --}}
         
         {{-- * Modal manual bulk --}}
         <div id="modal-pieces-bulk" class="modal" tabindex="-1" aria-hidden="true">
