@@ -27,12 +27,12 @@
 });
 
 $('.chat').on("click", ".btn-input-sn", function (event) {
-    var thisButton = event;
-    var partName   = $(thisButton).data("partname");
-    var partId     = $(thisButton).data("partid");
-    var inboundId     = $(thisButton).data("inboundid");
-    var partUom     = $(thisButton).data("uom");
-    var quantity   = $(thisButton).data("quantity");
+    var thisButton         = event;
+    var partName           = $(thisButton).data("partname");
+    var partId             = $(thisButton).data("partid");
+    var orderInboundId     = $(thisButton).data("orderinboundid");
+    var partUom            = $(thisButton).data("uom");
+    var quantity           = $(thisButton).data("quantity");
 
     $("#modal-non-sn").on("show.tw.modal", function () {
         const media = $('.html-non-sn');
@@ -43,7 +43,7 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
                 '<span>' + quantity + ' ' + partUom + '</span>' +
             '</div>' +
             '<input form="form-nonsn" type="hidden" name="part_id" value="' + partId + '"></input>' +
-            '<input form="form-nonsn" type="hidden" name="inbound_id" value="' + inboundId + '"></input>' +
+            '<input form="form-nonsn" type="hidden" name="order_inbound_id" value="' + orderInboundId + '"></input>' +
             '<input form="form-nonsn" type="hidden" name="quantity" value="' + quantity + '"></input>'
         );
     });

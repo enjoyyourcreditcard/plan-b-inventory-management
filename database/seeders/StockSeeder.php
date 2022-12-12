@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Part;
 use App\Models\Stock;
 use Illuminate\Database\Seeder;
 
@@ -14,77 +15,36 @@ class StockSeeder extends Seeder
      */
     public function run()
     {
-        // $part_id = [796, 12, 881, 1093];
         $warehouse_id = [1, 2];
 
-        // Stock::create([
-        //     'part_id' => 1419,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 12345,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // Stock::create([
-        //     'part_id' => 1419,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 23456,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // Stock::create([
-        //     'part_id' => 1419,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 34567,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // Stock::create([
-        //     'part_id' => 1419,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 45678,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // Stock::create([
-        //     'part_id' => 1419,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 56789,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // Stock::create([
-        //     'part_id' => 1093,
-        //     'warehouse_id' => 1,
-        //     'sn_code' => 67890,
-        //     'condition' => 'GOOD NEW',
-        //     'expired_date' => '2025-11-02',
-        //     'stock_status' => 'in',
-        //     'status' => 'active',
-        // ]);
-
-        // part.
         for ($j = 1; $j < 1420; $j++) {
-            for ($i = 0; $i < 10; $i++) {
+            $part      = Part::find($j);
+            $sn_status = (isset($part) ? $part->sn_status : null);
+            
+            if ($sn_status == 'SN' || $sn_status == 'sn') {
+                for ($i = 0; $i < 10; $i++) {
+                    try {
+                        Stock::create([
+                            'part_id' => $j,
+                            'warehouse_id' => $warehouse_id[array_rand($warehouse_id)],
+                            'sn_code' => '14045' . $i.$j,
+                            'condition' => 'GOOD NEW',
+                            'expired_date' => '2025-11-02',
+                            'stock_status' => 'in',
+                            'status' => 'active',
+                        ]);
+                    } catch (\Throwable $th) {
+                        continue;
+                    }
+                }
+            } else {
                 try {
                     Stock::create([
                         'part_id' => $j,
                         'warehouse_id' => $warehouse_id[array_rand($warehouse_id)],
-                        'sn_code' => '14045' . $i.$j,
+                        'quantity' => 1000,
+                        'good' => 1000,
+                        'not_good' => 0,
                         'condition' => 'GOOD NEW',
                         'expired_date' => '2025-11-02',
                         'stock_status' => 'in',
@@ -93,8 +53,6 @@ class StockSeeder extends Seeder
                 } catch (\Throwable $th) {
                     continue;
                 }
-                
-              
             }
         }
     }

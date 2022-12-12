@@ -237,6 +237,7 @@
                                     <div class="p-5 pb-8 text-center">
                                         <form id="form-nonsn" action="{{ Route('returnnonsn') }}" method="POST">
                                             @csrf
+                                            <div class="condition"></div>
                                             <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
                                             <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
                                         </form>

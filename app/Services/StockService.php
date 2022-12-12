@@ -87,6 +87,11 @@ class StockService
         $stock_status,
         $status,
         $created_at) {
+            $item->quantity = $this->stock
+                ->where([['part_id', $item->id], ['stock_status', 'in']])
+                ->first()
+                ->quantity;
+                
             $item->stock = $this->stock
                 ->when($part_id, function ($query, $part_id) {
                     return $query->where('part_id', $part_id);

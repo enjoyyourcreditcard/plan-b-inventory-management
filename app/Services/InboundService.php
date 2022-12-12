@@ -33,13 +33,14 @@ class InboundService
 
     public function handleAllInbound()
     {
-        $groupByPartIds = $this->inbound->with('part')->where('status', 'active')->get()->groupBy('part_id');
+        $groupByPartIds = $this->inbound->with('part', 'warehouse')->where('status', 'active')->get()->groupBy('part_id');
 
         if( count($groupByPartIds) ) {
             foreach ($groupByPartIds as $key => $groupByPartId) {
                 $distinct[] = collect([
                     'id'       => $groupByPartId->first()->id, 
                     'part_id'  => $groupByPartId->first()->part->id, 
+                    'warehouse'  => $groupByPartId->first()->warehouse->name, 
                     'part'     => $groupByPartId->first()->part->name,
                     'segment'  => $groupByPartId->first()->part->segment->name,
                     'brand'    => $groupByPartId->first()->part->brand_name,
@@ -244,6 +245,7 @@ class InboundService
                 'part_name'         => $this->part->find($data[0]->part_id)->name,
                 'uom'               => $data[0]->part->uom,
                 'inbound_id'        => $data[0]->inbound_id,
+                'order_inbound_id'  => $data[0]->id,
                 'part_id'           => $data[0]->part_id,
                 'quantity'          => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? count($data) : $data[0]->quantity,
                 'inputed_quantity'  => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? $inputedQuantity : ($data[0]->received_quantity == null ? 0 : $data[0]->received_quantity),

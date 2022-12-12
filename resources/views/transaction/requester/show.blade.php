@@ -126,7 +126,7 @@
                     @csrf
                     @method( "PUT" )
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
-                    <button class="btn text-white bg-emerald-700 impor w-24">Sure</button>
+                    <button class="loading btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
             </div>
         </div>
@@ -244,7 +244,7 @@
                 <ul class="pricing-tabs nav nav-pills box rounded-full mx-auto overflow-hidden" role="tablist">
                     <li id="layout-1-monthly-fees-tab" class="nav-item flex-1" role="presentation">
                         <a href="{{ Route( 'request.get.home' ) }}"
-                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-neutral-100 transition duration-300 ease-in-out hover:bg-white hover:text-slate-500"
+                            class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-neutral-100 transition duration-300 ease-in-out hover:bg-white hover:text-slate-500 h-full"
                             data-tw-toggle="pill" data-tw-target="#layout-1-monthly-fees" role="tab"
                             aria-controls="layout-1-monthly-fees" aria-selected="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -372,7 +372,7 @@
                         </div>
                         <div
                             class="flex items-center border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
-                            <button class="btn bg-emerald-900 text-white rounded-full w-full py-2 px-2">
+                            <button class="loading btn bg-emerald-900 text-white rounded-full w-full py-2 px-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
@@ -909,3 +909,7 @@
     @method( "PUT" )
 </form>
 @endsection
+
+@section('javaScript')
+<script src="{{ Asset('js/views/requester/index.js') }}"></script>
+@endSection

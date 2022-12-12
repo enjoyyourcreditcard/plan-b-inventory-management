@@ -21,6 +21,8 @@ class CreateRequestStocksTable extends Migration
             $table->foreign('grf_id')->references('id')->on('db_grfs');
             $table->unsignedBigInteger('part_id');
             $table->foreign('part_id')->references('id')->on('parts');
+            $table->unsignedBigInteger('stock_id')->nullable();
+            $table->foreign('stock_id')->references('id')->on('stocks');
             $table->string('sn')->comment('for sn only')->nullable();
             $table->string('sn_return')->comment('for sn only')->nullable();
             $table->string('quantity')->comment('for non sn only')->nullable();

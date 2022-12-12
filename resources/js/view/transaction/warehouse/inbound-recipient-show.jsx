@@ -112,6 +112,7 @@ function TransferApprov(props) {
                                         data-partname={ tableProps.row.original.part_name }
                                         data-partid={ tableProps.row.original.part_id }
                                         data-inboundid={ tableProps.row.original.inbound_id }
+                                        data-orderinboundid={ tableProps.row.original.order_inbound_id }
                                         data-uom={ tableProps.row.original.uom }
                                         data-quantity={ tableProps.row.original.quantity }>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check2-square w-4 h-4 mr-1" viewBox="0 0 16 16">

@@ -374,6 +374,20 @@ class InboundController extends Controller
             return Redirect::back()->withError($e->getMessage());
         }
     }
+
+    /*
+    *|--------------------------------------------------------------------------
+    *| Recipient store Non SN
+    *|--------------------------------------------------------------------------
+    */
+    public function recipientNonSnStore (Request $request, $id) {
+        try {
+            $this->orderInboundService->handleStoreNonSnInboundRecipientPieces($request, $id);
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
       
     /*
     *|--------------------------------------------------------------------------

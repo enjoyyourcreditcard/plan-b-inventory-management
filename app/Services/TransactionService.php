@@ -55,18 +55,22 @@ class TransactionService
             }
             if ($this->part->where('name', $parts[$i])->first()->sn_status == 'NON SN') {
                 $stock = $this->stock->where([['part_id', $this->part->where('name', $parts[$i])->first()->id], ['warehouse_id', $grf->warehouse_id]])->first();
+                
                 $stock->update([
-                    'quantity' => ($stock->quantity - $quantity[$i])
+                    'quantity' => ($stock->quantity - $quantity[$i]),
+                    'good'     => ($stock->good - $quantity[$i])
                 ]);
+
                 $this->stock->create([
-                    'part_id' => $stock->part_id, 
+                    'part_id'      => $stock->part_id, 
                     'warehouse_id' => $stock->warehouse_id, 
-                    'condition' => $stock->condition, 
-                    'recondition' => $stock->recondition, 
-                    'quantity' => $quantity[$i], 
+                    'condition'    => $stock->condition, 
+                    'recondition'  => $stock->recondition,
+                    'quantity'     => $quantity[$i],
+                    'good'         => $quantity[$i],
                     'expired_date' => $stock->expired_date, 
                     'stock_status' => 'hold', 
-                    'status' => 'active', 
+                    'status'       => 'active', 
                 ]);
             }
         }

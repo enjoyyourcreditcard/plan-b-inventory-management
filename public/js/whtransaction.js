@@ -81,4 +81,17 @@ $('.upload-non-sn').on('click', function (event) {
         '<input form="form-nonsn" type="hidden" name="part_id" value="' + partId + '"></input>' +
         '<input form="form-nonsn" type="hidden" name="quantity" value="' + icQuantity + '"></input>'
     );
+
+    $('.condition').html(
+        '<div class="flex gap-4 mb-8">' +
+            '<div class="w-full">' +
+                '<label>Good QTY</label>' +
+                '<input type="number" class="form-control w-full" min="0" max="' + icQuantity + '" name="good" value="0" required>' +
+            '</div>' +
+            '<div class="w-full">' +
+                '<label>Not Good QTY</label>' +
+                '<input type="number" class="form-control w-full" min="0" max="' + icQuantity + '" name="not_good" value="0" required>' +
+            '</div>' +
+        '</div>' 
+    );
 });

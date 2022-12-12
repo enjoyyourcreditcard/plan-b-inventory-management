@@ -45,7 +45,7 @@
                 </div>
                 <div class="px-5 pb-8 text-center">
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
-                    <button form="form-return-item" type="submit" name="isReturn" value="true" class="btn text-white !bg-emerald-700 impor w-24">Sure</button>
+                    <button form="form-return-item" type="submit" name="isReturn" value="true" class="loading btn text-white !bg-emerald-700 impor w-24">Sure</button>
                 </div>
             </div>
         </div>
@@ -250,4 +250,5 @@
 / * --}}
 @section( "javaScript" )
 <script src="{{ Asset( "js/views/requester/return.js" ) }}"></script>
+<script src="{{ Asset('js/views/requester/index.js') }}"></script>
 @endSection

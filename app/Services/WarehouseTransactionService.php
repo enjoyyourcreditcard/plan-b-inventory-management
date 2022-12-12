@@ -125,10 +125,18 @@ class WarehouseTransactionService
             'quantity' => 'required',
         ]);
 
+        $stock = $this->stock
+                      ->where('part_id', $validatedData['part_id'])
+                      ->where('warehouse_id', $this->grf->find($validatedData['grf_id'])->warehouse_id)
+                      ->where('stock_status', 'hold')
+                      ->where('quantity', $validatedData['quantity'])
+                      ->first();
+
         $this->requestStock->create([
             'request_form_id' => $request->request_form_id,
             'grf_id' => $request->grf_id,
             'part_id' => $request->part_id,
+            'stock_id' => $stock->id,
             'quantity' => $request->quantity,
         ]);
 
@@ -166,12 +174,13 @@ class WarehouseTransactionService
             // }
             // throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
 
-
+            $stock = $this->stock->where('part_id', $request->part_id)->where('sn_code', $sn_code)->first();
 
             $this->requestStock->create([
                 'request_form_id' => $request->request_form_id,
                 'grf_id' => $request->grf_id,
                 'part_id' => $request->part_id,
+                'stock_id' => $stock->id,
                 'sn' => $sn_code,
             ]);
         }

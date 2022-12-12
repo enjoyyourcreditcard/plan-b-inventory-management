@@ -72,8 +72,6 @@ class TransactionController extends Controller
      */
     public function show($code)
     {
-
-
         // $notifications =  $this->notificationService->handleAllNotification();
         $grf = $this->requestFormService->handleGetCurrentGrf($code);
         $requestForms = $this->requestFormService->handleShowRequestForm($code)->unique('segment_id');

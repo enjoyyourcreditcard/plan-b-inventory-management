@@ -7,33 +7,33 @@ use App\Models\Warehouse;
 // Facades
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Route;
 
 // Controllers
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PartController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\BuildController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\InboundController;
-use App\Http\Controllers\RequestController;
-use App\Http\Controllers\SegmentController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MiniStockController;
-use App\Http\Controllers\RekondisiController;
-use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BuildController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryPriceController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InboundController;
+use App\Http\Controllers\MiniStockController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderInboundController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\RekondisiController;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTransactionController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseReturnController;
 use App\Http\Controllers\WarehouseTransactionController;
 
@@ -362,6 +362,7 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::get('/recipient', [InboundController::class, 'recipientIndex'])->name('get.recipient');
     Route::get('/recipient/{id}', [InboundController::class, 'recipientShow'])->name('get.recipient.detail');
     Route::post('/giver/non-sn/{id}', [InboundController::class, 'giverNonSnStore'])->name('post.non.sn.giver');
+    Route::post('/recipient/non-sn/{id}', [InboundController::class, 'recipientNonSnStore'])->name('post.non.sn.recipient');
     Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
     Route::post('/recipient/pieces/{id}', [InboundController::class, 'recipientPiecesStore'])->name('post.pieces.recipient');
     Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');

@@ -79,7 +79,15 @@ function Stock() {
             Header: 'Stock',
             accessor: 'stock',
             Cell: tableProps => (
-                <p>{tableProps.row.original.stock}</p>
+                <p>
+                    {
+                        tableProps.row.original.sn_status == 'SN'
+                        ?
+                        tableProps.row.original.stock + ` ` + tableProps.row.original.uom
+                        :
+                        tableProps.row.original.quantity + ` ` + tableProps.row.original.uom
+                    }
+                </p>
             )
         },
       

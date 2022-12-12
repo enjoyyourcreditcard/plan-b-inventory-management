@@ -41,7 +41,7 @@
                     @csrf
                     <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
                     <input type="hidden" name="grf_code" value="{{ $grf_code }}">
-                    <button class="btn text-white bg-emerald-700 impor w-24">Sure</button>
+                    <button class="loading btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
             </div>
         </div>

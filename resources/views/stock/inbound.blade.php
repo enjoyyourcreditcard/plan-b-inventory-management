@@ -217,15 +217,17 @@
                         <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Segment</th>
                         <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Brand</th>
                         <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Quantity</th>
+                        <th class="whitespace-normal sticky top-0 z-50 bg-slate-100">Warehouse</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ( $inbound as $inbounds )
                     <tr class="intro-x">
-                        <td class="font-medium ml-2 mr-6 text-left w-6/12">{{ $inbounds['part'] }}</td>
+                        <td class="font-medium ml-2 mr-6 text-left">{{ $inbounds['part'] }}</td>
                         <td class="text-left">{{ $inbounds['segment'] }}</td>
                         <td class="text-left">{{ $inbounds['brand'] }}</td>
-                        <td class="text-left">{{ $inbounds['quantity'] . ' ' . $inbounds['uom'] }}</td>
+                        <td class="text-left">{{ $inbounds['quantity'] . ' ' . $inbounds['uom']}}</td>
+                        <td class="text-left">{{ $inbounds['warehouse'] }}</td>
                     </tr>
                     @empty
                     <tr>

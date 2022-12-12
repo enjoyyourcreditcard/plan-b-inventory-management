@@ -180,6 +180,20 @@ class OrderInboundService
                 ]);
             }
         } else {
+            $grf     = $this->grfInbound->find($id);
+            $inbound = $this->inbound->where('warehouse_id', $grf->warehouse_id)->where('part_id', $validatedDatas['part_id'])->where('stock_status', 'in')->first();
+
+            // $inbound->update([
+            //     'quantity' => ($inbound->quantity - $validatedDatas['quantity'])
+            // ]);
+            
+            // if ($inbound->quantity < 1) {
+            //     $inbound->update([
+            //         'stock_status' => 'out',
+            //         'status'       => 'non_active',
+            //     ]);
+            // }
+
             $this->orderInbound->create([
                 'grf_inbound_id' => $validatedDatas['grf_inbound_id'],
                 'part_id'        => $validatedDatas['part_id'],
@@ -355,15 +369,15 @@ class OrderInboundService
     {
         $validatedData = $request->validate([
             'part_id'    => 'required',
-            'inbound_id' => 'required',
             'quantity'   => 'required'
         ]);
 
         $currentGrf   = $this->grfInbound->with('inboundForms.inbound')->find($id);
-        $orderInbound = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_id], ['inbound_id', $request->inbound_id]])->first();
+        $inbound      = $this->inbound->where('part_id', $request->part_id)->where('warehouse_id', $currentGrf->warehouse_id)->where('stock_status', 'in')->where('status', 'active')->first();
+        $orderInbound = $this->orderInbound->where([['grf_inbound_id', $id], ['part_id', $request->part_id], ['quantity', $request->quantity]])->first();
 
         $orderInbound->update([
-            'received_quantity' => $request->quantity,
+            'inbound_id' => $inbound->id,
         ]);
 
         return 'stored';
@@ -478,6 +492,22 @@ class OrderInboundService
 
     /*
     *|--------------------------------------------------------------------------
+    *| Store non-sn Inbound Recipient
+    *|--------------------------------------------------------------------------
+    */
+    public function handleStoreNonSnInboundRecipientPieces($request, $id)
+    {
+        $orderInbound = $this->orderInbound->find($request->order_inbound_id);
+
+        $orderInbound->update([
+            'received_quantity' => $request->quantity
+        ]);
+
+        return 'stored';
+    }
+
+    /*
+    *|--------------------------------------------------------------------------
     *| Store sn Inbound Recipient
     *|--------------------------------------------------------------------------
     */
@@ -564,7 +594,7 @@ class OrderInboundService
 
         $this->timeline->create([
             'grf_inbound_id' => $id,
-            'status' => 'closed'
+            'status'         => 'closed'
         ]);
 
         for ($i = 0; $i < count($currentGrf->inboundForms); $i++) {
@@ -572,24 +602,35 @@ class OrderInboundService
             
             if ($orderInbounds->part->sn_status == "sn" || $orderInbounds->part->sn_status == "SN") {
                 $this->stock->create([
-                    'part_id' => $orderInbounds->inbound->part_id,
+                    'part_id'      => $orderInbounds->inbound->part_id,
                     'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
-                    'sn_code' => $orderInbounds->received_sn_code,
-                    'condition' => 'GOOD NEW',
+                    'sn_code'      => $orderInbounds->received_sn_code,
+                    'condition'    => 'GOOD NEW',
                     'expired_date' => now(),
                     'stock_status' => 'in',
-                    'status' => 'active',
+                    'status'       => 'active',
                 ]);
             } else {
-                $this->stock->create([
-                    'part_id' => $orderInbounds->inbound->part_id,
-                    'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
-                    'quantity' => $orderInbounds->received_quantity,
-                    'condition' => 'GOOD NEW',
-                    'expired_date' => now(),
-                    'stock_status' => 'in',
-                    'status' => 'active',
-                ]);
+                $stock = $this->stock->where([['part_id', $orderInbounds->part_id], ['warehouse_id', $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id]])->first();
+
+                if ($stock != null) {
+                    $stock->update([
+                        'quantity' => $stock->quantity + $orderInbounds->received_quantity,
+                        'good'     => $stock->quantity + $orderInbounds->received_quantity,
+                    ]);
+                } else {
+                    $this->stock->create([
+                        'part_id'      => $orderInbounds->inbound->part_id,
+                        'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id,
+                        'quantity'     => $orderInbounds->received_quantity,
+                        'condition'    => 'GOOD NEW',
+                        'good'         => $orderInbounds->received_quantity,
+                        'not_good'     => 0,
+                        'expired_date' => now(),
+                        'stock_status' => 'in',
+                        'status'       => 'active',
+                    ]);
+                }
             }
         }
 

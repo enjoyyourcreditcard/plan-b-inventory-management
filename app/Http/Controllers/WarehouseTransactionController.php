@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RequestStock;
+use App\Models\Stock;
 use App\Models\WhApproval;
-use App\Services\BrandService;
+use App\Models\RequestStock;
+use Illuminate\Http\Request;
 use App\Services\PartService;
-use App\Services\RequestFormService;
-use App\Services\RequestStockService;
-use App\Services\TransactionService;
-use App\Services\WarehouseService;
-use App\Services\WarehouseTransactionService;
+use App\Services\BrandService;
 use App\Imports\WarehouseImport;
+use App\Services\WarehouseService;
+use App\Services\RequestFormService;
+use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 // use Excel;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\Request;
+use App\Services\RequestStockService;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\WarehouseTransactionService;
 
 class WarehouseTransactionController extends Controller
 {
 
-    public function __construct(RequestStockService $requestStockService, WarehouseTransactionService $warehouseTransactionService, TransactionService $transactionService, WarehouseService $warehouseService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService)
+    public function __construct(RequestStockService $requestStockService, WarehouseTransactionService $warehouseTransactionService, TransactionService $transactionService, WarehouseService $warehouseService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, Stock $stock)
     {
         $this->warehouseTransactionService = $warehouseTransactionService;
         $this->warehouseService = $warehouseService;
@@ -30,6 +31,7 @@ class WarehouseTransactionController extends Controller
         $this->requestStockService = $requestStockService;
         $this->partService = $partService;
         $this->brandService = $brandService;
+        $this->stock = $stock;
     }
 
         /*
@@ -185,14 +187,16 @@ class WarehouseTransactionController extends Controller
                 'part_id' => 'required',
                 'sn_code.*' => 'distinct', 
                 'sn_code' => ['required', 'array'],
-            ]);
-    
-    
+            ]);;
+            
             foreach ($excel[0] as $row) {
+                $stock = $this->stock->where('part_id', $validateData['part_id'])->where('sn_code', $row[0])->first();
+                
                 RequestStock::create([
                     'request_form_id' => $request->request_form_id,
                     'grf_id' => $request->grf_id,
                     'part_id' => $request->part_id,
+                    'stock_id' => $stock->id,
                     'sn' => $row[0],
                     'sn_return' => null,
                     'remarks' => null,

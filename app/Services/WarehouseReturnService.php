@@ -73,7 +73,7 @@ class WarehouseReturnService {
 
     public function handlePostApproveReturnWH($req, $transactionService)
     {
-        $grf = $this->grf->with('requestStocks')->find($req->id);
+        $grf = $this->grf->with('requestStocks.stock')->find($req->id);
         
         foreach ($grf->requestStocks->where('sn', '!=', null)->where('condition', 'good') as $requestStock) {
             $this->stock->where('sn_code', $requestStock->sn_return)->update([
@@ -83,18 +83,26 @@ class WarehouseReturnService {
 
         foreach ($grf->requestStocks->where('sn', null)->where('condition', 'good') as $requestStock) {
             $stockIn = $this->stock->where([['part_id', $requestStock->part_id], ['warehouse_id', $grf->warehouse_id], ['sn_code', null], ['stock_status', 'in']])->first();
-            $stockOut = $this->stock->where([['part_id', $requestStock->part_id], ['warehouse_id', $grf->warehouse_id], ['sn_code', null], ['stock_status', 'out']])->first();
+            // $stockOut = $this->stock->where([['part_id', $requestStock->part_id], ['warehouse_id', $grf->warehouse_id], ['sn_code', null], ['stock_status', 'out']])->first();
+            $stockOut = $requestStock->stock;
 
             $stockIn->update([
-                'quantity' => $stockIn->quantity + $requestStock->quantity_return
-            ]);
-            
-            $stockOut->update([
-                'quantity' => $stockOut->quantity - $requestStock->quantity_return
+                'good'      => $stockIn->good + $stockOut->good,
+                'not_good'  => $stockIn->not_good + $stockOut->not_good
             ]);
 
+            $stockIn->update([
+                'quantity'  => $stockIn->good + $stockIn->not_good,
+            ]);
+            
+            // $stockOut->update([
+            //     'quantity' => $stockOut->quantity - $requestStock->quantity_return
+            // ]);
+
             if ($stockOut->quantity < 1) {
-                $stockOut->delete();
+                $stockOut->update([
+                    'status' => 'non_active'
+                ]);
             }
         }
 
@@ -118,13 +126,22 @@ class WarehouseReturnService {
     {
         $validatedData = $request->validate([
             'request_form_id' => 'required',
-            'grf_id' => 'required',
-            'part_id' => 'required',
-            'quantity' => 'nullable',
+            'grf_id'          => 'required',
+            'part_id'         => 'required',
+            'quantity'        => 'nullable',
+            'good'            => 'required',
+            'not_good'        => 'required',
         ]);
 
-        $this->requestStock->where([['request_form_id', $request->request_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->first()->update([
+        $requestStock = $this->requestStock->with('stock')->where([['request_form_id', $request->request_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->first();
+
+        $requestStock->update([
             'quantity_return' => $request->quantity
+        ]);
+
+        $requestStock->stock->update([
+            'good'     => $validatedData['good'],
+            'not_good' => $validatedData['not_good'],
         ]);
 
         return ('data stored!');

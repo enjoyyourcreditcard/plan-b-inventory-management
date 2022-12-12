@@ -129,7 +129,7 @@
                             </div>
                         </div>
                         <div class="p-5 pb-8 text-center">
-                            <form id="form-nonsn" action="{{ Route('inbound.post.non.sn.giver', $currentGrf->id) }}" method="POST">
+                            <form id="form-nonsn" action="{{ Route('inbound.post.non.sn.recipient', $currentGrf->id) }}" method="POST">
                                 @csrf
                                 <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
                             </form>
