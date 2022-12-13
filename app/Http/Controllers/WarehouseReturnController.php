@@ -51,7 +51,7 @@ class WarehouseReturnController extends Controller
     {
         $transactionService = $this->transactionService; 
         $this->warehouseReturnService->handlePostApproveReturnWH($request,$transactionService); 
-        return redirect()->route('warehouse.get.request');
+        return redirect()->route('warehouse.get.return');
         // return redirect()->back();
     }
 }

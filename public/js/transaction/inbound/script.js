@@ -81,3 +81,12 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
         );
     });
 });
+
+$('.select-inbound-ic').on('change', function (event) {
+    let select = event.currentTarget;
+    let option = select.selectedIndex;
+    let quantity = $(select.options[option]).data('quantity');
+    
+    $('.input-inbound-quantity').val(1);
+    $('.input-inbound-quantity').attr('max',quantity);
+});

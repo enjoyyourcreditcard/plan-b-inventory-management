@@ -385,17 +385,17 @@
 
                         <div class="mt-3">
                             <label for="regular-form-3" class="form-label">Part</label>
-                            <select name="part_id" data-placeholder="Select Part" class="tom-select w-full" required>
+                            <select name="part_id" data-placeholder="Select Part" class="select-inbound-ic tom-select w-full" required>
                                 <option></option>
                                 @foreach ( $inbounds as $inbound )
-                                <option value="{{ $inbound['part_id']}}">{{ $inbound['part'] }} - {{$inbound['brand']}}</option>
+                                <option value="{{ $inbound['part_id']}}" data-quantity="{{ $inbound['quantity'] }}">{{ $inbound['part'] }} - {{$inbound['brand']}}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mt-3">
                             <label for="regular-form-2" class="form-label">Quantity</label>
-                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control" min="1" value="1" required>
+                            <input name="quantity" id="regular-form-2" type="number" class="input-inbound-quantity form-control form-control" min="1" value="1" required>
                         </div>
 
                         <div
@@ -416,18 +416,18 @@
 
                         <div class="mt-3">
                             <label for="regular-form-3" class="form-label">Part</label>
-                            <select name="inbound_id" data-placeholder="Select Part" class="tom-select w-full" required
+                            <select name="inbound_id" data-placeholder="Select Part" class="select-inbound-ic tom-select w-full" required
                                 disabled>
                                 <option></option>
                                 @foreach ( $inbounds as $inbound )
-                                <option value="{{ $inbound['id'] }}">{{ $inbound['part'] }}</option>
+                                <option value="{{ $inbound['id'] }}" data-quantity="{{ $inbound['quantity'] }}">{{ $inbound['part'] }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="mt-3">
+                        <div class="mt-3 outline">
                             <label for="regular-form-2" class="form-label">Quantity</label>
-                            <input name="quantity" id="regular-form-2" type="number" class="form-control form-control"
+                            <input name="quantity" id="regular-form-2" type="number" class="input-inbound-quantity form-control form-control"
                                 min="1" value="1" max="{{ $inbound['quantity'] }}" required disabled>
                         </div>
 
@@ -605,6 +605,8 @@
 
     </div>
 </div>
-
-
 @endsection
+
+@section('javaScript')
+<script src="{{ Asset('js/transaction/inbound/script.js') }}" defer></script>
+@endSection

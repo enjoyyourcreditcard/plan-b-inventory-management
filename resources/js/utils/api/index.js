@@ -201,7 +201,7 @@ export default class Api {
                 name: name,
                 category_id: parseInt(category_id),
                 segment_id: parseInt(segment_id),
-                brand_id: parseInt(brand_id),
+                brand_id: brand_id,
                 uom: uom,
                 sn_status: sn,
                 color: color,

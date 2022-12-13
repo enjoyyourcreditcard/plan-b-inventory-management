@@ -61,19 +61,36 @@ class PartService
             'color' => 'required',
             'size' => 'required',
             'description' => 'required|max:255',
-            'note' => 'max:255',
+            'note' => 'nullable|max:255',
             'img' => 'nullable|file|max:5120'
         ]);
+        $array = explode (",", $validatedData['brand_id']); 
+        for ($i = 0; $i < count($array); $i++) {
+            $validatedData['brand_name'][$i] = $this->brand->find($array[$i])->name;
+    
+            if ($request->file('img')) {
+                $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');
+            } else {
+                $validatedData['img'] = 'images/part/default.jpg';
+            }
 
-        $validatedData['brand_name'] = $this->brand->find($validatedData['brand_id'])->name;
-
-        if ($request->file('img')) {
-            $validatedData['img'] = 'storage/' . $request->file('img')->store('images/part');
-        } else {
-            $validatedData['img'] = 'images/part/default.jpg';
+            Part::create([
+                'name' => $validatedData['name'],
+                'category_id' => $validatedData['category_id'],
+                'segment_id' => $validatedData['segment_id'],
+                'brand_id' => $array[$i],
+                'brand_name' => $validatedData['brand_name'][$i],
+                'uom' => $validatedData['uom'],
+                'sn_status' => $validatedData['sn_status'],
+                'color' => $validatedData['color'],
+                'size' => $validatedData['size'],
+                'description' => $validatedData['description'],
+                'note' => $validatedData['note'] != null ? $validatedData['note'] : null,
+                'img' => $validatedData['img']
+            ]);
         }
 
-        Part::create($validatedData);
+        // Part::create($validatedData);
 
         return ('Data has been stored');
     }

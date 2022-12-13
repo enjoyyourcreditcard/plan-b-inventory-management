@@ -27,7 +27,6 @@ class InboundExport implements WithHeadings,ShouldAutoSize
             'Serial Number(SN only)',
             'Quantity(non SN only)',
             'Stock Status',
-            'Status',
             'Warehouse',
             'Brand',
         ];

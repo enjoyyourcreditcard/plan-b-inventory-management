@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import ReactDOM from "react-dom";
 import Api from "../../utils/api";
+import { join } from "lodash";
 
 function CreatePart(props) {
     const api = new Api();
@@ -85,11 +86,12 @@ function CreatePart(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(join(brandInput));
         api.postAddPart(
             nameInput,
             categoryInput,
             segmentInput,
-            brandInput,
+            join(brandInput),
             uomInput,
             snStatusInput,
             colorInput,
@@ -161,8 +163,9 @@ function CreatePart(props) {
                         </div>
                         <div class="w-full mt-3 xl:mt-0 flex-1">
                             <Select
-                                options={brandOption}
-                                onChange={(event) => setBrandInput(event.value)}
+                                isMulti
+                                options={ brandOption }
+                                onChange={ (event) => setBrandInput(event.map((o) => o.value)) }
                             />
                         </div>
                     </div>
