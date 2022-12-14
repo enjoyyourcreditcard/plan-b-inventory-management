@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GrfInbound;
-use App\Models\OrderInbound;
-use Illuminate\Http\Request;
-use App\Services\PartService;
 use App\Exports\InboundExport;
 use App\Imports\InboundImport;
 use App\Services\InboundService;
-use App\Services\WarehouseService;
-use App\Services\RequestFormService;
-use App\Services\TransactionService;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Services\NotificationService;
 use App\Services\OrderInboundService;
+use App\Services\PartService;
+use App\Services\RequestFormService;
+use App\Services\TransactionService;
+use App\Services\WarehouseService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InboundController extends Controller
 {
@@ -30,24 +28,26 @@ class InboundController extends Controller
         $this->transactionService  = $transactionService;
     }
 
-    // INDEX
+    /*
+   *|--------------------------------------------------------------------------
+   *| IC: Index inbounds
+   *|--------------------------------------------------------------------------
+   */
     public function index()
     {
         try{
-            $inbound    = $this->inboundService->handleAllInbound();
+            $inbounds   = $this->inboundService->handleAllInbound();
             $parts      = $this->partService->handleAllPart();
             $warehouses = $this->warehouseService->handleAllWareHouse();
-            $grfs       = $this->orderInboundService->handleGetAllInboundGrf();
+            $irfCode    = $this->orderInboundService->handleGenerateInboundIrfCode();
             // $notifications    =  $this->notificationService->handleAllNotification();
-            // $inbound_grf_code = $this->orderInboundService->handleGenerateInboundRequest();
 
             return view('stock.inbound', [
-                'inbound'    => $inbound,
+                'inbounds'   => $inbounds,
                 'parts'      => $parts,
                 'warehouses' => $warehouses,
-                'grfs'       => $grfs
+                'irfCode'    => $irfCode,
                 // 'notifications'    => $notifications,
-                // 'inbound_grf_code' => $inbound_grf_code,
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -217,7 +217,11 @@ class InboundController extends Controller
         }
     }
 
-    // EXCEL
+    /*
+    *|--------------------------------------------------------------------------
+    *| IC: Download template excel for inbound
+    *|--------------------------------------------------------------------------
+    */
     public function export()
     {
         return (new InboundExport)->download('inboundPO.xlsx');
@@ -225,15 +229,14 @@ class InboundController extends Controller
         
     /*
     *|--------------------------------------------------------------------------
-    *| Store Bulk Part
+    *| IC: Upload excel inbound PO
     *|--------------------------------------------------------------------------
     */
     public function import (Request $request) {
         try {
             $this->orderInboundService->handleImportExcel($request);
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Proses upload berhasil! IRF telah terbuat.');
         } catch (\Exception $e) {
-            dd($e);
             return Redirect::back()->withError($e->getMessage());
         }
     }
@@ -331,7 +334,7 @@ class InboundController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient index
+    *| WH: Index inbounds
     *|--------------------------------------------------------------------------
     */
     public function recipientIndex () {
@@ -344,17 +347,15 @@ class InboundController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient show
+    *| WH: Detail inbound
     *|--------------------------------------------------------------------------
     */
     public function recipientShow ($id) {
         try {
-            $currentGrf   = $this->inboundService->handleShowGrfInboundRecipient($id);
-            $confirmation = $this->orderInboundService->handleConfirmationInboundRecipient($currentGrf);
+            $irf = $this->inboundService->handleShowIrfRecipient($id);
 
             return view('transaction.warehouse.recipient-show', [
-                'currentGrf' => $currentGrf,
-                'confirmation' => $confirmation,
+                'irf' => $irf,
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -363,13 +364,13 @@ class InboundController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient store SN Pieces
+    *| WH: Store sn to inbound_stocks table
     *|--------------------------------------------------------------------------
     */
     public function recipientPiecesStore (Request $request, $id) {
         try {
             $this->orderInboundService->handleStoreSnInboundRecipientPieces($request, $id);
-            return redirect()->back();
+            return redirect()->back()->with('success', 'SN berhasil diinput!');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -377,13 +378,13 @@ class InboundController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient store Non SN
+    *| WH: Checklist non SN inbound item
     *|--------------------------------------------------------------------------
     */
     public function recipientNonSnStore (Request $request, $id) {
         try {
             $this->orderInboundService->handleStoreNonSnInboundRecipientPieces($request, $id);
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Barang berhasil dicheck!');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -391,13 +392,13 @@ class InboundController extends Controller
       
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient store SN Bulk
+    *| WH: Import excel to inbound_stocks table
     *|--------------------------------------------------------------------------
     */
     public function recipientBulkStore (Request $request, $id) {
         try {
             $this->orderInboundService->handleStoreSnInboundRecipientBulk($request, $id);
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Excel berhasil diupload!');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -405,13 +406,13 @@ class InboundController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Recipient Submit
+    *| WH: Store inbound into stock table
     *|--------------------------------------------------------------------------
     */
     public function recipientSubmit (Request $request, $id) {
         try {
             $this->orderInboundService->handleUpdateRecipient($request, $id);
-            return redirect()->route('inbound.get.recipient');
+            return redirect()->route('inbound.get.recipient')->with('success', 'Barang telah tersimpan kedalam stock!');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -450,7 +451,7 @@ class InboundController extends Controller
 
     public function apiRecipientIndex ($id)
     {
-        return ResponseJSON($this->inboundService->handleGetGrfInboundRecipient($id), 200);
+        return ResponseJSON($this->inboundService->handleGetIrfRecipient($id), 200);
     }
 
     public function apiRecipientShow ($id)

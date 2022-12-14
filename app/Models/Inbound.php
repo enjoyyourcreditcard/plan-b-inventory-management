@@ -15,6 +15,10 @@ class Inbound extends Model
         'id'
     ];
 
+    public function irf() {
+        return $this->belongsTo(Irf::class);
+    }
+
     public function part() {
         return $this->belongsTo(Part::class);
     }
@@ -23,7 +27,7 @@ class Inbound extends Model
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function orderInbound() {
-        return $this->hasmany(OrderInbound::class);
+    public function inboundStocks() {
+        return $this->hasmany(InboundStock::class);
     }
 }

@@ -2,22 +2,21 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\GrfSeeder;
-use Illuminate\Database\Seeder;
-use Database\Seeders\PartSeeder;
-use Database\Seeders\UserSeeder;
 use Database\Seeders\BrandSeeder;
 use Database\Seeders\BuildSeeder;
-use Database\Seeders\StockSeeder;
-use Database\Seeders\InboundSeeder;
-use Database\Seeders\VendorSeeder;
-use Database\Seeders\SegmentSeeder;
 use Database\Seeders\CategorySeeder;
-use Database\Seeders\TimelineSeeder;
+use Database\Seeders\GrfSeeder;
+use Database\Seeders\HistoryPriceSeeder;
+use Database\Seeders\InboundSeeder;
+use Database\Seeders\PartSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RequestFormSeeder;
-use Database\Seeders\HistoryPriceSeeder;
-use Database\Seeders\InboundOrderSeeder;
+use Database\Seeders\SegmentSeeder;
+use Database\Seeders\StockSeeder;
+use Database\Seeders\TimelineSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\VendorSeeder;
+use Illuminate\Database\Seeder;
 
 
 
@@ -48,8 +47,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RequestFormSeeder::class);
         $this->call(TimelineSeeder::class);
         $this->call(RequestStockSeeder::class);
-        $this->call(InboundGrfSeeder::class);
-        $this->call(InboundOrderSeeder::class);
         $this->call(InboundSeeder::class);
     }
 }

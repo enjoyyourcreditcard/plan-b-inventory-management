@@ -187,9 +187,9 @@ class RequestFormService
     public function handleStoreGrf($request)
     {
         $validatedData = $request->validate([
-            'grf_code' => 'required',
+            'grf_code'     => 'required',
             'warehouse_id' => 'nullable',
-            'type' => 'nullable',
+            'type'         => 'nullable',
         ]);
 
         $validatedData['user_id'] = Auth::user()->id;

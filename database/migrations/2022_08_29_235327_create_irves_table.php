@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('inbound_grfs', function (Blueprint $table) {
+        Schema::create('irfs', function (Blueprint $table) {
             $table->id();
-            $table->string('grf_code')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('irf_code');
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            $table->string('warehouse_destination')->nullable();
-            $table->string('surat_jalan')->nullable();
-            $table->enum('status', ['draft', 'submited','wh_approved','delivery_approved','closed'])->default('draft'); //untuk sistem 
+            $table->enum('status', ['on_progress', 'delivered', 'closed'])->default('on_progress'); //untuk sistem 
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inbound_grfs');
+        Schema::dropIfExists('irfs');
     }
 };

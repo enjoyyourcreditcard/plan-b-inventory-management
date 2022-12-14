@@ -2,104 +2,34 @@
 
 namespace App\Services;
 
-// use App\Models\Part;
-// use App\Models\Warehouse;
-use App\Models\Stock;
-use App\Models\Inbound;
-use App\Models\GrfInbound;
-use App\Models\OrderInbound;
-use Illuminate\Http\Request;
 use App\Exports\InboundExport;
+use App\Models\Inbound;
+use App\Models\Irf;
 use App\Models\Part;
+use App\Models\Stock;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InboundService
 {
 
-    public function __construct(Inbound $inbound, Stock $stock, Part $part,GrfInbound $grfInbound, OrderInbound $orderInbound)
+    public function __construct(Inbound $inbound, Stock $stock, Part $part, Irf $irf)
     {
         $this->stock = $stock;
+        $this->irf = $irf;
         $this->part = $part;
         $this->inbound = $inbound;
-        $this->grfInbound = $grfInbound;
-        $this->orderInbound = $orderInbound;
     }
 
-        /*
+    /*
     *|--------------------------------------------------------------------------
     *| show all inbound
     *|--------------------------------------------------------------------------
     */
-
     public function handleAllInbound()
     {
-        $groupByPartIds = $this->inbound->with('part', 'warehouse')->where('status', 'active')->get()->groupBy('part_id');
-
-        if( count($groupByPartIds) ) {
-            foreach ($groupByPartIds as $key => $groupByPartId) {
-                $distinct[] = collect([
-                    'id'       => $groupByPartId->first()->id, 
-                    'part_id'  => $groupByPartId->first()->part->id, 
-                    'warehouse'  => $groupByPartId->first()->warehouse->name, 
-                    'part'     => $groupByPartId->first()->part->name,
-                    'segment'  => $groupByPartId->first()->part->segment->name,
-                    'brand'    => $groupByPartId->first()->part->brand_name,
-                    'quantity' => $this->part->find($key)->sn_status == 'SN' || $this->part->find($key)->sn_status == 'sn' ? $groupByPartId->count() : $groupByPartId->first()->quantity,
-                    'uom'      => $groupByPartId->first()->part->uom,
-                ]);
-            }
-        }else{
-            $distinct = [];
-        }
-
-        return ($distinct);
+        return $this->inbound->with('part', 'warehouse', 'irf')->orderBy('id', 'DESC')->get();
     }
-
-    // public function handleStoreInbound($request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'part_id' => 'required',
-    //         'sn_code' => 'required',
-    //         'condition' => 'required',
-    //         // 'inbound_status' => 'required',
-    //     ]);
-
-    //     $this->inbound->create($validatedData);
-        
-
-    //     return('Inbound has been stored');
-    // }
-
-    // public function handleUpdateInbound( $request)
-    // {
-    //     $inbound = $this->inbound->find($request->id);
-    //     $validatedData = $request->validate([
-    //         'condition' => 'required',
-    //         // 'inbound_status' => 'required',
-    //     ]);
-
-    //     $inbound->update($validatedData);
-
-    //     return('Inbound has been stored');
-    // }
-
-    // public function handleDeleteInbound($id)
-    // {
-    //     $this->inbound->destroy($id);
-
-    //     return('Inbound has been deleted');
-    // }
-
-    // public function handleUpInbound($id)
-    // {
-    //     $data = $this->inbound->where('id', $id)->first();
-    //     $dataArray = $data->toArray();
-    //     unset($dataArray['id'],$dataArray['created_at'],$dataArray['updated_at']);
-        
-        
-    //     $this->stock->create($dataArray);
-    //     // dd($data);
-    // }
 
     public function handleAllDeleteInbound(Request $request)
     {
@@ -114,23 +44,6 @@ class InboundService
         // $this->inbound->where('id', $request->input('ids'))->delete();
         return('Inbound has been deleted');
     }
-    
-    // public function handleAllUpInbound(Request $request)
-    // {
-    //     if (isset($request['id']) == true) {
-    //         foreach ($request['id'] as $id) {
-    //             $inbound = $this->inbound->find($id);
-    //             $data = $inbound->toArray();
-    //             unset($data['id'],$data['created_at'],$data['updated_at']);
-    //             $this->stock->create($data);
-    //         }
-    //         return('Inbound stored!');
-    //     }else{
-    //         return('No inbound');
-    //     }
-    // }
-
-    
 
     public function handleAllInboundApi(Request $request)
     {   
@@ -221,38 +134,44 @@ class InboundService
         return $collect;
     }
 
-    public function handleGetGrfInboundRecipient($id)
+    public function handleGetIrfRecipient($id)
     {
-        $data = $this->grfInbound->with('user', 'warehouse')->where([['status', '!=', 'closed'], ['status', '!=', 'submited'], ['warehouse_destination', $id]])->get();
+        $data = $this->irf->with('warehouse')->where([['status', '!=', 'closed'], ['warehouse_id', $id]])->get();
         return $data;
     }
 
-    public function handleShowGrfInboundRecipient($id)
+    public function handleShowIrfRecipient($id)
     {
-        $data = $this->grfInbound->with('warehouse', 'inboundForms.inbound')->find($id);
+        $data = $this->irf->with('warehouse', 'inbounds')->where('irf_code', str_replace('~', '/', $id))->first();
         return $data;
     }
 
     public function handleShowOrderInboundRecipient($id)
     {
-        $datas           = $this->orderInbound->with('grfInbound', 'inbound.part')->where('grf_inbound_id', $id)->get()->groupBy('part_id');
-        $collect         = collect([]);
-        $inputedQuantity = collect([]);
+        $irf      = $this->irf->with('inbounds.inboundStocks', 'inbounds.part')->find($id);
+        $inbounds = $irf->inbounds;
+        $collect  = collect([]);
 
-        foreach ($datas as $key => $data) {
-            $inputedQuantity = count($data->where('received_sn_code', '!=', null)); 
+        for ($i = 0; $i < $inbounds->count(); $i++ ) {
+            $inbound         = $inbounds[$i];
+            $isSn            = $inbound->part->sn_status == 'SN' || $inbound->part->sn_status == 'sn' ? true : false;
+            $inputedQuantity = $isSn ? $inbound->inboundStocks->count() : ($inbound->inboundStocks->count() ? $inbound->inboundStocks->first()->quantity : 0);
+            $isInputed       = $isSn ? ($inputedQuantity == $inbound->quantity ? true : false) : ($inputedQuantity == $inbound->quantity ? true : false);
+
             $collect->push([
-                'part_name'         => $this->part->find($data[0]->part_id)->name,
-                'uom'               => $data[0]->part->uom,
-                'inbound_id'        => $data[0]->inbound_id,
-                'order_inbound_id'  => $data[0]->id,
-                'part_id'           => $data[0]->part_id,
-                'quantity'          => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? count($data) : $data[0]->quantity,
-                'inputed_quantity'  => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? $inputedQuantity : ($data[0]->received_quantity == null ? 0 : $data[0]->received_quantity),
-                'is_sn'             => $data[0]->part->sn_status == 'SN' || $data[0]->part->sn_status == 'sn' ? true : false,
+                'inbound_id'       => $inbound->id,
+                'part_id'          => $inbound->part_id,
+                'part_name'        => $inbound->part->name,
+                'brand_name'       => $inbound->brand,
+                'sn_status'        => $inbound->part->sn_status,
+                'quantity'         => $inbound->quantity,
+                'uom'              => $inbound->part->uom,
+                'inputed_quantity' => $inputedQuantity,
+                'is_inputed'       => $isInputed,
+                'is_sn'            => $isSn,
             ]);
         }
-        
+
         return $collect;
     }
 }

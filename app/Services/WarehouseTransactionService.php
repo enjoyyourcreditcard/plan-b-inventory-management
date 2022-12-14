@@ -225,12 +225,12 @@ class WarehouseTransactionService
     */
     public function handleGenerateGrfCode()
     {
-        $allGrfs = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
-        $grfs = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'transfer']])->get());
-
-        $rawMonth = now()->format('m');
-        $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $allGrfs     = count($this->grf->where('user_id', '=', Auth::user()->id)->get());
+        $grfs        = count($this->grf->where([['user_id', '=', Auth::user()->id], ['status', '!=', 'closed'], ['type', 'transfer']])->get());
+        $rawMonth    = now()->format('m');
+        $map         = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
         $returnValue = '';
+
         while ($rawMonth > 0) {
             foreach ($map as $roman => $int) {
                 if ($rawMonth >= $int) {
@@ -242,9 +242,9 @@ class WarehouseTransactionService
         }
 
         $attempt = $allGrfs + 1;
-        $name = str_replace(' ', '-', strtoupper(Auth::user()->name));
-        $month = $returnValue;
-        $year = now()->format('Y');
+        $name    = str_replace(' ', '-', strtoupper(Auth::user()->name));
+        $month   = $returnValue;
+        $year    = now()->format('Y');
 
         if ($allGrfs > 0) {
             if ($allGrfs >= 9) {

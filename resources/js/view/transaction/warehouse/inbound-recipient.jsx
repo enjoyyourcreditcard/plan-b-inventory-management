@@ -22,7 +22,7 @@ function InboundGiver(props) {
 
     useEffect(() => {
         async function getData() {
-            api.getInboundRecipientIndex(props.warehouse_destination).then((response) => {
+            api.getInboundRecipientIndex(props.warehouse_id).then((response) => {
                 setRawData(response.data.data);
                 setData(response.data.data);
                 setLoadingData(false);
@@ -52,76 +52,40 @@ function InboundGiver(props) {
     const columns = React.useMemo(
         () => [
             {
-                Header: "GRF CODE",
-                accessor: "grf_code",
-                Cell: (tableProps) => {
-                    switch (tableProps.row.original.grf_code) {
-                        case null:
-                            return (
-                                <>
-                                    <span className="text-primary text-decoration-none ">
-                                        &nbsp;-
-                                    </span>
-                                </>
-                            );
-                    
-                        default:
-                            return (
-                            <>
-                                <span className="text-primary text-decoration-none ">
-                                    &nbsp;{tableProps.row.original.grf_code}
-                                </span>
-                            </>
-                            );
-                    }
-                },
-            },
-            {
-                Header: "Name",
-                accessor: "id",
+                Header: "IRF CODE",
+                accessor: "irf_code",
                 Cell: (tableProps) => (
                     <>
-                        <span className="text-primary text-decoration-none ">
-                            &nbsp;Request { tableProps.row.original.id }
-                        </span>
+                        <span className="text-primary text-decoration-none"> { tableProps.row.original.irf_code } </span>
                     </>
-                ),
+                )
             },
             {
                 Header: "Status",
                 accessor: "status",
                 Cell: (tableProps) => {
-                    switch (tableProps.row.original.status) {
-                        // case 'delivery_approved':
-                        //     return (
-                        //         <>
-                        //             <div className="flex items-center whitespace-nowrap text-success">
-                        //                 <svg
-                        //                     xmlns="http://www.w3.org/2000/svg"
-                        //                     width="24"
-                        //                     height="24"
-                        //                     viewBox="0 0 24 24"
-                        //                     fill="none"
-                        //                     stroke="currentColor"
-                        //                     strokeWidth="2"
-                        //                     strokeLinecap="round"
-                        //                     strokeLinejoin="round"
-                        //                     icon-name="check-square"
-                        //                     data-lucide="check-square"
-                        //                     className="lucide lucide-check-square w-4 h-4 mr-2"
-                        //                 >
-                        //                     <polyline points="9 11 12 14 22 4"></polyline>
-                        //                     <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                        //                 </svg>{" "}
-                        //                 <span>Ready to deliver</span>
-                        //             </div>
-                        //         </>  
-                        //     );                    
-                        case 'delivery_approved':
+                    switch (tableProps.row.original.status) {       
+                        case 'on_progress':
                             return (
                                 <>
-                                    <div className="flex items-cetner whitespace-nowrap text-amber-600">
-                                        <span>Waiting for pickup..</span>
+                                    <div className="flex items-cetner whitespace-nowrap text-slate-500">
+                                        <span className="bg-slate-200 py-1 px-4 rounded-lg"> Waiting for pickup.. </span>
+                                    </div>
+                                </>    
+                            );
+                        case 'delivered':
+                            return (
+                                <>
+                                    <div className="flex items-cetner whitespace-nowrap text-emerald-600">
+                                        <span className="bg-slate-200 py-1 px-4 rounded-lg"> Picked up </span>
+                                    </div>
+                                </>    
+                            );
+                        case 'closed':
+                            return (
+                                <>
+                                    <div className="flex items-cetner whitespace-nowrap text-slate-800">
+                                        <span className="bg-slate-200 py-1 px-4 rounded-lg"> Closed </span>
                                     </div>
                                 </>    
                             );
@@ -130,135 +94,23 @@ function InboundGiver(props) {
                 },
             },
             {
-                Header: "Delivery from",
-                accessor: "warehouse_id",
-                Cell: (tableProps) => (
-                    <>
-                        <span>
-                            &nbsp;{tableProps.row.original.warehouse.name}
-                        </span>
-                    </>
-                ),
-            },
-            {
                 Header: "Action",
                 Cell: (tableProps) => (
                     <>
-                        <a className="text-emerald-600 flex items-center underline gap-1 decoration-dotted" href={ `/inbound/recipient/` + tableProps.row.original.id }>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-eye" width="16" height="16" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <a className="text-emerald-600 flex items-right underline gap-1 decoration-dotted" href={ `/inbound/recipient/` + tableProps.row.original.irf_code.replaceAll('/', '~') }>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-seam" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <circle cx="12" cy="12" r="2"></circle>
-                                <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                                <path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9l8 -4.5"></path>
+                                <path d="M12 12l8 -4.5"></path>
+                                <path d="M8.2 9.8l7.6 -4.6"></path>
+                                <path d="M12 12v9"></path>
+                                <path d="M12 12l-8 -4.5"></path>
                             </svg>
-                            <span>Details</span>
+                            <span> Pick up </span>
                         </a>
                     </>
                 ),
             },
-           
-            // {
-            //     //Add this line to the column definition
-            //     Header: "Request At",
-            //     accessor: "created_at",
-            //     // style: { 'maxWidth': 10 },//Add this line to the column definition
-            //     Cell: (tableProps) => (
-            //         <>
-            //             <a
-            //                 href="#"
-            //                 className="text-primary text-decoration-none "
-            //             >
-            //                 {" "}
-            //                 &nbsp;{moment(tableProps.row.original.created_at).format('DD-MM-Y')}
-            //             </a>
-            //         </>
-            //     ),
-            // },
-
-            // {
-            //     // Header: `Location `,
-            //     Header: () => <p className="text-center">ACTION</p>,
-            //     accessor: "action",
-            //     Cell: (tableProps) => (
-            //         <>
-            //             {/* <div className="border-l-2">
-            //                 <div
-            //                     className="flex justify-center items-center"
-            //                     style={{ minWidth: 200 }}
-            //                 >
-            //                     <a
-            //                         className="flex items-center mr-3"
-            //                         href="javascript:;"
-            //                     >
-            //                         <svg
-            //                             xmlns="http://www.w3.org/2000/svg"
-            //                             width="24"
-            //                             height="24"
-            //                             viewBox="0 0 24 24"
-            //                             fill="none"
-            //                             stroke="currentColor"
-            //                             strokeWidth="2"
-            //                             stroke-linecap="round"
-            //                             stroke-linejoin="round"
-            //                             icon-name="check-square"
-            //                             data-lucide="check-square"
-            //                             className="lucide lucide-check-square w-4 h-4 mr-1"
-            //                         >
-            //                             <polyline points="9 11 12 14 22 4"></polyline>
-            //                             <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-            //                         </svg>{" "}
-            //                         Edit
-            //                     </a>
-            //                     <a
-            //                         className="flex items-center text-danger"
-            //                         href="javascript:;"
-            //                         onClick={() => {
-            //                             window.history.replaceState(
-            //                                 null,
-            //                                 null,
-            //                                 "?part_id=" +
-            //                                     tableProps.row.original.id
-            //                             );
-            //                         }}
-            //                         data-tw-toggle="modal"
-            //                         data-tw-target="#part-delete-confirmation-modal"
-            //                         data-id="2"
-            //                     >
-            //                         <svg
-            //                             xmlns="http://www.w3.org/2000/svg"
-            //                             width="24"
-            //                             height="24"
-            //                             viewBox="0 0 24 24"
-            //                             fill="none"
-            //                             stroke="currentColor"
-            //                             strokeWidth="2"
-            //                             stroke-linecap="round"
-            //                             stroke-linejoin="round"
-            //                             icon-name="trash-2"
-            //                             data-lucide="trash-2"
-            //                             className="lucide lucide-trash-2 w-4 h-4 mr-1"
-            //                         >
-            //                             <polyline points="3 6 5 6 21 6"></polyline>
-            //                             <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
-            //                             <line
-            //                                 x1="10"
-            //                                 y1="11"
-            //                                 x2="10"
-            //                                 y2="17"
-            //                             ></line>
-            //                             <line
-            //                                 x1="14"
-            //                                 y1="11"
-            //                                 x2="14"
-            //                                 y2="17"
-            //                             ></line>
-            //                         </svg>{" "}
-            //                         Delete
-            //                     </a>
-            //                 </div>
-            //             </div> */}
-            //         </>
-            //     ),
-            // },
         ],
         []
     );
@@ -562,11 +414,11 @@ function InboundGiver(props) {
 export default InboundGiver;
 
 if (document.getElementById("inboundRecipient")) {
-    const propsContainer = document.getElementById("inboundRecipient");
-    const props = Object.assign({}, propsContainer.dataset);
+    const props = {
+        'warehouse_id': document.getElementById("inboundRecipient").dataset.warehouseid,
+    };
 
     ReactDOM.render(
-        <InboundGiver {...props} />,
-        document.getElementById("inboundRecipient")
+        <InboundGiver {...props} />, document.getElementById("inboundRecipient")
     );
 }

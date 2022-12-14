@@ -9,7 +9,7 @@ class Grf extends Model
 {
     use HasFactory;
 
-    protected $table = 'db_grfs';
+    protected $table   = 'db_grfs';
     protected $guarded = ['id'];
 
     public function user ()

@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-
-
-
 {{-- /*
 |--------------------------------------------------------------------------
 | Breadcrumb
@@ -18,9 +15,6 @@
 @endsection
 
 @section('content')
-
-
-
 {{-- /*
 |--------------------------------------------------------------------------
 | Modal select new transfer
@@ -31,61 +25,31 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="p-5 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle w-16 h-16 text-success mx-auto mt-3" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                     </svg>
                     <div class="text-3xl mt-5">Pilih tipe transfer gudang</div>
-                    <div class="text-slate-500 mt-2">Kode GRF akan dibuat untuk anda. <br>Proses ini tidak dapat
-                        dibatalkan.</div>
+                    <div class="text-slate-500 mt-2">Kode GRF akan dibuat untuk anda. <br>Proses ini tidak dapat dibatalkan.</div>
                 </div>
                 <div class="p-5 pb-8 text-center">
                     <form action="{{ Route( 'warehouse.transfer.post' ) }}" method="POST">
                         @csrf
                         <input type="hidden" name="grf_code" value="{{ $grf_code }}">
                         <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
-                            <li id="top-products-laravel-tab" class="nav-item flex flex-col flex-grow"
-                                role="presentation">
-                                <button type="submit" name="type" value="transfer rekondisi" disabled
-                                    class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
-                                    data-tw-target="#top-products-laravel" aria-controls="top-products-laravel"
-                                    aria-selected="true" role="tab">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                        class="bi bi-arrow-repeat block w-6 h-6 mb-2 mx-auto" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                                        <path fill-rule="evenodd"
-                                            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                            <li id="top-products-laravel-tab" class="nav-item flex flex-col flex-grow" role="presentation">
+                                <button type="submit" name="type" value="transfer rekondisi" disabled class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#top-products-laravel" aria-controls="top-products-laravel" aria-selected="true" role="tab">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-repeat block w-6 h-6 mb-2 mx-auto" viewBox="0 0 16 16">
+                                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
                                     </svg> Rekondisi
                                 </button>
                             </li>
-                            <li id="top-products-symfony-tab" class="nav-item flex flex-col flex-grow"
-                                role="presentation">
-                                <button type="submit" name="type" value="transfer gudang baru"
-                                    class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
-                                    data-tw-target="#top-products-symfony" aria-selected="false" role="tab">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" icon-name="inbox" data-lucide="inbox"
-                                        class="lucide lucide-inbox block w-6 h-6 mb-2 mx-auto">
-                                        <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
-                                        <path
-                                            d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z">
-                                        </path>
-                                    </svg> Barang baru
-                                </button>
-                            </li>
-                            <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
-                                role="presentation">
-                                <button type="submit" name="type" value="transfer gudang lama"
-                                    class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
-                                    data-tw-target="#top-products-bootstrap" aria-selected="false" role="tab">
+                            <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow" role="presentation">
+                                <button type="submit" name="type" value="transfer gudang lama" class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#top-products-bootstrap" aria-selected="false" role="tab">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                         class="bi bi-truck block w-6 h-6 mb-2 mx-auto" viewBox="0 0 16 16">
-                                        <path
-                                            d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                                     </svg> Antara gudang
                                 </button>
                             </li>

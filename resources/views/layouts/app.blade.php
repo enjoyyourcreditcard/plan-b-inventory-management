@@ -656,16 +656,30 @@
 
                 @if (Auth::user()->role == "warehouse")
                 <li>
-                    <a href="{{ route('warehouse.get.dashboard') }}"
-                        class="side-menu {{ Route::currentRouteName() == 'warehouse.get.dashboard' ? ' side-menu--active' : '' }}">
-                        <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                                fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                <path fill-rule="evenodd"
-                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                            </svg> </div>
-                        <div class="side-menu__title"> Dashboard</div>
+                    <a href="{{ route('warehouse.get.dashboard') }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.dashboard' ? ' side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                            </svg>
+                        </div>
+                        <div class="side-menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ Route('inbound.get.recipient') }}" class="side-menu {{ Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu--active' : '' }}">
+                        <div class="side-menu__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-import" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
+                                <path d="M12 12l8 -4.5"></path>
+                                <path d="M12 12v9"></path>
+                                <path d="M12 12l-8 -4.5"></path>
+                                <path d="M22 18h-7"></path>
+                                <path d="M18 15l-3 3l3 3"></path>
+                             </svg>
+                        </div>
+                        <div class="side-menu__title"> Inbound </div>
                     </a>
                 </li>
                 <li>
@@ -702,7 +716,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu--active' : '' }}">
+                    <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' ? 'side-menu--active' : '' }}">
                         <div class="side-menu__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -716,7 +730,7 @@
                         </div>
                         <div class="side-menu__title">
                             Warehouse Transfer
-                            <div class="side-menu__sub-icon transform rotate-180">
+                            <div class="side-menu__sub-icon {{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' ? 'transform rotate-180' : null }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" icon-name="chevron-down" data-lucide="chevron-down"
@@ -726,10 +740,9 @@
                             </div>
                         </div>
                     </a>
-                    <ul class="{{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu__sub-open' : '' }}">
+                    <ul class="{{ Route::currentRouteName() == 'warehouse.get.recipient' || Route::currentRouteName() == 'warehouse.get.whtransfer' || Route::currentRouteName() == 'inbound.get.giver' ? 'side-menu__sub-open' : '' }}">
                         <li>
-                            <a href="{{ route('warehouse.get.whtransfer') }}"
-                                class="side-menu {{ Route::currentRouteName() == 'warehouse.get.whtransfer' ? ' side-menu--active' : '' }}">
+                            <a href="{{ route('warehouse.get.whtransfer') }}" class="side-menu {{ Route::currentRouteName() == 'warehouse.get.whtransfer' ? ' side-menu--active' : '' }}">
                                 <div class="side-menu__icon"> <svg xmlns="http://www.w3.org/2000/svg"
                                         class="icon icon-tabler icon-tabler-switch-horizontal" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -758,46 +771,6 @@
                                     </svg> </div>
                                 <div class="side-menu__title"> Warehouse Transfer penerima</div>
                             </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="side-menu {{ Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu--active' : '' }}">
-                                <div class="side-menu__icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packge-import" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5"></path>
-                                        <path d="M12 12l8 -4.5"></path>
-                                        <path d="M12 12v9"></path>
-                                        <path d="M12 12l-8 -4.5"></path>
-                                        <path d="M22 18h-7"></path>
-                                        <path d="M18 15l-3 3l3 3"></path>
-                                     </svg>
-                                </div>
-                                <div class="side-menu__title">
-                                   Inbound
-                                    <div class="side-menu__sub-icon transform {{ (request()->is('part')) || (request()->is('segment'))|| (request()->is('category')) || (request()->is('brand')) ? 'transform rotate-180' : '' }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-down"
-                                            data-lucide="chevron-down" class="lucide lucide-chevron-down">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </a>
-                            <ul class="{{ Route::currentRouteName() == 'inbound.get.giver' || Route::currentRouteName() == 'inbound.get.recipient' ? 'side-menu__sub-open' : '' }}">
-                                <li>
-                                    <a href="{{ Route('inbound.get.giver') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.giver') ? "side-menu--active" : "" }}">
-                                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                        <div class="side-menu__title"> Pengirim </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ Route('inbound.get.recipient') }}" class="side-menu {{ (Route::currentRouteName() == 'inbound.get.recipient') ? "side-menu--active" : "" }}">
-                                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                        <div class="side-menu__title"> Penerima </div>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -1150,20 +1123,29 @@
                 </div>
             </div>
         </div>
+
         @if (Session('error'))
         <div class="alert alert-danger alert-dismissible show flex items-center mb-2" role="alert">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
-                <path
-                    d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
-                <path
-                    d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
+                <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
             </svg> <span class="ml-3"> {{ session('error') }} </span>
             <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                </svg>
+            </button>
+        </div>
+        @endif
+
+        @if (Session('success'))
+        <div class="alert bg-emerald-500 text-white alert-dismissible show flex items-center mb-2" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg> <span class="ml-3"> {{ session('success') }} </span>
+            <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                 </svg>
             </button>
         </div>

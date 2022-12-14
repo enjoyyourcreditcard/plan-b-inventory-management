@@ -15,17 +15,15 @@ class CreateInboundsTable extends Migration
     {
         Schema::create('inbounds', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('part_id')->unsigned();
-            $table->foreign('part_id')->references('id')->on('parts');
+            $table->bigInteger('irf_id')->unsigned();
+            $table->foreign('irf_id')->references('id')->on('irfs');
             $table->bigInteger('warehouse_id')->unsigned();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            $table->string('brand')->nullable();
-            $table->string('orafin_code')->nullable();
-            $table->string('sn_code')->nullable()->unique()->comment('for sn only');
-            $table->integer('quantity')->nullable()->comment('for non sn only');
-            $table->string('condition')->default('good new');
-            $table->string('stock_status')->default('in');
-            $table->string('status')->default('active');
+            $table->bigInteger('part_id')->unsigned();
+            $table->foreign('part_id')->references('id')->on('parts');
+            $table->string('brand');
+            $table->integer('quantity');
+            $table->string('nomor_po');
             $table->timestamps();
         });
     }

@@ -267,18 +267,6 @@ export default class Api {
             .catch((error) => {});
     };
 
-    getInboundGiverIndex = (id) => {
-        return this.init()
-            .get(`inbound/giver/` + id)
-            .catch((error) => {});
-    };
-
-    getInboundGiverShow = (id) => {
-        return this.init()
-            .get(`inbound/giver/show/` + id)
-            .catch((error) => {});
-    };
-
     getInboundRecipientIndex = (id) => {
         return this.init()
             .get(`inbound/recipient/` + id)

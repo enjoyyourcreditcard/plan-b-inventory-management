@@ -111,8 +111,6 @@ Route::group(['prefix' => 'request', 'as' => 'request.', 'middleware' => ['JWTAu
 });
 
 Route::group(['prefix' => 'inbound'], function () {
-    Route::get('/giver/{id}', [InboundController::class, 'apiGiverIndex']);
-    Route::get('/giver/show/{id}', [InboundController::class, 'apiGiverShow']);
     Route::get('/recipient/{id}', [InboundController::class, 'apiRecipientIndex']);
     Route::get('/recipient/show/{id}', [InboundController::class, 'apiRecipientShow']);
 });

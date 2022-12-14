@@ -210,18 +210,18 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Index WH Transfer
+    *| IC: Index WH Transfer
     *|--------------------------------------------------------------------------
     */
     public function indexTransfer()
     {
         try {
             $grf_code = $this->warehouseTransactionService->handleGenerateGrfCode();
-            $grfs = $this->requestFormService->handleGetAllWarehouseTransferGrfByUser();
+            $grfs     = $this->requestFormService->handleGetAllWarehouseTransferGrfByUser();
 
             return view("transaction.warehouse.transfer", [
                 'grf_code' => $grf_code,
-                'grfs' => $grfs,
+                'grfs'     => $grfs,
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());

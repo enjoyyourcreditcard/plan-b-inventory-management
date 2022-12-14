@@ -325,21 +325,15 @@ Route::group(['prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', '
 */
 
 Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth']], function(){
-
     Route::get('/', [InboundController::class, 'index'])->name('get.home');
     Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
-
-    //Xcel
     Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
     Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
     Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
-
     Route::delete('/deleted/{code}', [InboundController::class, 'destroy'])->name("delete.item");
     Route::put('/{id}', [InboundController::class, 'storeAddWarehouse'])->name('post.warehouse');
     Route::get('/show/{code}', [InboundController::class, 'create'])->name('get.detail');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
-    // Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
-    // Route::put('/add/{id}', [InboundController::class, 'changeStatusToSubmit'])->name('put.update.status');
 });
 
 Route::get('/inboundshow', function () {
@@ -357,22 +351,22 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
     Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
     Route::get('/show/{id}', [InboundController::class, 'create'])->name('get.detail');
-    Route::get('/giver', [InboundController::class, 'giverIndex'])->name('get.giver');
-    Route::get('/giver/{id}', [InboundController::class, 'giverShow'])->name('get.giver.detail');
+    // Route::get('/giver', [InboundController::class, 'giverIndex'])->name('get.giver');
+    // Route::get('/giver/{id}', [InboundController::class, 'giverShow'])->name('get.giver.detail');
     Route::get('/recipient', [InboundController::class, 'recipientIndex'])->name('get.recipient');
     Route::get('/recipient/{id}', [InboundController::class, 'recipientShow'])->name('get.recipient.detail');
-    Route::post('/giver/non-sn/{id}', [InboundController::class, 'giverNonSnStore'])->name('post.non.sn.giver');
+    // Route::post('/giver/non-sn/{id}', [InboundController::class, 'giverNonSnStore'])->name('post.non.sn.giver');
     Route::post('/recipient/non-sn/{id}', [InboundController::class, 'recipientNonSnStore'])->name('post.non.sn.recipient');
-    Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
+    // Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
     Route::post('/recipient/pieces/{id}', [InboundController::class, 'recipientPiecesStore'])->name('post.pieces.recipient');
-    Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');
+    // Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');
     Route::post('/recipient/bulk/{id}', [InboundController::class, 'recipientBulkStore'])->name('post.bulk.recipient');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
     Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");
     Route::post('/add/wh/{id}', [InboundController::class, 'storeAddWh'])->name("post.add.wh");
     Route::post('/allup', [InboundController::class, 'allup'])->name('post.inbound.stock');
     Route::post('/import', [InboundController::class, 'import'])->name('post.excel.import');
-    Route::put('/giver/{id}', [InboundController::class, 'giverSubmit'])->name('put.giver');
+    // Route::put('/giver/{id}', [InboundController::class, 'giverSubmit'])->name('put.giver');
     Route::put('/recipient/{id}', [InboundController::class, 'recipientSubmit'])->name('put.recipient');
     Route::put('/current/{id}', [InboundController::class, 'updateCurrentWarehouse'])->name('put.current.warehouse');
     Route::put('/destination/{id}', [InboundController::class, 'updateWarehouseDestination'])->name('put.warehouse.destination');
