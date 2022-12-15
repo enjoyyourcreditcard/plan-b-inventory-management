@@ -343,6 +343,17 @@ class WarehouseTransactionController extends Controller
         }
     }
 
+    public function storeNonSNTransfer(Request $request)
+    {
+        try {
+            $this->warehouseTransactionService->handleUpdateTransferNonSN($request);
+            $this->warehouseTransactionService->handleStoreTransferNonSN($request);
+            return redirect()->back()->with('success', 'Berhasil');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
 
 
     /*
@@ -433,6 +444,16 @@ class WarehouseTransactionController extends Controller
     public function manualWhTransfer(Request $request, $id) {
         try {
             $this->warehouseTransactionService->handleStoreManualTransfer($request, $id);
+            return redirect()->back()->with('success', 'Berhasil');
+        } catch (\Exception $e) {
+            return Redirect::back()->withError($e->getMessage());
+        }
+    }
+
+    public function storeNonSNRecipient(Request $request, $id)
+    {
+        try {
+            $this->warehouseTransactionService->handleStoreRecipientNonSN($request, $id);
             return redirect()->back()->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());

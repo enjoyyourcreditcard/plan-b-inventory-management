@@ -56,8 +56,8 @@
                                     <strong>Destination :</strong> {{ $tfApprov->warehouse_destination }}
                                 </p>
                             </div>
-                            <div class="flex mb-5 mt-8 ">
-                                <form action="{{ route('warehouse.post.changeRecipient', $grf->id) }}" method="POST" class="w-full">
+                            <div id="button-submit-recipient" class="flex mb-5 mt-8 ">
+                                <form id="form-submit-recipient" action="{{ route('warehouse.post.changeRecipient', $grf->id) }}" method="POST" class="w-full">
                                     @csrf
                                     <button type="submit" class="btn btn-primary w-full rounded-full">
                                         Submit
@@ -194,6 +194,22 @@
             </div>
         </div>
         {{-- * End Bulk --}}
+        {{-- * Non SN --}}
+        <div id="modal-non-sn" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="form-non-sn" 
+                    action="{{ route('warehouse.post.non-sn', $item->id) }}"
+                        method="POST">
+                        @csrf
+                        <div class="modal-body p-10 text-center">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- * End Manual --}}
     </div>
 @endsection
 

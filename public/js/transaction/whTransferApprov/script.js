@@ -30,9 +30,12 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
     var thisButton = event;
     var transferFormsId = $(thisButton).data("transferformsid");
     var grfId = $(thisButton).data("grfid");
+    var warehouseId = $(thisButton).data("warehouseid");
     var partId = $(thisButton).data("partid");
     var partName = $(thisButton).data("partname");
     var quantity = $(thisButton).data("quantity");
+    var condition = $(thisButton).data("condition");
+    var expiredDate = $(thisButton).data("expireddate");
     
     $("#modal-pieces").on("show.tw.modal", function () {
         console.log('sup');
@@ -77,6 +80,54 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
                 '<input type="hidden" name="part_id" value="' +
                 partId +
                 '">'
+        );
+    });
+
+    $("#modal-non-sn").on("show.tw.modal", function () {
+        console.log('tes');
+        console.log(quantity);
+        let htmlNonSN =
+            '<input type="hidden" name="transfer_form_id" value="' +
+            transferFormsId +
+            '">' +
+            '<input type="hidden" name="grf_id" value="' +
+            grfId +
+            '">' +
+            '<input type="hidden" name="warehouse_id" value="' +
+            warehouseId +
+            '">' +
+            // '<input type="hidden" name="condition" value="' +
+            // condition +
+            // '">' +
+            // '<input type="hidden" name="expired_date" value="' +
+            // expiredDate +
+            // '">' +
+            '<input type="hidden" name="part_id" value="' +
+            partId +
+            '">' +
+            '<div class="text-slate-500 mt-2">' +
+            'Transfer ' +
+            '<strong>' +
+            quantity  +
+            '</strong>'+
+            ' '  +
+            partName +
+            '?' +
+            "</div>";
+
+            htmlNonSN +=
+            '<div class="input-group mt-4">' +
+            // '<div class="input-group-text">' +
+            // 'Qty' +
+            // "</div>" +
+            '<input type="hidden" name="quantity" class="form-control" value="' +
+            quantity +
+            '" required>' +
+            "</div>";
+
+        $("#modal-non-sn .modal-body").html(
+            htmlNonSN +
+                '<button form="form-non-sn" class="border block px-8 py-2 bg-emerald-700 text-center text-white rounded-full mx-auto mt-4">Yes</button>'
         );
     });
 });

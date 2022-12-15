@@ -20,7 +20,7 @@
                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
+                                    <polyline points="12 3 20 7.5 20 zz16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
                                     <line x1="12" y1="12" x2="20" y2="7.5">
                                     </line>
                                     <line x1="12" y1="12" x2="12" y2="21">
@@ -192,6 +192,22 @@
             </div>
         </div>
         {{-- * End Bulk --}}
+        {{-- * Non-SN --}}
+        <div id="modal-non-sn" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="form-non-sn" 
+                    action="{{ Route('warehouse.transfer.post.non-sn', $item->id) }}"
+                    method="POST">
+                        @csrf
+                        <div class="modal-body p-10 text-center">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- * End Non-SN --}}
     </div>
 
 @section('javaScript')

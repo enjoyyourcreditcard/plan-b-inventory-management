@@ -21,6 +21,7 @@ class CreateTransferStocksTable extends Migration
             $table->foreign('grf_id')->references('id')->on('db_grfs');
             $table->unsignedBigInteger('part_id');
             $table->foreign('part_id')->references('id')->on('parts');
+            $table->unsignedBigInteger('stock_id')->nullable();
             $table->string('sn')->nullable();
             $table->timestamps();
         });

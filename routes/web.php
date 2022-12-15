@@ -281,6 +281,7 @@ Route::group(['prefix' => 'warehouse', 'as' => 'warehouse.', 'middleware' => ['a
     Route::get('/show/transfer/{id}', [WarehouseTransactionController::class, 'showWhTransfer'])->name('get.detailtransferapprov');
     Route::get('/show/recipient/{id}', [WarehouseTransactionController::class, 'showWhRecipient'])->name('get.detailWhRecipient');
     Route::post('/store/pieces/{id}', [WarehouseTransactionController::class, 'manualWhTransfer'])->name('post.storemanual');
+    Route::post('/store/non-sn/{id}', [WarehouseTransactionController::class, 'storeNonSNRecipient'])->name('post.non-sn');
     Route::post('/store/bulk/{id}', [WarehouseTransactionController::class, 'bulkRecipient'])->name('post.bulkRecipient');
     Route::post('/submitStatus/{id}', [WarehouseTransactionController::class, 'submitStatus'])->name('post.changeStatus');
     Route::post('/submitRecipient/{id}', [WarehouseTransactionController::class, 'submitRecipient'])->name('post.changeRecipient');
@@ -309,6 +310,7 @@ Route::group(['prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', '
     Route::post('/', [WarehouseTransactionController::class, 'storeGrfTransfer'])->name('post');
     Route::post('/{code}', [WarehouseTransactionController::class, 'storeTransfer'])->name('post.detail');
     Route::post('/pieces/{code}', [WarehouseTransactionController::class, 'storePiecesTransfer'])->name('post.pieces');
+    Route::post('/non-sn/{code}', [WarehouseTransactionController::class, 'storeNonSNTransfer'])->name('post.non-sn');
     Route::post('/bulk/{code}', [WarehouseTransactionController::class, 'storeBulkTransfer'])->name('post.bulk');
     Route::put('/', [WarehouseTransactionController::class, 'updateTransfer'])->name('put');
     Route::put('/current-warehouse/{id}', [WarehouseTransactionController::class, 'updateCurrentWarehouseTransfer'])->name('put.current');
@@ -351,15 +353,10 @@ Route::group(['prefix' => 'inbound', 'as' => 'inbound.', 'middleware' => ['auth'
     Route::get('/delete/{id}', [InboundController::class, 'delete'])->name("get.delete");   
     Route::get('/excel', [InboundController::class, 'export'])->name('get.excel.template');
     Route::get('/show/{id}', [InboundController::class, 'create'])->name('get.detail');
-    // Route::get('/giver', [InboundController::class, 'giverIndex'])->name('get.giver');
-    // Route::get('/giver/{id}', [InboundController::class, 'giverShow'])->name('get.giver.detail');
     Route::get('/recipient', [InboundController::class, 'recipientIndex'])->name('get.recipient');
     Route::get('/recipient/{id}', [InboundController::class, 'recipientShow'])->name('get.recipient.detail');
-    // Route::post('/giver/non-sn/{id}', [InboundController::class, 'giverNonSnStore'])->name('post.non.sn.giver');
     Route::post('/recipient/non-sn/{id}', [InboundController::class, 'recipientNonSnStore'])->name('post.non.sn.recipient');
-    // Route::post('/giver/pieces/{id}', [InboundController::class, 'giverPiecesStore'])->name('post.pieces.giver');
     Route::post('/recipient/pieces/{id}', [InboundController::class, 'recipientPiecesStore'])->name('post.pieces.recipient');
-    // Route::post('/giver/bulk/{id}', [InboundController::class, 'giverBulkStore'])->name('post.bulk.giver');
     Route::post('/recipient/bulk/{id}', [InboundController::class, 'recipientBulkStore'])->name('post.bulk.recipient');
     Route::post('/', [InboundController::class, 'storeCreateInboundgrf'])->name('post.store.grf');
     Route::post('/add/item/{id}', [InboundController::class, 'storeAddItem'])->name("post.add.item");

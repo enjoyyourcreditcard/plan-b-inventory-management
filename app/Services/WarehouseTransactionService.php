@@ -442,6 +442,50 @@ class WarehouseTransactionService
     }
 
 
+    // Approve Transfer and create out status
+    public function handleStoreTransferNonSN($request)
+    {
+        $dataGrf = $this->grf->find($request->grf_id);
+        $baseStock = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $dataGrf->warehouse_id], ['sn_code', null], ['stock_status', 'in']])->first();
+
+        $data = $this->stock->create([
+            'part_id' => $request->part_id,
+            'warehouse_id' => $dataGrf->warehouse_id,
+            'sn_code' => null,
+            'quantity' => $request->quantity,
+            'condition' => $baseStock->condition,
+            'recondition' => null,
+            'expired_date' => $baseStock->expired_date,
+            'stock_status' => 'out',
+            'status' => 'active',
+        ]);
+
+        $transferStock = $this->transferStock
+        ->whereHas('transferForm', function ($query) use($dataGrf, $request) {$query->where([['grf_id', $dataGrf->id], ['transfer_form_id', $request->transfer_form_id]]);})
+        ->whereHas('transferForm.part', function ($query) {$query->where('sn_status', 'NON SN');})->get();
+
+        foreach ($transferStock as $key => $transferStock) {
+            $transferStock->update([
+                'stock_id' => $data->id 
+            ]);
+        }
+
+        return('approved');
+    }
+
+    // Update Stock for current warehouse
+    public function handleUpdateTransferNonSN($request)
+    {
+        $dataGrf = $this->grf->find($request->grf_id);
+        // $warehouseDestinationId = $this->warehouse->where('name', $dataGrf->warehouse_destination)->get('id');
+        $baseStock = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $dataGrf->warehouse_id], ['stock_status', 'in']])->first();
+
+        $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $dataGrf->warehouse_id], ['sn_code', null], ['stock_status', 'in']])->update([
+            'quantity' => $baseStock->quantity - $request->quantity
+        ]);
+
+        return('updated');
+    }
 
     /*
     *|--------------------------------------------------------------------------
@@ -523,12 +567,30 @@ class WarehouseTransactionService
         return ('');
     }
 
+    public function handleStoreRecipientNonSN($request, $id)
+    {
+        $dataGrf = $this->grf->find($request->grf_id);
+        $warehouseDestinationId = $this->warehouse->where('name', $dataGrf->warehouse_destination)->first('id');
+        $destinationStock = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $warehouseDestinationId->id], ['sn_code', null], ['stock_status', 'in']])->first();
+
+        $data = $this->transferStock
+        ->whereHas('transferForm', function ($query) use($dataGrf, $request) {$query->where([['grf_id', $dataGrf->id], ['transfer_form_id', $request->transfer_form_id]]);})
+        ->whereHas('transferForm.part', function ($query) {$query->where('sn_status', 'NON SN');})->first();
+        
+        $this->stock->where('id', $data->stock_id)->update([
+            'warehouse_id' => $warehouseDestinationId->id,
+            'stock_status' => 'in'
+        ]);
+    }
+
     public function handleSubmitTransferApprov($request, $id)
     {
         $currentGrf = $this->grf->with('transferStock')->find($id);
 
-        foreach ($currentGrf->transferStock as $transferStock) {
-            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'out']);
+        if ($this->stock->sn_code) {
+            foreach ($currentGrf->transferStock as $transferStock) {
+                $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'out']);
+            }
         }
 
         $currentGrf->status = "delivery_approved";
@@ -597,10 +659,27 @@ class WarehouseTransactionService
 
     public function handleSubmitRecipient($request, $id)
     {
-        $currentGrf = $this->grf->with('transferStock')->find($id);
+        $currentGrf = $this->grf->with('transferStock', 'transferForms.part')->find($id);
         // dd($this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id);
-        foreach ($currentGrf->transferStock as $transferStock) {
+        $dataSN = $this->transferStock->whereHas('grf', function ($query) use($id) {$query->where('id', $id);})->where('sn', '!=', null)->get();
+
+        foreach ($dataSN as $transferStock) {
             $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id]);
+        }
+
+        $dataNonSN = $this->transferForm->with('transferStocks')->whereHas('grf', function ($query) use($id) {$query->where('id', $id);})->whereHas('part', function ($query) {$query->where('sn_status', 'NON SN');})->get();
+        
+        
+        foreach ($dataNonSN as $key => $transferForms) {
+            $warehouseDestinationId = $this->warehouse->where('name', $currentGrf->warehouse_destination)->first();
+            $destinationStock = $this->stock->where([['part_id', $transferForms->part_id], ['warehouse_id', $warehouseDestinationId->id], ['sn_code', null], ['stock_status', 'in']])->first();
+            $dataNonSNId = $transferForms->transferStocks->first()->stock_id;
+
+            $this->stock->where('id', $destinationStock->id)->update([
+                'quantity' => $destinationStock->quantity + $transferForms->quantity
+            ]);
+
+            $this->stock->where('id', $dataNonSNId)->delete();
         }
 
         $currentGrf->status = "closed";
