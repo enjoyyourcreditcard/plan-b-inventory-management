@@ -40,14 +40,27 @@ class Part extends Model
     {
         return $this->hasMany(RequestForm::class);
     }
+
     public function requestStocks()
     {
         return $this->hasMany(RequestStock::class);
     }
+    
+    public function transferForms()
+    {
+        return $this->hasMany(TransferForm::class);
+    }
+
+    public function transferStocks()
+    {
+        return $this->hasMany(TransferStock::class);
+    }
+
     public function requester()
     {
         return $this->hasMany(Request::class);
     }
+
     public function orderInbound()
     {
         return $this->hasMany(OrderInbound::class);

@@ -17,15 +17,17 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\RequestStockService;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\WarehouseTransferService;
 use App\Services\WarehouseTransactionService;
 
 class WarehouseTransactionController extends Controller
 {
 
-    public function __construct(RequestStockService $requestStockService, WarehouseTransactionService $warehouseTransactionService, TransactionService $transactionService, WarehouseService $warehouseService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, Stock $stock)
+    public function __construct(RequestStockService $requestStockService, WarehouseTransferService $warehouseTransferService, WarehouseTransactionService $warehouseTransactionService, TransactionService $transactionService, WarehouseService $warehouseService, RequestFormService $requestFormService, PartService $partService, BrandService $brandService, Stock $stock)
     {
         $this->warehouseTransactionService = $warehouseTransactionService;
         $this->warehouseService = $warehouseService;
+        $this->warehouseTransferService = $warehouseTransferService;
         $this->transactionService = $transactionService;
         $this->requestFormService = $requestFormService;
         $this->requestStockService = $requestStockService;
@@ -216,12 +218,12 @@ class WarehouseTransactionController extends Controller
     public function indexTransfer()
     {
         try {
-            $grf_code = $this->warehouseTransactionService->handleGenerateGrfCode();
-            $grfs     = $this->requestFormService->handleGetAllWarehouseTransferGrfByUser();
+            $irfCode = $this->warehouseTransferService->handleGenerateIrfCode();
+            $irfs    = $this->warehouseTransferService->handleAllIrf();
 
             return view("transaction.warehouse.transfer", [
-                'grf_code' => $grf_code,
-                'grfs'     => $grfs,
+                'irf_code' => $irfCode,
+                'irfs'     => $irfs,
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -232,15 +234,15 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store GRF WH Transfer
+    *| IC: Store IRF warehouse transfer
     *|--------------------------------------------------------------------------
     */
-    public function storeGrfTransfer(Request $request)
+    public function storeIrfTransfer(Request $request)
     {
         try {
-            $this->requestFormService->handleStoreGrf($request);
+            $this->warehouseTransferService->handleStoreIrf($request);
 
-            return Redirect::route("warehouse.transfer.get.detail", str_replace('/', '~', strtolower($request->grf_code)));
+            return Redirect::route("warehouse.transfer.get.detail", str_replace('/', '~', $request->irf_code));
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -250,15 +252,15 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store Item Transfer
+    *| IC: Store Item Transfer
     *|--------------------------------------------------------------------------
     */
     public function storeTransfer(Request $request, $id)
     {
         try {
-            $this->warehouseTransactionService->handleStoreWarehouseForm($request, $id);
+            $this->warehouseTransferService->handleStoreWarehouseForm($request, $id);
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Berhasil memasukkan barang ke list!');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -266,7 +268,7 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Update Ready Transfer
+    *| IC: Submit IRG items to transfer
     *|--------------------------------------------------------------------------
     */
     public function updateTransfer(Request $request)
@@ -284,24 +286,24 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Displaying Warehouse Transfer
+    *| IC: Detail warehouse transfer
     *|--------------------------------------------------------------------------
     */
     public function createTransfer($code)
     {
         try {
-            $grf = $this->requestFormService->handleGetCurrentGrf($code);
-            $warehouses = $this->warehouseService->handleAllWareHouse();
-            $parts = $this->partService->handleAllPart();
-            $transferForms = $this->warehouseTransactionService->handleTransferFormPerGrf($code);
-            $brands = $this->brandService->handleGetAllBrand();
+            $irf           = $this->warehouseTransferService->handleGetCurrentIrf($code);
+            $transferForms = $this->warehouseTransferService->handleGetTransferFormPerIrf($code);
+            $warehouses    = $this->warehouseService->handleAllWareHouse();
+            $parts         = $this->partService->handleAllPart();
+            $brands        = $this->brandService->handleGetAllBrand();
 
             return view('transaction.warehouse.create', [
-                'grf' => $grf,
-                'warehouses' => $warehouses,
-                'parts' => $parts,
+                'irf'           => $irf,
+                'warehouses'    => $warehouses,
+                'parts'         => $parts,
                 'transferForms' => $transferForms,
-                'brands' => $brands,
+                'brands'        => $brands,
             ]);
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -328,26 +330,28 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store Pieces Transfer
+    *| WH: Store Pieces Transfer
     *|--------------------------------------------------------------------------
     */
     public function storePiecesTransfer(Request $request, $id)
     {
-        // Services
         try {
             $this->warehouseTransactionService->handleStorePiecesTransfer($request, $id);
-
             return redirect()->back()->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Store non SN Transfer
+    *|--------------------------------------------------------------------------
+    */
     public function storeNonSNTransfer(Request $request)
     {
         try {
             $this->warehouseTransactionService->handleUpdateTransferNonSN($request);
-            $this->warehouseTransactionService->handleStoreTransferNonSN($request);
             return redirect()->back()->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -358,7 +362,7 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store Bulk Transfer
+    *| WH: Store Bulk Transfer
     *|--------------------------------------------------------------------------
     */
     public function storeBulkTransfer(Request $request, $id)
@@ -366,7 +370,7 @@ class WarehouseTransactionController extends Controller
         try {
             $this->warehouseTransactionService->handleStoreBulkTransfer($request, $id);
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Berhasil mengimport excel');
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
         }
@@ -376,7 +380,7 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Change current warehouse on transfer
+    *| IC: Change current warehouse on transfer
     *|--------------------------------------------------------------------------
     */
     public function updateCurrentWarehouseTransfer(Request $request, $id)
@@ -401,7 +405,6 @@ class WarehouseTransactionController extends Controller
     {
         try {
             $this->warehouseTransactionService->handleChangeWarehouseDestinationTransfer($request, $id);
-
             return redirect()->back();
         } catch (\Exception $e) {
             return Redirect::back()->withError($e->getMessage());
@@ -410,37 +413,55 @@ class WarehouseTransactionController extends Controller
 
     /*
     *|--------------------------------------------------------------------------
-    *| Get data for wh approv transfer
+    *| WH: Get data for wh approv transfer
     *|--------------------------------------------------------------------------
     */
-
     public function apiTransfer($warehouse_id){
         return ResponseJSON($this->warehouseTransactionService->handleAllWhTransfer($warehouse_id), 200);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Get data for detail wh approv transfer
+    *|--------------------------------------------------------------------------
+    */
     public function apiDetailWhtransfer($id){
         return ResponseJSON($this->warehouseTransactionService->handleShowWhTransfer($id), 200);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: All IRF to transfer
+    *|--------------------------------------------------------------------------
+    */
     public function whtransfer()
     {
-       $transferform = $this->warehouseTransactionService->handleAllWhTransfer(Auth::user()->warehouse_id);
+        $transferform = $this->warehouseTransactionService->handleAllWhTransfer(Auth::user()->warehouse_id);
         return view('transaction.warehouse.transferApprov', [
             "transferform" => $transferform,
         ]); 
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Detail IRF on warehouse transfer
+    *|--------------------------------------------------------------------------
+    */
     public function showWhTransfer($id){
-        $grf = $this->requestFormService->handleGetCurrentGrf($id);
-        $currentGrf = $this->requestFormService->handleGetCurrentGrf($id);
-        $tfApprov = $this->warehouseTransactionService->handleShowWhTransfer($id);
+        $irf        = $this->warehouseTransferService->handleGetCurrentIrf($id);
+        $tfApprov   = $this->warehouseTransactionService->handleShowWhTransfer($id);
+        
         return view('transaction.warehouse.detailTransferApprov', [
-            'currentGrf' => $currentGrf,
-            'grf' => $grf,
-            'tfApprov' => $tfApprov,
+            'irf'        => $irf,
+            'tfApprov'   => $tfApprov,
         ]);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: input recieved item pieces
+    *|--------------------------------------------------------------------------
+    */
     public function manualWhTransfer(Request $request, $id) {
         try {
             $this->warehouseTransactionService->handleStoreManualTransfer($request, $id);
@@ -460,45 +481,61 @@ class WarehouseTransactionController extends Controller
         }
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Submit IRF to transfer
+    *|--------------------------------------------------------------------------
+    */
     public function submitStatus(Request $request, $id){
-        try {
+        // try {
             $this->warehouseTransactionService->handleSubmitTransferApprov($request, $id);
             return Redirect()->route('warehouse.get.whtransfer');
-        } catch(\Exception $e) {
-            return Redirect::back()->withError($e->getMessage());
-        }
+        // } catch(\Exception $e) {
+        //     return Redirect::back()->withError($e->getMessage());
+        // }
 
     }
 
     /*
     *|--------------------------------------------------------------------------
-    *| Get data for wh approv transfer
+    *| WH: API All IRF to recieve
     *|--------------------------------------------------------------------------
     */
-
     public function listRecipient($warehouse_destination){
         return ResponseJSON($this->warehouseTransactionService->handleWhRecipientAPI($warehouse_destination), 200);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: API Detail IRF to recieve
+    *|--------------------------------------------------------------------------
+    */
     public function apiRecipient($id){
         return ResponseJSON($this->warehouseTransactionService->handleShowRecipient($id), 200);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: All IRF to recieve
+    *|--------------------------------------------------------------------------
+    */
     public function recipient(){
-        $transferform = $this->warehouseTransactionService->handleWhRecipient(Auth::user()->warehouse_destination);
+        $irfs = $this->warehouseTransactionService->handleWhRecipient();
         return view('transaction.warehouse.recipientTransfer', [
-            "transferform" => $transferform,
+            "irfs" => $irfs,
         ]); 
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Detail IRF to recieve
+    *|--------------------------------------------------------------------------
+    */
     public function showWhRecipient($id){
-        $grf = $this->requestFormService->handleGetCurrentGrf($id);
-        $currentGrf = $this->requestFormService->handleGetCurrentGrf($id);
-        $tfApprov = $this->warehouseTransactionService->handleShowRecipient($id);
+        $irf        = $this->warehouseTransferService->handleGetCurrentIrf($id);
+
         return view('transaction.warehouse.detailRecipientTransfer', [
-            'currentGrf' => $currentGrf,
-            'grf' => $grf,
-            'tfApprov' => $tfApprov,
+            'irf' => $irf,
         ]);
     }
 
@@ -513,12 +550,11 @@ class WarehouseTransactionController extends Controller
 
     public function submitRecipient(Request $request, $id)
     {
-        try {
+        // try {
             $this->warehouseTransactionService->handleSubmitRecipient($request, $id);
             return Redirect()->route('warehouse.get.recipient');
-        } catch(\Exception $e) {
-            return Redirect::back()->withError($e->getMessage());
-        }
-
+        // } catch(\Exception $e) {
+        //     return Redirect::back()->withError($e->getMessage());
+        // }
     }
 }

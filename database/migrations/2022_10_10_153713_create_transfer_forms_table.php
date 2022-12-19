@@ -15,8 +15,8 @@ class CreateTransferFormsTable extends Migration
     {
         Schema::create('transfer_forms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('grf_id');
-            $table->foreign('grf_id')->references('id')->on('db_grfs');
+            $table->unsignedBigInteger('irf_id');
+            $table->foreign('irf_id')->references('id')->on('irfs');
             $table->unsignedBigInteger('part_id');
             $table->foreign('part_id')->references('id')->on('parts');
             $table->integer('quantity');

@@ -307,6 +307,8 @@ class OrderInboundService
         $recentIrf = $this->irf->create([
             'irf_code'     => $validatedData['irf_code'],
             'warehouse_id' => $validatedData['warehouse_id'],
+            'type'         => 'transfer_inbound',
+            'status'       => 'on_progress',
         ]);
 
         $this->timeline->create([

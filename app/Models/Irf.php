@@ -26,4 +26,14 @@ class Irf extends Model
     {
         return $this->hasMany(Timeline::class);
     }
+
+    public function transferForms ()
+    {
+        return $this->hasMany(TransferForm::class);
+    }
+
+    public function transferStocks ()
+    {
+        return $this->hasMany(TransferStock::class);
+    }
 }

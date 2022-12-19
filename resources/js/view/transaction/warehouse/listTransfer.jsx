@@ -26,7 +26,6 @@ function TransferList(props) {
                 setRawData(response.data.data);
                 setData(response.data.data);
 
-                console.log(response.data.data);
                 setLoadingData(false);
             });
         }
@@ -55,19 +54,19 @@ function TransferList(props) {
         () => [
             {
                 //Add this line to the column definition
-                Header: "Grf",
-                accessor: "grf_code",
+                Header: "IRF",
+                accessor: "irf_code",
                 // style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: (tableProps) => (
                     <>
                         <a
                             href={
                                 "/warehouse/show/transfer/" +
-                                tableProps.row.original.grf_code.replaceAll("/", "~")
+                                tableProps.row.original.irf_code.replaceAll("/", "~")
                             }
                             className="text-primary text-decoration-none "
                         >
-                            &nbsp;{tableProps.row.original.grf_code}
+                            &nbsp;{tableProps.row.original.irf_code}
                         </a>
                     </>
                 ),
@@ -105,6 +104,28 @@ function TransferList(props) {
                         </a>
                     </>
                 ),
+            },
+           
+            {
+                Header: "Status",
+                accessor: "status",
+                Cell: (tableProps) => {
+                    switch (tableProps.row.original.status) {
+                        case 'delivery_approved':
+                            return (
+                                <>
+                                    <span className="bg-slate-100 py-1 px-4 rounded-lg text-emerald-700"> Ready to deliver </span>
+                                </>           
+                            )
+                    
+                        default:
+                            return (
+                                <>
+                                    <span className="bg-slate-100 py-1 px-4 rounded-lg text-slate-500"> On progress.. </span>
+                                </>           
+                            )
+                    }
+                },
             },
            
             {

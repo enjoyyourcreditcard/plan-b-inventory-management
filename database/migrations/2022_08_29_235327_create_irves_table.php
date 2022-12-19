@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('irf_code');
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
-            $table->enum('status', ['on_progress', 'delivered', 'closed'])->default('on_progress'); //untuk sistem 
+            $table->string('warehouse_destination')->nullable();
+            $table->string('surat_jalan')->nullable();
+            $table->enum('type', ['transfer_rekondisi', 'transfer_antar_gudang', 'transfer_inbound']);
+            $table->enum('status', ['draft', 'on_progress', 'delivery_approved', 'delivered', 'closed'])->default('draft'); 
             $table->timestamps();
         });
     }

@@ -53,19 +53,19 @@ function RecipientList(props) {
         () => [
             {
                 //Add this line to the column definition
-                Header: "Grf",
-                accessor: "grf_code",
+                Header: "IRF",
+                accessor: "irf_code",
                 // style: { 'maxWidth': 10 },//Add this line to the column definition
                 Cell: (tableProps) => (
                     <>
                         <a
                             href={
                                 "/warehouse/show/recipient/" +
-                                tableProps.row.original.grf_code.replaceAll("/", "~")
+                                tableProps.row.original.irf_code.replaceAll("/", "~")
                             }
                             className="text-primary text-decoration-none "
                         >
-                            &nbsp;{tableProps.row.original.grf_code}
+                            &nbsp;{tableProps.row.original.irf_code}
                         </a>
                     </>
                 ),

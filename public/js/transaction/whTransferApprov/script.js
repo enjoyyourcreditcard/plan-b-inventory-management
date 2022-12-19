@@ -29,7 +29,7 @@ $("#dropzone-file").on("change", function (event) {
 $('.chat').on("click", ".btn-input-sn", function (event) {
     var thisButton = event;
     var transferFormsId = $(thisButton).data("transferformsid");
-    var grfId = $(thisButton).data("grfid");
+    var irfId = $(thisButton).data("irfid");
     var warehouseId = $(thisButton).data("warehouseid");
     var partId = $(thisButton).data("partid");
     var partName = $(thisButton).data("partname");
@@ -43,8 +43,8 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
             '<input type="hidden" name="transfer_form_id" value="' +
             transferFormsId +
             '">' +
-            '<input type="hidden" name="grf_id" value="' +
-            grfId +
+            '<input type="hidden" name="irf_id" value="' +
+            irfId +
             '">' +
             '<input type="hidden" name="part_id" value="' +
             partId +
@@ -74,8 +74,8 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
             '<input type="hidden" name="transfer_form_id" value="' +
                 transferFormsId +
                 '">' +
-                '<input type="hidden" name="grf_id" value="' +
-                grfId +
+                '<input type="hidden" name="irf_id" value="' +
+                irfId +
                 '">' +
                 '<input type="hidden" name="part_id" value="' +
                 partId +
@@ -90,8 +90,8 @@ $('.chat').on("click", ".btn-input-sn", function (event) {
             '<input type="hidden" name="transfer_form_id" value="' +
             transferFormsId +
             '">' +
-            '<input type="hidden" name="grf_id" value="' +
-            grfId +
+            '<input type="hidden" name="irf_id" value="' +
+            irfId +
             '">' +
             '<input type="hidden" name="warehouse_id" value="' +
             warehouseId +

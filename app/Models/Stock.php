@@ -27,4 +27,8 @@ class Stock extends Model
     public function grf() {
         return $this->belongsTo(Grf::class);
     }
+
+    public function transferStocks() {
+        return $this->hasMany(TransferStock::class);
+    }
 }

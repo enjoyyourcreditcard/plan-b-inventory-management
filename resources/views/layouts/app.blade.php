@@ -5,22 +5,17 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="{{asset(" dist/images/logo.svg")}}" rel="shortcut icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ Asset('') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Tinker admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
-    <meta name="keywords"
-        content="admin template, Tinker Admin Template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="Tinker admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Tinker Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
+    
     <title>InVentree</title>
-    <!-- BEGIN: CSS Assets-->
-    <!-- END: CSS Assets-->
-
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">

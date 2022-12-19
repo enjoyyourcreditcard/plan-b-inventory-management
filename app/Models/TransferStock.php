@@ -17,11 +17,15 @@ class TransferStock extends Model
         return $this->belongsTo(TransferForm::class);
     }
 
-    public function grf() {
-        return $this->belongsTo(Grf::class);
+    public function irf() {
+        return $this->belongsTo(Irf::class);
     }
 
     public function part() {
         return $this->belongsTo(Part::class);
+    }
+
+    public function stock() {
+        return $this->belongsTo(Stock::class);
     }
 }

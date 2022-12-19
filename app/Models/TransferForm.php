@@ -16,9 +16,9 @@ class TransferForm extends Model
         return $this->belongsTo(Part::class);
     }
 
-    public function grf ()
+    public function irf ()
     {
-        return $this->belongsTo(Grf::class);
+        return $this->belongsTo(Irf::class);
     }
 
     public function transferStocks ()

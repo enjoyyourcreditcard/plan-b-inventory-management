@@ -4,10 +4,13 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Grf;
+use App\Models\Irf;
+use App\Models\Part;
 use App\Models\Stock;
 use App\Models\Timeline;
 use App\Models\Warehouse;
 use App\Models\RequestForm;
+use App\Models\RequestStock;
 use App\Models\TransferForm;
 use Illuminate\Http\Request;
 use App\Models\TransferStock;
@@ -16,23 +19,22 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\WarehouseTransferImport;
 use App\Imports\WarehouseTransferRecipient;
-use App\Models\Part;
-use App\Models\RequestStock;
 use Illuminate\Validation\ValidationException;
 
 class WarehouseTransactionService
 {
 
-    public function __construct(Timeline $timeline, RequestForm $requestForm, Grf $grf, TransferForm $transferForm, TransferStock $transferStock, Stock $stock, Warehouse $warehouse, RequestStock $requestStock)
+    public function __construct(Timeline $timeline, RequestForm $requestForm, Grf $grf, Irf $irf, TransferForm $transferForm, TransferStock $transferStock, Stock $stock, Warehouse $warehouse, RequestStock $requestStock)
     {
-        $this->requestForm = $requestForm;
-        $this->grf = $grf;
-        $this->timeline = $timeline;
-        $this->warehouse = $warehouse;
-        $this->stock = $stock;
-        $this->transferForm = $transferForm;
+        $this->requestForm   = $requestForm;
+        $this->grf           = $grf;
+        $this->irf           = $irf;
+        $this->timeline      = $timeline;
+        $this->warehouse     = $warehouse;
+        $this->stock         = $stock;
+        $this->transferForm  = $transferForm;
         $this->transferStock = $transferStock;
-        $this->requestStock = $requestStock;
+        $this->requestStock  = $requestStock;
     }
 
     /*
@@ -57,15 +59,12 @@ class WarehouseTransactionService
         return ($grfs);
     }
 
-
-
     public function handleFindWhApproval($id)
     {
         $grfs = $this->grf->with('user')->where('status', 'ic_approved')->where('warehouse_id', $id)->get();
-
-        // dd($grfs);
         return ($grfs);
     }
+
     public function handleFindWhReturn($id)
     {
         $grfs = $this->grf->with('user')->where('status', 'return_ic_approved')->where('warehouse_id', $id)->get();
@@ -276,7 +275,7 @@ class WarehouseTransactionService
     {
         if ($request->warehouse_id != null && $request->warehouse_destination != null) {
             $validatedWarehouseId = $request->validate([
-                'warehouse_id' => 'required',
+                'warehouse_id'          => 'required',
                 'warehouse_destination' => 'required',
             ]);
 
@@ -284,7 +283,7 @@ class WarehouseTransactionService
         }
 
         $validatedData = $request->validate([
-            'part_id' => 'required',
+            'part_id'  => 'required',
             'quantity' => 'required',
         ]);
 
@@ -295,9 +294,9 @@ class WarehouseTransactionService
         for ($i = 0; $i < $request->quantity; $i++) {
             $this->transferStock->create([
                 'transfer_form_id' => $transferCreated->id,
-                'grf_id' => $transferCreated->grf_id,
-                'part_id' => $transferCreated->part_id,
-                'sn' => null,
+                'grf_id'           => $transferCreated->grf_id,
+                'part_id'          => $transferCreated->part_id,
+                'sn'               => null,
             ]);
         }
 
@@ -308,38 +307,18 @@ class WarehouseTransactionService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Submit the warehouse transfer list
+    *| IC: Submit the warehouse transfer list
     *|--------------------------------------------------------------------------
     */
     public function handleUpdateWarehouseTransfer($request)
     {
-        $transferForms = $this->transferForm->with('transferStocks')->where('grf_id', $request->grf_id)->get();
-
-        $stocks = [];
-
-        // foreach ($transferForms as $transferForm) {
-        //     foreach ($transferForm->transferStocks as $transferStock) {
-        //         if ($this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first()) {
-        //             $stocks[] = $this->stock->where([['sn_code', $transferStock->sn], ['part_id', $transferForm->part_id]])->first();
-        //         } else {
-        //             return redirect()->back()->with('error', 'SN Codes does not match, please recheck your SN Codes');
-        //         }
-        //     }
-        // }
-
-        foreach ($stocks as $stock) {
-            $stock->update([
-                'warehouse_id' => $this->warehouse->where('name', $request->warehouse_destination)->first()->id,
-            ]);
-        };
-
-        $this->grf->find($request->grf_id)->update([
-            'status' => 'submited',
+        $this->irf->find($request->irf_id)->update([
+            'status' => 'on_progress',
         ]);
 
         $this->timeline->create([
-            'grf_id' => $request->grf_id,
-            'status' => "submited",
+            'irf_id'     => $request->irf_id,
+            'status'     => "on_progress",
             'created_at' => now(),
         ]);
 
@@ -377,15 +356,15 @@ class WarehouseTransactionService
 
         $validatedData["warehouse_destination"] = null;
 
-        $this->transferStock->where("grf_id", $id)->get()->map(function ($itemList) {
+        $this->transferStock->where("irf_id", $id)->get()->map(function ($itemList) {
             $itemList->delete();
         });
 
-        $this->transferForm->where("grf_id", $id)->get()->map(function ($itemList) {
+        $this->transferForm->where("irf_id", $id)->get()->map(function ($itemList) {
             $itemList->delete();
         });
 
-        $this->grf->find($id)->update($validatedData);
+        $this->irf->find($id)->update($validatedData);
 
         return (null);
     }
@@ -401,7 +380,7 @@ class WarehouseTransactionService
     {
         $validatedData = $request->validate(["warehouse_destination" => "required"]);
 
-        $this->grf->find($id)->update($validatedData);
+        $this->irf->find($id)->update($validatedData);
 
         return (null);
     }
@@ -410,33 +389,40 @@ class WarehouseTransactionService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store pieces sn for warehouse transfer's items
+    *| SH: Store pieces sn for warehouse transfer's items
     *|--------------------------------------------------------------------------
     */
     public function handleStorePiecesTransfer($request, $id)
     {
-        // dd($request);
+        $irf   = $this->irf->with('transferForms', 'transferStocks')->find($request->irf_id);
         $limit = $this->transferForm->find($request->transfer_form_id)->quantity;
 
-        // $validatedData = $request->validate([
-        //     'transfer_form_id' => 'required',
-        //     'grf_id' => 'required',
-        //     'part_id' => 'required',
-        //     'sn_code.*' => 'distinct|exists:stocks,sn_code',
-        //     'sn_code' => [
-        //         'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
-        //             return $query->where('part_id', $request->part_id);
-        //         }),
-        //     ],
-        // ]);
+        $validatedData = $request->validate([
+            'transfer_form_id' => 'required',
+            'irf_id'           => 'required',
+            'part_id'          => 'required',
+            'sn_code.*'        => 'distinct|exists:stocks,sn_code',
+            'sn_code'          => ['required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request, $irf) {
+                return $query->where('part_id', $request->part_id)->where('warehouse_id', $irf->warehouse_id);
+            })],
+        ]);
 
-        $transferStocks = $this->transferStock->where([['transfer_form_id', $request->transfer_form_id], ['grf_id', $request->grf_id], ['part_id', $request->part_id]])->get();
+        for ($i = 0; $i < count($request->sn_code); $i++) {
+            $sn_code = $request->sn_code[$i];
+            $stock   = $this->stock->where('part_id', $request->part_id)->where('warehouse_id', $irf->warehouse_id)->where('sn_code', $sn_code)->where('stock_status', 'in')->where('status', 'active')->first();
 
-        foreach ($request["sn_code"] as $key => $sn_code) {
-            $transferStocks[$key]->update([
-                'sn' => $sn_code,
+            $this->transferStock->create([
+                'transfer_form_id' => $request->transfer_form_id,
+                'irf_id'           => $irf->id,
+                'part_id'          => $request->part_id,
+                'stock_id'         => $stock->id,
+                'sn'               => $sn_code,
             ]);
-        };
+
+            $stock->update([
+                'stock_status' => 'hold'
+            ]);
+        }
 
         return 'snes stored';
     }
@@ -473,15 +459,38 @@ class WarehouseTransactionService
         return('approved');
     }
 
-    // Update Stock for current warehouse
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Input non SN to transfer
+    *|--------------------------------------------------------------------------
+    */
     public function handleUpdateTransferNonSN($request)
     {
-        $dataGrf = $this->grf->find($request->grf_id);
-        // $warehouseDestinationId = $this->warehouse->where('name', $dataGrf->warehouse_destination)->get('id');
-        $baseStock = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $dataGrf->warehouse_id], ['stock_status', 'in']])->first();
+        $irf       = $this->irf->find($request->irf_id);
+        $stock     = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $irf->warehouse_id], ['stock_status', 'in'], ['status', 'active']])->first();
 
-        $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $dataGrf->warehouse_id], ['sn_code', null], ['stock_status', 'in']])->update([
-            'quantity' => $baseStock->quantity - $request->quantity
+        $stock->update([
+            'quantity' => ($stock->quantity - $request->quantity),
+            'good'     => ($stock->good - $request->quantity),
+        ]);
+
+        $holdStock = $this->stock->create([
+            'part_id'      => $request->part_id,
+            'warehouse_id' => $irf->warehouse_id,
+            'quantity'     => $request->quantity,
+            'good'         => $request->quantity,
+            'not_good'     => 0,
+            'expired_date' => $stock->expired_date,
+            'stock_status' => 'hold',
+            'status'       => 'active',
+        ]);
+
+        $this->transferStock->create([
+            'transfer_form_id' => $request->transfer_form_id,
+            'irf_id'           => $irf->id,
+            'part_id'          => $request->part_id,
+            'stock_id'         => $holdStock->id,
+            'quantity'         => $request->quantity,
         ]);
 
         return('updated');
@@ -489,13 +498,13 @@ class WarehouseTransactionService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Store bulk sn for warehouse transfer's items
+    *| WH: Store bulk sn for warehouse transfer's items
     *|--------------------------------------------------------------------------
     */
     public function handleStoreBulkTransfer($request, $id)
     {
-        $excel = Excel::toCollection(new WarehouseTransferImport, $request->file);
-
+        $irf     = $this->irf->with('transferForms', 'transferStocks')->find($request->irf_id);
+        $excel   = Excel::toCollection(new WarehouseTransferImport, $request->file);
         $sn_code = [];
 
         foreach ($excel->first() as $row) {
@@ -508,22 +517,30 @@ class WarehouseTransactionService
 
         $validatedData = $request->validate([
             'transfer_form_id' => 'required',
-            'grf_id' => 'required',
-            'part_id' => 'required',
-            'sn_code.*' => 'distinct|exists:stocks,sn_code',
-            'sn_code' => [
-                'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request) {
-                    return $query->where('part_id', $request->part_id);
+            'irf_id'           => 'required',
+            'part_id'          => 'required',
+            'sn_code.*'        => 'distinct|exists:stocks,sn_code',
+            'sn_code'          => [
+                'required', 'array', 'size:' . $limit, Rule::exists('stocks')->where(function ($query) use ($request, $irf) {
+                    return $query->where('part_id', $request->part_id)->where('warehouse_id', $irf->warehouse_id);
                 }),
             ],
         ]);
 
+        for ($i = 0; $i < count($request->sn_code); $i++) {
+            $sn_code = $request->sn_code[$i];
+            $stock   = $this->stock->where('part_id', $request->part_id)->where('warehouse_id', $irf->warehouse_id)->where('sn_code', $sn_code)->where('stock_status', 'in')->where('status', 'active')->first();
 
-        $transferStocks = $this->transferStock->where([['transfer_form_id', $validatedData['transfer_form_id']], ['grf_id', $validatedData['grf_id']], ['part_id', $validatedData['part_id']]])->get();
+            $this->transferStock->create([
+                'transfer_form_id' => $request->transfer_form_id,
+                'irf_id'           => $irf->id,
+                'part_id'          => $request->part_id,
+                'stock_id'         => $stock->id,
+                'sn'               => $sn_code,
+            ]);
 
-        foreach ($transferStocks as $key => $transferStock) {
-            $transferStock->update([
-                'sn' => $validatedData['sn_code'][$key],
+            $stock->update([
+                'stock_status' => 'hold'
             ]);
         }
 
@@ -534,71 +551,105 @@ class WarehouseTransactionService
 
     /*
     *|--------------------------------------------------------------------------
-    *| Get view wh transfer approv
+    *| WH: IRF by warehouse_id
     *|--------------------------------------------------------------------------
     */
-
     public function handleAllWhTransfer($warehouse_id)
     {
-        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_id', $warehouse_id], ['type', '!=', 'request'], ['status', 'submited']])->get();
+        $transferform = $this->irf->with('transferForms', 'warehouse')->where([['warehouse_id', $warehouse_id], ['type', '!=', 'transfer_inbound'], ['type', '!=', 'transfer_rekondisi'], ['status', '!=', 'closed']])->get();
         return ($transferform);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: transferForms by IRF
+    *|--------------------------------------------------------------------------
+    */
     public function handleShowWhTransfer($id)
     {
-        $wherewh = str_replace('~', '/', $id);
-        $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock',)->where('grf_code', $wherewh)->first();
+        $irf_code   = str_replace('~', '/', $id);
+        $whapproval = $this->irf->with('transferForms.part', 'transferForms.transferStocks', 'warehouse', 'transferStocks',)->where('irf_code', $irf_code)->first();
+
+        $whapproval->transferForms->map(function ($transferForm) {
+            $transferForm['inputed_quantity'] = $transferForm->part->sn_status == 'SN' || $transferForm->part->sn_status == 'sn' ? count($transferForm->transferStocks) : (isset($transferForm->transferStocks->first()->quantity) ? $transferForm->transferStocks->first()->quantity : 0);
+            return $transferForm;
+        });
+
         return ($whapproval);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Input recieved item pieces
+    *|--------------------------------------------------------------------------
+    */
     public function handleStoreManualTransfer($request, $id)
     {
-
         $validatedData = $request->validate([
             'transfer_form_id' => 'required',
-            'grf_id'           => 'required',
+            'irf_id'           => 'required',
             'part_id'          => 'required',
             'sn.*'             => ['distinct'],
             'sn'               => ['required', 'array', Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
-                $query->where([['part_id', $request->part_id], ['grf_id', $request->grf_id], ['transfer_form_id', $request->transfer_form_id]]);
+                $query->where([
+                    ['part_id', $request->part_id],
+                    ['irf_id', $request->irf_id],
+                    ['transfer_form_id', $request->transfer_form_id]
+                ]);
             })]
         ]);
 
-        return ('');
+        $transferForm = $this->transferForm->with('transferStocks')->find($request->transfer_form_id);
+
+        for ($i = 0; $i < count($transferForm->transferStocks); $i++) {
+            $transferStock = $transferForm->transferStocks[$i];
+
+            $transferStock->update([
+                'sn_return' => $request->sn[$i]
+            ]);
+        }
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: input recieved non SN
+    *|--------------------------------------------------------------------------
+    */
     public function handleStoreRecipientNonSN($request, $id)
     {
-        $dataGrf = $this->grf->find($request->grf_id);
-        $warehouseDestinationId = $this->warehouse->where('name', $dataGrf->warehouse_destination)->first('id');
-        $destinationStock = $this->stock->where([['part_id', $request->part_id], ['warehouse_id', $warehouseDestinationId->id], ['sn_code', null], ['stock_status', 'in']])->first();
-
-        $data = $this->transferStock
-        ->whereHas('transferForm', function ($query) use($dataGrf, $request) {$query->where([['grf_id', $dataGrf->id], ['transfer_form_id', $request->transfer_form_id]]);})
-        ->whereHas('transferForm.part', function ($query) {$query->where('sn_status', 'NON SN');})->first();
+        $irf = $this->irf->with('transferForms.transferStocks', 'transferStocks.stock')->find($request->irf_id);
         
-        $this->stock->where('id', $data->stock_id)->update([
-            'warehouse_id' => $warehouseDestinationId->id,
-            'stock_status' => 'in'
+        $irf->transferForms->find($request->transfer_form_id)->transferStocks->first()->update([
+            'quantity_return' => $request->quantity
         ]);
+
+        return 'updated';
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Submit IRF to transfer
+    *|--------------------------------------------------------------------------
+    */
     public function handleSubmitTransferApprov($request, $id)
     {
-        $currentGrf = $this->grf->with('transferStock')->find($id);
+        $irf = $this->irf->with('transferForms', 'transferStocks.stock')->find($id);
 
-        if ($this->stock->sn_code) {
-            foreach ($currentGrf->transferStock as $transferStock) {
-                $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'out']);
-            }
+        for ($i = 0; $i < count($irf->transferStocks); $i++) { 
+            $transferStock = $irf->transferStocks[$i];
+            $stock         = $transferStock->stock;
+            
+            $stock->update([
+                'stock_status' => 'out',
+            ]);
         }
 
-        $currentGrf->status = "delivery_approved";
-        $currentGrf->save();
+        $irf->status = "delivery_approved";
+        $irf->save();
 
         $this->timeline->create([
-            'grf_id' => $id,
-            'status' => 'delivery_approved',
+            'irf_id'     => $id,
+            'status'     => 'delivery_approved',
             'created_at' => now(),
         ]);
 
@@ -612,28 +663,43 @@ class WarehouseTransactionService
     */
     public function handleWhRecipientAPI($warehouse_destination)
     {
-        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', $warehouse_destination], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
-        return $transferform;
+        return $this->irf->with('transferForms', 'warehouse')->where([['warehouse_destination', $warehouse_destination], ['status', 'delivery_approved']])->get();
     }
 
     public function handleWhRecipient()
     {
-        $transferform = $this->grf->with('user', 'transferForms', 'warehouse')->where([['warehouse_destination', Auth::user()->warehouse->name], ['status', 'delivery_approved'], ['type', '!=', 'request']])->get();
-        return ($transferform);
+        return $this->irf->with('transferForms', 'warehouse')->where([['warehouse_destination', Auth::user()->warehouse->name], ['status', 'delivery_approved']])->get();
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: Detail IRF to recieve
+    *|--------------------------------------------------------------------------
+    */
     public function handleShowRecipient($id)
     {
-        $wherewh = str_replace('~', '/', $id);
-        $whapproval = $this->grf->with('transferForms.part', 'user', 'warehouse', 'transferStock')->where('grf_code', $wherewh)->first();
+        $irfCode    = str_replace('~', '/', $id);
+        $whapproval = $this->irf->with('transferForms.part', 'transferForms.transferStocks', 'warehouse', 'transferStocks')->where('irf_code', $irfCode)->first();
+
+        $whapproval->transferForms->map(function ($transferForm) {
+            $transferForm['inputed_quantity'] = $transferForm->part->sn_status == 'SN' || $transferForm->part->sn_status == 'sn' ? count($transferForm->transferStocks->where('sn_return', '!=', null)) : ($transferForm->transferStocks->first()->quantity_return == null ? 0 : $transferForm->transferStocks->first()->quantity_return);
+
+            return $transferForm;
+        });
+
         return ($whapproval);
     }
 
+    /*
+    *|--------------------------------------------------------------------------
+    *| WH: input recieved item bulk
+    *|--------------------------------------------------------------------------
+    */
     public function handleBulkRecipient($request, $id)
     {
+        $irf   = $this->irf->with('transferForms', 'transferStocks')->find($request->irf_id);
         $excel = Excel::toCollection(new WarehouseTransferRecipient, $request->file);
-
-        $sn = [];
+        $sn    = [];
 
         foreach ($excel->first() as $row) {
             $sn[] = $row->first();
@@ -645,33 +711,108 @@ class WarehouseTransactionService
 
         $validatedData = $request->validate([
             'transfer_form_id' => 'required',
-            'grf_id' => 'required',
+            'irf_id' => 'required',
             'part_id' => 'required',
             'sn.*' => 'distinct|exists:transfer_stocks,sn',
-            'sn' => [
-                'required', 'array', 'size:' . $limit, Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
-                    return $query->where([['part_id', $request->part_id], ['grf_id', $request->grf_id]]);
-                }),
-            ],
+            'sn' => ['required', 'array', 'size:' . $limit, Rule::exists('transfer_stocks')->where(function ($query) use ($request) {
+                $query->where([
+                        ['part_id', $request->part_id],
+                        ['irf_id', $request->irf_id],
+                        ['transfer_form_id', $request->transfer_form_id]
+                ]);
+            })],
         ]);
+
+        $transferForm = $this->transferForm->with('transferStocks')->find($request->transfer_form_id);
+
+        for ($i = 0; $i < count($transferForm->transferStocks); $i++) {
+            $transferStock = $transferForm->transferStocks[$i];
+
+            $transferStock->update([
+                'sn_return' => $request->sn[$i]
+            ]);
+        }
+
         return ('success');
     }
 
     public function handleSubmitRecipient($request, $id)
     {
-        $currentGrf = $this->grf->with('transferStock', 'transferForms.part')->find($id);
-        // dd($this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id);
-        $dataSN = $this->transferStock->whereHas('grf', function ($query) use($id) {$query->where('id', $id);})->where('sn', '!=', null)->get();
+        $irf                    = $this->irf->with('transferStocks', 'transferForms.part', 'transferForms.transferStocks.part')->find($id);
+        $warehouseDestinationId = $this->warehouse->where('name', $irf->warehouse_destination)->first()->id;
+        $dataSN                 = $this->transferStock->whereHas('irf', function ($query) use ($id) { $query->where('id', $id); })->whereHas('part', function ($query) { $query->where('sn_status', 'SN')->where('sn_status', 'sn'); })->get();
+        $dataNonSN              = $this->transferStock->whereHas('irf', function ($query) use ($id) { $query->where('id', $id); })->whereHas('part', function ($query) { $query->where('sn_status', '!=', 'SN')->where('sn_status', '!=', 'sn'); })->get();
+
+        // SN
+        for ($i = 0; $i < count($dataSN); $i++) { 
+            $transferStockSn = $dataSN[$i];
+
+            $this->stock->find($transferStockSn->stock_id)->update([
+                'warehouse_id' => $warehouseDestinationId,
+                'stock_status' => 'in',
+            ]);
+        }
+
+        // non SN
+        for ($i = 0; $i < count($dataNonSN); $i++) { 
+            $transferStockNonSn = $dataNonSN[$i];
+            $stock = $this->stock
+                          ->where('part_id', $transferStockNonSn->part_id)
+                          ->where('warehouse_id', $warehouseDestinationId)
+                          ->where('stock_status', 'in')
+                          ->where('status', 'active')
+                          ->first();
+
+            if ($stock) {
+                // ada
+                $stock->update([
+                    'quantity' => ($stock->quantity + $transferStockNonSn->quantity_return),
+                    'good'     => ($stock->good + $transferStockNonSn->quantity_return),
+                    'not_good' => 0,
+                ]);
+            } else {
+                // gk ada
+                $this->stock->create([
+                    'part_id'      => $transferStockNonSn->part_id,
+                    'warehouse_id' => $warehouseDestinationId,
+                    'quantity'     => $transferStockNonSn->quantity_return,
+                    'good'         => $transferStockNonSn->quantity_return,
+                    'not_good'     => 0,
+                    'condition'    => $transferStockNonSn->stock->condition,
+                    'expired_date' => $transferStockNonSn->stock->expired_date,
+                    'stock_status' => 'in',
+                    'status'       => 'active',
+                ]);
+            }
+
+            $transferStockNonSn->stock->update([
+                'status' => 'non_active'
+            ]);
+        }
+
+        $irf->update([
+            'status' =>'closed'
+        ]);
+
+        $this->timeline->create([
+            'irf_id'     => $id,
+            'status'     => 'user_pickup',
+            'created_at' => now(),
+        ]);
+
+        return 'Submited';
+
+        // ================================================================
 
         foreach ($dataSN as $transferStock) {
-            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $currentGrf->warehouse_destination)->first()->id]);
+            $this->stock->where('sn_code', $transferStock->sn)->update(['stock_status' => 'in', 'warehouse_id' => $this->warehouse->where('name', $irf->warehouse_destination)->first()->id]);
         }
 
         $dataNonSN = $this->transferForm->with('transferStocks')->whereHas('grf', function ($query) use($id) {$query->where('id', $id);})->whereHas('part', function ($query) {$query->where('sn_status', 'NON SN');})->get();
         
         
         foreach ($dataNonSN as $key => $transferForms) {
-            $warehouseDestinationId = $this->warehouse->where('name', $currentGrf->warehouse_destination)->first();
+            $warehouseDestinationId = $this->warehouse->where('name', $irf->warehouse_destination)->first();
             $destinationStock = $this->stock->where([['part_id', $transferForms->part_id], ['warehouse_id', $warehouseDestinationId->id], ['sn_code', null], ['stock_status', 'in']])->first();
             $dataNonSNId = $transferForms->transferStocks->first()->stock_id;
 
@@ -682,8 +823,8 @@ class WarehouseTransactionService
             $this->stock->where('id', $dataNonSNId)->delete();
         }
 
-        $currentGrf->status = "closed";
-        $currentGrf->save();
+        $irf->status = "closed";
+        $irf->save();
 
         $this->timeline->create([
             'grf_id' => $id,

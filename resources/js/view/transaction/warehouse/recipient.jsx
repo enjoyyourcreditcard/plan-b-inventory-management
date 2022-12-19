@@ -24,7 +24,7 @@ function Recipient(props) {
     useEffect(() => {
         async function getData() {
             api.getWarehouseRecipient(props.grf_code).then((response) => {
-                console.table(response.data.data.transfer_forms);
+                console.log(response.data.data.transfer_forms);
                 setRawData(response.data.data.transfer_forms);
                 setData(response.data.data.transfer_forms);
 
@@ -76,8 +76,20 @@ function Recipient(props) {
 
                 Cell: (tableProps) => (
                     <>
+                        <p>
+                            {tableProps.row.original.quantity + ' ' + tableProps.row.original.part.uom}
+                        </p>
+                    </>
+                ),
+            },
+            {
+                Header: "Inputed Quantity",
+                accessor: "inputed_quantity",
+
+                Cell: (tableProps) => (
+                    <>
                         <p style={{ minWidth: 300, padding: 0, margin: 0 }}>
-                            {tableProps.row.original.quantity}
+                            {tableProps.row.original.inputed_quantity + ' ' + tableProps.row.original.part.uom}
                         </p>
                     </>
                 ),
@@ -108,27 +120,35 @@ function Recipient(props) {
                 Cell: (tableProps) => (
                     <>
                     {
+                        tableProps.row.original.inputed_quantity == tableProps.row.original.quantity ?
+                        <span>
+                            -
+                        </span>
+                        :
                         tableProps.row.original.part.sn_status == 'SN' ?
-                        <button class="btn-input-sn flex items-center text-slate-500" data-tw-toggle="modal"
-                            data-tw-target="#modal-pieces-bulk" data-transferformsid={ tableProps.row.original.id }
-                            data-grfid={ tableProps.row.original.grf_id } data-partid={ tableProps.row.original.part_id }
-                            data-partname={ tableProps.row.original.part.name } data-quantity={ tableProps.row.original.quantity }>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                class="bi bi-upc-scan w-4 h-4 mr-1" viewBox="0 0 16 16">
-                                <path
-                                    d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5zM3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z" />
+                        <button class="btn-input-sn flex items-center text-slate-500"
+                            data-tw-toggle="modal"
+                            data-tw-target="#modal-pieces-bulk"
+                            data-transferformsid={ tableProps.row.original.id }
+                            data-irfid={ tableProps.row.original.irf_id }
+                            data-partid={ tableProps.row.original.part_id }
+                            data-partname={ tableProps.row.original.part.name }
+                            data-quantity={ tableProps.row.original.quantity }>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-upc-scan w-4 h-4 mr-1" viewBox="0 0 16 16">
+                                <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5zM3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z" />
                             </svg> Input SN
                         </button>
                         :
                         <button class="btn-input-sn flex items-center text-slate-500" data-tw-toggle="modal"
-                            data-tw-target="#modal-non-sn" data-transferformsid={ tableProps.row.original.id }
-                            data-grfid={ tableProps.row.original.grf_id } data-partid={ tableProps.row.original.part_id
-                            } data-partname={ tableProps.row.original.part.name } data-quantity={
-                            tableProps.row.original.quantity } data-warehouseid={ tableProps.row.original.warehouse_id }>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-check-lg w-4 h-4 mr-1" viewBox="0 0 16 16">
-                                <path
-                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                            data-tw-target="#modal-non-sn"
+                            data-transferformsid={ tableProps.row.original.id }
+                            data-irfid={ tableProps.row.original.irf_id }
+                            data-partid={ tableProps.row.original.part_id}
+                            data-partname={ tableProps.row.original.part.name }
+                            data-quantity={tableProps.row.original.quantity }
+                            data-warehouseid={ tableProps.row.original.warehouse_id }>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg w-4 h-4 mr-1" viewBox="0 0 16 16">
+                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                             </svg> Approve
                         </button>
                     }

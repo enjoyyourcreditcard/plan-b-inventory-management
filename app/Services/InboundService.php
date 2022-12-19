@@ -136,7 +136,7 @@ class InboundService
 
     public function handleGetIrfRecipient($id)
     {
-        $data = $this->irf->with('warehouse')->where([['status', '!=', 'closed'], ['warehouse_id', $id]])->get();
+        $data = $this->irf->with('warehouse')->where([['status', '!=', 'closed'], ['type', 'transfer_inbound'], ['warehouse_id', $id]])->get();
         return $data;
     }
 

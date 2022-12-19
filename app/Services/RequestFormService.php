@@ -4,14 +4,15 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Grf;
-use App\Models\Notification;
 use App\Models\Part;
-use App\Models\RequestForm;
-use App\Models\RequestStock;
 use App\Models\Stock;
 use App\Models\Timeline;
+use App\Models\RequestForm;
 use Illuminate\Support\Arr;
+use App\Models\Notification;
+use App\Models\RequestStock;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -145,10 +146,10 @@ class RequestFormService
         }
 
         $validatedData = $request->validate([
-            'brand_id' => 'nullable',
-            'segment_id' => 'required',
-            'quantity' => 'required|integer',
-            'remarks' => 'nullable',
+            'brand_id'   => 'nullable',
+            'segment_id' => ['required', Rule::unique('dbs_request_forms')->where(function ($query) use ($id) { return $query->where('grf_id', $id); })],
+            'quantity'   => 'required|integer',
+            'remarks'    => 'nullable',
         ]);
 
         $validatedData['grf_id'] = $this->grf->find($id)->id;

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('breadcrumb')
     <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
         <ol class="breadcrumb">
@@ -8,6 +9,7 @@
         </ol>
     </nav>
 @endsection
+
 @section('content')
     <div class="intro-y chat grid grid-cols-12 gap-5 mt-5">
         <div class="col-span-12 lg:col-span-4 2xl:col-span-4">
@@ -29,7 +31,7 @@
                                     </line>
                                 </svg>
                                 <p class="text-sm ml-2">
-                                    <strong>Grf Code :</strong> {{ $currentGrf->grf_code }}
+                                    <strong>IRF Code :</strong> {{ $irf->irf_code }}
                                 </p>
                             </div>
                             <div class="flex mb-5">
@@ -57,7 +59,12 @@
                                 </p>
                             </div>
                             <div class="flex mb-5 mt-8 ">
-                                <form action="{{ route('warehouse.post.changeStatus', $grf->id) }}" method="POST" class="w-full">
+                                @if ($irf->status == 'delivery_approved')
+                                <a href="{{ Route('warehouse.get.whtransfer') }}" class="btn btn-slate-200 w-full rounded-full">
+                                    Back
+                                </a>
+                                @else
+                                <form action="{{ route('warehouse.post.changeStatus', $irf->id) }}" method="POST" class="w-full">
                                     @csrf
                                     <button type="submit" class="btn btn-primary w-full rounded-full">
                                         Submit
@@ -72,46 +79,21 @@
                                         </svg>
                                     </button>
                                 </form>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         {{-- react --}}
-        <div id="detail-transfer" class="table-responsive overflow-auto col-span-8 lg:col-span-8 2xl:col-span-8" data-grfcode="{{ str_replace( '/', '~', strtolower( $grf->grf_code ) ) }}"></div>
+        <div id="detail-transfer" class="table-responsive overflow-auto col-span-8 lg:col-span-8 2xl:col-span-8" data-grfcode="{{ str_replace( '/', '~', strtolower( $irf->irf_code ) ) }}"></div>
         {{-- react --}}
-        {{-- <div class="table-responsive overflow-auto col-span-8 lg:col-span-8 2xl:col-span-8">
-            <table class="table table-report">
-                <thead>
-                    <tr>
-                        <th class="whitespace-nowrap">PART NAME</th>
-                        <th class="text-center whitespace-nowrap">TRANSFER QUANTITY</th>
-                        <th class=" whitespace-nowrap">ACTIONS</th>
-                    </tr>
-                </thead> --}}
-                {{-- <tbody> --}}
-                    @foreach ($tfApprov->transferForms as $item)
-                        {{-- <tr class="intro-x"> --}}
-                            {{-- <td class="text-emerald-900 text-xs whitespace-nowrap ">{{ $item->part->name }}</td> --}}
-                            {{-- <td class="text-emerald-900 text-xs text-center">{{ $item->quantity }} Items</td> --}}
-                            {{-- <td class="text-emerald-900"> --}}
-                                {{-- <button class="btn-input-sn flex items-center text-slate-500" data-tw-toggle="modal"
-                                    data-tw-target="#modal-pieces-bulk" data-transferformsid="{{ $item->id }}"
-                                    data-grfid="{{ $item->grf_id }}" data-partid="{{ $item->part_id }}"
-                                    data-partname="{{ $item->part->name }}" data-quantity="{{ $item->quantity }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="currentColor" class="bi bi-upc-scan w-4 h-4 mr-1" viewBox="0 0 16 16">
-                                        <path
-                                            d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5zM3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z" />
-                                    </svg> Input SN
-                                </button> --}}
-                            {{-- </td> --}}
-                        {{-- </tr> --}}
-                    @endforeach
-                {{-- </tbody> --}}
-            {{-- </table> --}}
-        {{-- </div> --}}
+
+        @foreach ($tfApprov->transferForms as $item)
+        @endforeach
+
         {{-- * Modal manual bulk --}}
         <div id="modal-pieces-bulk" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -138,6 +120,7 @@
             </div>
         </div>
         {{-- * End Modal manual bulk --}}
+
         {{-- * Manual --}}
         <div id="modal-pieces" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -152,6 +135,7 @@
             </div>
         </div>
         {{-- * End Manual --}}
+
         {{-- * bulk --}}
         <div id="modal-bulk" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -192,13 +176,12 @@
             </div>
         </div>
         {{-- * End Bulk --}}
+
         {{-- * Non-SN --}}
         <div id="modal-non-sn" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form id="form-non-sn" 
-                    action="{{ Route('warehouse.transfer.post.non-sn', $item->id) }}"
-                    method="POST">
+                    <form id="form-non-sn" action="{{ Route('warehouse.transfer.post.non-sn', $item->id) }}" method="POST">
                         @csrf
                         <div class="modal-body p-10 text-center">
 
@@ -209,8 +192,8 @@
         </div>
         {{-- * End Non-SN --}}
     </div>
+@endsection
 
 @section('javaScript')
     <script src="{{ Asset('js/transaction/whTransferApprov/script.js') }}"></script>
 @endSection
-@endsection

@@ -307,7 +307,7 @@ Route::get('/warehousereturn/action/grf/{id}', [WarehouseTransactionController::
 Route::group(['prefix' => 'warehouse-transfer', 'as' => 'warehouse.transfer.', 'middleware' => ['auth']], function () {
     Route::get('/', [WarehouseTransactionController::class, 'indexTransfer'])->name('get.home');
     Route::get('/{code}', [WarehouseTransactionController::class, 'createTransfer'])->name('get.detail');
-    Route::post('/', [WarehouseTransactionController::class, 'storeGrfTransfer'])->name('post');
+    Route::post('/', [WarehouseTransactionController::class, 'storeIrfTransfer'])->name('post');
     Route::post('/{code}', [WarehouseTransactionController::class, 'storeTransfer'])->name('post.detail');
     Route::post('/pieces/{code}', [WarehouseTransactionController::class, 'storePiecesTransfer'])->name('post.pieces');
     Route::post('/non-sn/{code}', [WarehouseTransactionController::class, 'storeNonSNTransfer'])->name('post.non-sn');

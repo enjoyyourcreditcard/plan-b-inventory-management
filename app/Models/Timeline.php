@@ -15,6 +15,12 @@ class Timeline extends Model
     {
         return $this->belongsTo(Grf::class);
     }
+
+    public function irf ()
+    {
+        return $this->belongsTo(Irf::class);
+    }
+
     public function inboundGrf ()
     {
         return $this->belongsTo(GrfInbound::class);
