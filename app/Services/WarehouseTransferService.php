@@ -68,7 +68,7 @@ class WarehouseTransferService
     */
     public function handleAllIrf()
     {
-        $irfs = $this->irf->with('transferForms')->get();
+        $irfs = $this->irf->with('transferForms')->where('type', '!=', 'transfer_inbound')->get();
 
         $irfs->map(function ($irf) {
             $irf['total_stock'] = 0;
