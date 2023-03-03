@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@headlessui/react": "^1.7.3",
+        "flowbite": "^1.6.3",
         "form-data": "^4.0.0",
         "momen": "^0.0.1-security",
         "moment": "^2.29.4",

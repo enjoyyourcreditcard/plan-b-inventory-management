@@ -105,7 +105,7 @@
                                 @if ($data['sn_status'] == 'SN')
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <button type="button" class="upload-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#upload" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}">
+                                        <button type="button" class="btn-upload-sn upload-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#upload" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}">
                                             <p class="flex items-center mr-3 text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                                     <polyline points="9 11 12 14 22 4"></polyline>
@@ -119,7 +119,7 @@
                                 @else
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <button type="button" class="upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}" data-partuom="{{ $data['uom'] }}">
+                                        <button type="button" class="btn-check upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $data['part_id'] }}" data-partname="{{ $data['name'] }}" data-requestformid="{{ $data['id'] }}" data-icquantity="{{ $data['quantity'] }}" data-partuom="{{ $data['uom'] }}">
                                             <p class="flex items-center mr-3 text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                                     <polyline points="9 11 12 14 22 4"></polyline>
@@ -199,23 +199,21 @@
                         <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
                             <li id="top-products-symfony-tab" class="nav-item flex flex-col flex-grow"
                                 role="presentation">
-                                <button type="submit" name="type" value="transfer gudang baru"
+                                <button id="btn-bulk" type="submit" name="type" value="transfer gudang baru"
                                     class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
                                     data-tw-target="#importExcel" data-tw-toggle="modal" aria-selected="false"
                                     role="tab">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-file-earmark-diff block w-6 h-6 mb-2 mx-auto"
                                         viewBox="0 0 16 16">
-                                        <path
-                                            d="M8 5a.5.5 0 0 1 .5.5V7H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V8H6a.5.5 0 0 1 0-1h1.5V5.5A.5.5 0 0 1 8 5zm-2.5 6.5A.5.5 0 0 1 6 11h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
-                                        <path
-                                            d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                                        <path d="M8 5a.5.5 0 0 1 .5.5V7H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V8H6a.5.5 0 0 1 0-1h1.5V5.5A.5.5 0 0 1 8 5zm-2.5 6.5A.5.5 0 0 1 6 11h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
                                     </svg> Bulk
                                 </button>
                             </li>
                             <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
                                 role="presentation">
-                                <button type="submit" name="type" value="transfer gudang lama"
+                                <button id="btn-pieces" type="submit" name="type" value="transfer gudang lama"
                                     class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500"
                                     data-tw-target="#inputSn" data-tw-toggle="modal" aria-selected="false"
                                     role="tab">
@@ -254,8 +252,7 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-tw-dismiss="modal"
-                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button id="btn-cancel-bulk" type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
                     <button type="submit" class="btn btn-primary w-20">Send</button>
                 </div>
                 </form>
@@ -288,8 +285,7 @@
 
                 <!-- BEGIN: Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" data-tw-dismiss="modal"
-                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button type="button" id="btn-cancel-pieces" data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
                     <button type="submit" class="btn btn-primary w-20">Send</button>
                 </div>
                 <!-- END: Modal Footer -->
@@ -305,4 +301,5 @@
 
 @section('javaScript')
     <script src="{{ asset('js/whtransaction.js') }}"></script>
+    <script src="{{ Asset('js/modal.js') }}"></script>
 @endSection

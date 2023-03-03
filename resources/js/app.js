@@ -12,6 +12,8 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import 'flowbite';
+
 import './view/master/part';
 import './view/request/request';
 import './view/request/return';

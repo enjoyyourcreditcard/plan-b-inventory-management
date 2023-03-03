@@ -53,9 +53,8 @@
 
             <!-- BEGIN: Modal Footer -->
             <div class="modal-footer">
-                <button data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
-                <button class="btn btn-primary w-20" data-tw-toggle="modal"
-                    data-tw-target="#modal-change-warehouse-confirmation">Save</button>
+                <button id="btn-cancel-change-warehouse" data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                <button id="btn-save-warehouse" class="btn btn-primary w-20" data-tw-toggle="modal" data-tw-target="#modal-change-warehouse-confirmation">Save</button>
             </div>
             <!-- END: Modal Footer -->
 
@@ -91,7 +90,7 @@
                     @method( "PUT" )
                 </form>
                 <div class="px-5 pb-8 text-center">
-                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                    <a id="btn-cancel-save-warehouse" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
                     <button type="submit" class="btn text-white !bg-emerald-700 impor w-24"
                         form="form-change-warehouse">Sure</button>
                 </div>
@@ -125,7 +124,7 @@
                     class="px-5 pb-8 text-center">
                     @csrf
                     @method( "PUT" )
-                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                    <a id="close-modal-approv" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
                     <button class="loading btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
             </div>
@@ -224,7 +223,7 @@
                 </svg> Warehouse: <span class="underline decoration-dotted ml-1">{{ $grf->warehouse->name }}</span>
 
                 @if( $grf->status === "draft" )
-                <button data-tw-toggle="modal" data-tw-target="#modal-change-warehouse"
+                <button id="btn-change-warehouse" data-tw-toggle="modal" data-tw-target="#modal-change-warehouse"
                     class="flex items-center ml-auto text-slate-500 transition duration-200 ease-in-out hover:text-slate-300 active:text-slate-700">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-pencil-square w-4 h-4 mr-2" viewBox="0 0 16 16">
@@ -256,7 +255,7 @@
                     </li>
                     @if($grf->status === "draft")
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
-                        <button data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation"
+                        <button id="btn-submit-newReq" data-tw-toggle="modal" data-tw-target="#modal-request-submit-confirmation"
                             class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white {{ $grf->warehouse_id && count( $requestForms ) ? "
                             transition duration-300 ease-in-out hover:bg-emerald-700" : "" }}" data-tw-toggle="pill"
                             data-tw-target="#layout-1-annual-fees" role="tab" aria-controls="layout-1-annual-fees"
@@ -912,4 +911,5 @@
 
 @section('javaScript')
 <script src="{{ Asset('js/views/requester/index.js') }}"></script>
+<script src="{{ Asset('js/modal.js') }}"></script>
 @endSection

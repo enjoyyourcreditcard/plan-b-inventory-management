@@ -115,7 +115,7 @@
                                             data-partnamereturn="{{ $item['name'] }}"
                                             data-grfidreturn="{{ $whreturn->id }}"
                                             data-icquantityreturn="{{ $item['count_return'] }}">
-                                            <p class="flex items-center mr-3 text-white"> <svg
+                                            <p class="btn-return-upload-sn flex items-center mr-3 text-white"> <svg
                                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -130,7 +130,7 @@
                                 @else
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <button type="button" class="upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $item['part_id'] }}" data-partname="{{ $item['name'] }}" data-requestformid="{{ $item['id'] }}" data-icquantity="{{ $item['non_sn_count_return'] }}" data-partuom="{{ $item['uom'] }}">
+                                        <button type="button" class="btn-return-check upload-non-sn bg-emerald-900 p-2 px-4 rounded-full mt-2 mb-2" data-tw-toggle="modal" data-tw-target="#non-sn" data-partid="{{ $item['part_id'] }}" data-partname="{{ $item['name'] }}" data-requestformid="{{ $item['id'] }}" data-icquantity="{{ $item['non_sn_count_return'] }}" data-partuom="{{ $item['uom'] }}">
                                             <p class="flex items-center mr-3 text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square w-4 h-4 mr-1">
                                                     <polyline points="9 11 12 14 22 4"></polyline>
@@ -184,7 +184,7 @@
                                         <ul class="nav nav-boxed-tabs justify-center flex-col gap-4" role="tablist">
                                             <li id="top-products-symfony-tab" class="nav-item flex flex-col flex-grow"
                                                 role="presentation">
-                                                <button class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#importExcelReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
+                                                <button id="btn-return-bulk" class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full btn-success text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#importExcelReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor"
                                                         class="bi bi-file-earmark-diff block w-6 h-6 mb-2 mx-auto"
@@ -198,7 +198,7 @@
                                             </li>
                                             <li id="top-products-bootstrap-tab" class="nav-item flex flex-col flex-grow"
                                                 role="presentation">
-                                                <button class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full !bg-emerald-700 text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#inputSnReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
+                                                <button id="btn-return-pieces" class="nav-link text-center w-auto mb-2 sm:mb-0 sm:mx-2 !rounded-full btn-success text-white transition duration-300 ease-in-out hover:!bg-slate-100 hover:!text-slate-500" data-tw-target="#inputSnReturn" data-tw-toggle="modal" aria-selected="false" role="tab">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor"
                                                         class="bi bi-list-ul block w-6 h-6 mb-2 mx-auto"
@@ -238,7 +238,7 @@
                                         <form id="form-nonsn" action="{{ Route('returnnonsn') }}" method="POST">
                                             @csrf
                                             <div class="condition"></div>
-                                            <button class="bg-emerald-800 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
+                                            <button class="btn-success mt-3 font-bold text-white px-8 py-2 rounded-full"> Checklist </button>
                                             <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
                                         </form>
                                     </div>
@@ -255,24 +255,20 @@
                                     <h2 class="font-medium text-base mr-auto">Select File</h2>
                                 </div>
                                 <div class="modal-body gap-4 gap-y-3">
-                                    <form action="{{ route('importexcelreturn') }}" method="POST" id="formBulkReturn"
-                                        class="dropzone-" enctype="multipart/form-data">
+                                    <form action="{{ route('importexcelreturn') }}" method="POST" id="formBulkReturn" class="dropzone-" enctype="multipart/form-data">
                                         @csrf
-                                        <input id="input-bulk-grf-id-return" type="hidden" name="grf_id"
-                                            value="">
+                                        <input id="input-bulk-grf-id-return" type="hidden" name="grf_id" value="">
                                         <input type="hidden" name="grf_id" value="{{ $whreturn->id }}">
                                         <div class="fallback">
-                                            <input id="input-bulk-part-id-return" type="hidden" name="part_id"
-                                                value="">
+                                            <input id="input-bulk-part-id-return" type="hidden" name="part_id" value="">
                                             <label id="input-bulk-part-name-return" class="form-label"></label>
                                             <input type="file" name="file" class="" required>
                                         </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" data-tw-dismiss="modal"
-                                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
-                                    <button type="submit" class="btn btn-primary w-20">Send</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                                        <button type="submit" class="btn btn-primary w-20">Send</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -300,8 +296,7 @@
 
                                 <!-- BEGIN: Modal Footer -->
                                 <div class="modal-footer">
-                                    <button type="button" data-tw-dismiss="modal"
-                                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                                    <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
                                     <button type="submit" class="btn btn-primary w-20">Send</button>
                                 </div>
                                 <!-- END: Modal Footer -->
@@ -319,4 +314,5 @@
 
 @section('javaScript')
     <script src="{{ asset('js/warehousereturn.js') }}"></script>
+    <script src="{{ Asset('js/modal.js') }}"></script>
 @endSection

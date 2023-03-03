@@ -21,6 +21,7 @@ function ReturnStock() {
     const [data, setData] = useState([]);
     const [requestForms, setRequestForms] = useState([]);
     const [isUsed, setIsUsed] = useState(null);
+    const [isModal, setIsModal] = useState(false);
 
     useEffect(() => {
         async function getData() {
@@ -41,7 +42,12 @@ function ReturnStock() {
             console.log(aa);
             setRequestForms(aa);
             setIsUsed(aa.request_forms.length > 0 ? true : false);
+            setIsModal(true);
         });
+    }
+
+    const handleCloseModal = () => {
+        setIsModal(false);
     }
 
     function filterNoStock() {
@@ -327,6 +333,58 @@ function ReturnStock() {
                 headerGroups={headerGroups}
                 page={page}
             />
+
+            {
+                isModal ?
+                <div className="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center backdrop-blur-sm" style={{ zIndex: 99, background: `#000000a6` }} onClick={ handleCloseModal }>
+                    <div className="bg-white flex flex-col gap-5 p-10 rounded-lg shadow-lg" onClick={ (event) => event.stopPropagation() }>
+                        <div className="modal-body p-0">
+                            <div className="p-5 text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-info-circle text-slate-600 mx-auto mt-3" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                                <div className="text-md my-5">{ requestForms.grf_code }</div>
+                                {
+                                    isUsed ?
+                                    <table role="table" className="table table-report -mt-2 overflow-scroll w-full">
+                                        <thead>
+                                            <tr>
+                                                <th>Return Item</th>
+                                                <th class="text-right">Return Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody role="rowgroup">
+                                            {
+                                                requestForms.request_forms?.map((i) => 
+                                                    <tr role="row" className="intro-y">
+                                                        <td role="cell" className="align-middle text-left"><span className="text-primary text-decoration-none"> &nbsp; { i.part.name }  </span></td>
+                                                        {
+                                                            i.part.sn_status == 'SN' || i.part.sn_status == 'sn' ?
+                                                            <td role="cell" className="align-middle text-right"><span className="text-primary text-decoration-none "> &nbsp;  { i.request_stocks.length }  item </span></td>
+                                                            :
+                                                            <td role="cell" className="align-middle text-right"><span className="text-primary text-decoration-none "> &nbsp;  { i.quantity }  item </span></td>
+                                                        }
+                                                    </tr>
+                                                )
+                                            }
+                                        </tbody>
+                                    </table>
+                                    :
+                                    <div className="text-center py-8">
+                                        Semua barang terpakai
+                                    </div>
+                                }
+                            </div>
+                            <form action={ "/transaction/" + requestForms.id } method="POST" className="px-5 pb-8 text-center">
+                                <a onClick={ handleCloseModal } data-tw-dismiss="modal" className="btn btn-outline-secondary w-24 mr-2">Cancel</a>
+                                <button className="btn text-white btn-success impor" type="submit" name="isUsed" value={ isUsed ? `true` : `false` }>{ isUsed ? `Approve` : `Approve dan akhiri GRF` }</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                : null
+            }
         </>
     );
 }

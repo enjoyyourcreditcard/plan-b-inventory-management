@@ -39,7 +39,7 @@
                 </div>
                 <form id="form-new-grf" action="{{ Route( "request.post.store.create.grf" ) }}" method="POST" class="px-5 pb-8 text-center">
                     @csrf
-                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
+                    <a id="btn-cancel-newReq" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-2">Cancel</a>
                     <input type="hidden" name="grf_code" value="{{ $grf_code }}">
                     <button class="loading btn text-white bg-emerald-700 impor w-24">Sure</button>
                 </form>
@@ -99,11 +99,11 @@
     <div class="col-span-12 mt-8">
         <div class="intro-y flex items-center h-10">
             <h2 class="text-lg font-medium truncate mr-5">Good Request Forms</h2>
-            <div class="ml-auto">
+            {{-- <div class="ml-auto">
                 <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#emergency-warning-modal" class="btn bg-red-600 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill mr-1" viewBox="0 0 16 16"> <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>&nbsp;Emergency Request
                 </a>
-            </div>
+            </div> --}}
         </div>
         <div id="#" class="grid grid-cols-12 gap-6 mt-5">
 
@@ -317,7 +317,7 @@
             |--------------------------------------------------------------------------
             / * --}}
             @if( count( $grfsAvailable->where('is_emergency', 0) ) < 3 )
-            <button data-tw-toggle="modal" data-tw-target="#modal-new-request"
+            <button id="btn-newReq" data-tw-toggle="modal" data-tw-target="#modal-new-request"
                 class="flex flex-col justify-center items-center py-8 gap-4 col-span-12 sm:col-span-4 xl:col-span-4 intro-y rounded border border-gray-300 border-dashed transition duration-300 ease-in-out hover:bg-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-lg"
                     viewBox="0 0 16 16">
@@ -457,11 +457,8 @@
         </div>
         <div class="intro-y h-full box p-5 mt-5">
             @if ($chartDatas == false)
-            <div class="w-12/12 aspect-square flex flex-col justify-center items-center rounded-full bg-slate-300 text-white">
-                <div class="text-sm">No data yet</div>
-            </div>
+            <div class="text-sm text-centered">No data yet</div>
             @else
-            <canvas class="mt-3" id="report-used-item" height="300"></canvas>
             <div class="mt-8">
                 <div class="flex items-center">
                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
@@ -495,4 +492,5 @@
 
 @section('javaScript')
 <script src="{{ Asset('js/views/requester/index.js') }}"></script>
+<script src="{{ Asset('js/modal.js') }}"></script>
 @endSection

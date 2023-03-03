@@ -44,8 +44,8 @@
                         be undone.</div>
                 </div>
                 <div class="px-5 pb-8 text-center">
-                    <a data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
-                    <button form="form-return-item" type="submit" name="isReturn" value="true" class="loading btn text-white !bg-emerald-700 impor w-24">Sure</button>
+                    <a id="btn-cancel-return" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                    <button form="form-return-item" type="submit" name="isReturn" value="true" class="loading btn text-white btn-success impor w-24">Sure</button>
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@
                         </button>
                     </li>
                     <li id="layout-1-annual-fees-tab" class="nav-item flex-1" role="presentation">
-                        <button data-tw-toggle="modal" data-tw-target="#modal-return-confirmation"
+                        <button id="btn-return" data-tw-toggle="modal" data-tw-target="#modal-return-confirmation"
                             class="nav-link flex justify-center items-center gap-2 py-2 lg:py-3 w-full bg-emerald-900 text-white transition duration-300 ease-in-out hover:bg-emerald-700"
                             data-tw-toggle="pill" data-tw-target="#layout-1-annual-fees" role="tab"
                             aria-controls="layout-1-annual-fees" aria-selected="false">
@@ -153,23 +153,19 @@
         |--------------------------------------------------------------------------
         / * --}}
         <div class="post intro-y overflow-hidden w-full box">
-            <ul class="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800" role="tablist">
+            <ul id="myTab" data-tabs-toggle="#myTabContent" role="tablist" class="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800">
 
                 @foreach ( $miniStocks->groupBy( "category" ) as $key => $categories )
-                <li class="nav-item">
-                    <button data-tw-toggle="tab" data-tw-target="#tab-{{ $key }}"
-                        class="nav-link  w-full py-4 {{  $loop->first ? "active" : "" }}" role="tab"
-                        aria-controls="content" aria-selected="true">{{ $key }}
-                    </button>
+                <li role="presentation" class="nav-item">
+                    <button id="{{ $key }}-tab" data-tabs-target="#{{ $key }}" type="button" role="tab" aria-controls="{{ $key }}" aria-selected="false" class="nav-link  w-full py-4">{{ $key }}</button>
                 </li>
                 @endforeach
 
             </ul>
-            <div class="post__content tab-content">
+            <div id="myTabContent" class="post__content tab-content">
 
                 @foreach ( $miniStocks->groupBy( "category" ) as $key => $categories )
-                <div id="tab-{{ $key }}" class="tab-pane overflow-x-auto p-5 {{  $loop->first ? "active" : "" }}"
-                    role="tabpanel" aria-labelledby="content-tab">
+                <div id="{{ $key }}" role="tabpanel" aria-labelledby="{{ $key }}-tab" class="hidden tab-pane overflow-x-auto p-5 active">
                     <form id="form-return-item" action="{{ Route( "return.put.detail", $grf->id ) }}" method="POST">
                         @csrf
                         @method ( "PUT" )
@@ -251,4 +247,5 @@
 @section( "javaScript" )
 <script src="{{ Asset( "js/views/requester/return.js" ) }}"></script>
 <script src="{{ Asset('js/views/requester/index.js') }}"></script>
+<script src="{{ Asset('js/modal.js') }}"></script>
 @endSection
